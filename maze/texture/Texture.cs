@@ -27,6 +27,12 @@ namespace textured_raycast.maze.texture
             pixels[x + y * width] = pixel;
         }
 
+        public AniTexture toAniTexture()
+        {
+            Texture[] thisInList = new Texture[] {this};
+            return new AniTexture(thisInList);
+        }
+
         public void draw() {
             for(int y = 0; y < height; y++) {
                 for(int x = 0; x < width; x++) {
