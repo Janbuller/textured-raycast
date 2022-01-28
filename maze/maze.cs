@@ -39,7 +39,7 @@ namespace textured_raycast.maze
 
         private static bool Start(Map map) {
             Console.Clear();
-            MazeEngine game = new MazeEngine(100, 100, "maze");
+            MazeEngine game = new MazeEngine(300, 200, "maze");
 
             // Position vector
             Vector2d pos = new Vector2d(5.5, 7.5);
@@ -299,10 +299,14 @@ namespace textured_raycast.maze
                     game.DrawVerLine(x, lineHeight, tex, texX, darken, playerHeight);
                 }
 
+                game.DrawBorder();
+                game.SwapBuffers();
+                game.DrawScreen();
+
                 // Handle movement
                 double rotSpeed = 0.2;
                 double movSpeed = 0.1;
-                while (Console.KeyAvailable) {
+                do {
                     // Reads and saves pressed key
                     ConsoleKeyInfo key = Console.ReadKey();
                     // Checks the pressed key. Sends press to menu.
@@ -350,7 +354,7 @@ namespace textured_raycast.maze
                     } else if (key.Key == ConsoleKey.Q) {
                         playerVelY = 0.03f;
                     }
-                }
+                } while (Console.KeyAvailable);
 
                 // Check for win/exit
                 if(pos.Floor() == winC) {
@@ -361,10 +365,6 @@ namespace textured_raycast.maze
                     // Loser!
                     return false;
                 }
-
-                game.DrawBorder();
-                game.SwapBuffers();
-                game.DrawScreen();
             }
         }
     }
