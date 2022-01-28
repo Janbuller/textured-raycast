@@ -12,8 +12,6 @@ namespace textured_raycast.maze.texture
     class AniTexture {
         public Texture[] textures;
 
-        public 
-
         public AniTexture(Texture[] texturesIn)
         {
             textures = texturesIn;
