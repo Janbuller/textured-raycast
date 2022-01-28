@@ -39,7 +39,7 @@ namespace textured_raycast.maze
 
         private static bool Start(Map map) {
             Console.Clear();
-            MazeEngine game = new MazeEngine(120, 60, "maze");
+            MazeEngine game = new MazeEngine(100, 100, "maze");
 
             // Position vector
             Vector2d pos = new Vector2d(5.5, 7.5);
@@ -123,7 +123,7 @@ namespace textured_raycast.maze
                             Convert.ToInt32(color.g * darken),
                             Convert.ToInt32(color.b * darken)
                         );
-                        game.DrawChar("█".Pastel((darkPix).getSysColor()), x, y);
+                        game.DrawChar(darkPix, x, y);
 
                         color = ceilingTex.getPixel(texture.x, texture.y);
                         darkPix = new TexColor(
@@ -131,7 +131,7 @@ namespace textured_raycast.maze
                             Convert.ToInt32(color.g * darken),
                             Convert.ToInt32(color.b * darken)
                         );
-                        game.DrawChar("█".Pastel((darkPix).getSysColor()), x, game.GetWinHeight() - y - 1);
+                        game.DrawChar(darkPix, x, game.GetWinHeight() - y - 1);
                     }
                 }
 
