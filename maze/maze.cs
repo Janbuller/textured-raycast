@@ -39,57 +39,30 @@ namespace textured_raycast.maze
 
         private static bool Start(Map map) {
             Console.Clear();
-            MazeEngine game = new MazeEngine(300, 200, "maze");
+            MazeEngine game = new MazeEngine(120, 80, "maze");
 
             // Position vector
-            Vector2d pos = new Vector2d(5.5, 7.5);
+            Vector2d pos = map.playerStartPos;
             float playerHeight = 0;
             float playerVelY = 0;
+
             // Directional unit vector
-            Vector2d dir = new Vector2d(0, 1);
+            Vector2d dir = map.playerStartRot;
+
             // Camera view plane, held as 2d vector line.
             // Were this actually 3d, not raycasting, it would be a plane,
             // represtented by 2 vectors.
-            Vector2d plane = new Vector2d(0.66, 0);
-
-            // The location of the win and exit cells
-            Vector2d winC = new Vector2d(-1, -1);
-            Vector2d extC = new Vector2d(-1, -1);
+            Vector2d plane = new Vector2d(0.66f, 0);
 
             // The visibility distance. Controls the distance-based darkening.
             int visRange = 25;
-
-            // Loops through all cells, checking for control cells.
-            for(int x = 0; x < map.Width; x++) {
-                for(int y = 0; y < map.Height-1; y++) {
-                    int cell = map.GetCell(x, y);
-                    // Control cells are above 100
-                    if(cell >= 100) {
-                        switch(cell) {
-                            case 100: // SpawnPoint
-                                // Removes spawnpoint cell
-                                map.SetCellRel(x, y, 0);
-                                pos.x = 0.5 + x;
-                                pos.y = 0.5 + y;
-                                break;
-                            case 101: // WinPoint
-                                winC.x = x;
-                                winC.y = y;
-                                break;
-                            case 102: // ExitPoint
-                                extC.x = x;
-                                extC.y = y;
-                                break;
-                        }
-                    }
-                }
-            }
 
             // Main game loop
             while(true) {
                 // game.DrawBackground(Color.FromArgb(255, 255, 0), Color.Blue, visRange);
 
-                for(int y = 0; y < game.GetWinHeight(); y++) {
+                for(int y = 0; y < game.GetWinHeight(); y++)
+                {
                     Vector2d rayDirLeft = dir - plane;
                     Vector2d rayDirRight = dir + plane;
 
@@ -199,7 +172,7 @@ namespace textured_raycast.maze
                     // while loop.
                     bool hit = false;
                     // The cell-type / number of the hit wall.
-                    int hitNum = 0;
+                    Wall hitWall = null;
                     // Whether it was hit in a y-intersection or an
                     // x-intersection.
                     int side = 0;
@@ -235,9 +208,9 @@ namespace textured_raycast.maze
 
                         // Check if the currently intersected cell was not
                         // empty.
-                        if(map.GetCell((int)mapPos.x, (int)mapPos.y) > 0) {
+                        if(map.IsWal((int)mapPos.x, (int)mapPos.y)) {
                             hit = true;
-                            hitNum = map.GetCell((int)mapPos.x, (int)mapPos.y);
+                            hitWall = map.GetWall((int)mapPos.x, (int)mapPos.y);
                         }
 
                     }
@@ -270,13 +243,13 @@ namespace textured_raycast.maze
                     // facing side, simulating lighting,
                     if(side == 0) {
                         // Construct darker color
-                        darken = 0.8f;
+                        darken = 1; // B - i removed this because it looked dumb knowing that there was no lighting in the room (and it made distance shadows unequal) 
                     }
 
                     // Darken color based on distance and visRange variable.
                     darken = (float)Math.Max(0, darken - perpWallDist * (visRange * 0.005));
 
-                    Texture tex = textures[hitNum];
+                    Texture tex = textures[hitWall == null ? 1 : hitWall.thisTexID];
                     double wallX;
                     if (side == 0)
                         wallX = pos.y + perpWallDist * rayDir.y;
@@ -306,9 +279,9 @@ namespace textured_raycast.maze
                 // Handle movement
                 double rotSpeed = 0.2;
                 double movSpeed = 0.1;
-                do {
+                while (Console.KeyAvailable) {
                     // Reads and saves pressed key
-                    ConsoleKeyInfo key = Console.ReadKey();
+                    ConsoleKeyInfo key = Console.ReadKey(true);
                     // Checks the pressed key. Sends press to menu.
 
                     // Multiplied with movement speed, during collision check,
@@ -321,18 +294,18 @@ namespace textured_raycast.maze
                         // make sense, since they could be different. They are
                         // split up, to allow sliding on walls, when not walking
                         // perpendicular into them.
-                        int cellX = map.GetCell((int)(pos.x + dir.x * (movSpeed * extraColDistMult )), (int)(pos.y));
-                        int cellY = map.GetCell((int)(pos.x), (int)(pos.y + dir.y * (movSpeed * extraColDistMult)));
+                        Wall cellX = map.GetWall((int)(pos.x + dir.x * (movSpeed * extraColDistMult )), (int)(pos.y));
+                        Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y + dir.y * (movSpeed * extraColDistMult)));
 
                         // Check if cell is empty or a control cell, if so, move.
-                        if(cellX == 0 || cellX >= 100) pos.x += dir.x * movSpeed;
-                        if(cellY == 0 || cellY >= 100) pos.y += dir.y * 0.1;
+                        if(!cellX.isWal) pos.x += dir.x * movSpeed;
+                        if(!cellY.isWal) pos.y += dir.y * 0.1;
                     } else if(key.Key == ConsoleKey.DownArrow) {
                         // Same as before, just backwards, so with subtraction instead of addition.
-                        int cellX = map.GetCell((int)(pos.x - dir.x * (movSpeed*extraColDistMult)), (int)(pos.y));
-                        int cellY = map.GetCell((int)(pos.x), (int)(pos.y - dir.y * (movSpeed*extraColDistMult)));
-                        if(cellX == 0 || cellX >= 100) pos.x -= dir.x * movSpeed;
-                        if(cellY == 0 || cellY >= 100) pos.y -= dir.y * 0.1;
+                        Wall cellX = map.GetWall((int)(pos.x - dir.x * (movSpeed*extraColDistMult)), (int)(pos.y));
+                        Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - dir.y * (movSpeed*extraColDistMult)));
+                        if(!cellX.isWal) pos.x -= dir.x * movSpeed;
+                        if(!cellY.isWal) pos.y -= dir.y * 0.1;
                     } else if(key.Key == ConsoleKey.RightArrow) {
                         // Use too much math, to calculate the direction unit vector.
                         double oldDirX = dir.x;
@@ -354,8 +327,9 @@ namespace textured_raycast.maze
                     } else if (key.Key == ConsoleKey.Q) {
                         playerVelY = 0.03f;
                     }
-                } while (Console.KeyAvailable);
+                };
 
+                /*
                 // Check for win/exit
                 if(pos.Floor() == winC) {
                     // Winner!
@@ -365,6 +339,7 @@ namespace textured_raycast.maze
                     // Loser!
                     return false;
                 }
+                */
             }
         }
     }

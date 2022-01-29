@@ -14,7 +14,7 @@ namespace textured_raycast.maze.texture
             string[] imageData = File.ReadAllLines(location);
 
             // Check magic number, to see if correct format
-            if(imageData[0] != "P3")
+            if (imageData[0] != "P3")
                 return null;
 
             // Remove all comments
