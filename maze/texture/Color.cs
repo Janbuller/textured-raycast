@@ -38,5 +38,23 @@ namespace textured_raycast.maze.texture
                 Convert.ToInt32(vec1.g * scalar),
                 Convert.ToInt32(vec1.b * scalar));
         }
+
+        public static bool operator ==(TexColor col1, TexColor col2) {
+            if (System.Object.ReferenceEquals(col1, null))
+            {
+                if (System.Object.ReferenceEquals(col2, null))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            return col1.r == col2.r &&
+                   col1.g == col2.g &&
+                   col1.b == col2.b;
+        }
+        public static bool operator !=(TexColor col1, TexColor col2) {
+            return !(col1 == col2);
+        }
     }
 }

@@ -69,7 +69,7 @@ namespace textured_raycast.maze
             }
         }
 
-        public void DrawVerLine(int x, int height, Texture tex, int texX, float darken) {
+        public void DrawVerLine(int x, int height, Texture tex, int texX, float darken, TexColor alphaCol = null) {
             // Return exception, if char is out of game window.
             if (x < 0 || x > GetWinWidth()) {
                 throw new ArgumentOutOfRangeException();
@@ -91,6 +91,8 @@ namespace textured_raycast.maze
                 TexColor color = tex.getPixel(texX, texY);
                 // Draw the line, using NuGet package "Pastel" to color, using
                 // ansi escape sequences.
+                if(alphaCol == color)
+                    continue;
                 DrawChar((color * darken), x, i);
             }
 
@@ -166,7 +168,7 @@ namespace textured_raycast.maze
                 string line = "";
                 for(int x = 0; x < winWidth; x++) {
                     line += "▀".Pastel(buffer[x + y*winWidth].getSysColor()).PastelBg(buffer[x + (y+1) * winWidth].getSysColor());
-                    if(buffer[x + y*winWidth] == null) {
+                    if(buffer[x + y*winWidth] is null) {
                         line += " ".PastelBg(Color.Black);
                     }
                 }

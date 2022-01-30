@@ -17,14 +17,21 @@ namespace textured_raycast.maze
         // Map is śaved as a list of ints. Different numbers have different
         // functions/colors.
         public List<Wall> map = new List<Wall>();
-        public List<Sprite> sprites = new List<Sprite>();
+        public List<Sprite> sprites = new List<Sprite>() {
+            new Sprite(2, 3, 7),
+            new Sprite(3, 3, 7),
+            new Sprite(4, 3, 7),
+            new Sprite(5, 3, 7),
+            new Sprite(6, 3, 7),
+            new Sprite(2, 4, 8),
+            new Sprite(6, 4, 8),
+        };
 
         public Vector2d playerStartPos;
         public Vector2d playerStartRot;
 
         public Map(string location)
         {
-            sprites.Append(new Sprite(2, 2, 2));
             string[] imageData = File.ReadAllLines(location);
 
             int reqWidth;

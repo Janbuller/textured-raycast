@@ -29,6 +29,8 @@ namespace textured_raycast.maze
             {4,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/mossy.ppm")},
             {5,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/redstone.ppm")},
             {6,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/colorstone.ppm")},
+            {7,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/pillar.ppm")},
+            {8,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/barrel.ppm")},
             {101, TextureLoaders.loadFromPlainPPM("img/wolfenstein/end.ppm")}, // Also used as collision box for winning.
             {102, TextureLoaders.loadFromPlainPPM("img/wolfenstein/exit.ppm")}, // Also used for leaving the maze
         };
@@ -227,6 +229,8 @@ namespace textured_raycast.maze
                     ZBuffer[x] = perpWallDist;
                 }
 
+                SpriteCasting(ref game, map.sprites, pos, plane, dir, ZBuffer);
+
                 game.DrawBorder();
                 game.SwapBuffers();
                 game.DrawScreen();
@@ -345,14 +349,14 @@ namespace textured_raycast.maze
             }
         }
 
-        public static void SpriteCasting(List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir) {
+        public static void SpriteCasting(ref MazeEngine game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer) {
             List<double> spriteDist = new List<double>();
             for(int i = 0; i < sprites.Count; i++) {
                 // Calculate sprite distance from player, using pythagoras.
                 // Since it's only used for comparing with itself, sqrt isn't required.
                 double xDist = pos.x - sprites[i].getX();
                 double yDist = pos.y - sprites[i].getY();
-                spriteDist.Append(xDist * xDist + yDist * yDist);
+                spriteDist.Add(xDist * xDist + yDist * yDist);
             }
 
             // Sort the sprites list by the sprites distance,
@@ -360,12 +364,40 @@ namespace textured_raycast.maze
             sprites = sprites
                 .Select((value, index) => new {Index = index, Value = value})
                 .OrderBy(o => spriteDist[o.Index])
-                .Select(o => o.Value).ToList();
+                .Select(o => o.Value)
+                .Reverse()
+                .ToList();
 
             for(int i = 0; i < sprites.Count; i++) {
                 Sprite curSpr = sprites[i];
+                Texture sprTex = textures[curSpr.texID];
                 // The relative sprite position from the camera.
                 Vector2d relSprPos = curSpr.getPos() - pos;
+
+                // The inverse of the imaginary camera matrix.
+                Matrix2x2d invCamMat = new Matrix2x2d(new double[] {dir.y,    -dir.x,
+                                                                    -plane.y, plane.x});
+                double invDet = 1.0 / (plane.x * dir.y - dir.x * plane.y);
+
+                Vector2d transformed = invDet * invCamMat.multByVec(relSprPos);
+
+                int spriteScreenX = (int)((game.GetWinWidth() / 2) * (1 + transformed.x / transformed.y));
+
+                int spriteHeight = (int)(Math.Abs(game.GetWinHeight() / transformed.y));
+
+                int spriteWidth = spriteHeight;
+                int startX = -spriteWidth / 2 + spriteScreenX;
+                startX = Math.Max(0, startX);
+                int endX = spriteWidth / 2 + spriteScreenX;
+                endX = Math.Min(endX, game.GetWinWidth() - 1);
+
+                for(int x = startX; x < endX; x++) {
+                    int texX = (int)(256 * (x - (-spriteWidth / 2 + spriteScreenX)) * sprTex.width / spriteWidth) / 256;
+
+                    if(transformed.y > 0)
+                        if(transformed.y < ZBuffer[x])
+                            game.DrawVerLine(x, spriteHeight, sprTex, texX, 1.0f, new TexColor(0, 0, 0));
+                }
             }
         }
     }

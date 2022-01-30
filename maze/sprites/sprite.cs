@@ -10,7 +10,7 @@ namespace textured_raycast.maze.sprites
     internal class Sprite
     {
         Vector2d pos;
-        int texID;
+        public int texID;
         public Sprite(Vector2d pos, int texID)
         {
             this.pos = pos;
