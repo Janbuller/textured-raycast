@@ -73,15 +73,19 @@ namespace textured_raycast.maze
                     // x-coordinate.
                     // The x-range of the rendering space then becomes [-1;1].
                     // This allows for easier further calculations.
-                    double cameraX = 2 * x / (double)game.GetWinWidth() - 1;
+                    //
+                    // Formula:
+                    // (   2*x   )
+                    // ( ------- ) - 1
+                    // (  Width  )
+                    double cameraX = ( (2 * x) / (double)game.GetWinWidth()) - 1;
                     // A unit vector, representing the direction of the
                     // currently cast ray. Calculated by the player direction
                     // plus part of the viewport "plane".
                     Vector2d rayDir = dir + (plane * cameraX);
 
-                    // The player position in map-coordinates. Had we
-                    // implemented integer vectors, this would be one of those.
-                    Vector2d mapPos = pos.Floor();
+                    // The player position in map-coordinates.
+                    Vector2i mapPos = (Vector2i)pos.Floor();
 
                     // sideDist holds the initial length, needed to travel, for
                     // the ray to be on an x-intersection and a y-intersection.
@@ -100,23 +104,23 @@ namespace textured_raycast.maze
                     // Holds the direction to move in for x and y.
                     // X: -1 = left ; +1 = right
                     // Y: -1 = up   ; +1 = down
-                    Vector2d step = new Vector2d(0, 0);
+                    Vector2i step = new Vector2i(0, 0);
 
                     // Sets step variable and calculates sideDist for both x and y.
                     if(rayDir.x < 0) {
                         step.x = -1;
-                        sideDist.x = (pos.x - mapPos.x) * diffDist.x;
+                        sideDist.x = (pos.x - (double)mapPos.x) * diffDist.x;
                     } else {
                         step.x = 1;
-                        sideDist.x = (mapPos.x + 1 - pos.x) * diffDist.x;
+                        sideDist.x = ((double)mapPos.x + 1 - pos.x) * diffDist.x;
                     }
 
                     if(rayDir.y < 0) {
                         step.y = -1;
-                        sideDist.y = (pos.y - mapPos.y) * diffDist.y;
+                        sideDist.y = (pos.y - (double)mapPos.y) * diffDist.y;
                     } else {
                         step.y = 1;
-                        sideDist.y = (mapPos.y + 1 - pos.y) * diffDist.y;
+                        sideDist.y = ((double)mapPos.y + 1 - pos.y) * diffDist.y;
                     }
 
                     // Whether or not the ray hit a wall. Used to get out of a
