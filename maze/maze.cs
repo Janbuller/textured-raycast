@@ -57,8 +57,6 @@ namespace textured_raycast.maze
 
             // Main game loop
             while(true) {
-                // game.DrawBackground(Color.FromArgb(255, 255, 0), Color.Blue, visRange);
-
                 FloorCasting(ref game, dir, plane, pos, visRange);
 
                 // Loop through every x in the "window", casting a ray for each.
@@ -288,52 +286,54 @@ namespace textured_raycast.maze
         }
 
         public static void FloorCasting(ref MazeEngine game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange) {
-                for(int y = 0; y < game.GetWinHeight(); y++)
-                {
-                    Vector2d rayDirLeft = dir - plane;
-                    Vector2d rayDirRight = dir + plane;
+            for(int y = 0; y < game.GetWinHeight(); y++)
+            {
+                Vector2d rayDirLeft = dir - plane;
+                Vector2d rayDirRight = dir + plane;
 
-                    int midOff = y - game.GetWinHeight() / 2;
-                    float camHeight = 0.5f * game.GetWinHeight();
-                    float lineDist = camHeight / midOff;
-                    lineDist = lineDist < 1000000000 ? lineDist : 1000000000;
+                int midOff = y - game.GetWinHeight() / 2;
+                float camHeight = 0.5f * game.GetWinHeight();
+                float lineDist = camHeight / midOff;
+                lineDist = lineDist < 1000000000 ? lineDist : 1000000000;
 
-                    Vector2d floorOff = lineDist * (rayDirRight - rayDirLeft) / game.GetWinWidth();
+                Vector2d floorOff = lineDist * (rayDirRight - rayDirLeft) / game.GetWinWidth();
 
-                    Vector2d floor = pos + (new Vector2d(lineDist, lineDist) * rayDirLeft);
+                Vector2d floor = pos + (new Vector2d(lineDist, lineDist) * rayDirLeft);
 
-                    for(int x = 0; x < game.GetWinWidth(); x++) {
-                        Texture ceilingTex =  textures[4];
-                        Texture floorTex =  textures[1];
-                        Vector2i cellPos = (Vector2i)floor.Floor();
-                        Vector2i texture = (Vector2i)(floorTex.width * (floor - (Vector2d)cellPos)).Floor();
-                        texture = new Vector2i(
-                            Math.Abs(texture.x),
-                            Math.Abs(texture.y)
-                        );
+                for(int x = 0; x < game.GetWinWidth(); x++) {
+                    Texture ceilingTex =  textures[4];
+                    Texture floorTex =  textures[1];
+                    Vector2i cellPos = (Vector2i)floor.Floor();
+                    Vector2i texture = (Vector2i)(floorTex.width * (floor - (Vector2d)cellPos)).Floor();
+                    texture = new Vector2i(
+                        Math.Abs(texture.x),
+                        Math.Abs(texture.y)
+                    );
 
-                        floor += floorOff;
+                    floor += floorOff;
 
-                        float darken = 0.9f;
-                        darken = (float)Math.Min(1, Math.Max(0, darken - lineDist * (visRange * 0.005)));
+                    float darken = 0.9f;
+                    darken = (float)Math.Min(1, Math.Max(0, darken - lineDist * (visRange * 0.005)));
 
-                        TexColor color = floorTex.getPixel(texture.x, texture.y);
-                        TexColor darkPix = new TexColor(
-                            Convert.ToInt32(color.r * darken),
-                            Convert.ToInt32(color.g * darken),
-                            Convert.ToInt32(color.b * darken)
-                        );
-                        game.DrawChar(darkPix, x, y);
+                    TexColor color = floorTex.getPixel(texture.x, texture.y);
+                    TexColor darkPix = new TexColor(
+                        Convert.ToInt32(color.r * darken),
+                        Convert.ToInt32(color.g * darken),
+                        Convert.ToInt32(color.b * darken)
+                    );
+                    game.DrawChar(darkPix, x, y);
 
-                        color = ceilingTex.getPixel(texture.x, texture.y);
-                        darkPix = new TexColor(
-                            Convert.ToInt32(color.r * darken),
-                            Convert.ToInt32(color.g * darken),
-                            Convert.ToInt32(color.b * darken)
-                        );
-                        game.DrawChar(darkPix, x, game.GetWinHeight() - y - 1);
-                    }
+                    color = ceilingTex.getPixel(texture.x, texture.y);
+                    darkPix = new TexColor(
+                        Convert.ToInt32(color.r * darken),
+                        Convert.ToInt32(color.g * darken),
+                        Convert.ToInt32(color.b * darken)
+                    );
+                    game.DrawChar(darkPix, x, game.GetWinHeight() - y - 1);
                 }
+            }
         }
+
+
     }
 }
