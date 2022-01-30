@@ -43,8 +43,6 @@ namespace textured_raycast.maze
 
             // Position vector
             Vector2d pos = map.playerStartPos;
-            float playerHeight = 0;
-            float playerVelY = 0;
 
             // Directional unit vector
             Vector2d dir = map.playerStartRot;
@@ -216,15 +214,8 @@ namespace textured_raycast.maze
                     // if(side == 0 && rayDir.x > 0) texX = tex.width - texX - 1;
                     // if(side == 1 && rayDir.y < 0) texX = tex.width - texX - 1;
 
-                    playerHeight += playerVelY;
-                    playerVelY -= 0.00002f;
-
-                    if(playerHeight <= 0) {
-                        playerHeight = 0;
-                    }
-
                     // Draw the ray.
-                    game.DrawVerLine(x, lineHeight, tex, texX, darken, playerHeight);
+                    game.DrawVerLine(x, lineHeight, tex, texX, darken);
                 }
 
                 game.DrawBorder();
@@ -279,8 +270,6 @@ namespace textured_raycast.maze
                         double oldPlaneX = plane.x;
                         plane.x = plane.x * Math.Cos(rotSpeed) - plane.y * Math.Sin(rotSpeed);
                         plane.y = oldPlaneX * Math.Sin(rotSpeed) + plane.y * Math.Cos(rotSpeed);
-                    } else if (key.Key == ConsoleKey.Q) {
-                        playerVelY = 0.03f;
                     }
                 };
 

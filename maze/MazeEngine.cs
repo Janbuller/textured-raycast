@@ -69,7 +69,7 @@ namespace textured_raycast.maze
             }
         }
 
-        public void DrawVerLine(int x, int height, Texture tex, int texX, float darken, float offset) {
+        public void DrawVerLine(int x, int height, Texture tex, int texX, float darken) {
             // Return exception, if char is out of game window.
             if (x < 0 || x > GetWinWidth()) {
                 throw new ArgumentOutOfRangeException();
@@ -83,8 +83,6 @@ namespace textured_raycast.maze
             if(startY < 0) {
                 texPos += sectionHeight * (startY * -1);
             }
-            startY += (int)offset;
-            endY += (int)offset;
             startY = startY < 0 ? 0 : startY;
             endY = endY > GetWinHeight() ? GetWinHeight() : endY;
             for(int i = startY; i < endY; i++) {
