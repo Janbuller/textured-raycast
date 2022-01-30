@@ -10,17 +10,44 @@ namespace textured_raycast.maze.sprites
     internal class Sprite
     {
         Vector2d pos;
+        public int spriteID;
         public int texID;
-        public Sprite(Vector2d pos, int texID)
+        public bool canInteract = false;
+        public int effectID;
+        public int extraEffectDetailID;
+
+        public Sprite(Vector2d pos, int spriteID, int effectID = 0, int extraEffectDetailID = 0)
         {
             this.pos = pos;
-            this.texID = texID;
+            this.spriteID = spriteID;
+            this.texID = spriteID;
+            if (effectID != 0)
+                this.canInteract = true;
+            this.effectID = effectID;
+            this.extraEffectDetailID = extraEffectDetailID;
         }
 
-        public Sprite(double posX, double posY, int texID)
+        public Sprite(double posX, double posY, int spriteID, int effectID = 0, int extraEffectDetailID = 0)
         {
             this.pos = new Vector2d(posX, posY);
-            this.texID = texID;
+            this.spriteID = spriteID;
+            this.texID = spriteID;
+            if (effectID != 0)
+                this.canInteract = true;
+            this.effectID = effectID;
+            this.extraEffectDetailID = extraEffectDetailID;
+        }
+
+        public void Activate()
+        {
+            if (effectID == 2) // is a chest, fx
+            {
+                // add item id extraEffectDetailID to player inventory
+            }
+            else if (effectID == 3) // or maby a door, fx
+            {
+                // go to map with id extraEffectDetailID
+            }
         }
 
         public Vector2d getPos() {

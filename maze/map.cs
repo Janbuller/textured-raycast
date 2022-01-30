@@ -17,15 +17,7 @@ namespace textured_raycast.maze
         // Map is śaved as a list of ints. Different numbers have different
         // functions/colors.
         public List<Wall> map = new List<Wall>();
-        public List<Sprite> sprites = new List<Sprite>() {
-            new Sprite(2, 3, 7),
-            new Sprite(3, 3, 7),
-            new Sprite(4, 3, 7),
-            new Sprite(5, 3, 7),
-            new Sprite(6, 3, 7),
-            new Sprite(2, 4, 8),
-            new Sprite(6, 4, 8),
-        };
+        public List<Sprite> sprites = new List<Sprite>();
 
         public Vector2d playerStartPos;
         public Vector2d playerStartRot;
@@ -36,22 +28,22 @@ namespace textured_raycast.maze
 
             int reqWidth;
             int reqHeight;
-            float plrStartX;
-            float plrStartY;
-            float plrStartDX;
-            float plrStartDY;
+            double plrStartX;
+            double plrStartY;
+            double plrStartDX;
+            double plrStartDY;
 
-            if (!int.TryParse(imageData[0], out reqWidth))
+            if (!int.TryParse(imageData[0].Split(' ')[0], out reqWidth))
                 return;
-            if (!int.TryParse(imageData[1], out reqHeight))
+            if (!int.TryParse(imageData[0].Split(' ')[1], out reqHeight))
                 return;
-            if (!float.TryParse(imageData[2], out plrStartX))
+            if (!double.TryParse(imageData[1].Split(' ')[0], out plrStartX))
                 return;
-            if (!float.TryParse(imageData[3], out plrStartY))
+            if (!double.TryParse(imageData[1].Split(' ')[1], out plrStartY))
                 return;
-            if (!float.TryParse(imageData[4], out plrStartDX))
+            if (!double.TryParse(imageData[2].Split(' ')[0], out plrStartDX))
                 return;
-            if (!float.TryParse(imageData[5], out plrStartDY))
+            if (!double.TryParse(imageData[2].Split(' ')[1], out plrStartDY))
                 return;
 
             width = reqWidth;
@@ -63,9 +55,15 @@ namespace textured_raycast.maze
             // Initialize map to empty list of correct size.
             map = new Wall[width * height].ToList();
 
-            for (int i = 6; i < imageData.Length; i++)
+            for (int i = 3; i < map.Count + 2; i++)
             {
-                map[i - 6] = new Wall(int.Parse(imageData[i]));
+                map[i - 3] = new Wall(int.Parse(imageData[i]));
+            }
+
+            for (int i = map.Count + 2; i < imageData.Length; i++)
+            {
+                string[] thisInfo = imageData[i].Split(' ');
+                sprites.Add(new Sprite(int.Parse(thisInfo[0]), int.Parse(thisInfo[1]), int.Parse(thisInfo[2])));
             }
         }
 

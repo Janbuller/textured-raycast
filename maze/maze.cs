@@ -47,6 +47,9 @@ namespace textured_raycast.maze
             // Position vector
             Vector2d pos = map.playerStartPos;
 
+            // The distance of witch the player can interact
+            double interactDist = 0.4;
+
             // Directional unit vector
             Vector2d dir = map.playerStartRot;
 
@@ -232,6 +235,28 @@ namespace textured_raycast.maze
                 SpriteCasting(ref game, map.sprites, pos, plane, dir, ZBuffer);
 
                 game.DrawBorder();
+
+                // Add textbox to draw if neccecary
+
+                Sprite spriteToInteract = null;
+                double distanceToInteract = 9999;
+
+                foreach (Sprite sprite in map.sprites)
+                {
+                    double distance = pos.DistTo(sprite.getPos());
+                    if (distance < interactDist && distance < distanceToInteract && sprite.canInteract)
+                    {
+                        spriteToInteract = sprite;
+                        distanceToInteract = distance;
+                    }
+                }
+
+                if (spriteToInteract != null)
+                {
+                    Console.WriteLine("Press [E] to interact with sprite");
+                }
+                Console.WriteLine("                                                      ");
+
                 game.SwapBuffers();
                 game.DrawScreen();
 
@@ -247,25 +272,30 @@ namespace textured_raycast.maze
                     // forcing the player to stay slightly further away from
                     // walls.
                     float extraColDistMult = 1f;
-                    if(key.Key == ConsoleKey.UpArrow) {
+                    if (key.Key == ConsoleKey.UpArrow)
+                    {
                         // CellX and CellY holds the cell, the player would move
                         // into, in those directions. Using a vector doesn't
                         // make sense, since they could be different. They are
                         // split up, to allow sliding on walls, when not walking
                         // perpendicular into them.
-                        Wall cellX = map.GetWall((int)(pos.x + dir.x * (movSpeed * extraColDistMult )), (int)(pos.y));
+                        Wall cellX = map.GetWall((int)(pos.x + dir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
                         Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y + dir.y * (movSpeed * extraColDistMult)));
 
                         // Check if cell is empty or a control cell, if so, move.
-                        if(!cellX.isWal) pos.x += dir.x * movSpeed;
-                        if(!cellY.isWal) pos.y += dir.y * 0.1;
-                    } else if(key.Key == ConsoleKey.DownArrow) {
+                        if (!cellX.isWal) pos.x += dir.x * movSpeed;
+                        if (!cellY.isWal) pos.y += dir.y * 0.1;
+                    }
+                    else if (key.Key == ConsoleKey.DownArrow)
+                    {
                         // Same as before, just backwards, so with subtraction instead of addition.
-                        Wall cellX = map.GetWall((int)(pos.x - dir.x * (movSpeed*extraColDistMult)), (int)(pos.y));
-                        Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - dir.y * (movSpeed*extraColDistMult)));
-                        if(!cellX.isWal) pos.x -= dir.x * movSpeed;
-                        if(!cellY.isWal) pos.y -= dir.y * 0.1;
-                    } else if(key.Key == ConsoleKey.RightArrow) {
+                        Wall cellX = map.GetWall((int)(pos.x - dir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
+                        Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - dir.y * (movSpeed * extraColDistMult)));
+                        if (!cellX.isWal) pos.x -= dir.x * movSpeed;
+                        if (!cellY.isWal) pos.y -= dir.y * 0.1;
+                    }
+                    else if (key.Key == ConsoleKey.RightArrow)
+                    {
                         // Use too much math, to calculate the direction unit vector.
                         double oldDirX = dir.x;
                         dir.x = dir.x * Math.Cos(-rotSpeed) - dir.y * Math.Sin(-rotSpeed);
@@ -274,7 +304,9 @@ namespace textured_raycast.maze
                         double oldPlaneX = plane.x;
                         plane.x = plane.x * Math.Cos(-rotSpeed) - plane.y * Math.Sin(-rotSpeed);
                         plane.y = oldPlaneX * Math.Sin(-rotSpeed) + plane.y * Math.Cos(-rotSpeed);
-                    } else if(key.Key == ConsoleKey.LeftArrow) {
+                    }
+                    else if (key.Key == ConsoleKey.LeftArrow)
+                    {
                         // Use too much math, to calculate the direction unit vector.
                         double oldDirX = dir.x;
                         dir.x = dir.x * Math.Cos(rotSpeed) - dir.y * Math.Sin(rotSpeed);
@@ -283,6 +315,11 @@ namespace textured_raycast.maze
                         double oldPlaneX = plane.x;
                         plane.x = plane.x * Math.Cos(rotSpeed) - plane.y * Math.Sin(rotSpeed);
                         plane.y = oldPlaneX * Math.Sin(rotSpeed) + plane.y * Math.Cos(rotSpeed);
+                    }
+                    else if (key.Key == ConsoleKey.E)
+                    {
+                        if (spriteToInteract != null)
+                            spriteToInteract.Activate();
                     }
                 };
 
