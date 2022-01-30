@@ -6,6 +6,7 @@ using System.Linq;
 using System.Drawing;
 using textured_raycast.maze.math;
 using textured_raycast.maze.texture;
+using textured_raycast.maze.sprites;
 using Pastel;
 
 namespace textured_raycast.maze
@@ -55,8 +56,11 @@ namespace textured_raycast.maze
             // The visibility distance. Controls the distance-based darkening.
             int visRange = 25;
 
+            double[] ZBuffer = new double[game.GetWinWidth()];
+
             // Main game loop
             while(true) {
+                // Do the floor/ceiling casting.
                 FloorCasting(ref game, dir, plane, pos, visRange);
 
                 // Loop through every x in the "window", casting a ray for each.
@@ -218,6 +222,9 @@ namespace textured_raycast.maze
 
                     // Draw the ray.
                     game.DrawVerLine(x, lineHeight, tex, texX, darken);
+
+                    // Set z-buffer
+                    ZBuffer[x] = perpWallDist;
                 }
 
                 game.DrawBorder();
@@ -338,6 +345,28 @@ namespace textured_raycast.maze
             }
         }
 
+        public static void SpriteCasting(List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir) {
+            List<double> spriteDist = new List<double>();
+            for(int i = 0; i < sprites.Count; i++) {
+                // Calculate sprite distance from player, using pythagoras.
+                // Since it's only used for comparing with itself, sqrt isn't required.
+                double xDist = pos.x - sprites[i].getX();
+                double yDist = pos.y - sprites[i].getY();
+                spriteDist.Append(xDist * xDist + yDist * yDist);
+            }
 
+            // Sort the sprites list by the sprites distance,
+            // using some dark linq magic.
+            sprites = sprites
+                .Select((value, index) => new {Index = index, Value = value})
+                .OrderBy(o => spriteDist[o.Index])
+                .Select(o => o.Value).ToList();
+
+            for(int i = 0; i < sprites.Count; i++) {
+                Sprite curSpr = sprites[i];
+                // The relative sprite position from the camera.
+                Vector2d relSprPos = curSpr.getPos() - pos;
+            }
+        }
     }
 }
