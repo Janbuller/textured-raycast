@@ -232,7 +232,7 @@ namespace textured_raycast.maze
                     ZBuffer[x] = perpWallDist;
                 }
 
-                SpriteCasting(ref game, map.sprites, pos, plane, dir, ZBuffer);
+                SpriteCasting(ref game, map.sprites, pos, plane, dir, ZBuffer, visRange);
 
                 game.DrawBorder();
 
@@ -386,7 +386,7 @@ namespace textured_raycast.maze
             }
         }
 
-        public static void SpriteCasting(ref MazeEngine game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer) {
+        public static void SpriteCasting(ref MazeEngine game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange) {
             List<double> spriteDist = new List<double>();
             for(int i = 0; i < sprites.Count; i++) {
                 // Calculate sprite distance from player, using pythagoras.
@@ -428,12 +428,15 @@ namespace textured_raycast.maze
                 int endX = spriteWidth / 2 + spriteScreenX;
                 endX = Math.Min(endX, game.GetWinWidth() - 1);
 
+                float darken = 0.9f;
+                darken = (float)Math.Min(1, Math.Max(0, darken - transformed.y * (visRange * 0.005)));
+
                 for(int x = startX; x < endX; x++) {
                     int texX = (int)(256 * (x - (-spriteWidth / 2 + spriteScreenX)) * sprTex.width / spriteWidth) / 256;
 
                     if(transformed.y > 0)
                         if(transformed.y < ZBuffer[x])
-                            game.DrawVerLine(x, spriteHeight, sprTex, texX, 1.0f, new TexColor(0, 0, 0));
+                            game.DrawVerLine(x, spriteHeight, sprTex, texX, darken, new TexColor(0, 0, 0));
                 }
             }
         }
