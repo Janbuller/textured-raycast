@@ -19,6 +19,9 @@ namespace textured_raycast.maze
         public List<Wall> map = new List<Wall>();
         public List<Sprite> sprites = new List<Sprite>();
 
+        public int floorTexID = 1;
+        public int ceilTexID = 4;
+
         public Vector2d playerStartPos;
         public Vector2d playerStartRot;
 

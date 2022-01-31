@@ -67,7 +67,7 @@ namespace textured_raycast.maze
             // Main game loop
             while(true) {
                 // Do the floor/ceiling casting.
-                FloorCasting(ref game, dir, plane, pos, visRange);
+                FloorCasting(ref game, dir, plane, pos, visRange, map);
 
                 // Loop through every x in the "window", casting a ray for each.
                 // ---
@@ -338,7 +338,9 @@ namespace textured_raycast.maze
             }
         }
 
-        public static void FloorCasting(ref MazeEngine game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange) {
+        public static void FloorCasting(ref MazeEngine game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map) {
+            Texture floorTex =  textures[map.floorTexID];
+            Texture ceilingTex =  textures[map.ceilTexID];
             for(int y = 0; y < game.GetWinHeight(); y++)
             {
                 Vector2d rayDirLeft = dir - plane;
@@ -354,8 +356,6 @@ namespace textured_raycast.maze
                 Vector2d floor = pos + (new Vector2d(lineDist, lineDist) * rayDirLeft);
 
                 for(int x = 0; x < game.GetWinWidth(); x++) {
-                    Texture ceilingTex =  textures[4];
-                    Texture floorTex =  textures[1];
                     Vector2i cellPos = (Vector2i)floor.Floor();
                     Vector2i texture = (Vector2i)(floorTex.width * (floor - (Vector2d)cellPos)).Floor();
                     texture = new Vector2i(
@@ -374,7 +374,8 @@ namespace textured_raycast.maze
                         Convert.ToInt32(color.g * darken),
                         Convert.ToInt32(color.b * darken)
                     );
-                    game.DrawChar(darkPix, x, y);
+                    if(y > game.GetWinHeight() / 2)
+                        game.DrawChar(darkPix, x, y);
 
                     color = ceilingTex.getPixel(texture.x, texture.y);
                     darkPix = new TexColor(
