@@ -9,7 +9,7 @@ namespace textured_raycast.maze.sprites
 {
     internal class Sprite
     {
-        Vector2d pos;
+        Vector2<double> pos;
         public int spriteID;
         public int texID;
         public bool canInteract = false;
@@ -18,7 +18,7 @@ namespace textured_raycast.maze.sprites
 
         public Sprite(double posX, double posY, int spriteID, int effectID = 0, int extraEffectDetailID = 0)
         {
-            this.pos = new Vector2d(posX, posY);
+            this.pos = new Vector2<double>(posX, posY);
             this.spriteID = spriteID;
             this.texID = spriteID;
             // if (effectID != 0)
@@ -39,7 +39,7 @@ namespace textured_raycast.maze.sprites
             }
         }
 
-        public Vector2d getPos() {
+        public Vector2<double> getPos() {
             return pos;
         }
         public double getX() {

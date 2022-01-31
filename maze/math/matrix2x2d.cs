@@ -20,8 +20,8 @@ namespace textured_raycast.maze.math
             elements[y * 2 + x] = value;
         }
 
-        public Vector2d multByVec(Vector2d vec) {
-            return new Vector2d(
+        public Vector2<double> multByVec(Vector2<double> vec) {
+            return new Vector2<double>(
                 getE(0, 0) * vec.x + getE(1,0) * vec.y,
                 getE(0, 1) * vec.x + getE(1,1) * vec.y
             );
