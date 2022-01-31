@@ -46,18 +46,18 @@ namespace textured_raycast.maze
             MazeEngine game = new MazeEngine(120, 80, "maze");
 
             // Position vector
-            Vector2<double> pos = map.playerStartPos;
+            Vector2d pos = map.playerStartPos;
 
             // The distance of witch the player can interact
             double interactDist = 0.4;
 
             // Directional unit vector
-            Vector2<double> dir = map.playerStartRot;
+            Vector2d dir = map.playerStartRot;
 
             // Camera view plane, held as 2d vector line.
             // Were this actually 3d, not raycasting, it would be a plane,
             // represtented by 2 vectors.
-            Vector2<double> plane = new Vector2<double>(0.66f, 0);
+            Vector2d plane = new Vector2d(0.66f, 0);
 
             // The visibility distance. Controls the distance-based darkening.
             int visRange = 25;
@@ -92,20 +92,20 @@ namespace textured_raycast.maze
                     // A unit vector, representing the direction of the
                     // currently cast ray. Calculated by the player direction
                     // plus part of the viewport "plane".
-                    Vector2<double> rayDir = dir + (plane * cameraX);
+                    Vector2d rayDir = dir + (plane * cameraX);
 
                     // The player position in map-coordinates.
-                    Vector2<int> mapPos = pos.Floor();
+                    Vector2i mapPos = (Vector2i)pos.Floor();
 
                     // sideDist holds the initial length, needed to travel, for
                     // the ray to be on an x-intersection and a y-intersection.
-                    Vector2<double> sideDist = new Vector2<double>(0, 0);
+                    Vector2d sideDist = new Vector2d(0, 0);
                     // The x-value holds the amount, x has to increase by, to go
                     // from one intersection of the grid in the y-axis, to
                     // another. The y-value is the opposite.
                     // The ternary operator is used to avoid division by zero,
                     // setting it to a really high number in that case.
-                    Vector2<double> diffDist = new Vector2<double>(rayDir.x == 0 ? 100000000 : Math.Abs(1 / rayDir.x),
+                    Vector2d diffDist = new Vector2d(rayDir.x == 0 ? 100000000 : Math.Abs(1 / rayDir.x),
                                                      rayDir.y == 0 ? 100000000 : Math.Abs(1 / rayDir.y));
                     // The distance to the intersected cell, perpendicular to
                     // the camera plane.
@@ -114,7 +114,7 @@ namespace textured_raycast.maze
                     // Holds the direction to move in for x and y.
                     // X: -1 = left ; +1 = right
                     // Y: -1 = up   ; +1 = down
-                    Vector2<int> step = new Vector2<int>(0, 0);
+                    Vector2i step = new Vector2i(0, 0);
 
                     // Sets step variable and calculates sideDist for both x and y.
                     if(rayDir.x < 0) {
@@ -338,27 +338,27 @@ namespace textured_raycast.maze
             }
         }
 
-        public static void FloorCasting(ref MazeEngine game, Vector2<double> dir, Vector2<double> plane, Vector2<double> pos, float visRange) {
+        public static void FloorCasting(ref MazeEngine game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange) {
             for(int y = 0; y < game.GetWinHeight(); y++)
             {
-                Vector2<double> rayDirLeft = dir - plane;
-                Vector2<double> rayDirRight = dir + plane;
+                Vector2d rayDirLeft = dir - plane;
+                Vector2d rayDirRight = dir + plane;
 
                 int midOff = y - game.GetWinHeight() / 2;
                 float camHeight = 0.5f * game.GetWinHeight();
                 float lineDist = camHeight / midOff;
                 lineDist = lineDist < 1000000000 ? lineDist : 1000000000;
 
-                Vector2<double> floorOff = lineDist * (rayDirRight - rayDirLeft) / game.GetWinWidth();
+                Vector2d floorOff = lineDist * (rayDirRight - rayDirLeft) / game.GetWinWidth();
 
-                Vector2<double> floor = pos + (new Vector2<double>(lineDist, lineDist) * rayDirLeft);
+                Vector2d floor = pos + (new Vector2d(lineDist, lineDist) * rayDirLeft);
 
                 for(int x = 0; x < game.GetWinWidth(); x++) {
                     Texture ceilingTex =  textures[4];
                     Texture floorTex =  textures[1];
-                    Vector2<int> cellPos = floor.Floor();
-                    Vector2<int> texture = (floorTex.width * (floor - cellPos)).Floor();
-                    texture = new Vector2<int>(
+                    Vector2i cellPos = (Vector2i)floor.Floor();
+                    Vector2i texture = (Vector2i)(floorTex.width * (floor - (Vector2d)cellPos)).Floor();
+                    texture = new Vector2i(
                         Math.Abs(texture.x),
                         Math.Abs(texture.y)
                     );
@@ -387,7 +387,7 @@ namespace textured_raycast.maze
             }
         }
 
-        public static void SpriteCasting(ref MazeEngine game, List<Sprite> sprites, Vector2<double> pos, Vector2<double> plane, Vector2<double> dir, double[] ZBuffer, int visRange) {
+        public static void SpriteCasting(ref MazeEngine game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange) {
             List<double> spriteDist = new List<double>();
             for(int i = 0; i < sprites.Count; i++) {
                 // Calculate sprite distance from player, using pythagoras.
@@ -410,14 +410,14 @@ namespace textured_raycast.maze
                 Sprite curSpr = sprites[i];
                 Texture sprTex = textures[curSpr.texID];
                 // The relative sprite position from the camera.
-                Vector2<double> relSprPos = curSpr.getPos() - pos;
+                Vector2d relSprPos = curSpr.getPos() - pos;
 
                 // The inverse of the imaginary camera matrix.
                 Matrix2x2d invCamMat = new Matrix2x2d(new double[] {dir.y,    -dir.x,
                                                                     -plane.y, plane.x});
                 double invDet = 1.0 / (plane.x * dir.y - dir.x * plane.y);
 
-                Vector2<double> transformed = invDet * invCamMat.multByVec(relSprPos);
+                Vector2d transformed = invDet * invCamMat.multByVec(relSprPos);
 
                 int spriteScreenX = (int)((game.GetWinWidth() / 2) * (1 + transformed.x / transformed.y));
 

@@ -19,8 +19,8 @@ namespace textured_raycast.maze
         public List<Wall> map = new List<Wall>();
         public List<Sprite> sprites = new List<Sprite>();
 
-        public Vector2<double> playerStartPos;
-        public Vector2<double> playerStartRot;
+        public Vector2d playerStartPos;
+        public Vector2d playerStartRot;
 
         public Map(string location)
         {
@@ -49,8 +49,8 @@ namespace textured_raycast.maze
             width = reqWidth;
             height = reqHeight;
 
-            playerStartPos = new Vector2<double>(plrStartX, plrStartY);
-            playerStartRot = new Vector2<double>(plrStartDX, plrStartDY);
+            playerStartPos = new Vector2d(plrStartX, plrStartY);
+            playerStartRot = new Vector2d(plrStartDX, plrStartDY);
 
             // Initialize map to empty list of correct size.
             map = new Wall[width * height].ToList();
