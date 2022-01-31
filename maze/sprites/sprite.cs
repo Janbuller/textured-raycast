@@ -16,23 +16,12 @@ namespace textured_raycast.maze.sprites
         public int effectID;
         public int extraEffectDetailID;
 
-        public Sprite(Vector2d pos, int spriteID, int effectID = 0, int extraEffectDetailID = 0)
-        {
-            this.pos = pos;
-            this.spriteID = spriteID;
-            this.texID = spriteID;
-            if (effectID != 0)
-                this.canInteract = true;
-            this.effectID = effectID;
-            this.extraEffectDetailID = extraEffectDetailID;
-        }
-
         public Sprite(double posX, double posY, int spriteID, int effectID = 0, int extraEffectDetailID = 0)
         {
             this.pos = new Vector2d(posX, posY);
             this.spriteID = spriteID;
             this.texID = spriteID;
-            if (effectID != 0)
+            // if (effectID != 0)
                 this.canInteract = true;
             this.effectID = effectID;
             this.extraEffectDetailID = extraEffectDetailID;
