@@ -51,8 +51,8 @@ namespace textured_raycast.maze.math
 
         // Non-static function. Floors vector, basically turning it into an
         // integer vector.
-        public Vector2<T> Floor(){
-            return new Vector2<T>(Math.Floor((dynamic)x), Math.Floor((dynamic)y));
+        public Vector2<int> Floor(){
+            return new Vector2<int>(Math.Floor((dynamic)x), Math.Floor((dynamic)y));
         }
         public double DistTo(Vector2<T> otherVec2d){
             return Math.Sqrt(Math.Pow((dynamic)otherVec2d.x - (dynamic)x, 2) + Math.Pow((dynamic)otherVec2d.y - (dynamic)y, 2));
