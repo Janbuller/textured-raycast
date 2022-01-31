@@ -63,7 +63,7 @@ namespace textured_raycast.maze
             for (int i = map.Count + 2; i < imageData.Length; i++)
             {
                 string[] thisInfo = imageData[i].Split(' ');
-                sprites.Add(new Sprite(int.Parse(thisInfo[0]), int.Parse(thisInfo[1]), int.Parse(thisInfo[2])));
+                sprites.Add(new Sprite(double.Parse(thisInfo[0]), double.Parse(thisInfo[1]), int.Parse(thisInfo[2])));
             }
         }
 
