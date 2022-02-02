@@ -163,8 +163,15 @@ namespace textured_raycast.maze
             // problems on Windows.
             Console.CursorTop = 0;
             Console.CursorLeft = 0;
+
+            int startY = 0;
+            if (firstBuffer)
+            {
+                startY = 2;
+            }
+
             // Draw buffer, line by line. This improves performance.
-            for (int y = 0; y <  winHeight; y+=2) {
+            for (int y = startY; y <  winHeight; y+=4) {
                 string line = "";
                 for(int x = 0; x < winWidth; x++) {
                     line += "▀".Pastel(buffer[x + y*winWidth].getSysColor()).PastelBg(buffer[x + (y+1) * winWidth].getSysColor());
@@ -172,7 +179,9 @@ namespace textured_raycast.maze
                         line += " ".PastelBg(Color.Black);
                     }
                 }
-                Console.WriteLine(line);
+                Console.CursorTop = y / 2;
+                Console.Write(line);
+                Console.CursorLeft=0;
             }
         }
     }
