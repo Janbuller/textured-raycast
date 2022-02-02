@@ -273,7 +273,7 @@ namespace textured_raycast.maze
                     // forcing the player to stay slightly further away from
                     // walls.
                     float extraColDistMult = 1f;
-                    if (key.Key == ConsoleKey.UpArrow)
+                    if (key.Key == ConsoleKey.W)
                     {
                         // CellX and CellY holds the cell, the player would move
                         // into, in those directions. Using a vector doesn't
@@ -287,13 +287,33 @@ namespace textured_raycast.maze
                         if (!cellX.isWal) pos.x += dir.x * movSpeed;
                         if (!cellY.isWal) pos.y += dir.y * 0.1;
                     }
-                    else if (key.Key == ConsoleKey.DownArrow)
+                    else if (key.Key == ConsoleKey.S)
                     {
                         // Same as before, just backwards, so with subtraction instead of addition.
                         Wall cellX = map.GetWall((int)(pos.x - dir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
                         Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - dir.y * (movSpeed * extraColDistMult)));
                         if (!cellX.isWal) pos.x -= dir.x * movSpeed;
                         if (!cellY.isWal) pos.y -= dir.y * 0.1;
+                    }
+                    else if (key.Key == ConsoleKey.D)
+                    {
+                        Vector2d newDir = new Vector2d(-dir.y, dir.x);
+
+                        // Same as before, just backwards, so with subtraction instead of addition.
+                        Wall cellX = map.GetWall((int)(pos.x - dir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
+                        Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - newDir.y * (movSpeed * extraColDistMult)));
+                        if (!cellX.isWal) pos.x -= newDir.x * movSpeed;
+                        if (!cellY.isWal) pos.y -= newDir.y * 0.1;
+                    }
+                    else if (key.Key == ConsoleKey.A)
+                    {
+                        Vector2d newDir = new Vector2d(-dir.y, dir.x) * -1;
+
+                        // Same as before, just backwards, so with subtraction instead of addition.
+                        Wall cellX = map.GetWall((int)(pos.x - newDir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
+                        Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - newDir.y * (movSpeed * extraColDistMult)));
+                        if (!cellX.isWal) pos.x -= newDir.x * movSpeed;
+                        if (!cellY.isWal) pos.y -= newDir.y * 0.1;
                     }
                     else if (key.Key == ConsoleKey.RightArrow)
                     {
