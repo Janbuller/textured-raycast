@@ -300,7 +300,7 @@ namespace textured_raycast.maze
                         Vector2d newDir = new Vector2d(-dir.y, dir.x);
 
                         // Same as before, just backwards, so with subtraction instead of addition.
-                        Wall cellX = map.GetWall((int)(pos.x - dir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
+                        Wall cellX = map.GetWall((int)(pos.x - newDir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
                         Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - newDir.y * (movSpeed * extraColDistMult)));
                         if (!cellX.isWal) pos.x -= newDir.x * movSpeed;
                         if (!cellY.isWal) pos.y -= newDir.y * 0.1;
