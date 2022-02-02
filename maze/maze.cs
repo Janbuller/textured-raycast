@@ -23,7 +23,7 @@ namespace textured_raycast.maze
         };
 
         static Dictionary<int, Texture> textures = new Dictionary<int, Texture>() {
-            {1,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/greystone.ppm")},
+            {1,   TextureLoaders.loadFromPlainPPM("img/test5.ppm")},
             {2,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/redbrick.ppm")},
             {3,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/bluestone.ppm")},
             {4,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/mossy.ppm")},
