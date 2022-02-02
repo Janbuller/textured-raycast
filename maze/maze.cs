@@ -273,7 +273,7 @@ namespace textured_raycast.maze
                     // forcing the player to stay slightly further away from
                     // walls.
                     float extraColDistMult = 1f;
-                    if (key.Key == ConsoleKey.W)
+                    if (key.Key == ConsoleKey.UpArrow || key.Key == ConsoleKey.W)
                     {
                         // CellX and CellY holds the cell, the player would move
                         // into, in those directions. Using a vector doesn't
@@ -287,7 +287,7 @@ namespace textured_raycast.maze
                         if (!cellX.isWal) pos.x += dir.x * movSpeed;
                         if (!cellY.isWal) pos.y += dir.y * 0.1;
                     }
-                    else if (key.Key == ConsoleKey.S)
+                    else if (key.Key == ConsoleKey.DownArrow || key.Key == ConsoleKey.S)
                     {
                         // Same as before, just backwards, so with subtraction instead of addition.
                         Wall cellX = map.GetWall((int)(pos.x - dir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
