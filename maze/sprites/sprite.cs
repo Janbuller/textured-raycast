@@ -33,9 +33,11 @@ namespace textured_raycast.maze.sprites
             {
                 // add item id extraEffectDetailID to player inventory
             }
-            else if (effectID == 3) // or maby a door, fx
+            else if (effectID == 3) // or maby a door, fx (it could also be an invisible door, so just a tp point, and then have a door image on the wall)
             {
                 // go to map with id extraEffectDetailID
+                // or maby more like opening of the door with id extraEffectDetailID
+                // so that if you enter one plae, you exit the same place
             }
         }
 
