@@ -21,11 +21,13 @@ namespace textured_raycast.maze
 
         public Dictionary<int, Vector2d> doorPositions = new Dictionary<int, Vector2d>();
 
-        public int floorTexID = 1;
-        public int ceilTexID = 4;
+        public int floorTexID;
+        public int ceilTexID;
 
         public Vector2d playerStartPos;
         public Vector2d playerStartRot;
+
+        public bool useSkybox = true;
 
         public Map(string location)
         {
@@ -42,6 +44,14 @@ namespace textured_raycast.maze
                 return;
             if (!int.TryParse(imageData[0].Split(' ')[1], out reqHeight))
                 return;
+            if (!int.TryParse(imageData[0].Split(' ')[2], out floorTexID))
+                return;
+            if (imageData[0].Split(' ').Length == 4)
+            {
+                useSkybox = false;
+                if (!int.TryParse(imageData[0].Split(' ')[3], out ceilTexID))
+                    return;
+            }
             if (!double.TryParse(imageData[1].Split(' ')[0], out plrStartX))
                 return;
             if (!double.TryParse(imageData[1].Split(' ')[1], out plrStartY))

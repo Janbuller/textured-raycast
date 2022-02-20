@@ -376,7 +376,7 @@ namespace textured_raycast.maze
 
         public static void FloorCasting(ref MazeEngine game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map) {
             Texture floorTex =  textures[map.floorTexID];
-            Texture ceilingTex =  textures[map.ceilTexID];
+            Texture ceilingTex =  textures[map.useSkybox ? 1 : map.ceilTexID];
             for(int y = 0; y < game.GetWinHeight(); y++)
             {
                 Vector2d rayDirLeft = dir - plane;
@@ -413,7 +413,7 @@ namespace textured_raycast.maze
                     if(y > game.GetWinHeight() / 2)
                         game.DrawChar(darkPix, x, y);
 
-                    if((cellPos.x + cellPos.y) % 2 == 0) {
+                    if(!map.useSkybox) {
                         color = ceilingTex.getPixel(texture.x, texture.y);
                         darkPix = new TexColor(
                             Convert.ToInt32(color.r * darken),
@@ -421,8 +421,10 @@ namespace textured_raycast.maze
                             Convert.ToInt32(color.b * darken)
                         );
                         game.DrawChar(darkPix, x, game.GetWinHeight() - y - 1);
-                    } else {
-                        if(y > game.GetWinHeight() / 2) {
+                    } else
+                    {
+                        if (y > game.GetWinHeight() / 2)
+                        {
                             var pix = GetSkyboxPixel(ref game, dir, textures[11], x, game.GetWinHeight() - y - 1);
                             game.DrawChar(pix, x, game.GetWinHeight() - y - 1);
                         }
