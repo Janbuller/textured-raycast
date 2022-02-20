@@ -78,7 +78,7 @@ namespace textured_raycast.maze
                 pos = world.plrPos;
                 dir = world.plrRot;
 
-                DrawSkybox(ref game, dir, textures[11]);
+                // DrawSkybox(ref game, dir, textures[11]);
 
                 // Do the floor/ceiling casting.
                 FloorCasting(ref game, dir, plane, pos, visRange, map);
@@ -421,6 +421,11 @@ namespace textured_raycast.maze
                             Convert.ToInt32(color.b * darken)
                         );
                         game.DrawChar(darkPix, x, game.GetWinHeight() - y - 1);
+                    } else {
+                        if(y > game.GetWinHeight() / 2) {
+                            var pix = GetSkyboxPixel(ref game, dir, textures[11], x, game.GetWinHeight() - y - 1);
+                            game.DrawChar(pix, x, game.GetWinHeight() - y - 1);
+                        }
                     }
                 }
             }
@@ -429,12 +434,13 @@ namespace textured_raycast.maze
         public static void DrawSkybox(ref MazeEngine game, Vector2d dir, Texture skyboxTex) {
             for(int y = 0; y < game.GetWinHeight() / 2; y++) {
                 for(int x = 0; x < game.GetWinWidth(); x++) {
-                    DrawSkyboxPixel(ref game, dir, skyboxTex, x, y);
+                    var pix = GetSkyboxPixel(ref game, dir, skyboxTex, x, y);
+                    game.DrawChar(pix, x, y);
                 }
             }
         }
 
-        public static void DrawSkyboxPixel(ref MazeEngine game, Vector2d dir, Texture skyboxTex, int x, int y) {
+        public static TexColor GetSkyboxPixel(ref MazeEngine game, Vector2d dir, Texture skyboxTex, int x, int y) {
             double heightDiff = skyboxTex.height / (game.GetWinHeight() * 0.5);
             int calX = (int)(x * heightDiff);
             int calY = (int)(y * heightDiff);
@@ -447,7 +453,7 @@ namespace textured_raycast.maze
                 calX -= skyboxTex.width;
             while(calX < skyboxTex.width)
                 calX += skyboxTex.width;
-            game.DrawChar(skyboxTex.getPixel(calX, calY), x, y);
+            return skyboxTex.getPixel(calX, calY);
         }
 
         public static void SpriteCasting(ref MazeEngine game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange) {
