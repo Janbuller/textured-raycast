@@ -61,6 +61,38 @@ namespace textured_raycast.maze.sprites
                 texID = 10;
                 canInteract = false;
             }
+            else if (effectID == 5)
+            {
+                switch (extraEffects[0])
+                {
+                    case 0:
+                        world.currentMessage = "Hi, i am a barrel";
+                        break;
+                    case 1:
+                        world.currentMessage = "What, are you suprised that i can talk?";
+                        break;
+                    case 2:
+                        world.currentMessage = "Imagine a barrel not talking, like that idiot over there, what a dummy...";
+                        break;
+                    case 3:
+                        world.currentMessage = "Do you want a tip for this game?";
+                        break;
+                    case 4:
+                        world.currentMessage = "Of course you want a tip, well here ya go...";
+                        break;
+                    case 5:
+                        world.currentMessage = "There is no game, so no tip";
+                        break;
+                }
+                extraEffects[0] += 1;
+                if (extraEffects[0] == 6)
+                    extraEffects[0] = 0;
+            }
+            else if (effectID == 6)
+            {
+                texID = 10;
+                canInteract = false;
+            }
         }
 
         public string ActivateMessage()
@@ -73,9 +105,22 @@ namespace textured_raycast.maze.sprites
             {
                 return "Press [E] to break";
             }
+            else if (effectID == 5)
+            {
+                return "Hey! Press [E] To talk with me!";
+            }
 
             return "Press [E] to interact with sprite";
             // proply dont really need the Press [E] part at all
+        }
+
+        public void resetSprite()
+        {
+            if (effectID == 6)
+            {
+                texID = 8;
+                canInteract = true;
+            }
         }
 
         public Vector2d getPos() {

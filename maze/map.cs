@@ -113,8 +113,17 @@ namespace textured_raycast.maze
 
         public void openDoor(ref World world, int myID, int doorID)
         {
+            resetSprites();
             world.currentMap = myID;
             world.plrPos = new Vector2d(doorPositions[doorID].x, doorPositions[doorID].y);
+        }
+
+        public void resetSprites()
+        {
+            foreach (Sprite sprite in sprites)
+            {
+                sprite.resetSprite();
+            }
         }
 
         // Gets specific cell.

@@ -26,7 +26,7 @@ namespace textured_raycast.maze
             {1,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/greystone.ppm")},
             {2,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/redbrick.ppm")},
             {3,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/bluestone.ppm")},
-            {4,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/mossy.ppm")},
+            {4,   TextureLoaders.loadFromPlainPPM("img/test5.ppm")},
             {5,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/redstone.ppm")},
             {6,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/colorstone.ppm")},
             {7,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/pillar.ppm")},
@@ -78,7 +78,7 @@ namespace textured_raycast.maze
                 pos = world.plrPos;
                 dir = world.plrRot;
 
-                // DrawSkybox(ref game, dir, textures[11]);
+                //DrawSkybox(ref game, dir, textures[1]);
 
                 // Do the floor/ceiling casting.
                 FloorCasting(ref game, dir, plane, pos, visRange, map);
@@ -241,7 +241,8 @@ namespace textured_raycast.maze
                     // if(side == 1 && rayDir.y < 0) texX = tex.width - texX - 1;
 
                     // Draw the ray.
-                    game.DrawVerLine(x, lineHeight, tex, texX, darken);
+                    if (hitWall.doDraw)
+                        game.DrawVerLine(x, lineHeight, tex, texX, darken);
 
                     // Set z-buffer
                     ZBuffer[x] = perpWallDist;
@@ -249,7 +250,8 @@ namespace textured_raycast.maze
 
                 SpriteCasting(ref game, map.sprites, pos, plane, dir, ZBuffer, visRange);
 
-                game.DrawBorder();
+                // not really neccecary
+                //game.DrawBorder();
 
                 // Add textbox to draw if neccecary
 
@@ -267,10 +269,13 @@ namespace textured_raycast.maze
                 }
 
                 if (spriteToInteract != null)
-                {
-                    Console.WriteLine(spriteToInteract.ActivateMessage());
-                }
-                Console.WriteLine("                                                      ");
+                    world.interactMessage = spriteToInteract.ActivateMessage();
+                else
+                    world.interactMessage = "";
+
+                Console.Write(world.currentMessage == "" ? world.interactMessage : world.currentMessage);
+
+                Console.WriteLine("                                                                  ");
 
                 game.DrawTexture(textures[8], -8, -24, new TexColor(0, 0, 0));
 
@@ -281,6 +286,7 @@ namespace textured_raycast.maze
                 double rotSpeed = 0.2;
                 double movSpeed = 0.1;
                 while (Console.KeyAvailable) {
+                    world.currentMessage = "";
                     // Reads and saves pressed key
                     ConsoleKeyInfo key = Console.ReadKey(true);
                     // Checks the pressed key. Sends press to menu.
@@ -302,6 +308,9 @@ namespace textured_raycast.maze
                         // Check if cell is empty or a control cell, if so, move.
                         if (!cellX.isWal) pos.x += dir.x * movSpeed;
                         if (!cellY.isWal) pos.y += dir.y * 0.1;
+
+                        cellX.Collide(ref world);
+                        cellY.Collide(ref world);
                     }
                     else if (key.Key == ConsoleKey.DownArrow || key.Key == ConsoleKey.S)
                     {
@@ -310,6 +319,9 @@ namespace textured_raycast.maze
                         Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - dir.y * (movSpeed * extraColDistMult)));
                         if (!cellX.isWal) pos.x -= dir.x * movSpeed;
                         if (!cellY.isWal) pos.y -= dir.y * 0.1;
+
+                        cellX.Collide(ref world);
+                        cellY.Collide(ref world);
                     }
                     else if (key.Key == ConsoleKey.D)
                     {
@@ -320,6 +332,9 @@ namespace textured_raycast.maze
                         Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - newDir.y * (movSpeed * extraColDistMult)));
                         if (!cellX.isWal) pos.x -= newDir.x * movSpeed;
                         if (!cellY.isWal) pos.y -= newDir.y * 0.1;
+
+                        cellX.Collide(ref world);
+                        cellY.Collide(ref world);
                     }
                     else if (key.Key == ConsoleKey.A)
                     {
@@ -330,6 +345,9 @@ namespace textured_raycast.maze
                         Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - newDir.y * (movSpeed * extraColDistMult)));
                         if (!cellX.isWal) pos.x -= newDir.x * movSpeed;
                         if (!cellY.isWal) pos.y -= newDir.y * 0.1;
+
+                        cellX.Collide(ref world);
+                        cellY.Collide(ref world);
                     }
                     else if (key.Key == ConsoleKey.RightArrow)
                     {

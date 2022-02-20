@@ -191,9 +191,12 @@ namespace textured_raycast.maze
             for (int y = 0; y <  winHeight; y+=2) {
                 string line = "";
                 for(int x = 0; x < winWidth; x++) {
-                    line += "▀".Pastel(buffer[x + y*winWidth].getSysColor()).PastelBg(buffer[x + (y+1) * winWidth].getSysColor());
-                    if(buffer[x + y*winWidth] is null) {
+                    if(buffer[x + y*winWidth] is null || buffer[x + (y + 1) * winWidth] is null) {
                         line += " ".PastelBg(Color.Black);
+                    }
+                    else
+                    {
+                        line += "▀".Pastel(buffer[x + y * winWidth].getSysColor()).PastelBg(buffer[x + (y + 1) * winWidth].getSysColor());
                     }
                 }
                 Console.WriteLine(line);

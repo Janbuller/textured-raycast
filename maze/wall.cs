@@ -9,6 +9,7 @@ namespace textured_raycast.maze
         public bool isWal = true;
         public int wallID;
         public int thisTexID;
+        public bool doDraw = true;
 
         public Wall(int wallIDIn)
         {
@@ -19,6 +20,17 @@ namespace textured_raycast.maze
 
             if (wallID == 0)
                 isWal = false;
+
+            if (wallID == -1)
+                doDraw = false;
+        }
+
+        public void Collide(ref World world)
+        {
+            if (wallID == -1)
+            {
+                world.currentMessage = "Your inner desires compel you to stay.";
+            }
         }
     }
 }

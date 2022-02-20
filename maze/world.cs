@@ -15,6 +15,9 @@ namespace textured_raycast.maze
             {2, new Map("maps/someHiddenPlace.map")},
         };
 
+        public string currentMessage = ""; // this is to show messages to the player or something
+        public string interactMessage = ""; // This takes priority over current message
+
         public Vector2d plrPos;
         public Vector2d plrRot;
 
