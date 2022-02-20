@@ -19,6 +19,8 @@ namespace textured_raycast.maze
         public List<Wall> map = new List<Wall>();
         public List<Sprite> sprites = new List<Sprite>();
 
+        public Dictionary<int, Vector2d> doorPositions = new Dictionary<int, Vector2d>();
+
         public int floorTexID = 1;
         public int ceilTexID = 4;
 
@@ -66,7 +68,30 @@ namespace textured_raycast.maze
             for (int i = map.Count + 2; i < imageData.Length; i++)
             {
                 string[] thisInfo = imageData[i].Split(' ');
-                sprites.Add(new Sprite(double.Parse(thisInfo[0]), double.Parse(thisInfo[1]), int.Parse(thisInfo[2])));
+                if (thisInfo.Length == 3)
+                {
+                    sprites.Add(new Sprite(double.Parse(thisInfo[0]), double.Parse(thisInfo[1]), int.Parse(thisInfo[2])));
+                }
+                else if (thisInfo.Length == 4)
+                {
+                    sprites.Add(new Sprite(double.Parse(thisInfo[0]), double.Parse(thisInfo[1]), int.Parse(thisInfo[2]), effectID: int.Parse(thisInfo[3])));
+                }
+                else
+                {
+                    string thisString = "";
+                    for (int i2 = 4; i2 < thisInfo.Length; i2++)
+                    {
+                        thisString+=thisInfo[i2]+" ";
+                    }
+                    if (thisString.Length > 0)
+                        thisString = thisString.Substring(0, thisString.Length - 1);
+
+
+                    sprites.Add(new Sprite(double.Parse(thisInfo[0]), double.Parse(thisInfo[1]), int.Parse(thisInfo[2]), effectID: int.Parse(thisInfo[3]), whatsLeft: thisString));
+
+                    if (sprites[sprites.Count - 1].effectID == 1)
+                        doorPositions.Add(sprites[sprites.Count - 1].extraEffects[2], sprites[sprites.Count - 1].getPos());
+                }
             }
         }
 
@@ -74,6 +99,12 @@ namespace textured_raycast.maze
         public bool IsWal(int x, int y)
         {
             return map[x + y * width].isWal;
+        }
+
+        public void openDoor(ref World world, int myID, int doorID)
+        {
+            world.currentMap = myID;
+            world.plrPos = new Vector2d(doorPositions[doorID].x, doorPositions[doorID].y);
         }
 
         // Gets specific cell.

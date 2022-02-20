@@ -23,7 +23,7 @@ namespace textured_raycast.maze
         };
 
         static Dictionary<int, Texture> textures = new Dictionary<int, Texture>() {
-            {1,   TextureLoaders.loadFromPlainPPM("img/test5.ppm")},
+            {1,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/greystone.ppm")},
             {2,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/redbrick.ppm")},
             {3,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/bluestone.ppm")},
             {4,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/mossy.ppm")},
@@ -32,27 +32,31 @@ namespace textured_raycast.maze
             {7,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/pillar.ppm")},
             {8,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/barrel.ppm")},
             {9,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/greenlight.ppm")},
+            {10,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/barrelBroken.ppm")},
             {101, TextureLoaders.loadFromPlainPPM("img/wolfenstein/end.ppm")}, // Also used as collision box for winning.
             {102, TextureLoaders.loadFromPlainPPM("img/wolfenstein/exit.ppm")}, // Also used for leaving the maze
         };
 
         // Returns true if maze is completed, false if exited.
-        public static bool StartMaze(Map map) {
-            return Start(map);
+        public static bool StartMaze(World world) {
+            return Start(world);
         }
 
-        private static bool Start(Map map) {
+        private static bool Start(World world) {
+
+            Map map = world.getMapByID(world.currentMap);
+
             Console.Clear();
             MazeEngine game = new MazeEngine(120, 80, "maze");
 
             // Position vector
-            Vector2d pos = map.playerStartPos;
+            Vector2d pos = world.plrPos;
 
             // The distance of witch the player can interact
             double interactDist = 0.4;
 
             // Directional unit vector
-            Vector2d dir = map.playerStartRot;
+            Vector2d dir = world.plrRot;
 
             // Camera view plane, held as 2d vector line.
             // Were this actually 3d, not raycasting, it would be a plane,
@@ -65,7 +69,15 @@ namespace textured_raycast.maze
             double[] ZBuffer = new double[game.GetWinWidth()];
 
             // Main game loop
-            while(true) {
+            while(true)
+            {
+                // make sure it knows what map its on
+                map = world.getMapByID(world.currentMap);
+
+                pos = world.plrPos;
+                dir = world.plrRot;
+
+
                 // Do the floor/ceiling casting.
                 FloorCasting(ref game, dir, plane, pos, visRange, map);
 
@@ -254,7 +266,7 @@ namespace textured_raycast.maze
 
                 if (spriteToInteract != null)
                 {
-                    Console.WriteLine("Press [E] to interact with sprite");
+                    Console.WriteLine(spriteToInteract.ActivateMessage());
                 }
                 Console.WriteLine("                                                      ");
 
@@ -340,7 +352,7 @@ namespace textured_raycast.maze
                     else if (key.Key == ConsoleKey.E)
                     {
                         if (spriteToInteract != null)
-                            spriteToInteract.Activate();
+                            spriteToInteract.Activate(ref world);
                     }
                 };
 
@@ -429,6 +441,10 @@ namespace textured_raycast.maze
 
             for(int i = 0; i < sprites.Count; i++) {
                 Sprite curSpr = sprites[i];
+
+                if (curSpr.doRender == false)
+                    continue;
+
                 Texture sprTex = textures[curSpr.texID];
                 // The relative sprite position from the camera.
                 Vector2d relSprPos = curSpr.getPos() - pos;

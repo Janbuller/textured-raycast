@@ -10,8 +10,8 @@ namespace textured_raycast
     {
         static void Main(string[] args)
         {
-            Map map = new Map("maps/overworld.map");
-            Maze.StartMaze(map);
+            World world = new World();
+            Maze.StartMaze(world);
 
             // Texture test = TextureLoaders.loadFromPlainPPM("img/test.ppm");
             // test.draw();
