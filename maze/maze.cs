@@ -33,6 +33,7 @@ namespace textured_raycast.maze
             {8,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/barrel.ppm")},
             {9,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/greenlight.ppm")},
             {10,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/barrelBroken.ppm")},
+            {11,   TextureLoaders.loadFromPlainPPM("img/skybox.ppm")},
             {101, TextureLoaders.loadFromPlainPPM("img/wolfenstein/end.ppm")}, // Also used as collision box for winning.
             {102, TextureLoaders.loadFromPlainPPM("img/wolfenstein/exit.ppm")}, // Also used for leaving the maze
         };
@@ -77,6 +78,7 @@ namespace textured_raycast.maze
                 pos = world.plrPos;
                 dir = world.plrRot;
 
+                DrawSkybox(ref game, dir, textures[11]);
 
                 // Do the floor/ceiling casting.
                 FloorCasting(ref game, dir, plane, pos, visRange, map);
@@ -411,15 +413,41 @@ namespace textured_raycast.maze
                     if(y > game.GetWinHeight() / 2)
                         game.DrawChar(darkPix, x, y);
 
-                    color = ceilingTex.getPixel(texture.x, texture.y);
-                    darkPix = new TexColor(
-                        Convert.ToInt32(color.r * darken),
-                        Convert.ToInt32(color.g * darken),
-                        Convert.ToInt32(color.b * darken)
-                    );
-                    game.DrawChar(darkPix, x, game.GetWinHeight() - y - 1);
+                    if((cellPos.x + cellPos.y) % 2 == 0) {
+                        color = ceilingTex.getPixel(texture.x, texture.y);
+                        darkPix = new TexColor(
+                            Convert.ToInt32(color.r * darken),
+                            Convert.ToInt32(color.g * darken),
+                            Convert.ToInt32(color.b * darken)
+                        );
+                        game.DrawChar(darkPix, x, game.GetWinHeight() - y - 1);
+                    }
                 }
             }
+        }
+
+        public static void DrawSkybox(ref MazeEngine game, Vector2d dir, Texture skyboxTex) {
+            for(int y = 0; y < game.GetWinHeight() / 2; y++) {
+                for(int x = 0; x < game.GetWinWidth(); x++) {
+                    DrawSkyboxPixel(ref game, dir, skyboxTex, x, y);
+                }
+            }
+        }
+
+        public static void DrawSkyboxPixel(ref MazeEngine game, Vector2d dir, Texture skyboxTex, int x, int y) {
+            double heightDiff = skyboxTex.height / (game.GetWinHeight() * 0.5);
+            int calX = (int)(x * heightDiff);
+            int calY = (int)(y * heightDiff);
+
+            double dirRad = Math.Atan2(dir.x, dir.y);
+            double dirClamp = dirRad / (Math.PI * 2);
+            int xOffset = (int)(dirClamp * skyboxTex.width);
+            calX += xOffset;
+            while(calX > skyboxTex.width)
+                calX -= skyboxTex.width;
+            while(calX < skyboxTex.width)
+                calX += skyboxTex.width;
+            game.DrawChar(skyboxTex.getPixel(calX, calY), x, y);
         }
 
         public static void SpriteCasting(ref MazeEngine game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange) {
@@ -429,6 +457,7 @@ namespace textured_raycast.maze
                 // Since it's only used for comparing with itself, sqrt isn't required.
                 double xDist = pos.x - sprites[i].getX();
                 double yDist = pos.y - sprites[i].getY();
+
                 spriteDist.Add(xDist * xDist + yDist * yDist);
             }
 
