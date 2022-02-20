@@ -108,6 +108,30 @@ namespace textured_raycast.maze
             // }
         }
 
+        /// <summary>
+        /// Draws a texture at a specific position.
+        /// </summary>
+        public void DrawTexture(Texture tex, int xP, int yP) {
+            for(int y = 0; y < tex.height; y++) {
+                for(int x = 0; x < tex.width; x++) {
+                    DrawChar(tex.getPixel(x, y), xP+x, yP+y);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Draws a texture at a specific position, ignoring any pixels of color <c>alpha</c>.
+        /// </summary>
+        public void DrawTexture(Texture tex, int xP, int yP, TexColor alpha) {
+            for(int y = 0; y < tex.height; y++) {
+                for(int x = 0; x < tex.width; x++) {
+                    TexColor pixel = tex.getPixel(x, y);
+                    if(pixel != alpha)
+                        DrawChar(pixel, xP+x, yP+y);
+                }
+            }
+        }
+
         // Draws a border around game window
         public void DrawBorder() {
             int winWidth = GetWinWidth();

@@ -270,6 +270,8 @@ namespace textured_raycast.maze
                 }
                 Console.WriteLine("                                                      ");
 
+                game.DrawTexture(textures[8], -8, -24, new TexColor(0, 0, 0));
+
                 game.SwapBuffers();
                 game.DrawScreen();
 
