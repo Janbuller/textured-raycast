@@ -449,19 +449,33 @@ namespace textured_raycast.maze
         }
 
         public static TexColor GetSkyboxPixel(ref MazeEngine game, Vector2d dir, Texture skyboxTex, int x, int y) {
+            // The difference between the height of on pixel on the screen and
+            // on the texture, were the texture to fill the top helf of the
+            // screen.
             double heightDiff = skyboxTex.height / (game.GetWinHeight() * 0.5);
-            int calX = (int)(x * heightDiff);
-            int calY = (int)(y * heightDiff);
+            // Calibrated pixel position. This is the pixel on the texture,
+            // closest to the one on the screen at x and y.
+            Vector2i cal = new Vector2i((int)(x * heightDiff), (int)(y * heightDiff));
 
+            // Get the players rotation in radians.
             double dirRad = Math.Atan2(dir.x, dir.y);
-            double dirClamp = dirRad / (Math.PI * 2);
-            int xOffset = (int)(dirClamp * skyboxTex.width);
-            calX += xOffset;
-            while(calX > skyboxTex.width)
-                calX -= skyboxTex.width;
-            while(calX < skyboxTex.width)
-                calX += skyboxTex.width;
-            return skyboxTex.getPixel(calX, calY);
+            // The players rotation, mapped from the range [0, 2PI] to [0, 1].
+            double dirMapped = dirRad / (Math.PI * 2);
+            // The offset to the skybox texture, based of the mapped direction.
+            int xOffset = (int)(dirMapped * skyboxTex.width);
+
+            // Add the offset to the position.
+            cal.x += xOffset;
+
+            // While the position is outside the texture width, move back by the
+            // amount over the bounds. This makes the texture repeating on the
+            // x-axis.
+            while(cal.x > skyboxTex.width)
+                cal.x -= skyboxTex.width;
+            while(cal.x < skyboxTex.width)
+                cal.x += skyboxTex.width;
+            // Return the pixel at the position.
+            return skyboxTex.getPixel(cal.x, cal.y);
         }
 
         // TODO: Switch to using z-buffer, instead of painters algorithm.
