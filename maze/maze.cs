@@ -413,24 +413,15 @@ namespace textured_raycast.maze
                     darken = (float)Math.Min(1, Math.Max(0, darken - lineDist * (visRange * 0.005)));
 
                     TexColor color = floorTex.getPixel(texture.x, texture.y);
-                    TexColor darkPix = new TexColor(
-                        Convert.ToInt32(color.r * darken),
-                        Convert.ToInt32(color.g * darken),
-                        Convert.ToInt32(color.b * darken)
-                    );
+                    color *= darken;
                     if(y > game.GetWinHeight() / 2)
-                        game.DrawPixel(darkPix, x, y);
+                        game.DrawPixel(color, x, y);
 
                     if(!map.useSkybox) {
                         color = ceilingTex.getPixel(texture.x, texture.y);
-                        darkPix = new TexColor(
-                            Convert.ToInt32(color.r * darken),
-                            Convert.ToInt32(color.g * darken),
-                            Convert.ToInt32(color.b * darken)
-                        );
-                        game.DrawPixel(darkPix, x, game.GetWinHeight() - y - 1);
-                    } else
-                    {
+                        color *= darken;
+                        game.DrawPixel(color, x, game.GetWinHeight() - y - 1);
+                    } else {
                         if (y > game.GetWinHeight() / 2)
                         {
                             var pix = GetSkyboxPixel(winHeight, dir, textures[11], x, game.GetWinHeight() - y - 1);

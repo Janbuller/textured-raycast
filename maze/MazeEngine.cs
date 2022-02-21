@@ -93,17 +93,6 @@ namespace textured_raycast.maze
                     continue;
                 DrawPixel((color * darken), x, i);
             }
-
-            // int startY = GetWinHeight()/2 - height/2;
-            // int secNum = 0;
-            // for(int i = 0; i < height; i+=sectionHeight) {
-            //     // Draw the line, using NuGet package "Pastel" to color, using
-            //     // ansi escape sequences.
-            //     for(int j = 0; j < sectionHeight; j++) {
-            //         DrawChar("█".Pastel(allSecCol[i-(secNum*sectionHeight)].getSysColor()), x, startY+i+j);
-            //     }
-            //     secNum++;
-            // }
         }
 
         /// <summary>
