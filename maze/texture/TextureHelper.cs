@@ -1,12 +1,4 @@
-using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Linq;
-using System.Drawing;
-using textured_raycast.maze.math;
-using textured_raycast.maze.texture;
 
 namespace textured_raycast.maze.texture
 {

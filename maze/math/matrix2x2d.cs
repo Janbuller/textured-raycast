@@ -1,6 +1,3 @@
-using System;
-using System.Drawing;
-
 namespace textured_raycast.maze.math
 {
     // Vector 2 double.

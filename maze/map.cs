@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using textured_raycast;
 using textured_raycast.maze.math;
 using textured_raycast.maze.sprites;
 using System.Globalization;
