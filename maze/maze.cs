@@ -476,6 +476,7 @@ namespace textured_raycast.maze
             return skyboxTex.getPixel(calX, calY);
         }
 
+        // TODO: Switch to using z-buffer, instead of painters algorithm.
         public static void SpriteCasting(ref MazeEngine game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange) {
             List<double> spriteDist = new List<double>();
             for(int i = 0; i < sprites.Count; i++) {
@@ -515,7 +516,6 @@ namespace textured_raycast.maze
                 // transformations
                 Matrix2x2d camMat = new Matrix2x2d(new double[] {plane.x, dir.x,
                                                                  plane.y, dir.y});
-
                 // The position of the sprite, transformed by the inverse of the
                 // imaginary camera matrix. The camera matrix holds the position
                 // and rotation of the camera, so by multiplying the sprite pos
@@ -525,6 +525,12 @@ namespace textured_raycast.maze
                 // transformed sprite. The y-coordinate is the distance from the
                 // camera.
                 Vector2d transformed = camMat.getInverse() * relSprPos;
+
+                // Cull sprites, that are behind the camera. Since the
+                // distance variable isn't absolute, so a negative value,
+                // means that it is behind the camera.
+                if(transformed.y < 0)
+                    continue;
 
                 // The screen-space middle x-position of the sprite.
                 int spriteScreenX = (int)((game.GetWinWidth() / 2) * (1 + transformed.x / transformed.y));
@@ -553,9 +559,9 @@ namespace textured_raycast.maze
                 // sprite. This is calculated, by taking away half of the sprite
                 // width, from the middle of the drawing pos.
                 //
-                // This is capped, to not go belov zero, since that
-                // would be outside the screen. It might seem, like this would
-                // draw off-camera sprites, but they are culled later.
+                // This is capped, to not go belov zero, since that would be
+                // outside the screen. It might seem, like this would draw
+                // off-camera sprites, but they were culled earlier.
                 int startX = spriteScreenX - spriteWidth / 2;
                 startX = Math.Max(0, startX);
                 // Same as startX, excepts it adds half the width and caps at
@@ -573,18 +579,14 @@ namespace textured_raycast.maze
                     // The x-coordnate on the sprite texture, corresponding to the
                     int texX = (int)(256 * (x - (-spriteWidth / 2 + spriteScreenX)) * sprTex.width / spriteWidth) / 256;
 
-                    // Cull sprites, that are behind the camera. Since the
-                    // distance variable isn't absolute, so a negative value,
-                    // means that it is behind the camera.
-                    if(transformed.y > 0)
-                        // Cull columns, that are behind walls, by looking at
-                        // the wall-zbuffer and comparing it to the distance.
-                        // The zbuffer doesn't hold the z-positions of the
-                        // sprites, since sprites are the only thing using it,
-                        // and they were sorted earlier, thereby using the
-                        // painters algorihm.
-                        if(transformed.y < ZBuffer[x])
-                            game.DrawVerLine(x, spriteScreenHeight, sprTex, texX, darken, new TexColor(0, 0, 0));
+                    // Cull columns, that are behind walls, by looking at
+                    // the wall-zbuffer and comparing it to the distance.
+                    // The zbuffer doesn't hold the z-positions of the
+                    // sprites, since sprites are the only thing using it,
+                    // and they were sorted earlier, thereby using the
+                    // painters algorihm.
+                    if(transformed.y < ZBuffer[x])
+                        game.DrawVerLine(x, spriteScreenHeight, sprTex, texX, darken, new TexColor(0, 0, 0));
                 }
             }
         }
