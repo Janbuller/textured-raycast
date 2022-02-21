@@ -519,7 +519,7 @@ namespace textured_raycast.maze
                 int startX = -spriteWidth / 2 + spriteScreenX;
                 startX = Math.Max(0, startX);
                 int endX = spriteWidth / 2 + spriteScreenX;
-                endX = Math.Min(endX, game.GetWinWidth() - 1);
+                endX = Math.Min(endX, game.GetWinWidth());
 
                 float darken = 0.9f;
                 darken = (float)Math.Min(1, Math.Max(0, darken - transformed.y * (visRange * 0.005)));
