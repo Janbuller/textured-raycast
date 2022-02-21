@@ -383,6 +383,8 @@ namespace textured_raycast.maze
         public static void FloorCasting(ref MazeEngine game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map) {
             Texture floorTex =  textures[map.floorTexID];
             Texture ceilingTex =  textures[map.useSkybox ? 1 : map.ceilTexID];
+
+            int winHeight = game.GetWinHeight();
             for(int y = 0; y < game.GetWinHeight(); y++)
             {
                 Vector2d rayDirLeft = dir - plane;
@@ -431,7 +433,7 @@ namespace textured_raycast.maze
                     {
                         if (y > game.GetWinHeight() / 2)
                         {
-                            var pix = GetSkyboxPixel(ref game, dir, textures[11], x, game.GetWinHeight() - y - 1);
+                            var pix = GetSkyboxPixel(winHeight, dir, textures[11], x, game.GetWinHeight() - y - 1);
                             game.DrawPixel(pix, x, game.GetWinHeight() - y - 1);
                         }
                     }
@@ -439,20 +441,25 @@ namespace textured_raycast.maze
             }
         }
 
+        // Draws the skybox to the top half of the game screen. This isn't very
+        // optimized, and shouldn't be used, as it draws to pixels, that will
+        // later be drawn over.
         public static void DrawSkybox(ref MazeEngine game, Vector2d dir, Texture skyboxTex) {
+            int winHeight = game.GetWinHeight();
+
             for(int y = 0; y < game.GetWinHeight() / 2; y++) {
                 for(int x = 0; x < game.GetWinWidth(); x++) {
-                    var pix = GetSkyboxPixel(ref game, dir, skyboxTex, x, y);
+                    var pix = GetSkyboxPixel(winHeight, dir, skyboxTex, x, y);
                     game.DrawPixel(pix, x, y);
                 }
             }
         }
 
-        public static TexColor GetSkyboxPixel(ref MazeEngine game, Vector2d dir, Texture skyboxTex, int x, int y) {
+        public static TexColor GetSkyboxPixel(int winHeight, Vector2d dir, Texture skyboxTex, int x, int y) {
             // The difference between the height of on pixel on the screen and
             // on the texture, were the texture to fill the top helf of the
             // screen.
-            double heightDiff = skyboxTex.height / (game.GetWinHeight() * 0.5);
+            double heightDiff = skyboxTex.height / (winHeight * 0.5);
             // Calibrated pixel position. This is the pixel on the texture,
             // closest to the one on the screen at x and y.
             Vector2i cal = new Vector2i((int)(x * heightDiff), (int)(y * heightDiff));
