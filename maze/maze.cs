@@ -217,15 +217,8 @@ namespace textured_raycast.maze
                         lineHeight = 1000;
                     }
 
-                    float darken = 1;
-                    // Actually draw the raycast line. Darken color depending on
-                    // facing side, simulating lighting,
-                    if(side == 0) {
-                        // Construct darker color
-                        darken = 1; // B - i removed this because it looked dumb knowing that there was no lighting in the room (and it made distance shadows unequal) 
-                    }
-
                     // Darken color based on distance and visRange variable.
+                    float darken = 0.9f;
                     darken = (float)Math.Max(0, darken - perpWallDist * (visRange * 0.005));
 
                     Texture tex = textures[hitWall == null ? 1 : hitWall.thisTexID];
@@ -327,7 +320,6 @@ namespace textured_raycast.maze
                     {
                         Vector2d newDir = new Vector2d(-dir.y, dir.x);
 
-                        // Same as before, just backwards, so with subtraction instead of addition.
                         Wall cellX = map.GetWall((int)(pos.x - newDir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
                         Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - newDir.y * (movSpeed * extraColDistMult)));
                         if (!cellX.isWal) pos.x -= newDir.x * movSpeed;
@@ -340,7 +332,6 @@ namespace textured_raycast.maze
                     {
                         Vector2d newDir = new Vector2d(-dir.y, dir.x) * -1;
 
-                        // Same as before, just backwards, so with subtraction instead of addition.
                         Wall cellX = map.GetWall((int)(pos.x - newDir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
                         Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - newDir.y * (movSpeed * extraColDistMult)));
                         if (!cellX.isWal) pos.x -= newDir.x * movSpeed;
