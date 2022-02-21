@@ -509,7 +509,7 @@ namespace textured_raycast.maze
                 // The inverse of the imaginary camera matrix.
                 Matrix2x2d camMat = new Matrix2x2d(new double[] {plane.x, dir.x,
                                                                     plane.y, dir.y});
-                Vector2d transformed = camMat.getInverse().multByVec(relSprPos);
+                Vector2d transformed = camMat.getInverse() * relSprPos;
 
                 int spriteScreenX = (int)((game.GetWinWidth() / 2) * (1 + transformed.x / transformed.y));
 

@@ -17,10 +17,10 @@ namespace textured_raycast.maze.math
             elements[y * 2 + x] = value;
         }
 
-        public Vector2d multByVec(Vector2d vec) {
+        private static Vector2d multByVec(Vector2d vec, Matrix2x2d mat) {
             return new Vector2d(
-                getE(0, 0) * vec.x + getE(1,0) * vec.y,
-                getE(0, 1) * vec.x + getE(1,1) * vec.y
+                mat.getE(0, 0) * vec.x + mat.getE(1,0) * vec.y,
+                mat.getE(0, 1) * vec.x + mat.getE(1,1) * vec.y
             );
         }
 
@@ -47,6 +47,14 @@ namespace textured_raycast.maze.math
         }
         public static Matrix2x2d operator *(Matrix2x2d mat, double scalar) {
             return multByScalar(scalar, mat);
+        }
+
+        public static Vector2d operator *(Vector2d vec, Matrix2x2d mat) {
+            return multByVec(vec, mat);
+
+        }
+        public static Vector2d operator *(Matrix2x2d mat, Vector2d vec) {
+            return multByVec(vec, mat);
         }
     }
 }
