@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Pastel" Version="2.1.0" />
+    <PackageReference Include="Pastel" Version="3.0.0" />
   </ItemGroup>
 
 </Project>

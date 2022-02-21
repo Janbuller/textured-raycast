@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 using System.Linq;
 using Pastel;
 using System.Drawing;
@@ -38,7 +36,7 @@ namespace textured_raycast.maze
         public int GetWinHeight() { return parameters.winHeight; }
 
         // Used to draw char to current buffer.
-        public void DrawChar(TexColor col, int x, int y) {
+        public void DrawPixel(TexColor col, int x, int y) {
             // Return exception, if char is out of game window.
             if (x < 0 || x >= GetWinWidth() || y < 0 || y >= GetWinHeight()) {
                 return;
@@ -65,7 +63,7 @@ namespace textured_raycast.maze
             for(int i = 0; i < height; i++) {
                 // Draw the line, using NuGet package "Pastel" to color, using
                 // ansi escape sequences.
-                DrawChar(color, x, startY+i);
+                DrawPixel(color, x, startY+i);
             }
         }
 
@@ -93,7 +91,7 @@ namespace textured_raycast.maze
                 // ansi escape sequences.
                 if(alphaCol == color)
                     continue;
-                DrawChar((color * darken), x, i);
+                DrawPixel((color * darken), x, i);
             }
 
             // int startY = GetWinHeight()/2 - height/2;
@@ -114,7 +112,7 @@ namespace textured_raycast.maze
         public void DrawTexture(Texture tex, int xP, int yP) {
             for(int y = 0; y < tex.height; y++) {
                 for(int x = 0; x < tex.width; x++) {
-                    DrawChar(tex.getPixel(x, y), xP+x, yP+y);
+                    DrawPixel(tex.getPixel(x, y), xP+x, yP+y);
                 }
             }
         }
@@ -127,7 +125,7 @@ namespace textured_raycast.maze
                 for(int x = 0; x < tex.width; x++) {
                     TexColor pixel = tex.getPixel(x, y);
                     if(pixel != alpha)
-                        DrawChar(pixel, xP+x, yP+y);
+                        DrawPixel(pixel, xP+x, yP+y);
                 }
             }
         }
@@ -138,12 +136,12 @@ namespace textured_raycast.maze
             int winHeight = GetWinHeight();
             TexColor whiteColor = new TexColor(255, 255, 255);
             for (int y = 0; y <  winHeight; y++) {
-                DrawChar(whiteColor, 0, y);
-                DrawChar(whiteColor, winWidth-1, y);
+                DrawPixel(whiteColor, 0, y);
+                DrawPixel(whiteColor, winWidth-1, y);
             }
             for(int x = 0; x < winWidth; x++) {
-                DrawChar(whiteColor, x, 0);
-                DrawChar(whiteColor, x, winHeight-1);
+                DrawPixel(whiteColor, x, 0);
+                DrawPixel(whiteColor, x, winHeight-1);
             }
         }
 

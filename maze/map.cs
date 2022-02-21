@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using textured_raycast;
 using textured_raycast.maze.math;
 using textured_raycast.maze.sprites;
+using System.Globalization;
 
 namespace textured_raycast.maze
 {
@@ -97,7 +96,7 @@ namespace textured_raycast.maze
                         thisString = thisString.Substring(0, thisString.Length - 1);
 
 
-                    sprites.Add(new Sprite(double.Parse(thisInfo[0]), double.Parse(thisInfo[1]), int.Parse(thisInfo[2]), effectID: int.Parse(thisInfo[3]), whatsLeft: thisString));
+                    sprites.Add(new Sprite(double.Parse(thisInfo[0], CultureInfo.InvariantCulture), double.Parse(thisInfo[1], CultureInfo.InvariantCulture), int.Parse(thisInfo[2]), effectID: int.Parse(thisInfo[3]), whatsLeft: thisString));
 
                     if (sprites[sprites.Count - 1].effectID == 1)
                         doorPositions.Add(sprites[sprites.Count - 1].extraEffects[2], sprites[sprites.Count - 1].getPos());
