@@ -497,39 +497,94 @@ namespace textured_raycast.maze
                 .ToList();
 
             for(int i = 0; i < sprites.Count; i++) {
+                // Grab a reference to the current sprite, since it'll be used a
+                // lot, and this should hopefully make it slightly faster and
+                // more understandable.
                 Sprite curSpr = sprites[i];
 
-                if (curSpr.doRender == false)
+                // Don't render the sprite, if it isn't supposed to be rendered.
+                if(!curSpr.doRender)
                     continue;
 
+                // Grab a reference of the current sprites texture.
                 Texture sprTex = textures[curSpr.texID];
                 // The relative sprite position from the camera.
                 Vector2d relSprPos = curSpr.getPos() - pos;
 
-                // The inverse of the imaginary camera matrix.
+                // The imaginary camera matrix, which will be used for the
+                // transformations
                 Matrix2x2d camMat = new Matrix2x2d(new double[] {plane.x, dir.x,
-                                                                    plane.y, dir.y});
+                                                                 plane.y, dir.y});
+
+                // The position of the sprite, transformed by the inverse of the
+                // imaginary camera matrix. The camera matrix holds the position
+                // and rotation of the camera, so by multiplying the sprite pos
+                // by it, the camera stays still, and the sprite moves in the
+                // opposite direction.
+                // The x-coordinate is the 1-dimensional x-position of the
+                // transformed sprite. The y-coordinate is the distance from the
+                // camera.
                 Vector2d transformed = camMat.getInverse() * relSprPos;
 
+                // The screen-space middle x-position of the sprite.
                 int spriteScreenX = (int)((game.GetWinWidth() / 2) * (1 + transformed.x / transformed.y));
 
-                int spriteHeight = (int)(Math.Abs(game.GetWinHeight() / transformed.y));
+                // The screen-space height of the given sprite. This is
+                // calculated, by dividing the height of the screen, by the
+                // camera distance to the sprite. This makes sense, since when
+                // the distance to the sprite goes down, we want it to be
+                // larger. To do this, we would use the reciprocal of the
+                // distance. To then scale it up, we multiply by the screen
+                // height. This gives the following equation:
+                //    1
+                // -------- * height
+                // distance
+                //
+                // This equation is then transformed to:
+                //  1 * height     height
+                // ----------- =  --------
+                //   distance     distance
+                int spriteScreenHeight = (int)((game.GetWinHeight() / transformed.y));
 
-                int spriteWidth = spriteHeight;
-                int startX = -spriteWidth / 2 + spriteScreenX;
+                // We assume, that the width of the sprite is the same as the
+                // height of the sprite.
+                int spriteWidth = spriteScreenHeight;
+                // The screenspace x-positionm, at which to start drawing the
+                // sprite. This is calculated, by taking away half of the sprite
+                // width, from the middle of the drawing pos.
+                //
+                // This is capped, to not go belov zero, since that
+                // would be outside the screen. It might seem, like this would
+                // draw off-camera sprites, but they are culled later.
+                int startX = spriteScreenX - spriteWidth / 2;
                 startX = Math.Max(0, startX);
+                // Same as startX, excepts it adds half the width and caps at
+                // screen width, instead.
                 int endX = spriteWidth / 2 + spriteScreenX;
                 endX = Math.Min(endX, game.GetWinWidth());
 
+                // Calculates the darkening of the sprite, based of the distance
+                // to the camera.
                 float darken = 0.9f;
                 darken = (float)Math.Min(1, Math.Max(0, darken - transformed.y * (visRange * 0.005)));
 
+                // Goes through all columns, from statX to endX.
                 for(int x = startX; x < endX; x++) {
+                    // The x-coordnate on the sprite texture, corresponding to the
                     int texX = (int)(256 * (x - (-spriteWidth / 2 + spriteScreenX)) * sprTex.width / spriteWidth) / 256;
 
+                    // Cull sprites, that are behind the camera. Since the
+                    // distance variable isn't absolute, so a negative value,
+                    // means that it is behind the camera.
                     if(transformed.y > 0)
+                        // Cull columns, that are behind walls, by looking at
+                        // the wall-zbuffer and comparing it to the distance.
+                        // The zbuffer doesn't hold the z-positions of the
+                        // sprites, since sprites are the only thing using it,
+                        // and they were sorted earlier, thereby using the
+                        // painters algorihm.
                         if(transformed.y < ZBuffer[x])
-                            game.DrawVerLine(x, spriteHeight, sprTex, texX, darken, new TexColor(0, 0, 0));
+                            game.DrawVerLine(x, spriteScreenHeight, sprTex, texX, darken, new TexColor(0, 0, 0));
                 }
             }
         }
