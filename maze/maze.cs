@@ -377,18 +377,6 @@ namespace textured_raycast.maze
                             spriteToInteract.Activate(ref world);
                     }
                 };
-
-                /*
-                // Check for win/exit
-                if(pos.Floor() == winC) {
-                    // Winner!
-                    return true;
-                }
-                if(pos.Floor() == extC) {
-                    // Loser!
-                    return false;
-                }
-                */
             }
         }
 
