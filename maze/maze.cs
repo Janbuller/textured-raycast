@@ -538,11 +538,11 @@ namespace textured_raycast.maze
                 //  1 * height     height
                 // ----------- =  --------
                 //   distance     distance
-                int spriteScreenHeight = (int)((game.GetWinHeight() / transformed.y));
+                //
+                // This is called spriteScreenSize, as we assume the width to be
+                // the same as the height.
+                int spriteScreenSize = (int)((game.GetWinHeight() / transformed.y));
 
-                // We assume, that the width of the sprite is the same as the
-                // height of the sprite.
-                int spriteWidth = spriteScreenHeight;
                 // The screenspace x-positionm, at which to start drawing the
                 // sprite. This is calculated, by taking away half of the sprite
                 // width, from the middle of the drawing pos.
@@ -550,11 +550,11 @@ namespace textured_raycast.maze
                 // This is capped, to not go belov zero, since that would be
                 // outside the screen. It might seem, like this would draw
                 // off-camera sprites, but they were culled earlier.
-                int startX = spriteScreenX - spriteWidth / 2;
+                int startX = spriteScreenX - spriteScreenSize / 2;
                 startX = Math.Max(0, startX);
                 // Same as startX, excepts it adds half the width and caps at
                 // screen width, instead.
-                int endX = spriteWidth / 2 + spriteScreenX;
+                int endX = spriteScreenSize / 2 + spriteScreenX;
                 endX = Math.Min(endX, game.GetWinWidth());
 
                 // Calculates the darkening of the sprite, based of the distance
@@ -565,7 +565,7 @@ namespace textured_raycast.maze
                 // Goes through all columns, from statX to endX.
                 for(int x = startX; x < endX; x++) {
                     // The x-coordnate on the sprite texture, corresponding to the
-                    int texX = (int)(256 * (x - (-spriteWidth / 2 + spriteScreenX)) * sprTex.width / spriteWidth) / 256;
+                    int texX = (int)(256 * (x - (-spriteScreenSize / 2 + spriteScreenX)) * sprTex.width / spriteScreenSize) / 256;
 
                     // Cull columns, that are behind walls, by looking at
                     // the wall-zbuffer and comparing it to the distance.
@@ -574,7 +574,7 @@ namespace textured_raycast.maze
                     // and they were sorted earlier, thereby using the
                     // painters algorihm.
                     if(transformed.y < ZBuffer[x])
-                        game.DrawVerLine(x, spriteScreenHeight, sprTex, texX, darken, new TexColor(0, 0, 0));
+                        game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, new TexColor(0, 0, 0));
                 }
             }
         }
