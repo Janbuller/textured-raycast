@@ -48,7 +48,7 @@ namespace textured_raycast.maze
             Map map = world.getMapByID(world.currentMap);
 
             Console.Clear();
-            MazeEngine game = new MazeEngine(120, 80, "maze");
+            ConsoleEngine game = new ConsoleEngine(120, 80, "maze");
 
             // Position vector
             Vector2d pos = world.plrPos;
@@ -371,7 +371,7 @@ namespace textured_raycast.maze
             }
         }
 
-        public static void FloorCasting(ref MazeEngine game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map) {
+        public static void FloorCasting(ref ConsoleEngine game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map) {
             Texture floorTex =  textures[map.floorTexID];
             Texture ceilingTex =  textures[map.useSkybox ? 1 : map.ceilTexID];
 
@@ -426,7 +426,7 @@ namespace textured_raycast.maze
         // Draws the skybox to the top half of the game screen. This isn't very
         // optimized, and shouldn't be used, as it draws to pixels, that will
         // later be drawn over.
-        public static void DrawSkybox(ref MazeEngine game, Vector2d dir, Texture skyboxTex) {
+        public static void DrawSkybox(ref ConsoleEngine game, Vector2d dir, Texture skyboxTex) {
             int winHeight = game.GetWinHeight();
 
             for(int y = 0; y < game.GetWinHeight() / 2; y++) {
@@ -468,7 +468,7 @@ namespace textured_raycast.maze
         }
 
         // TODO: Switch to using z-buffer, instead of painters algorithm.
-        public static void SpriteCasting(ref MazeEngine game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange) {
+        public static void SpriteCasting(ref ConsoleEngine game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange) {
             List<double> spriteDist = new List<double>();
             for(int i = 0; i < sprites.Count; i++) {
                 // Calculate sprite distance from player, using pythagoras.

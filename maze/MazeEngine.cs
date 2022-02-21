@@ -7,7 +7,12 @@ using textured_raycast.maze.texture;
 
 namespace textured_raycast.maze
 {
-    class MazeEngine {
+    struct GameParams {
+        public int winWidth, winHeight;
+        public string name;
+    }
+
+    class ConsoleEngine {
         GameParams parameters = new GameParams();
 
         // Double buffer system made for futureproofing. Allows for possible
@@ -18,7 +23,7 @@ namespace textured_raycast.maze
 
         bool firstBuffer = true;
 
-        public MazeEngine(int win_width, int win_height, string game_name) {
+        public ConsoleEngine(int win_width, int win_height, string game_name) {
             // Used to initialize the buffers to and empty sized list.
             TexColor[] tmp = new TexColor[win_width * win_height];
             buffer1 = tmp.ToList();
@@ -189,9 +194,5 @@ namespace textured_raycast.maze
                 Console.WriteLine(line);
             }
         }
-    }
-    class GameParams {
-        public int winWidth, winHeight;
-        public string name;
     }
 }
