@@ -417,7 +417,7 @@ namespace textured_raycast.maze
                         Convert.ToInt32(color.b * darken)
                     );
                     if(y > game.GetWinHeight() / 2)
-                        game.DrawChar(darkPix, x, y);
+                        game.DrawPixel(darkPix, x, y);
 
                     if(!map.useSkybox) {
                         color = ceilingTex.getPixel(texture.x, texture.y);
@@ -426,13 +426,13 @@ namespace textured_raycast.maze
                             Convert.ToInt32(color.g * darken),
                             Convert.ToInt32(color.b * darken)
                         );
-                        game.DrawChar(darkPix, x, game.GetWinHeight() - y - 1);
+                        game.DrawPixel(darkPix, x, game.GetWinHeight() - y - 1);
                     } else
                     {
                         if (y > game.GetWinHeight() / 2)
                         {
                             var pix = GetSkyboxPixel(ref game, dir, textures[11], x, game.GetWinHeight() - y - 1);
-                            game.DrawChar(pix, x, game.GetWinHeight() - y - 1);
+                            game.DrawPixel(pix, x, game.GetWinHeight() - y - 1);
                         }
                     }
                 }
@@ -443,7 +443,7 @@ namespace textured_raycast.maze
             for(int y = 0; y < game.GetWinHeight() / 2; y++) {
                 for(int x = 0; x < game.GetWinWidth(); x++) {
                     var pix = GetSkyboxPixel(ref game, dir, skyboxTex, x, y);
-                    game.DrawChar(pix, x, y);
+                    game.DrawPixel(pix, x, y);
                 }
             }
         }
