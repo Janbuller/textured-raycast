@@ -23,8 +23,8 @@ namespace textured_raycast.maze
             {7,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/pillar.ppm")},
             {8,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/barrel.ppm")},
             {9,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/greenlight.ppm")},
-            {10,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/barrelBroken.ppm")},
-            {11,   TextureLoaders.loadFromPlainPPM("img/skybox.ppm")},
+            {10,  TextureLoaders.loadFromPlainPPM("img/wolfenstein/barrelBroken.ppm")},
+            {11,  TextureLoaders.loadFromPlainPPM("img/skybox.ppm")},
             {101, TextureLoaders.loadFromPlainPPM("img/wolfenstein/end.ppm")}, // Also used as collision box for winning.
             {102, TextureLoaders.loadFromPlainPPM("img/wolfenstein/exit.ppm")}, // Also used for leaving the maze
         };
@@ -363,25 +363,29 @@ namespace textured_raycast.maze
         }
 
         public static void FloorCasting(ref ConsoleEngine game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map) {
+            // Grabs the floor and ceiling texture, before the loop, since we
+            // don't want differently textured ceiling or floor.
             Texture floorTex =  textures[map.floorTexID];
             Texture ceilingTex =  textures[map.useSkybox ? 1 : map.ceilTexID];
 
+            // Grab the windiw dimensions, since they'll be used a lot.
+            int winWidth = game.GetWinWidth();
             int winHeight = game.GetWinHeight();
-            for(int y = 0; y < game.GetWinHeight(); y++)
+            for(int y = 0; y < winHeight; y++)
             {
                 Vector2d rayDirLeft = dir - plane;
                 Vector2d rayDirRight = dir + plane;
 
-                int midOff = y - game.GetWinHeight() / 2;
-                float camHeight = 0.5f * game.GetWinHeight();
+                int midOff = y - winHeight / 2;
+                float camHeight = 0.5f * winHeight;
                 float lineDist = camHeight / midOff;
                 lineDist = lineDist < 1000000000 ? lineDist : 1000000000;
 
-                Vector2d floorOff = lineDist * (rayDirRight - rayDirLeft) / game.GetWinWidth();
+                Vector2d floorOff = lineDist * (rayDirRight - rayDirLeft) / winWidth;
 
                 Vector2d floor = pos + (new Vector2d(lineDist, lineDist) * rayDirLeft);
 
-                for(int x = 0; x < game.GetWinWidth(); x++) {
+                for(int x = 0; x < winWidth; x++) {
                     Vector2i cellPos = (Vector2i)floor.Floor();
                     Vector2i texture = (Vector2i)(floorTex.width * (floor - (Vector2d)cellPos)).Floor();
                     texture = new Vector2i(
@@ -396,18 +400,18 @@ namespace textured_raycast.maze
 
                     TexColor color = floorTex.getPixel(texture.x, texture.y);
                     color *= darken;
-                    if(y > game.GetWinHeight() / 2)
+                    if(y > winHeight / 2)
                         game.DrawPixel(color, x, y);
 
                     if(!map.useSkybox) {
                         color = ceilingTex.getPixel(texture.x, texture.y);
                         color *= darken;
-                        game.DrawPixel(color, x, game.GetWinHeight() - y - 1);
+                        game.DrawPixel(color, x, winHeight - y - 1);
                     } else {
-                        if (y > game.GetWinHeight() / 2)
+                        if (y > winHeight / 2)
                         {
-                            var pix = GetSkyboxPixel(winHeight, dir, textures[11], x, game.GetWinHeight() - y - 1);
-                            game.DrawPixel(pix, x, game.GetWinHeight() - y - 1);
+                            var pix = GetSkyboxPixel(winHeight, dir, textures[11], x, winHeight - y - 1);
+                            game.DrawPixel(pix, x, winHeight - y - 1);
                         }
                     }
                 }
@@ -524,11 +528,13 @@ namespace textured_raycast.maze
                 // larger. To do this, we would use the reciprocal of the
                 // distance. To then scale it up, we multiply by the screen
                 // height. This gives the following equation:
+                //
                 //    1
                 // -------- * height
                 // distance
                 //
                 // This equation is then transformed to:
+                //
                 //  1 * height     height
                 // ----------- =  --------
                 //   distance     distance
