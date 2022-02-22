@@ -1,3 +1,5 @@
+local love = love
+
 function loadImage(path)
     local linesFromFile = {}
     for line in love.filesystem.lines(path) do table.insert(linesFromFile, line) end
@@ -93,6 +95,17 @@ local guiTileSize = 40
 local guiTilediff = 6
 local guiMaxTiles = 30
 
+local spawn = {0, 0}
+local spawnLook = {0, 0}
+local spawnPlacing = 1
+local floor = 1
+local roof = 0
+
+local editingSprite = 0
+local sprites = {}
+
+local keys = "1234567890"
+
 function newGrid(gW, gH)
     local grid = {}
 
@@ -128,29 +141,52 @@ function love.draw()
                 love.graphics.setColor(1, 1, 1)
                 love.graphics.draw(image[grid[x+gW/2][y+gH/2]], x, y, 0, 1/image[grid[x+gW/2][y+gH/2]]:getWidth())
             end
-            love.graphics.setColor(0, 0, 0)
+            love.graphics.setColor(1, 1, 1)
             love.graphics.rectangle("line", x, y, 1, 1)
         end
     end
 
-    love.graphics.setColor(1, 1, 1)
+    love.graphics.circle("fill", spawn[1], spawn[2], 0.3)
+    love.graphics.line(spawn[1], spawn[2], spawn[1]+spawnLook[1], spawn[2]+spawnLook[2])
+
+    love.graphics.setColor(1, 1, 1, 1)
     if openMen then
         love.graphics.rectangle("fill", px-gW/2+1, py-gH/2+1, 0.5, 0.8)
     end
 
-    if drawSelect then
-        love.graphics.origin()
-        love.graphics.setLineWidth(2)
-        
-        for i = 1,images do
-            love.graphics.setColor(1, 1, 1)
-            if selected == i then
-                love.graphics.setColor(1, 1, 0)
+    for _, sprite in pairs(sprites) do
+        love.graphics.draw(image[sprite[3]], sprite[1]-0.3, sprite[2]-0.3, 0, 0.6/image[sprite[3]]:getWidth(), 0.6/image[sprite[3]]:getHeight())
+    end
+    
+    love.graphics.origin()
+    love.graphics.setLineWidth(2)
+
+    love.graphics.draw(image[floor], 5, h-45, 0, 40/image[floor]:getWidth(), 40/image[floor]:getHeight())
+    
+    if roof ~= 0 then
+        love.graphics.draw(image[roof], 50, h-45, 0, 40/image[roof]:getWidth(), 40/image[roof]:getHeight())
+    end
+
+    if editingSprite ~= 0 then
+        love.graphics.setColor(0, 0, 0, 0.2)
+        love.graphics.rectangle("fill", 0, 0, w, h)
+
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.rectangle("fill", 0, h/2-10, w, 20)
+        love.graphics.setColor(0, 0, 0)
+        love.graphics.printf(sprites[editingSprite][4], 0, h/2-6, w, "center")
+    else
+        if drawSelect then
+            for i = 1,images do
+                love.graphics.setColor(1, 1, 1)
+                if selected == i then
+                    love.graphics.setColor(1, 1, 0)
+                end
+                love.graphics.rectangle("fill", 2+(guiTileSize+guiTilediff)*(i-1)-((math.ceil(i/guiMaxTiles)-1)*(guiTileSize+guiTilediff)*guiMaxTiles)-1, 2+(guiTileSize+guiTilediff)*(math.ceil(i/guiMaxTiles)-1)-1, (guiTileSize+guiTilediff/2),  (guiTileSize+guiTilediff/2))
+                
+                love.graphics.setColor(1, 1, 1)
+                love.graphics.draw(image[i], 2+(guiTileSize+guiTilediff)*(i-1)-((math.ceil(i/guiMaxTiles)-1)*(guiTileSize+guiTilediff)*guiMaxTiles), 2+(guiTileSize+guiTilediff)*(math.ceil(i/guiMaxTiles)-1), 0, guiTileSize/image[i]:getWidth(), guiTileSize/image[i]:getHeight())
             end
-            love.graphics.rectangle("fill", 2+(guiTileSize+guiTilediff)*(i-1)-((math.ceil(i/guiMaxTiles)-1)*(guiTileSize+guiTilediff)*guiMaxTiles)-1, 2+(guiTileSize+guiTilediff)*(math.ceil(i/guiMaxTiles)-1)-1, (guiTileSize+guiTilediff/2),  (guiTileSize+guiTilediff/2))
-            
-            love.graphics.setColor(1, 1, 1)
-            love.graphics.draw(image[i], 2+(guiTileSize+guiTilediff)*(i-1)-((math.ceil(i/guiMaxTiles)-1)*(guiTileSize+guiTilediff)*guiMaxTiles), 2+(guiTileSize+guiTilediff)*(math.ceil(i/guiMaxTiles)-1), 0, guiTileSize/image[i]:getWidth(), guiTileSize/image[i]:getHeight())
         end
     end
 end
@@ -158,6 +194,64 @@ end
 function love.keypressed(key)
     if key == "m" then
         drawSelect = not drawSelect
+    elseif key == "f" then
+        floor = selected
+    elseif key == "r" then
+        if roof == selected then
+            roof = 0
+        else
+            roof = selected
+        end
+    elseif key == "e" then
+        local mx, my = love.mouse.getPosition()
+        px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
+
+        local closest = 0
+        local distance = 0.5
+        for i,sprite in ipairs(sprites) do
+            local thisDist = math.dist(sprite[1], sprite[2], px, py)
+            if thisDist < distance then
+                distance = thisDist
+                closest = i
+            end
+        end
+
+        if closest ~= 0 then
+            editingSprite = closest
+        end
+    elseif key == "s" then
+        saveFile()
+    elseif key == "p" then
+        local mx, my = love.mouse.getPosition()
+        px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
+        if spawnPlacing == 1 then
+            spawn = {px, py}
+            spawnPlacing = 2
+        else
+            local v = math.floor(math.atan2(py-spawn[2], px-spawn[1])/(math.pi/2)+math.pi/8)*(math.pi/2)
+            spawnLook = {math.floor(math.cos(v)), math.floor(math.sin(v))}
+            spawnPlacing = 1
+        end
+    else
+        if key == "backspace" then
+            sprites[editingSprite][4] = string.sub(sprites[editingSprite][4], 0, math.max(#sprites[editingSprite][4]-2, 0))
+        elseif key == "return" then
+            editingSprite = 0
+        elseif key == "delete" then
+            table.remove(sprites, editingSprite)
+            editingSprite = 0
+        end
+        if editingSprite ~= 0 then
+            for i = 1,#keys do
+                if key == string.sub(keys, i, i) then
+                    if #sprites[editingSprite][4] == 0 then
+                        sprites[editingSprite][4] = sprites[editingSprite][4] .. key
+                    else
+                        sprites[editingSprite][4] = sprites[editingSprite][4] .. " " .. key
+                    end
+                end
+            end
+        end
     end
 end
 
@@ -198,9 +292,9 @@ function love.mousereleased(x, y, b)
         end
         mx, my = -1, -1
     elseif b == 2 then
-        px, py = ((x-w/2-gridOffsetX)/scale)+gW/2-1, ((y-h/2-gridOffsetY)/scale)+gH/2-1
-        selectedForMenuX, selectedForMenuY = math.floor((x-w/2-gridOffsetX)/scale)+gW/2, math.floor((y-h/2-gridOffsetY)/scale)+gH/2
-        openMen = true
+        px, py = ((x-w/2-gridOffsetX)/scale), ((y-h/2-gridOffsetY)/scale)
+
+        table.insert(sprites, {px, py, selected, ""})
     end
 end
 
@@ -217,4 +311,38 @@ function love.update()
             grid[pointX][pointY] = selected
         end
     end
+end
+
+function math.dist(x1,y1, x2,y2) return ((x2-x1)^2+(y2-y1)^2)^0.5 end
+
+function saveFile()
+    local str = ""
+
+    if roof == 0 then
+        str = str..gW.." "..gH.." "..floor.."\n"
+    else
+        str = str..gW.." "..gH.." "..floor.." "..roof.."\n"
+    end
+    str = str..math.abs((spawn[1]+gW/2-1)-gW).." "..(spawn[2]+gH/2-1).."\n"
+    str = str..spawnLook[1].." "..spawnLook[2].."\n"
+
+    for y = 1,gH do
+        for x = gW,1,-1 do
+            str = str..grid[x][y].."\n"
+        end
+    end
+
+    for _, sprite in pairs(sprites) do
+        if sprite[4] == "" then
+            str = str..(sprite[1]+gW/2-1).." "..(sprite[2]+gH/2-1).." "..sprite[3].."\n"
+        else
+            str = str..(sprite[1]+gW/2-1).." "..(sprite[2]+gH/2-1).." "..sprite[3].." "..sprite[4].."\n"
+        end
+    end
+
+    str = string.sub(str, 0, #str-1)
+
+    local f = io.open("newMap.map", "w")
+    f:write(str)
+    f:close()
 end

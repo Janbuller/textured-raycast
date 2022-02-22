@@ -23,7 +23,6 @@ namespace textured_raycast.maze.sprites
                 this.canInteract = true;
             this.effectID = effectID;
 
-            Console.WriteLine(whatsLeft.Length);
             if (whatsLeft.Length != 0)
             {
                 string[] thisSplit = whatsLeft.Split(' ');

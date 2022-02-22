@@ -270,6 +270,9 @@ namespace textured_raycast.maze
 
                 Console.WriteLine("                                                                  ");
 
+                Console.WriteLine(dir.x + "|" + dir.y+ "                                                                  ");
+                Console.WriteLine(pos.x + "|" + pos.y+ "                                                                  ");
+
                 game.DrawTexture(textures[8], -8, -24, new TexColor(0, 0, 0));
 
                 game.SwapBuffers();
@@ -390,7 +393,7 @@ namespace textured_raycast.maze
 
                 Vector2d floor = pos + (new Vector2d(lineDist, lineDist) * rayDirLeft);
 
-                for(int x = 0; x < game.GetWinWidth(); x++) {
+                for (int x = 0; x < game.GetWinWidth(); x++) {
                     Vector2i cellPos = (Vector2i)floor.Floor();
                     Vector2i texture = (Vector2i)(floorTex.width * (floor - (Vector2d)cellPos)).Floor();
                     texture = new Vector2i(

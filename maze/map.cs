@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
@@ -51,13 +52,13 @@ namespace textured_raycast.maze
                 if (!int.TryParse(imageData[0].Split(' ')[3], out ceilTexID))
                     return;
             }
-            if (!double.TryParse(imageData[1].Split(' ')[0], out plrStartX))
+            if (!double.TryParse(imageData[1].Split(' ')[0], NumberStyles.Any, CultureInfo.InvariantCulture, out plrStartX))
                 return;
-            if (!double.TryParse(imageData[1].Split(' ')[1], out plrStartY))
+            if (!double.TryParse(imageData[1].Split(' ')[1], NumberStyles.Any, CultureInfo.InvariantCulture, out plrStartY))
                 return;
-            if (!double.TryParse(imageData[2].Split(' ')[0], out plrStartDX))
+            if (!double.TryParse(imageData[2].Split(' ')[0], NumberStyles.Any, CultureInfo.InvariantCulture, out plrStartDX))
                 return;
-            if (!double.TryParse(imageData[2].Split(' ')[1], out plrStartDY))
+            if (!double.TryParse(imageData[2].Split(' ')[1], NumberStyles.Any, CultureInfo.InvariantCulture, out plrStartDY))
                 return;
 
             width = reqWidth;
@@ -69,21 +70,21 @@ namespace textured_raycast.maze
             // Initialize map to empty list of correct size.
             map = new Wall[width * height].ToList();
 
-            for (int i = 3; i < map.Count + 2; i++)
+            for (int i = 3; i < map.Count + 3; i++)
             {
                 map[i - 3] = new Wall(int.Parse(imageData[i]));
             }
 
-            for (int i = map.Count + 2; i < imageData.Length; i++)
+            for (int i = map.Count + 4; i < imageData.Length; i++)
             {
                 string[] thisInfo = imageData[i].Split(' ');
                 if (thisInfo.Length == 3)
                 {
-                    sprites.Add(new Sprite(double.Parse(thisInfo[0]), double.Parse(thisInfo[1]), int.Parse(thisInfo[2])));
+                    sprites.Add(new Sprite(double.Parse(thisInfo[0], CultureInfo.InvariantCulture), double.Parse(thisInfo[1], CultureInfo.InvariantCulture), int.Parse(thisInfo[2])));
                 }
                 else if (thisInfo.Length == 4)
                 {
-                    sprites.Add(new Sprite(double.Parse(thisInfo[0]), double.Parse(thisInfo[1]), int.Parse(thisInfo[2]), effectID: int.Parse(thisInfo[3])));
+                    sprites.Add(new Sprite(double.Parse(thisInfo[0], CultureInfo.InvariantCulture), double.Parse(thisInfo[1], CultureInfo.InvariantCulture), int.Parse(thisInfo[2]), effectID: int.Parse(thisInfo[3])));
                 }
                 else
                 {
