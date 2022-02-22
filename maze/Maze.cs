@@ -25,6 +25,7 @@ namespace textured_raycast.maze
             {9,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/greenlight.ppm")},
             {10,  TextureLoaders.loadFromPlainPPM("img/wolfenstein/barrelBroken.ppm")},
             {11,  TextureLoaders.loadFromPlainPPM("img/skybox.ppm")},
+            {12,  TextureLoaders.loadFromPlainPPM("img/shadyman.ppm")},
             {101, TextureLoaders.loadFromPlainPPM("img/wolfenstein/end.ppm")}, // Also used as collision box for winning.
             {102, TextureLoaders.loadFromPlainPPM("img/wolfenstein/exit.ppm")}, // Also used for leaving the maze
         };
