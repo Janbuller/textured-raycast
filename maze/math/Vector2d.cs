@@ -48,7 +48,7 @@ namespace textured_raycast.maze.math
             return new Vector2d(vec1.x / scalar, vec1.y / scalar);
         }
 
-        // allow casting to v2d
+        // allow casting v2i to v2d
         public static explicit operator Vector2d(Vector2i vec) {
             return new Vector2d(vec.x, vec.y);
         }

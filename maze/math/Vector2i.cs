@@ -57,7 +57,7 @@ namespace textured_raycast.maze.math
             return new Vector2i(vec1.x / scalar, vec1.y / scalar);
         }
 
-        // allow casting to v2i
+        // allow casting v2d to v2i
         public static explicit operator Vector2i(Vector2d vec) {
             return new Vector2i(Convert.ToInt32(vec.x), Convert.ToInt32(vec.y));
         }
