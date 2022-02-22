@@ -53,7 +53,8 @@ namespace textured_raycast.maze
             // Camera view plane, held as 2d vector line.
             // Were this actually 3d, not raycasting, it would be a plane,
             // represtented by 2 vectors.
-            Vector2d plane = new Vector2d(0.66f, 0);
+            // Vector2d plane = new Vector2d(0.66f, 0);
+            Vector2d plane = new Vector2d(dir.y, -dir.x) * 0.66;
 
             // The visibility distance. Controls the distance-based darkening.
             int visRange = 25;
@@ -369,16 +370,26 @@ namespace textured_raycast.maze
             Texture ceilingTex =  textures[map.useSkybox ? 1 : map.ceilTexID];
 
             // Grab the windiw dimensions, since they'll be used a lot.
-            int winWidth = game.GetWinWidth();
+            int winWidth  = game.GetWinWidth();
             int winHeight = game.GetWinHeight();
+
+            // Loop through every row in the window.
             for(int y = 0; y < winHeight; y++)
             {
+                // Calculatethe direction vector, for a vector going from the
+                // player position, through the imaginary cameraplane, on both
+                // sides of said plane.
                 Vector2d rayDirLeft = dir - plane;
                 Vector2d rayDirRight = dir + plane;
 
+                // Calculate the current rows offset from the middle of the
+                // screen.
                 int midOff = y - winHeight / 2;
+                // Get the camera height, assuming it to be in the middle of the
+                // screen.
                 float camHeight = 0.5f * winHeight;
                 float lineDist = camHeight / midOff;
+                // Cap lineDist, since it'll be casted to an int later.
                 lineDist = lineDist < 1000000000 ? lineDist : 1000000000;
 
                 Vector2d floorOff = lineDist * (rayDirRight - rayDirLeft) / winWidth;
