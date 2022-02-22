@@ -12,7 +12,7 @@
             // TODO: do something based on the wall id
 
             wallID = wallIDIn;
-            thisTexID = 1;
+            thisTexID = wallID > 0 ? wallID : 1;
 
             if (wallID == 0)
                 isWal = false;

@@ -295,7 +295,7 @@ namespace textured_raycast.maze
 
                         // Check if cell is empty or a control cell, if so, move.
                         if (!cellX.isWal) pos.x += dir.x * movSpeed;
-                        if (!cellY.isWal) pos.y += dir.y * 0.1;
+                        if (!cellY.isWal) pos.y += dir.y * movSpeed;
 
                         cellX.Collide(ref world);
                         cellY.Collide(ref world);
@@ -306,7 +306,7 @@ namespace textured_raycast.maze
                         Wall cellX = map.GetWall((int)(pos.x - dir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
                         Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - dir.y * (movSpeed * extraColDistMult)));
                         if (!cellX.isWal) pos.x -= dir.x * movSpeed;
-                        if (!cellY.isWal) pos.y -= dir.y * 0.1;
+                        if (!cellY.isWal) pos.y -= dir.y * movSpeed;
 
                         cellX.Collide(ref world);
                         cellY.Collide(ref world);
@@ -318,7 +318,7 @@ namespace textured_raycast.maze
                         Wall cellX = map.GetWall((int)(pos.x - newDir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
                         Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - newDir.y * (movSpeed * extraColDistMult)));
                         if (!cellX.isWal) pos.x -= newDir.x * movSpeed;
-                        if (!cellY.isWal) pos.y -= newDir.y * 0.1;
+                        if (!cellY.isWal) pos.y -= newDir.y * movSpeed;
 
                         cellX.Collide(ref world);
                         cellY.Collide(ref world);
@@ -330,7 +330,7 @@ namespace textured_raycast.maze
                         Wall cellX = map.GetWall((int)(pos.x - newDir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
                         Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - newDir.y * (movSpeed * extraColDistMult)));
                         if (!cellX.isWal) pos.x -= newDir.x * movSpeed;
-                        if (!cellY.isWal) pos.y -= newDir.y * 0.1;
+                        if (!cellY.isWal) pos.y -= newDir.y * movSpeed;
 
                         cellX.Collide(ref world);
                         cellY.Collide(ref world);
