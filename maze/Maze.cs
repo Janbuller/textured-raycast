@@ -13,15 +13,6 @@ namespace textured_raycast.maze
 {
     class Maze {
 
-        // Numbers and their colors.
-        static Dictionary<int, Color> colors = new Dictionary<int, Color>() {
-            {1, Color.FromArgb(255, 255, 255)},
-            {2, Color.FromArgb(0,   255, 0  )},
-            {3, Color.FromArgb(255, 0,   0  )},
-            {101, Color.FromArgb(0,   255, 0  )}, // Also used as collision box for winning.
-            {102, Color.FromArgb(255, 0,   0  )}, // Also used for leaving the maze
-        };
-
         static Dictionary<int, Texture> textures = new Dictionary<int, Texture>() {
             {1,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/greystone.ppm")},
             {2,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/redbrick.ppm")},
