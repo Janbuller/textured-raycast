@@ -270,6 +270,12 @@ namespace textured_raycast.maze
                 game.SwapBuffers();
                 game.DrawScreen();
 
+                HandleInput(ref world, map, pos, ref dir, ref plane, ref spriteToInteract);
+
+            }
+        }
+
+        public static void HandleInput(ref World world, Map map, Vector2d pos, ref Vector2d dir, ref Vector2d plane, ref Sprite spriteToInteract) {
                 // Handle movement
                 double rotSpeed = 0.2;
                 double movSpeed = 0.1;
@@ -363,7 +369,6 @@ namespace textured_raycast.maze
                             spriteToInteract.Activate(ref world);
                     }
                 };
-            }
         }
 
         public static void FloorCasting(ref ConsoleEngine game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map) {
