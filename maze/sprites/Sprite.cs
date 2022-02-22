@@ -38,13 +38,20 @@ namespace textured_raycast.maze.sprites
 
         public void Activate(ref World world)
         {
-            if (effectID == 1)
+            if (effectID == 1) // door
             {
                 world.getMapByID(extraEffects[0]).openDoor(ref world, extraEffects[0], extraEffects[1]);
             }
-            else if (effectID == 2) // is a chest, fx
+            else if (effectID == 2) // button
             {
-                // add item id extraEffectDetailID to player inventory
+                if (extraEffects[0] == 1)
+                {
+                    world.currentMessage = "you heard a *click* sound somewhere close";
+                }
+                else if (extraEffects[0] == 2)
+                {
+                    world.currentMessage = "you heard a *click* sound somewhere far in the distance";
+                }
             }
             else if (effectID == 3) // or maby a door, fx (it could also be an invisible door, so just a tp point, and then have a door image on the wall)
             {
@@ -62,27 +69,17 @@ namespace textured_raycast.maze.sprites
                 switch (extraEffects[0])
                 {
                     case 0:
-                        world.currentMessage = "Hi, i am a barrel";
+                        world.currentMessage = "Welcome, this is my world";
                         break;
                     case 1:
-                        world.currentMessage = "What, are you suprised that i can talk?";
+                        world.currentMessage = "My world of puzzles, that is.";
                         break;
                     case 2:
-                        world.currentMessage = "Imagine a barrel not talking, like that idiot over there, what a dummy...";
-                        break;
-                    case 3:
-                        world.currentMessage = "Do you want a tip for this game?";
-                        break;
-                    case 4:
-                        world.currentMessage = "Of course you want a tip, well here ya go...";
-                        break;
-                    case 5:
-                        world.currentMessage = "There is no game, so no tip";
+                        world.currentMessage = "Behind me, there is a room, enter it. And you win. You may start by going to the left, have fuuuun.";
+                        canInteract = false;
                         break;
                 }
                 extraEffects[0] += 1;
-                if (extraEffects[0] == 6)
-                    extraEffects[0] = 0;
             }
             else if (effectID == 6)
             {
