@@ -328,6 +328,39 @@ function saveFile()
 
     for y = 1,gH do
         for x = gW,1,-1 do
+            print(grid[x][y])
+            str = str..grid[x][y].."\n"
+        end
+    end
+
+    for _, sprite in pairs(sprites) do
+        if sprite[4] == "" then
+            str = str..math.abs((sprite[1]+gW/2-1)-gW).." "..(sprite[2]+gH/2-1).." "..sprite[3].."\n"
+        else
+            str = str..math.abs((sprite[1]+gW/2-1)-gW).." "..(sprite[2]+gH/2-1).." "..sprite[3].." "..sprite[4].."\n"
+        end
+    end
+
+    str = string.sub(str, 0, #str-1)
+
+    local f = io.open("newMap.map", "w")
+    f:write(str)
+    f:close()
+end
+
+function loadFile()
+    local str = ""
+
+    if roof == 0 then
+        str = str..gW.." "..gH.." "..floor.."\n"
+    else
+        str = str..gW.." "..gH.." "..floor.." "..roof.."\n"
+    end
+    str = str..math.abs((spawn[1]+gW/2-1)-gW).." "..(spawn[2]+gH/2-1).."\n"
+    str = str..spawnLook[1].." "..spawnLook[2].."\n"
+
+    for y = 1,gH do
+        for x = gW,1,-1 do
             str = str..grid[x][y].."\n"
         end
     end

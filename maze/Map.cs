@@ -75,8 +75,9 @@ namespace textured_raycast.maze
                 map[i - 3] = new Wall(int.Parse(imageData[i]));
             }
 
-            for (int i = map.Count + 4; i < imageData.Length; i++)
+            for (int i = map.Count + 3; i < imageData.Length; i++)
             {
+                Console.WriteLine(imageData[i]);
                 string[] thisInfo = imageData[i].Split(' ');
                 if (thisInfo.Length == 3)
                 {
@@ -86,7 +87,7 @@ namespace textured_raycast.maze
                 {
                     sprites.Add(new Sprite(double.Parse(thisInfo[0], CultureInfo.InvariantCulture), double.Parse(thisInfo[1], CultureInfo.InvariantCulture), int.Parse(thisInfo[2]), effectID: int.Parse(thisInfo[3])));
                 }
-                else
+                else if (thisInfo.Length != 1)
                 {
                     string thisString = "";
                     for (int i2 = 4; i2 < thisInfo.Length; i2++)
