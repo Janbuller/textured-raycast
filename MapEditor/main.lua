@@ -105,14 +105,19 @@ local sprites = {}
 
 local sys = "Win"
 local fileName = "newMap"
+local setSize = ""
+
+local definingSize = true
 
 local editingFName = false
 
 local keys = "1234567890"
+local keysSize = "1234567890 "
 local txtKeys = "abcdefghijklmnopqrstuvwxyz"
 
-function newGrid(gW, gH)
+function newGrid(gWin, gHin)
     local grid = {}
+    gW, gH = gWin, gHin
 
     for x = 1,gW do
         grid[x] = {}
@@ -195,11 +200,30 @@ function love.draw()
         end
     end
 
+    love.graphics.print("[n] Size: "..setSize, 5, h-125)
     love.graphics.print("[z] Sys: "..sys, 5, h-105)
     love.graphics.print("[x] File name: "..fileName, 5, h-85)
 end
 
 function love.keypressed(key)
+    if definingSize == true then
+        if key == "space" then key = " " end
+        if key == "backspace" then
+            setSize = string.sub(setSize, 0, #setSize-1)
+        elseif key == "return" then
+            local wh = string.numsplit(setSize, " ")
+            if wh[1] and wh[2] then
+                grid = newGrid(wh[1], wh[2])
+                definingSize = false
+            end
+        end
+        for i = 1,#keysSize do
+            if key == string.sub(keysSize, i, i) then
+                setSize = setSize .. key
+            end
+        end
+        return
+    end
     if editingFName == true then
         if key == "backspace" then
             fileName = string.sub(fileName, 0, #fileName-1)
@@ -215,74 +239,77 @@ function love.keypressed(key)
                 end
             end
         end
-    else
-        if key == "m" then
-            drawSelect = not drawSelect
-        elseif key == "f" then
-            floor = selected
-        elseif key == "r" then
-            if roof == selected then
-                roof = 0
-            else
-                roof = selected
-            end
-        elseif key == "z" then
-            if sys == "Win" then
-                sys = "Lin"
-            else
-                sys = "Win"
-            end
-        elseif key == "x" then
-            editingFName = true
-        elseif key == "e" then
-            local mx, my = love.mouse.getPosition()
-            px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
-    
-            local closest = 0
-            local distance = 0.5
-            for i,sprite in ipairs(sprites) do
-                local thisDist = math.dist(sprite[1], sprite[2], px, py)
-                if thisDist < distance then
-                    distance = thisDist
-                    closest = i
-                end
-            end
-    
-            if closest ~= 0 then
-                editingSprite = closest
-            end
-        elseif key == "s" then
-            saveFile()
-        elseif key == "l" then
-            loadFile()
-        elseif key == "p" then
-            local mx, my = love.mouse.getPosition()
-            px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
-            if spawnPlacing == 1 then
-                spawn = {px, py}
-                spawnPlacing = 2
-            else
-                local v = math.floor(math.atan2(py-spawn[2], px-spawn[1])/(math.pi/2)+math.pi/8)*(math.pi/2)
-                spawnLook = {math.floor(math.cos(v)), math.floor(math.sin(v))}
-                spawnPlacing = 1
-            end
+        return
+    end
+    if key == "m" then
+        drawSelect = not drawSelect
+    elseif key == "f" then
+        floor = selected
+    elseif key == "r" then
+        if roof == selected then
+            roof = 0
         else
-            if key == "backspace" then
-                sprites[editingSprite][4] = string.sub(sprites[editingSprite][4], 0, math.max(#sprites[editingSprite][4]-2, 0))
-            elseif key == "return" then
-                editingSprite = 0
-            elseif key == "delete" then
-                table.remove(sprites, editingSprite)
-                editingSprite = 0
+            roof = selected
+        end
+    elseif key == "z" then
+        if sys == "Win" then
+            sys = "Lin"
+        else
+            sys = "Win"
+        end
+    elseif key == "x" then
+        editingFName = true
+    elseif key == "e" then
+        local mx, my = love.mouse.getPosition()
+        px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
+
+        local closest = 0
+        local distance = 0.5
+        for i,sprite in ipairs(sprites) do
+            local thisDist = math.dist(sprite[1], sprite[2], px, py)
+            if thisDist < distance then
+                distance = thisDist
+                closest = i
             end
-            if editingSprite ~= 0 then
-                for i = 1,#keys do
-                    if key == string.sub(keys, i, i) then
-                        if #sprites[editingSprite][4] == 0 then
-                            sprites[editingSprite][4] = sprites[editingSprite][4] .. key
-                        else
-                            sprites[editingSprite][4] = sprites[editingSprite][4] .. " " .. key
-                        end
+        end
+
+        if closest ~= 0 then
+            editingSprite = closest
+        end
+    elseif key == "s" then
+        saveFile()
+    elseif key == "n" then
+        setSize = ""
+        definingSize = true
+    elseif key == "l" then
+        loadFile()
+    elseif key == "p" then
+        local mx, my = love.mouse.getPosition()
+        px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
+        if spawnPlacing == 1 then
+            spawn = {px, py}
+            spawnPlacing = 2
+        else
+            local v = math.floor(math.atan2(py-spawn[2], px-spawn[1])/(math.pi/2)+math.pi/8)*(math.pi/2)
+            spawnLook = {math.floor(math.cos(v)), math.floor(math.sin(v))}
+            spawnPlacing = 1
+        end
+    else
+        if key == "backspace" then
+            sprites[editingSprite][4] = string.sub(sprites[editingSprite][4], 0, math.max(#sprites[editingSprite][4]-2, 0))
+        elseif key == "return" then
+            editingSprite = 0
+        elseif key == "delete" then
+            table.remove(sprites, editingSprite)
+            editingSprite = 0
+        end
+        if editingSprite ~= 0 then
+            for i = 1,#keys do
+                if key == string.sub(keys, i, i) then
+                    if #sprites[editingSprite][4] == 0 then
+                        sprites[editingSprite][4] = sprites[editingSprite][4] .. key
+                    else
+                        sprites[editingSprite][4] = sprites[editingSprite][4] .. " " .. key
                     end
                 end
             end
@@ -397,7 +424,7 @@ function loadFile()
         table.insert(lines, line)
     end
     local nrsL = string.numsplit(lines[1], " ")
-    gW, gH = nrsL[1], nrsL[2]
+    grid = newGrid(nrsL[1], nrsL[2])
     floor = nrsL[3]
     if nrsL[4] then
         roof = nrsL[4]
