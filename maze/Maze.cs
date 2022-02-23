@@ -64,7 +64,7 @@ namespace textured_raycast.maze
             double[] ZBuffer = new double[game.GetWinWidth()];
 
             // Main game loop
-            while(true)
+            while(world.running)
             {
                 // make sure it knows what map its on
                 map = world.getMapByID(world.currentMap);
@@ -248,6 +248,7 @@ namespace textured_raycast.maze
                 foreach (Sprite sprite in map.sprites)
                 {
                     double distance = pos.DistTo(sprite.getPos());
+                    Console.WriteLine(distance + " : " + sprite.canInteract);
                     if (distance < interactDist && distance < distanceToInteract && sprite.canInteract)
                     {
                         spriteToInteract = sprite;
@@ -263,9 +264,6 @@ namespace textured_raycast.maze
                 Console.Write(world.currentMessage == "" ? world.interactMessage : world.currentMessage);
 
                 Console.WriteLine("                                                                  ");
-
-                Console.WriteLine(dir.x + "|" + dir.y+ "                                                                  ");
-                Console.WriteLine(pos.x + "|" + pos.y+ "                                                                  ");
 
                 game.DrawTexture(textures[8], -8, -24, new TexColor(0, 0, 0));
 

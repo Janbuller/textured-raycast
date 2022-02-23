@@ -5,6 +5,7 @@ using System.IO;
 using textured_raycast.maze.math;
 using textured_raycast.maze.sprites;
 using System.Globalization;
+using textured_raycast.maze.sprites.allSprites;
 
 namespace textured_raycast.maze
 {
@@ -26,6 +27,16 @@ namespace textured_raycast.maze
 
         public Vector2d playerStartPos;
         public Vector2d playerStartRot;
+
+        private Dictionary<int, Type> spriteTypes = new Dictionary<int, Type>(){
+            {0, typeof(DefaultSprite)},
+            {1, typeof(Barrel)},
+            {2, typeof(ShadyMan1)},
+            {3, typeof(Button)},
+            {4, typeof(MSG)},
+            {5, typeof(TP)},
+            {6, typeof(ShadyMan2)},
+        };
 
         public bool useSkybox = true;
 
@@ -77,15 +88,28 @@ namespace textured_raycast.maze
 
             for (int i = map.Count + 3; i < imageData.Length; i++)
             {
-                Console.WriteLine(imageData[i]);
+                Console.Write(imageData[i]);
                 string[] thisInfo = imageData[i].Split(' ');
+                int thisID = 0;
+
                 if (thisInfo.Length == 3)
                 {
-                    sprites.Add(new Sprite(double.Parse(thisInfo[0], CultureInfo.InvariantCulture), double.Parse(thisInfo[1], CultureInfo.InvariantCulture), int.Parse(thisInfo[2])));
+                    thisID = 0;
+                }
+                else
+                {
+                    thisID = int.Parse(thisInfo[3]);
+                }
+
+
+
+                if (thisInfo.Length == 3)
+                {
+                    sprites.Add(Activator.CreateInstance(spriteTypes[thisID], double.Parse(thisInfo[0], CultureInfo.InvariantCulture), double.Parse(thisInfo[1], CultureInfo.InvariantCulture), int.Parse(thisInfo[2]), 0, "") as Sprite);
                 }
                 else if (thisInfo.Length == 4)
                 {
-                    sprites.Add(new Sprite(double.Parse(thisInfo[0], CultureInfo.InvariantCulture), double.Parse(thisInfo[1], CultureInfo.InvariantCulture), int.Parse(thisInfo[2]), effectID: int.Parse(thisInfo[3])));
+                    sprites.Add(Activator.CreateInstance(spriteTypes[thisID], double.Parse(thisInfo[0], CultureInfo.InvariantCulture), double.Parse(thisInfo[1], CultureInfo.InvariantCulture), int.Parse(thisInfo[2]), int.Parse(thisInfo[3]), "") as Sprite);
                 }
                 else if (thisInfo.Length != 1)
                 {
@@ -98,10 +122,10 @@ namespace textured_raycast.maze
                         thisString = thisString.Substring(0, thisString.Length - 1);
 
 
-                    sprites.Add(new Sprite(double.Parse(thisInfo[0], CultureInfo.InvariantCulture), double.Parse(thisInfo[1], CultureInfo.InvariantCulture), int.Parse(thisInfo[2]), effectID: int.Parse(thisInfo[3]), whatsLeft: thisString));
+                    sprites.Add(Activator.CreateInstance(spriteTypes[thisID], double.Parse(thisInfo[0], CultureInfo.InvariantCulture), double.Parse(thisInfo[1], CultureInfo.InvariantCulture), int.Parse(thisInfo[2]), int.Parse(thisInfo[3]), thisString) as Sprite);
 
-                    if (sprites[sprites.Count - 1].effectID == 1)
-                        doorPositions.Add(sprites[sprites.Count - 1].extraEffects[2], sprites[sprites.Count - 1].getPos());
+                    //if (sprites[sprites.Count - 1].effectID == 1)
+                    //    doorPositions.Add(sprites[sprites.Count - 1].extraEffects[2], sprites[sprites.Count - 1].getPos());
                 }
             }
         }

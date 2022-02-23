@@ -58,6 +58,7 @@ local image = {
     "img/wolfenstein/greenlight.ppm",
     "img/wolfenstein/barrelBroken.ppm",
     "img/skybox.ppm",
+    "img/shadyman.ppm",
     "img/button.ppm",
 }
 local images = #image
@@ -203,6 +204,12 @@ function love.draw()
     love.graphics.print("[n] Size: "..setSize, 5, h-125)
     love.graphics.print("[z] Sys: "..sys, 5, h-105)
     love.graphics.print("[x] File name: "..fileName, 5, h-85)
+    
+    local Tmx, Tmy = love.mouse.getPosition()
+    local px, py = math.abs((((Tmx-w/2-gridOffsetX)/scale)+gW/2-1)-gW), (((Tmy-h/2-gridOffsetY)/scale)+gH/2-1)
+    local pointX, pointY = math.floor(px), math.floor(py)
+    love.graphics.print(px .. " | " .. py, 5, h-145)
+    love.graphics.print(pointX .. " | " .. pointY, 5, h-165)
 end
 
 function love.keypressed(key)
