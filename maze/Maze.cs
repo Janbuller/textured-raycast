@@ -281,7 +281,7 @@ namespace textured_raycast.maze
         }
 
         public static void HandleInput(ref World world, Map map, Vector2d pos, ref Vector2d dir, ref Vector2d plane, ref Sprite spriteToInteract) {
-            double rotSpeed = 0.2;
+            double rotSpeed = 0.1;
             double movSpeed = 0.1;
 
             float extraColDistMult = 1f;
