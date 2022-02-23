@@ -58,8 +58,7 @@ local image = {
     "img/wolfenstein/greenlight.ppm",
     "img/wolfenstein/barrelBroken.ppm",
     "img/skybox.ppm",
-    "img/wolfenstein/end.ppm",
-    "img/wolfenstein/exit.ppm",
+    "img/button.ppm",
 }
 local images = #image
 
@@ -104,7 +103,13 @@ local roof = 0
 local editingSprite = 0
 local sprites = {}
 
+local sys = "Win"
+local fileName = "newMap"
+
+local editingFName = false
+
 local keys = "1234567890"
+local txtKeys = "abcdefghijklmnopqrstuvwxyz"
 
 function newGrid(gW, gH)
     local grid = {}
@@ -189,65 +194,95 @@ function love.draw()
             end
         end
     end
+
+    love.graphics.print("[z] Sys: "..sys, 5, h-105)
+    love.graphics.print("[x] File name: "..fileName, 5, h-85)
 end
 
 function love.keypressed(key)
-    if key == "m" then
-        drawSelect = not drawSelect
-    elseif key == "f" then
-        floor = selected
-    elseif key == "r" then
-        if roof == selected then
-            roof = 0
-        else
-            roof = selected
+    if editingFName == true then
+        if key == "backspace" then
+            fileName = string.sub(fileName, 0, #fileName-1)
+        elseif key == "return" then
+            editingFName = false
         end
-    elseif key == "e" then
-        local mx, my = love.mouse.getPosition()
-        px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
-
-        local closest = 0
-        local distance = 0.5
-        for i,sprite in ipairs(sprites) do
-            local thisDist = math.dist(sprite[1], sprite[2], px, py)
-            if thisDist < distance then
-                distance = thisDist
-                closest = i
+        for i = 1,#txtKeys do
+            if key == string.sub(txtKeys, i, i) then
+                if love.keyboard.isDown("lshift") then
+                    fileName = fileName .. string.upper(key)
+                else
+                    fileName = fileName .. key
+                end
             end
         end
-
-        if closest ~= 0 then
-            editingSprite = closest
-        end
-    elseif key == "s" then
-        saveFile()
-    elseif key == "p" then
-        local mx, my = love.mouse.getPosition()
-        px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
-        if spawnPlacing == 1 then
-            spawn = {px, py}
-            spawnPlacing = 2
-        else
-            local v = math.floor(math.atan2(py-spawn[2], px-spawn[1])/(math.pi/2)+math.pi/8)*(math.pi/2)
-            spawnLook = {math.floor(math.cos(v)), math.floor(math.sin(v))}
-            spawnPlacing = 1
-        end
     else
-        if key == "backspace" then
-            sprites[editingSprite][4] = string.sub(sprites[editingSprite][4], 0, math.max(#sprites[editingSprite][4]-2, 0))
-        elseif key == "return" then
-            editingSprite = 0
-        elseif key == "delete" then
-            table.remove(sprites, editingSprite)
-            editingSprite = 0
-        end
-        if editingSprite ~= 0 then
-            for i = 1,#keys do
-                if key == string.sub(keys, i, i) then
-                    if #sprites[editingSprite][4] == 0 then
-                        sprites[editingSprite][4] = sprites[editingSprite][4] .. key
-                    else
-                        sprites[editingSprite][4] = sprites[editingSprite][4] .. " " .. key
+        if key == "m" then
+            drawSelect = not drawSelect
+        elseif key == "f" then
+            floor = selected
+        elseif key == "r" then
+            if roof == selected then
+                roof = 0
+            else
+                roof = selected
+            end
+        elseif key == "z" then
+            if sys == "Win" then
+                sys = "Lin"
+            else
+                sys = "Win"
+            end
+        elseif key == "x" then
+            editingFName = true
+        elseif key == "e" then
+            local mx, my = love.mouse.getPosition()
+            px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
+    
+            local closest = 0
+            local distance = 0.5
+            for i,sprite in ipairs(sprites) do
+                local thisDist = math.dist(sprite[1], sprite[2], px, py)
+                if thisDist < distance then
+                    distance = thisDist
+                    closest = i
+                end
+            end
+    
+            if closest ~= 0 then
+                editingSprite = closest
+            end
+        elseif key == "s" then
+            saveFile()
+        elseif key == "l" then
+            loadFile()
+        elseif key == "p" then
+            local mx, my = love.mouse.getPosition()
+            px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
+            if spawnPlacing == 1 then
+                spawn = {px, py}
+                spawnPlacing = 2
+            else
+                local v = math.floor(math.atan2(py-spawn[2], px-spawn[1])/(math.pi/2)+math.pi/8)*(math.pi/2)
+                spawnLook = {math.floor(math.cos(v)), math.floor(math.sin(v))}
+                spawnPlacing = 1
+            end
+        else
+            if key == "backspace" then
+                sprites[editingSprite][4] = string.sub(sprites[editingSprite][4], 0, math.max(#sprites[editingSprite][4]-2, 0))
+            elseif key == "return" then
+                editingSprite = 0
+            elseif key == "delete" then
+                table.remove(sprites, editingSprite)
+                editingSprite = 0
+            end
+            if editingSprite ~= 0 then
+                for i = 1,#keys do
+                    if key == string.sub(keys, i, i) then
+                        if #sprites[editingSprite][4] == 0 then
+                            sprites[editingSprite][4] = sprites[editingSprite][4] .. key
+                        else
+                            sprites[editingSprite][4] = sprites[editingSprite][4] .. " " .. key
+                        end
                     end
                 end
             end
@@ -328,7 +363,6 @@ function saveFile()
 
     for y = 1,gH do
         for x = gW,1,-1 do
-            print(grid[x][y])
             str = str..grid[x][y].."\n"
         end
     end
@@ -343,39 +377,58 @@ function saveFile()
 
     str = string.sub(str, 0, #str-1)
 
-    local f = io.open("newMap.map", "w")
+    local f = io.open(getPath()..fileName..".map", "w")
     f:write(str)
     f:close()
 end
 
-function loadFile()
-    local str = ""
-
-    if roof == 0 then
-        str = str..gW.." "..gH.." "..floor.."\n"
-    else
-        str = str..gW.." "..gH.." "..floor.." "..roof.."\n"
+function getPath()
+    if sys == "Win" then
+        return "bin/Debug/netcoreapp3.1/maps/"
+    elseif sys == "Lin" then
+        return "maps/"
     end
-    str = str..math.abs((spawn[1]+gW/2-1)-gW).." "..(spawn[2]+gH/2-1).."\n"
-    str = str..spawnLook[1].." "..spawnLook[2].."\n"
+end
 
+function loadFile()
+    local f = io.open(getPath()..fileName..".map", "r")
+    local lines = {}
+    for line in f:lines() do
+        table.insert(lines, line)
+    end
+    local nrsL = string.numsplit(lines[1], " ")
+    gW, gH = nrsL[1], nrsL[2]
+    floor = nrsL[3]
+    if nrsL[4] then
+        roof = nrsL[4]
+    end
+    
+    nrsL = string.numsplit(lines[2], " ")
+    spawn = {(math.abs(nrsL[1]-gW)-gW/2+1), (nrsL[2]-gH/2+1)}
+    nrsL = string.numsplit(lines[3], " ")
+    spawnLook = {nrsL[1], nrsL[2]}
+
+    local count = 0
     for y = 1,gH do
         for x = gW,1,-1 do
-            str = str..grid[x][y].."\n"
+            grid[x][y] = tonumber(lines[4+count])
+            count = count + 1
         end
     end
 
-    for _, sprite in pairs(sprites) do
-        if sprite[4] == "" then
-            str = str..(sprite[1]+gW/2-1).." "..(sprite[2]+gH/2-1).." "..sprite[3].."\n"
+    sprites = {}
+    for i = count+4, #lines do
+        nrsL = string.numsplit(lines[i], " ")
+        if #nrsL == 3 then
+            table.insert(sprites, {(math.abs(nrsL[1]-gW)-gW/2+1), (nrsL[2]-gH/2+1), nrsL[3], ""})
         else
-            str = str..(sprite[1]+gW/2-1).." "..(sprite[2]+gH/2-1).." "..sprite[3].." "..sprite[4].."\n"
+            local str = ""
+            for i2 = 4, #nrsL do
+                str = str..nrsL[i2].." "
+            end
+            str = string.sub(str, 0, math.max(0, #str-1))
+            
+            table.insert(sprites, {(math.abs(nrsL[1]-gW)-gW/2+1), (nrsL[2]-gH/2+1), nrsL[3], str})
         end
     end
-
-    str = string.sub(str, 0, #str-1)
-
-    local f = io.open("newMap.map", "w")
-    f:write(str)
-    f:close()
 end
