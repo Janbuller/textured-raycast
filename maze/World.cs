@@ -8,7 +8,7 @@ namespace textured_raycast.maze
         public int currentMap = 1;
         private Dictionary<int, Map> maps = new Dictionary<int, Map>()
         {
-            {1, new Map("maps/overworld.map")},
+            {1, new Map("maps/test.map")},
             {2, new Map("maps/someHiddenPlace.map")},
         };
 
