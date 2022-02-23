@@ -386,7 +386,7 @@ function getPath()
     if sys == "Win" then
         return "bin/Debug/netcoreapp3.1/maps/"
     elseif sys == "Lin" then
-        return "maps/"
+        return "../maps/"
     end
 end
 
