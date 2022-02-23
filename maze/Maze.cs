@@ -276,6 +276,8 @@ namespace textured_raycast.maze
                 HandleInput(ref world, map, pos, ref dir, ref plane, ref spriteToInteract);
 
             }
+
+            return false;
         }
 
         public static void HandleInput(ref World world, Map map, Vector2d pos, ref Vector2d dir, ref Vector2d plane, ref Sprite spriteToInteract) {
