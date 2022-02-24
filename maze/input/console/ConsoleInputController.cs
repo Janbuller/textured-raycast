@@ -25,10 +25,10 @@ namespace textured_raycast.maze.input.console
         }
 
         public void Init() {
-            Task.Run(() => { Run(); });
+            Task.Run(() => { InputLoop(); });
         }
 
-        private void Run() {
+        private void InputLoop() {
             while(true) {
                 while(Console.KeyAvailable) {
                     Keys key = ConvertKeys(Console.ReadKey().Key);

@@ -251,7 +251,7 @@ namespace textured_raycast.maze
                 foreach (Sprite sprite in map.sprites)
                 {
                     double distance = pos.DistTo(sprite.getPos());
-                    Console.WriteLine(distance + " : " + sprite.canInteract);
+                    // Console.WriteLine(distance + " : " + sprite.canInteract);
                     if (distance < interactDist && distance < distanceToInteract && sprite.canInteract)
                     {
                         spriteToInteract = sprite;
