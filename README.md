@@ -1,2 +1,2 @@
 # textured-raycast
-simple, textured, console-based raycasting engine in c#.
+~~simple~~, textured, console-based raycasting engine in c#.
