@@ -5,9 +5,9 @@ local socket = require("socket")
 function loadImage(path)
     local str, len = love.filesystem.read(path)
 
-    str = string.gsub(str, "#[^\r\n]+\r\n", "")
+    str = string.gsub(str, "#[^\r\n]+\r\n?\n?", "")
 
-    local _,start, w, h, colorMax = string.find(str, "(%d+) (%d+)\r\n(%d+)")
+    local _,start, w, h, colorMax = string.find(str, "(%d+) (%d+)\r\n?\n?(%d+)")
     local iData = love.image.newImageData(tonumber(h), tonumber(w))
     colorMax = tonumber(colorMax)
 
@@ -38,7 +38,6 @@ end
 
 local image = {
     "img/wolfenstein/greystone.ppm",
-    --[[
     "img/wolfenstein/redbrick.ppm",
     "img/wolfenstein/bluestone.ppm",
     "img/test5.ppm",
@@ -49,7 +48,7 @@ local image = {
     "img/wolfenstein/greenlight.ppm",
     "img/wolfenstein/barrelBroken.ppm",
     "img/shadyman.ppm",
-    "img/button.ppm",]]
+    "img/button.ppm",
 }
 local images = #image
 
@@ -65,9 +64,7 @@ for i, path in ipairs(image) do
     love.graphics.print(i.."/"..images, 15, 15)
 
 	love.graphics.present()
-    local now = socket.gettime()
     image[i] = loadImage(path)
-    print(socket.gettime()-now)
 end
 
 local w, h = love.graphics.getWidth(), love.graphics.getHeight()
