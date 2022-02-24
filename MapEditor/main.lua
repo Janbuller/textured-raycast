@@ -1,38 +1,28 @@
 local love = love
 
+local socket = require("socket")
+
 function loadImage(path)
-    local linesFromFile = {}
-    for line in love.filesystem.lines(path) do table.insert(linesFromFile, line) end
-    if (linesFromFile[1] ~= "P3") then
-        return
-    end
-    local lines = {}
-    for _, line in pairs(linesFromFile) do
-        if string.sub(line, 0, 1) ~= "#" then
-            table.insert(lines, line)
-        end
-    end
-    local nrs = string.numsplit(lines[2], " ")
-    local w, h = nrs[1], nrs[2]
-    local maxColVal = tonumber(lines[3])
-    local pixles = {}
+    local str, len = love.filesystem.read(path)
 
-    for i = 4,#lines, 3 do
-        local line = lines[i]
-        local color = {0, 0, 0}
-        for j = 0,2 do
-            color[j+1] = tonumber(lines[i+j])/255
-        end
-        pixles[(i-4)/3+1] = color
-    end
+    str = string.gsub(str, "#[^\r\n]+\r\n", "")
 
-    local thisP = 1
-    local iData = love.image.newImageData(h, w)
-    for x = 0,w-1 do
-        for y = 0,h-1 do
-            iData:setPixel(y, x, pixles[thisP][1], pixles[thisP][2], pixles[thisP][3], 1)
-            thisP = thisP + 1
+    local _,start, w, h, colorMax = string.find(str, "(%d+) (%d+)\r\n(%d+)")
+    local iData = love.image.newImageData(tonumber(h), tonumber(w))
+    colorMax = tonumber(colorMax)
+
+    local i = 0
+    local thisColor = {}
+    for strPart in string.gmatch(str, "(%d+)") do
+        if i > 3 then
+            local colorPos = ((i-1)%3)+1
+            thisColor[colorPos] = tonumber(strPart)/colorMax
+            if i%3 == 0 then
+                local pos = math.ceil(i/3)-2
+                iData:setPixel(pos-math.floor(pos/w)*w, math.floor(pos/w), thisColor[1], thisColor[2], thisColor[3])
+            end
         end
+        i = i + 1
     end
 
     return love.graphics.newImage(iData)
@@ -48,6 +38,7 @@ end
 
 local image = {
     "img/wolfenstein/greystone.ppm",
+    --[[
     "img/wolfenstein/redbrick.ppm",
     "img/wolfenstein/bluestone.ppm",
     "img/test5.ppm",
@@ -57,9 +48,8 @@ local image = {
     "img/wolfenstein/barrel.ppm",
     "img/wolfenstein/greenlight.ppm",
     "img/wolfenstein/barrelBroken.ppm",
-    "img/skybox.ppm",
     "img/shadyman.ppm",
-    "img/button.ppm",
+    "img/button.ppm",]]
 }
 local images = #image
 
@@ -75,7 +65,9 @@ for i, path in ipairs(image) do
     love.graphics.print(i.."/"..images, 15, 15)
 
 	love.graphics.present()
+    local now = socket.gettime()
     image[i] = loadImage(path)
+    print(socket.gettime()-now)
 end
 
 local w, h = love.graphics.getWidth(), love.graphics.getHeight()
