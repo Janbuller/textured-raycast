@@ -5,9 +5,9 @@ local socket = require("socket")
 function loadImage(path)
     local str, len = love.filesystem.read(path)
 
-    str = string.gsub(str, "#[^\r\n]+\r\n?\n?", "")
+    str = string.gsub(str, "#[^\r\n]+\r?\n", "")
 
-    local _,start, w, h, colorMax = string.find(str, "(%d+) (%d+)\r\n?\n?(%d+)")
+    local _,start, w, h, colorMax = string.find(str, "(%d+) (%d+)\r?\n(%d+)")
     local iData = love.image.newImageData(tonumber(h), tonumber(w))
     colorMax = tonumber(colorMax)
 
