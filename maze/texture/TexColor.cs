@@ -3,6 +3,9 @@ using System.Drawing;
 
 namespace textured_raycast.maze.texture
 {
+    /// <summary>
+    /// A simple, rgb (0-255) based color class, used for the textures.
+    /// </summary>
     class TexColor {
         public int r, g, b;
 
@@ -16,6 +19,9 @@ namespace textured_raycast.maze.texture
             setColorWithMax(r, g, b, max);
         }
 
+        /// <summary>
+        /// Sets color, based on a clamping of (0-<c>max</c>).
+        /// </summary>
         public void setColorWithMax(int r, int g, int b, int max) {
             int rel = 255 / max;
             this.r = r * rel;
@@ -23,6 +29,9 @@ namespace textured_raycast.maze.texture
             this.b = b * rel;
         }
 
+        /// <summary>
+        /// Gets a <c>System.Drawing</c> based color object from a <c>TexColor</c>
+        /// </summary>
         public Color getSysColor() {
             return Color.FromArgb(r, g, b);
         }
