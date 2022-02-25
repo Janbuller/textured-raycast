@@ -191,6 +191,7 @@ namespace textured_raycast.maze
                         line += "▀".Pastel(buffer[x + y * winWidth].getSysColor()).PastelBg(buffer[x + (y + 1) * winWidth].getSysColor());
                     }
                 }
+                Console.CursorLeft = 0;
                 Console.WriteLine(line);
             }
         }
