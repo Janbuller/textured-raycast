@@ -2,7 +2,7 @@
 {
     internal class Wall
     {
-        public bool isWal = true;
+        public bool isWall = true;
         public int wallID;
         public int thisTexID;
         public bool doDraw = true;
@@ -15,7 +15,7 @@
             thisTexID = wallID > 0 ? wallID : 1;
 
             if (wallID == 0)
-                isWal = false;
+                isWall = false;
 
             if (wallID == -1)
                 doDraw = false;
