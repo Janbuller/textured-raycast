@@ -12,7 +12,7 @@ using Pastel;
 namespace textured_raycast.maze.input
 {
     interface ILowLevelInput {
-        bool GetKey(Keys key);
+        KeyState GetKey(Keys key);
         void Init();
     }
 }

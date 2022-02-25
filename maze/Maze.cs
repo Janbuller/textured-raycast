@@ -289,7 +289,7 @@ namespace textured_raycast.maze
                 // Multiplied with movement speed, during collision check,
                 // forcing the player to stay slightly further away from
                 // walls.
-                if (InputManager.GetKey(Keys.K_UP) || InputManager.GetKey(Keys.K_W))
+                if (InputManager.GetKey(Keys.K_UP) != KeyState.KEY_UP || InputManager.GetKey(Keys.K_W) != KeyState.KEY_UP)
                 {
                     // CellX and CellY holds the cell, the player would move
                     // into, in those directions. Using a vector doesn't
@@ -306,7 +306,7 @@ namespace textured_raycast.maze
                     cellX.Collide(ref world);
                     cellY.Collide(ref world);
                 }
-                if (InputManager.GetKey(Keys.K_DOWN) || InputManager.GetKey(Keys.K_S))
+                if (InputManager.GetKey(Keys.K_DOWN) != KeyState.KEY_UP  || InputManager.GetKey(Keys.K_S) != KeyState.KEY_UP)
                 {
                     // Same as before, just backwards, so with subtraction instead of addition.
                     Wall cellX = map.GetWall((int)(pos.x - dir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
@@ -317,7 +317,7 @@ namespace textured_raycast.maze
                     cellX.Collide(ref world);
                     cellY.Collide(ref world);
                 }
-                if (InputManager.GetKey(Keys.K_D))
+                if (InputManager.GetKey(Keys.K_D) != KeyState.KEY_UP)
                 {
                     Vector2d newDir = new Vector2d(-dir.y, dir.x);
 
@@ -329,7 +329,7 @@ namespace textured_raycast.maze
                     cellX.Collide(ref world);
                     cellY.Collide(ref world);
                 }
-                if (InputManager.GetKey(Keys.K_A))
+                if (InputManager.GetKey(Keys.K_A) != KeyState.KEY_UP)
                 {
                     Vector2d newDir = new Vector2d(-dir.y, dir.x) * -1;
 
@@ -341,7 +341,7 @@ namespace textured_raycast.maze
                     cellX.Collide(ref world);
                     cellY.Collide(ref world);
                 }
-                if (InputManager.GetKey(Keys.K_RIGHT))
+                if (InputManager.GetKey(Keys.K_RIGHT) != KeyState.KEY_UP)
                 {
                     // Use too much math, to calculate the direction unit vector.
                     double oldDirX = dir.x;
@@ -352,7 +352,7 @@ namespace textured_raycast.maze
                     plane.x = plane.x * Math.Cos(-rotSpeed) - plane.y * Math.Sin(-rotSpeed);
                     plane.y = oldPlaneX * Math.Sin(-rotSpeed) + plane.y * Math.Cos(-rotSpeed);
                 }
-                if (InputManager.GetKey(Keys.K_LEFT))
+                if (InputManager.GetKey(Keys.K_LEFT) != KeyState.KEY_UP)
                 {
                     // Use too much math, to calculate the direction unit vector.
                     double oldDirX = dir.x;
@@ -363,7 +363,7 @@ namespace textured_raycast.maze
                     plane.x = plane.x * Math.Cos(rotSpeed) - plane.y * Math.Sin(rotSpeed);
                     plane.y = oldPlaneX * Math.Sin(rotSpeed) + plane.y * Math.Cos(rotSpeed);
                 }
-                if (InputManager.GetKey(Keys.K_E))
+                if (InputManager.GetKey(Keys.K_E) == KeyState.KEY_DOWN)
                 {
                     if (spriteToInteract != null)
                         spriteToInteract.Activate(ref world);

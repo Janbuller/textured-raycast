@@ -2,6 +2,12 @@ using System.Collections.Generic;
 
 namespace textured_raycast.maze.input
 {
+    enum KeyState {
+        KEY_UP,
+        KEY_DOWN,
+        KEY_HELD,
+    }
+
     class InputManager{
 
         static ILowLevelInput InputController;
@@ -11,7 +17,7 @@ namespace textured_raycast.maze.input
             InputController.Init();
         }
 
-        public static bool GetKey(Keys key) {
+        public static KeyState GetKey(Keys key) {
             return InputController.GetKey(key);
         }
     }
