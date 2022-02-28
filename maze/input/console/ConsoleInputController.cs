@@ -36,7 +36,7 @@ namespace textured_raycast.maze.input.console
         private void InputLoop() {
             while(true) {
                 while(Console.KeyAvailable) {
-                    Keys key = ConvertKeys(Console.ReadKey().Key);
+                    Keys key = ConvertKeys(Console.ReadKey(true).Key);
 
                     pressedKeys[key] = new Press(KeyState.KEY_DOWN, DateTime.Now.Ticks);
                 }
