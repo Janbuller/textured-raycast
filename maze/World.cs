@@ -3,6 +3,15 @@ using textured_raycast.maze.math;
 
 namespace textured_raycast.maze
 {
+    public enum states
+    {
+        Game,
+        Inventory,
+        Fighting,
+        UI,
+        Stopping,
+    }
+
     internal class World
     {
         public int currentMap = 1;
@@ -11,7 +20,7 @@ namespace textured_raycast.maze
             {1, new Map("maps/overworld.map")}
         };
 
-        public bool running = true;
+        public states state = states.Game;
 
         public string currentMessage = ""; // this is to show messages to the player or something
         public string interactMessage = ""; // This takes priority over current message

@@ -65,8 +65,9 @@ namespace textured_raycast.maze
             double[] ZBuffer = new double[game.GetWinWidth()];
 
             // Main game loop
-            while(world.running)
+            while(world.state != states.Stopping)
             {
+
                 // make sure it knows what map its on
                 map = world.getMapByID(world.currentMap);
 
@@ -78,163 +79,8 @@ namespace textured_raycast.maze
                 // Do the floor/ceiling casting.
                 FloorCasting(ref game, dir, plane, pos, visRange, map);
 
-                // Loop through every x in the "window", casting a ray for each.
-                // ---
-                // Raycasting is done using the digital differential analyzer
-                // algorithm. For a straight line, the x distance, between
-                // intersections of a grid on the y axis, is the same. Same goes
-                // inverse. By checking all the intersected cells for both,
-                // swtiching between them and always using the current shortest,
-                // the first gridcell intersection can be found.
-                for(int x = 0; x < game.GetWinWidth(); x++) {
-                    // The current x-coordinate on the camera viewport "plane"
-                    // (line), corresponding to the current viewspace
-                    // x-coordinate.
-                    // The x-range of the rendering space then becomes [-1;1].
-                    // This allows for easier further calculations.
-                    //
-                    // Formula:
-                    // (   2*x   )
-                    // ( ------- ) - 1
-                    // (  Width  )
-                    double cameraX = ( (2 * x) / (double)game.GetWinWidth()) - 1;
-                    // A unit vector, representing the direction of the
-                    // currently cast ray. Calculated by the player direction
-                    // plus part of the viewport "plane".
-                    Vector2d rayDir = dir + (plane * cameraX);
-
-                    // The player position in map-coordinates.
-                    Vector2i mapPos = (Vector2i)pos.Floor();
-
-                    // sideDist holds the initial length, needed to travel, for
-                    // the ray to be on an x-intersection and a y-intersection.
-                    Vector2d sideDist = new Vector2d(0, 0);
-                    // The x-value holds the amount, x has to increase by, to go
-                    // from one intersection of the grid in the y-axis, to
-                    // another. The y-value is the opposite.
-                    // The ternary operator is used to avoid division by zero,
-                    // setting it to a really high number in that case.
-                    Vector2d diffDist = new Vector2d(rayDir.x == 0 ? 100000000 : Math.Abs(1 / rayDir.x),
-                                                     rayDir.y == 0 ? 100000000 : Math.Abs(1 / rayDir.y));
-                    // The distance to the intersected cell, perpendicular to
-                    // the camera plane.
-                    double perpWallDist;
-
-                    // Holds the direction to move in for x and y.
-                    // X: -1 = left ; +1 = right
-                    // Y: -1 = up   ; +1 = down
-                    Vector2i step = new Vector2i(0, 0);
-
-                    // Sets step variable and calculates sideDist for both x and y.
-                    if(rayDir.x < 0) {
-                        step.x = -1;
-                        sideDist.x = (pos.x - (double)mapPos.x) * diffDist.x;
-                    } else {
-                        step.x = 1;
-                        sideDist.x = ((double)mapPos.x + 1 - pos.x) * diffDist.x;
-                    }
-
-                    if(rayDir.y < 0) {
-                        step.y = -1;
-                        sideDist.y = (pos.y - (double)mapPos.y) * diffDist.y;
-                    } else {
-                        step.y = 1;
-                        sideDist.y = ((double)mapPos.y + 1 - pos.y) * diffDist.y;
-                    }
-
-                    // Whether or not the ray hit a wall. Used to get out of a
-                    // while loop.
-                    bool hit = false;
-                    // The cell-type / number of the hit wall.
-                    Wall hitWall = null;
-                    // Whether it was hit in a y-intersection or an
-                    // x-intersection.
-                    int side = 0;
-                    // This while loop runs, until a ray hits a cell.
-                    while(!hit) {
-                        // DDA essentially just casts two rays the same direction.
-                        // On looking for x-intersections and one for
-                        // y-intersections. We switch between the two, depending
-                        // on which is currently shorter, then keep casting
-                        // that, until the other is shorter.
-                        // SideDist is now holding the full ray distance.
-                        if(sideDist.x < sideDist.y) {
-                            // Increment sideDist by the distance between
-                            // intersections.
-                            sideDist.x += diffDist.x;
-                            // mapPos now holds the position of the intersected
-                            // cell.
-                            mapPos.x += step.x;
-                            // Set side, since we know, if this ray hit, the
-                            // side was 0.
-                            side = 0;
-                        } else {
-                            // Increment sideDist by the distance between
-                            // intersections.
-                            sideDist.y += diffDist.y;
-                            // mapPos now holds the position of the intersected
-                            // cell.
-                            mapPos.y += step.y;
-                            // Set side, since we know, if this ray hit, the
-                            // side was 0.
-                            side = 1;
-                        }
-
-                        // Check if the currently intersected cell was not
-                        // empty.
-                        if(map.IsWal((int)mapPos.x, (int)mapPos.y)) {
-                            hit = true;
-                            hitWall = map.GetWall((int)mapPos.x, (int)mapPos.y);
-                        }
-
-                    }
-
-                    // Calculate the distance to the wall, depending on which
-                    // intersection was made. This is because DDA essentially
-                    // just casts two rays the same direction. On looking for
-                    // x-intersections and one for y-intersections. We use the
-                    // side variable to know which ray hit, calculating the
-                    // distance it traveled.
-                    if(side == 0)
-                        perpWallDist = (sideDist.x - diffDist.x);
-                    else
-                        perpWallDist = (sideDist.y - diffDist.y);
-
-                    // lineHeight stores the height needed to draw the ray in
-                    // screen coordinates.
-                    // It is calculated in a try-catch block, to catch a
-                    // division by zero and in that case, make it a very large
-                    // number.
-                    int lineHeight;
-                    try {
-                        lineHeight = Convert.ToInt32(game.GetWinHeight() / perpWallDist);
-                    } catch (Exception e) {
-                        lineHeight = 1000;
-                    }
-
-                    // Darken color based on distance and visRange variable.
-                    float darken = 0.9f;
-                    darken = (float)Math.Max(0, darken - perpWallDist * (visRange * 0.005));
-
-                    Texture tex = textures[hitWall == null ? 1 : hitWall.thisTexID];
-                    double wallX;
-                    if (side == 0)
-                        wallX = pos.y + perpWallDist * rayDir.y;
-                    else
-                        wallX = pos.x + perpWallDist * rayDir.x;
-                    wallX -= (int)wallX;
-
-                    int texX = (int)(wallX * tex.width);
-                    // if(side == 0 && rayDir.x > 0) texX = tex.width - texX - 1;
-                    // if(side == 1 && rayDir.y < 0) texX = tex.width - texX - 1;
-
-                    // Draw the ray.
-                    if (hitWall.doDraw)
-                        game.DrawVerLine(x, lineHeight, tex, texX, darken);
-
-                    // Set z-buffer
-                    ZBuffer[x] = perpWallDist;
-                }
+                // Do the wall casting
+                WallCasting(ref game, ref ZBuffer, dir, plane, pos, visRange, map);
 
                 SpriteCasting(ref game, map.sprites, pos, plane, dir, ZBuffer, visRange);
 
@@ -370,7 +216,185 @@ namespace textured_raycast.maze
                 }
         }
 
-        public static void FloorCasting(ref ConsoleEngine game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map) {
+        public static void WallCasting(ref ConsoleEngine game, ref double[] ZBuffer, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map)
+        {
+
+            // Loop through every x in the "window", casting a ray for each.
+            // ---
+            // Raycasting is done using the digital differential analyzer
+            // algorithm. For a straight line, the x distance, between
+            // intersections of a grid on the y axis, is the same. Same goes
+            // inverse. By checking all the intersected cells for both,
+            // swtiching between them and always using the current shortest,
+            // the first gridcell intersection can be found.
+            for (int x = 0; x < game.GetWinWidth(); x++)
+            {
+                // The current x-coordinate on the camera viewport "plane"
+                // (line), corresponding to the current viewspace
+                // x-coordinate.
+                // The x-range of the rendering space then becomes [-1;1].
+                // This allows for easier further calculations.
+                //
+                // Formula:
+                // (   2*x   )
+                // ( ------- ) - 1
+                // (  Width  )
+                double cameraX = ((2 * x) / (double)game.GetWinWidth()) - 1;
+                // A unit vector, representing the direction of the
+                // currently cast ray. Calculated by the player direction
+                // plus part of the viewport "plane".
+                Vector2d rayDir = dir + (plane * cameraX);
+
+                // The player position in map-coordinates.
+                Vector2i mapPos = (Vector2i)pos.Floor();
+
+                // sideDist holds the initial length, needed to travel, for
+                // the ray to be on an x-intersection and a y-intersection.
+                Vector2d sideDist = new Vector2d(0, 0);
+                // The x-value holds the amount, x has to increase by, to go
+                // from one intersection of the grid in the y-axis, to
+                // another. The y-value is the opposite.
+                // The ternary operator is used to avoid division by zero,
+                // setting it to a really high number in that case.
+                Vector2d diffDist = new Vector2d(rayDir.x == 0 ? 100000000 : Math.Abs(1 / rayDir.x),
+                                                 rayDir.y == 0 ? 100000000 : Math.Abs(1 / rayDir.y));
+                // The distance to the intersected cell, perpendicular to
+                // the camera plane.
+                double perpWallDist;
+
+                // Holds the direction to move in for x and y.
+                // X: -1 = left ; +1 = right
+                // Y: -1 = up   ; +1 = down
+                Vector2i step = new Vector2i(0, 0);
+
+                // Sets step variable and calculates sideDist for both x and y.
+                if (rayDir.x < 0)
+                {
+                    step.x = -1;
+                    sideDist.x = (pos.x - (double)mapPos.x) * diffDist.x;
+                }
+                else
+                {
+                    step.x = 1;
+                    sideDist.x = ((double)mapPos.x + 1 - pos.x) * diffDist.x;
+                }
+
+                if (rayDir.y < 0)
+                {
+                    step.y = -1;
+                    sideDist.y = (pos.y - (double)mapPos.y) * diffDist.y;
+                }
+                else
+                {
+                    step.y = 1;
+                    sideDist.y = ((double)mapPos.y + 1 - pos.y) * diffDist.y;
+                }
+
+                // Whether or not the ray hit a wall. Used to get out of a
+                // while loop.
+                bool hit = false;
+                // The cell-type / number of the hit wall.
+                Wall hitWall = null;
+                // Whether it was hit in a y-intersection or an
+                // x-intersection.
+                int side = 0;
+                // This while loop runs, until a ray hits a cell.
+                while (!hit)
+                {
+                    // DDA essentially just casts two rays the same direction.
+                    // On looking for x-intersections and one for
+                    // y-intersections. We switch between the two, depending
+                    // on which is currently shorter, then keep casting
+                    // that, until the other is shorter.
+                    // SideDist is now holding the full ray distance.
+                    if (sideDist.x < sideDist.y)
+                    {
+                        // Increment sideDist by the distance between
+                        // intersections.
+                        sideDist.x += diffDist.x;
+                        // mapPos now holds the position of the intersected
+                        // cell.
+                        mapPos.x += step.x;
+                        // Set side, since we know, if this ray hit, the
+                        // side was 0.
+                        side = 0;
+                    }
+                    else
+                    {
+                        // Increment sideDist by the distance between
+                        // intersections.
+                        sideDist.y += diffDist.y;
+                        // mapPos now holds the position of the intersected
+                        // cell.
+                        mapPos.y += step.y;
+                        // Set side, since we know, if this ray hit, the
+                        // side was 0.
+                        side = 1;
+                    }
+
+                    // Check if the currently intersected cell was not
+                    // empty.
+                    if (map.IsWal((int)mapPos.x, (int)mapPos.y))
+                    {
+                        hit = true;
+                        hitWall = map.GetWall((int)mapPos.x, (int)mapPos.y);
+                    }
+
+                }
+
+                // Calculate the distance to the wall, depending on which
+                // intersection was made. This is because DDA essentially
+                // just casts two rays the same direction. On looking for
+                // x-intersections and one for y-intersections. We use the
+                // side variable to know which ray hit, calculating the
+                // distance it traveled.
+                if (side == 0)
+                    perpWallDist = (sideDist.x - diffDist.x);
+                else
+                    perpWallDist = (sideDist.y - diffDist.y);
+
+                // lineHeight stores the height needed to draw the ray in
+                // screen coordinates.
+                // It is calculated in a try-catch block, to catch a
+                // division by zero and in that case, make it a very large
+                // number.
+                int lineHeight;
+                try
+                {
+                    lineHeight = Convert.ToInt32(game.GetWinHeight() / perpWallDist);
+                }
+                catch (Exception e)
+                {
+                    lineHeight = 1000;
+                }
+
+                // Darken color based on distance and visRange variable.
+                float darken = 0.9f;
+                darken = (float)Math.Max(0, darken - perpWallDist * (visRange * 0.005));
+
+                Texture tex = textures[hitWall == null ? 1 : hitWall.thisTexID];
+                double wallX;
+                if (side == 0)
+                    wallX = pos.y + perpWallDist * rayDir.y;
+                else
+                    wallX = pos.x + perpWallDist * rayDir.x;
+                wallX -= (int)wallX;
+
+                int texX = (int)(wallX * tex.width);
+                // if(side == 0 && rayDir.x > 0) texX = tex.width - texX - 1;
+                // if(side == 1 && rayDir.y < 0) texX = tex.width - texX - 1;
+
+                // Draw the ray.
+                if (hitWall.doDraw)
+                    game.DrawVerLine(x, lineHeight, tex, texX, darken);
+
+                // Set z-buffer
+                ZBuffer[x] = perpWallDist;
+            }
+        }
+
+        public static void FloorCasting(ref ConsoleEngine game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map)
+        {
             // Grabs the floor and ceiling texture, before the loop, since we
             // don't want differently textured ceiling or floor.
             Texture floorTex =  textures[map.floorTexID];
