@@ -178,7 +178,6 @@ namespace textured_raycast.maze
             // This used to be Console.Clear(), but that has insane flickering
             // problems on Windows.
             Console.CursorTop = 0;
-            Console.CursorLeft = 0;
             // Draw buffer, line by line. This improves performance.
             for (int y = 0; y <  winHeight; y+=2) {
                 string line = "";
@@ -191,6 +190,11 @@ namespace textured_raycast.maze
                         line += "▀".Pastel(buffer[x + y * winWidth].getSysColor()).PastelBg(buffer[x + (y + 1) * winWidth].getSysColor());
                     }
                 }
+                // This makes every line render at the far left. This is
+                // necessary, due to the asynchronous input handling, when using
+                // console-based input, as it shows the pressed button, moving
+                // the rendered line to the right.
+                Console.CursorLeft = 0;
                 Console.WriteLine(line);
             }
         }

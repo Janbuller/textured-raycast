@@ -125,9 +125,9 @@ namespace textured_raycast.maze
         }
 
         // Return if specific cell is a wall / should be drawn.
-        public bool IsWal(int x, int y)
+        public bool IsWall(int x, int y)
         {
-            return map[x + y * width].isWal;
+            return map[x + y * width].isWall;
         }
 
         public void openDoor(ref World world, int myID, int doorID)

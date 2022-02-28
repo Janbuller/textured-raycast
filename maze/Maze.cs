@@ -82,6 +82,7 @@ namespace textured_raycast.maze
                 // Do the wall casting
                 WallCasting(ref game, ref ZBuffer, dir, plane, pos, visRange, map);
 
+
                 SpriteCasting(ref game, map.sprites, pos, plane, dir, ZBuffer, visRange);
 
                 // Console.WriteLine();
@@ -130,90 +131,91 @@ namespace textured_raycast.maze
             double rotSpeed = 0.1;
             double movSpeed = 0.1;
 
+            // Multiplied with movement speed, during collision check,
+            // forcing the player to stay slightly further away from
+            // walls.
             float extraColDistMult = 1f;
-                world.currentMessage = "";
-                // Multiplied with movement speed, during collision check,
-                // forcing the player to stay slightly further away from
-                // walls.
-                if (InputManager.GetKey(Keys.K_UP) || InputManager.GetKey(Keys.K_W))
-                {
-                    // CellX and CellY holds the cell, the player would move
-                    // into, in those directions. Using a vector doesn't
-                    // make sense, since they could be different. They are
-                    // split up, to allow sliding on walls, when not walking
-                    // perpendicular into them.
-                    Wall cellX = map.GetWall((int)(pos.x + dir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
-                    Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y + dir.y * (movSpeed * extraColDistMult)));
+            world.currentMessage = "";
 
-                    // Check if cell is empty or a control cell, if so, move.
-                    if (!cellX.isWal) pos.x += dir.x * movSpeed;
-                    if (!cellY.isWal) pos.y += dir.y * movSpeed;
+            if (InputManager.GetKey(Keys.K_UP) != KeyState.KEY_UP || InputManager.GetKey(Keys.K_W) != KeyState.KEY_UP)
+            {
+                // CellX and CellY holds the cell, the player would move
+                // into, in those directions. Using a vector doesn't
+                // make sense, since they could be different. They are
+                // split up, to allow sliding on walls, when not walking
+                // perpendicular into them.
+                Wall cellX = map.GetWall((int)(pos.x + dir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
+                Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y + dir.y * (movSpeed * extraColDistMult)));
 
-                    cellX.Collide(ref world);
-                    cellY.Collide(ref world);
-                }
-                if (InputManager.GetKey(Keys.K_DOWN) || InputManager.GetKey(Keys.K_S))
-                {
-                    // Same as before, just backwards, so with subtraction instead of addition.
-                    Wall cellX = map.GetWall((int)(pos.x - dir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
-                    Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - dir.y * (movSpeed * extraColDistMult)));
-                    if (!cellX.isWal) pos.x -= dir.x * movSpeed;
-                    if (!cellY.isWal) pos.y -= dir.y * movSpeed;
+                // Check if cell is empty or a control cell, if so, move.
+                if (!cellX.isWall) pos.x += dir.x * movSpeed;
+                if (!cellY.isWall) pos.y += dir.y * movSpeed;
 
-                    cellX.Collide(ref world);
-                    cellY.Collide(ref world);
-                }
-                if (InputManager.GetKey(Keys.K_D))
-                {
-                    Vector2d newDir = new Vector2d(-dir.y, dir.x);
+                cellX.Collide(ref world);
+                cellY.Collide(ref world);
+            }
+            if (InputManager.GetKey(Keys.K_DOWN) != KeyState.KEY_UP  || InputManager.GetKey(Keys.K_S) != KeyState.KEY_UP)
+            {
+                // Same as before, just backwards, so with subtraction instead of addition.
+                Wall cellX = map.GetWall((int)(pos.x - dir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
+                Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - dir.y * (movSpeed * extraColDistMult)));
+                if (!cellX.isWall) pos.x -= dir.x * movSpeed;
+                if (!cellY.isWall) pos.y -= dir.y * movSpeed;
 
-                    Wall cellX = map.GetWall((int)(pos.x - newDir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
-                    Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - newDir.y * (movSpeed * extraColDistMult)));
-                    if (!cellX.isWal) pos.x -= newDir.x * movSpeed;
-                    if (!cellY.isWal) pos.y -= newDir.y * movSpeed;
+                cellX.Collide(ref world);
+                cellY.Collide(ref world);
+            }
+            if (InputManager.GetKey(Keys.K_D) != KeyState.KEY_UP)
+            {
+                Vector2d newDir = new Vector2d(-dir.y, dir.x);
 
-                    cellX.Collide(ref world);
-                    cellY.Collide(ref world);
-                }
-                if (InputManager.GetKey(Keys.K_A))
-                {
-                    Vector2d newDir = new Vector2d(-dir.y, dir.x) * -1;
+                Wall cellX = map.GetWall((int)(pos.x - newDir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
+                Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - newDir.y * (movSpeed * extraColDistMult)));
+                if (!cellX.isWall) pos.x -= newDir.x * movSpeed;
+                if (!cellY.isWall) pos.y -= newDir.y * movSpeed;
 
-                    Wall cellX = map.GetWall((int)(pos.x - newDir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
-                    Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - newDir.y * (movSpeed * extraColDistMult)));
-                    if (!cellX.isWal) pos.x -= newDir.x * movSpeed;
-                    if (!cellY.isWal) pos.y -= newDir.y * movSpeed;
+                cellX.Collide(ref world);
+                cellY.Collide(ref world);
+            }
+            if (InputManager.GetKey(Keys.K_A) != KeyState.KEY_UP)
+            {
+                Vector2d newDir = new Vector2d(-dir.y, dir.x) * -1;
 
-                    cellX.Collide(ref world);
-                    cellY.Collide(ref world);
-                }
-                if (InputManager.GetKey(Keys.K_RIGHT))
-                {
-                    // Use too much math, to calculate the direction unit vector.
-                    double oldDirX = dir.x;
-                    dir.x = dir.x * Math.Cos(-rotSpeed) - dir.y * Math.Sin(-rotSpeed);
-                    dir.y = oldDirX * Math.Sin(-rotSpeed) + dir.y * Math.Cos(-rotSpeed);
-                    // Use too much math, to calculate the camera viewport plane.
-                    double oldPlaneX = plane.x;
-                    plane.x = plane.x * Math.Cos(-rotSpeed) - plane.y * Math.Sin(-rotSpeed);
-                    plane.y = oldPlaneX * Math.Sin(-rotSpeed) + plane.y * Math.Cos(-rotSpeed);
-                }
-                if (InputManager.GetKey(Keys.K_LEFT))
-                {
-                    // Use too much math, to calculate the direction unit vector.
-                    double oldDirX = dir.x;
-                    dir.x = dir.x * Math.Cos(rotSpeed) - dir.y * Math.Sin(rotSpeed);
-                    dir.y = oldDirX * Math.Sin(rotSpeed) + dir.y * Math.Cos(rotSpeed);
-                    // Use too much math, to calculate the camera viewport plane.
-                    double oldPlaneX = plane.x;
-                    plane.x = plane.x * Math.Cos(rotSpeed) - plane.y * Math.Sin(rotSpeed);
-                    plane.y = oldPlaneX * Math.Sin(rotSpeed) + plane.y * Math.Cos(rotSpeed);
-                }
-                if (InputManager.GetKey(Keys.K_E))
-                {
-                    if (spriteToInteract != null)
-                        spriteToInteract.Activate(ref world);
-                }
+                Wall cellX = map.GetWall((int)(pos.x - newDir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
+                Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - newDir.y * (movSpeed * extraColDistMult)));
+                if (!cellX.isWall) pos.x -= newDir.x * movSpeed;
+                if (!cellY.isWall) pos.y -= newDir.y * movSpeed;
+
+                cellX.Collide(ref world);
+                cellY.Collide(ref world);
+            }
+            if (InputManager.GetKey(Keys.K_RIGHT) != KeyState.KEY_UP)
+            {
+                // Use too much math, to calculate the direction unit vector.
+                double oldDirX = dir.x;
+                dir.x = dir.x * Math.Cos(-rotSpeed) - dir.y * Math.Sin(-rotSpeed);
+                dir.y = oldDirX * Math.Sin(-rotSpeed) + dir.y * Math.Cos(-rotSpeed);
+                // Use too much math, to calculate the camera viewport plane.
+                double oldPlaneX = plane.x;
+                plane.x = plane.x * Math.Cos(-rotSpeed) - plane.y * Math.Sin(-rotSpeed);
+                plane.y = oldPlaneX * Math.Sin(-rotSpeed) + plane.y * Math.Cos(-rotSpeed);
+            }
+            if (InputManager.GetKey(Keys.K_LEFT) != KeyState.KEY_UP)
+            {
+                // Use too much math, to calculate the direction unit vector.
+                double oldDirX = dir.x;
+                dir.x = dir.x * Math.Cos(rotSpeed) - dir.y * Math.Sin(rotSpeed);
+                dir.y = oldDirX * Math.Sin(rotSpeed) + dir.y * Math.Cos(rotSpeed);
+                // Use too much math, to calculate the camera viewport plane.
+                double oldPlaneX = plane.x;
+                plane.x = plane.x * Math.Cos(rotSpeed) - plane.y * Math.Sin(rotSpeed);
+                plane.y = oldPlaneX * Math.Sin(rotSpeed) + plane.y * Math.Cos(rotSpeed);
+            }
+            if (InputManager.GetKey(Keys.K_E) == KeyState.KEY_DOWN)
+            {
+                if (spriteToInteract != null)
+                    spriteToInteract.Activate(ref world);
+            }
         }
 
         public static void WallCasting(ref ConsoleEngine game, ref double[] ZBuffer, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map)
@@ -334,7 +336,7 @@ namespace textured_raycast.maze
 
                     // Check if the currently intersected cell was not
                     // empty.
-                    if (map.IsWal((int)mapPos.x, (int)mapPos.y))
+                    if (map.IsWall((int)mapPos.x, (int)mapPos.y))
                     {
                         hit = true;
                         hitWall = map.GetWall((int)mapPos.x, (int)mapPos.y);

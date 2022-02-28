@@ -40,6 +40,8 @@ namespace textured_raycast.maze.texture
                 int[] colors = new int[3];
                 for(int j = 0; j < 3; j++) {
                     colors[j] = Convert.ToInt32(imageData[i+j]);
+                    colors[j] = Convert.ToInt32(imageData[i+j]);
+                    colors[j] = Convert.ToInt32(imageData[i+j]);
 
                 }
                 TexColor color = new TexColor(colors[0], colors[1], colors[2], maxColorVal);
