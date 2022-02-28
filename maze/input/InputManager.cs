@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace textured_raycast.maze.input
 {
     enum KeyState {

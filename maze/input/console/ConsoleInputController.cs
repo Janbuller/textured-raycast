@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using textured_raycast.maze.input;
 
 namespace textured_raycast.maze.input.console
 {
