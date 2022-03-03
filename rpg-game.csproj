@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\" />
-    <Folder Include="maze\sprites\allSprites\" />
   </ItemGroup>
 
   <ItemGroup>

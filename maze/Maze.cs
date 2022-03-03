@@ -32,13 +32,14 @@ namespace textured_raycast.maze
             {1,   TextureLoaders.loadFromPlainPPM("img/gui/chatBox1.ppm")},
             {2,   TextureLoaders.loadFromPlainPPM("img/gui/chatBox2.ppm")},
             {3,   TextureLoaders.loadFromPlainPPM("img/gui/chatBox3.ppm")},
-            {4,   TextureLoaders.loadFromPlainPPM("img/gui/Font.ppm")},
-            {5,   TextureLoaders.loadFromPlainPPM("img/gui/Menu1.ppm")},
-            {6,   TextureLoaders.loadFromPlainPPM("img/gui/Menu2.ppm")},
-            {7,   TextureLoaders.loadFromPlainPPM("img/gui/Menu3.ppm")},
+            {4,   TextureLoaders.loadFromPlainPPM("img/gui/Menu1.ppm")},
+            {5,   TextureLoaders.loadFromPlainPPM("img/gui/Menu2.ppm")},
+            {6,   TextureLoaders.loadFromPlainPPM("img/gui/Menu3.ppm")},
         };
 
-        // Returns true if maze is completed, false if exited.
+        static string GUITextStrings = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        static List<Texture> GUIText = SpriteSheetLoaders.loadHorisontalSpriteSheetFromPlainPPM("img/gui/Font.ppm", 3);
+
         public static bool StartMaze(World world) {
             return Start(world);
         }
@@ -49,7 +50,8 @@ namespace textured_raycast.maze
 
             Console.Clear();
             ConsoleEngine engine = new ConsoleEngine(120, 80, "maze");
-            ConsoleBuffer game   = new ConsoleBuffer(120, 80);
+            ConsoleBuffer game = new ConsoleBuffer(120, 80);
+            ConsoleBuffer UIHolder = new ConsoleBuffer(120, 80);
 
             // Position vector
             Vector2d pos = world.plrPos;
@@ -76,11 +78,11 @@ namespace textured_raycast.maze
             {
                 while (world.state == states.Paused)
                 {
-                    ConsoleBuffer ui = new ConsoleBuffer(120, 80);
+                    UIHolder.Clear();
 
-                    ui.DrawTexture(GUITextures[world.uiIndex+4], 10, 10);
+                    UIHolder.DrawTexture(GUITextures[world.uiIndex+4], 10, 10);
 
-                    engine.DrawConBuffer(game.mixBuffer(ui));
+                    engine.DrawConBuffer(game.mixBuffer(UIHolder));
 
                     engine.SwapBuffers();
                     engine.DrawScreen();
@@ -133,16 +135,20 @@ namespace textured_raycast.maze
                     else
                         world.interactMessage = "";
 
-                    Console.Write(world.currentMessage == "" ? world.interactMessage : world.currentMessage);
+                    string toSend = world.currentMessage == "" ? world.interactMessage : world.currentMessage;
 
-                    Console.WriteLine("                                                                  ");
+                    UIHolder.Clear();
+
+                    if (toSend != "")
+                    {
+                        UIHolder.DrawTexture(GUITextures[1], 1, UIHolder.GetWinHeight() - GUITextures[1].height - 1);
+                        UIHolder.DrawTexture(GUIText[getCharFromString('A', GUITextStrings)], 3, UIHolder.GetWinHeight() - GUITextures[1].height+1);
+                    }
 
                     world.dayTime += world.dt/60; // 60 = 1 whole day = 60 sec
                     if (world.dayTime > 1) world.dayTime -= 1;
 
-                    Console.WriteLine(world.dayTime);
-
-                    engine.DrawConBuffer(game);
+                    engine.DrawConBuffer(game.mixBuffer(UIHolder));
 
                     engine.SwapBuffers();
                     engine.DrawScreen();
@@ -443,6 +449,19 @@ namespace textured_raycast.maze
                 // Set z-buffer
                 ZBuffer[x] = perpWallDist;
             }
+        }
+
+        public static int getCharFromString(Char toFind, string toSearch)
+        {
+            toFind = Char.ToUpper(toFind);
+            for (int i = 0; i < toSearch.Length; i++)
+            {
+                if (toSearch[i] == toFind)
+                {
+                    return i;
+                }
+            }
+            return 0;
         }
 
         public static void FloorCasting(ref ConsoleBuffer game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, World world)

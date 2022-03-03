@@ -29,7 +29,8 @@ namespace textured_raycast.maze
         public Vector2d playerStartRot;
 
         private Dictionary<int, Type> spriteTypes = new Dictionary<int, Type>(){
-            {0, typeof(DefaultSprite)}
+            {0, typeof(DefaultSprite)},
+            {1, typeof(TestInteracting)}
         };
 
         public bool useSkybox = true;
