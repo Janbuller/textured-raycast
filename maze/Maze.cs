@@ -1,14 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 using System.Linq;
-using System.Drawing;
 using textured_raycast.maze.math;
 using textured_raycast.maze.texture;
 using textured_raycast.maze.sprites;
 using textured_raycast.maze.input;
-using Pastel;
 
 namespace textured_raycast.maze
 {
@@ -413,7 +409,7 @@ namespace textured_raycast.maze
                 {
                     lineHeight = Convert.ToInt32(game.GetWinHeight() / perpWallDist);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     lineHeight = 1000;
                 }
