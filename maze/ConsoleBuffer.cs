@@ -66,6 +66,11 @@ namespace textured_raycast.maze
             return consoleBuffer;
         }
 
+        public void Clear() {
+            TexColor[] tmp = new TexColor[GetWinHeight() * GetWinWidth()];
+            buffer = tmp.ToList();
+        }
+
         // Draws a centered vertical line, width xPos, Height and Color.
         public void DrawVerLine(int x, int height, TexColor color) {
             // Return exception, if char is out of game window.
