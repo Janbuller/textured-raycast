@@ -67,7 +67,7 @@ namespace textured_raycast.maze
             Vector2d plane = new Vector2d(dir.y, -dir.x) * 0.66;
 
             // The visibility distance. Controls the distance-based darkening.
-            int visRange = 1;
+            int visRange = 25;
 
             double[] ZBuffer = new double[engine.GetWinWidth()];
 
