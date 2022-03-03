@@ -69,7 +69,7 @@ namespace textured_raycast.maze
             Vector2d plane = new Vector2d(dir.y, -dir.x) * 0.66;
 
             // The visibility distance. Controls the distance-based darkening.
-            int visRange = 1;
+            int visRange = 25;
 
             double[] ZBuffer = new double[engine.GetWinWidth()];
 
@@ -486,7 +486,7 @@ namespace textured_raycast.maze
 
                 // Calculate the current rows offset from the middle of the
                 // screen.
-                int midOff = y - winHeight / 2;
+                int midOff = y - (winHeight / 2)+1;
                 // Get the camera height, assuming it to be in the middle of the
                 // screen.
                 float camHeight = 0.5f * winHeight;
@@ -516,7 +516,7 @@ namespace textured_raycast.maze
 
                     TexColor color = floorTex.getPixel(texture.x, texture.y);
                     color *= darken;
-                    if(y > winHeight / 2)
+                    if(y > (winHeight / 2)-1)
                         game.DrawPixel(color, x, y);
 
                     if(!map.useSkybox) {
@@ -524,7 +524,7 @@ namespace textured_raycast.maze
                         color *= darken;
                         game.DrawPixel(color, x, winHeight - y - 1);
                     } else {
-                        if (y > winHeight / 2)
+                        if (y > (winHeight / 2)-1)
                         {
                             var pix = GetSkyboxPixel(winHeight, dir, textures[11], x, winHeight - y - 1, world.dayTime);
                             game.DrawPixel(pix, x, winHeight - y - 1);
