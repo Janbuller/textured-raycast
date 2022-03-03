@@ -53,6 +53,7 @@ namespace textured_raycast.maze.texture
 
                 return false;
             }
+
             return col1.r == col2.r &&
                    col1.g == col2.g &&
                    col1.b == col2.b;
