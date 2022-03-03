@@ -42,7 +42,8 @@ namespace textured_raycast.maze
             Map map = world.getMapByID(world.currentMap);
 
             Console.Clear();
-            ConsoleEngine game = new ConsoleEngine(120, 80, "maze");
+            ConsoleEngine engine = new ConsoleEngine(120, 80, "maze");
+            ConsoleBuffer game   = new ConsoleBuffer(120, 80);
 
             // Position vector
             Vector2d pos = world.plrPos;
@@ -62,7 +63,7 @@ namespace textured_raycast.maze
             // The visibility distance. Controls the distance-based darkening.
             int visRange = 25;
 
-            double[] ZBuffer = new double[game.GetWinWidth()];
+            double[] ZBuffer = new double[engine.GetWinWidth()];
 
             // Main game loop
             while(world.state != states.Stopping)
@@ -121,10 +122,10 @@ namespace textured_raycast.maze
 
                     Console.WriteLine("                                                                  ");
 
-                    game.DrawTexture(textures[8], -8, -24, new TexColor(0, 0, 0));
+                game.DrawTexture(textures[8], -8, -24, new TexColor(0, 0, 0));
 
-                    game.SwapBuffers();
-                    game.DrawScreen();
+                game.SwapBuffers();
+                game.DrawScreen();
 
                     HandleInputGame(ref world, map, pos, ref dir, ref plane, ref spriteToInteract);
                 }
@@ -211,7 +212,7 @@ namespace textured_raycast.maze
             cellY.Collide(ref world);
         }
 
-        public static void WallCasting(ref ConsoleEngine game, ref double[] ZBuffer, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map)
+        public static void WallCasting(ref ConsoleBuffer game, ref double[] ZBuffer, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map)
         {
 
             // Loop through every x in the "window", casting a ray for each.
@@ -388,7 +389,7 @@ namespace textured_raycast.maze
             }
         }
 
-        public static void FloorCasting(ref ConsoleEngine game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map)
+        public static void FloorCasting(ref ConsoleBuffer game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map)
         {
             // Grabs the floor and ceiling texture, before the loop, since we
             // don't want differently textured ceiling or floor.
@@ -458,7 +459,7 @@ namespace textured_raycast.maze
         // Draws the skybox to the top half of the game screen. This isn't very
         // optimized, and shouldn't be used, as it draws to pixels, that will
         // later be drawn over.
-        public static void DrawSkybox(ref ConsoleEngine game, Vector2d dir, Texture skyboxTex) {
+        public static void DrawSkybox(ref ConsoleBuffer game, Vector2d dir, Texture skyboxTex) {
             int winHeight = game.GetWinHeight();
 
             for(int y = 0; y < game.GetWinHeight() / 2; y++) {
@@ -500,7 +501,7 @@ namespace textured_raycast.maze
         }
 
         // TODO: Switch to using z-buffer, instead of painters algorithm.
-        public static void SpriteCasting(ref ConsoleEngine game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange) {
+        public static void SpriteCasting(ref ConsoleBuffer game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange) {
             List<double> spriteDist = new List<double>();
             for(int i = 0; i < sprites.Count; i++) {
                 // Calculate sprite distance from player, using pythagoras.

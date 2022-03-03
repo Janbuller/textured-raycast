@@ -40,109 +40,12 @@ namespace textured_raycast.maze
         public int GetWinWidth() { return parameters.winWidth; }
         public int GetWinHeight() { return parameters.winHeight; }
 
-        // Used to draw char to current buffer.
-        public void DrawPixel(TexColor col, int x, int y) {
-            // Return exception, if char is out of game window.
-            if (x < 0 || x >= GetWinWidth() || y < 0 || y >= GetWinHeight()) {
-                return;
-            }
-
-            // Decides buffer to draw to. Does so using other function.
-            if(!firstBuffer) {
-                DrawToFramebuffer(col, x, y, ref buffer1);
+        public void DrawConBuffer(ConsoleBuffer buf) {
+            if(firstBuffer) {
+                buffer2 = buf.getBuffer();
             } else {
-                DrawToFramebuffer(col, x, y, ref buffer2);
+                buffer1 = buf.getBuffer();
             }
-        }
-
-        // Draws a centered vertical line, width xPos, Height and Color.
-        public void DrawVerLine(int x, int height, TexColor color) {
-            // Return exception, if char is out of game window.
-            if (x < 0 || x > GetWinWidth()) {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            // Draw line, by choosing a starting Y and looping through height in
-            // a for loop.
-            int startY = GetWinHeight()/2 - height/2;
-            for(int i = 0; i < height; i++) {
-                // Draw the line, using NuGet package "Pastel" to color, using
-                // ansi escape sequences.
-                DrawPixel(color, x, startY+i);
-            }
-        }
-
-        public void DrawVerLine(int x, int height, Texture tex, int texX, float darken, TexColor alphaCol = null) {
-            // Return exception, if char is out of game window.
-            if (x < 0 || x > GetWinWidth()) {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            int startY = GetWinHeight()/2 - height/2;
-            int endY = height + startY;
-
-            float sectionHeight = (float)tex.height / height;
-            float texPos = (startY - GetWinHeight() / 2 + height /2) * sectionHeight;
-            if(startY < 0) {
-                texPos += sectionHeight * (startY * -1);
-            }
-            startY = startY < 0 ? 0 : startY;
-            endY = endY > GetWinHeight() ? GetWinHeight() : endY;
-            for(int i = startY; i < endY; i++) {
-                int texY = (int)texPos;
-                texPos += sectionHeight;
-                TexColor color = tex.getPixel(texX, texY);
-                // Draw the line, using NuGet package "Pastel" to color, using
-                // ansi escape sequences.
-                if(alphaCol == color)
-                    continue;
-                DrawPixel((color * darken), x, i);
-            }
-        }
-
-        /// <summary>
-        /// Draws a texture at a specific position.
-        /// </summary>
-        public void DrawTexture(Texture tex, int xP, int yP) {
-            for(int y = 0; y < tex.height; y++) {
-                for(int x = 0; x < tex.width; x++) {
-                    DrawPixel(tex.getPixel(x, y), xP+x, yP+y);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Draws a texture at a specific position, ignoring any pixels of color <c>alpha</c>.
-        /// </summary>
-        public void DrawTexture(Texture tex, int xP, int yP, TexColor alpha) {
-            for(int y = 0; y < tex.height; y++) {
-                for(int x = 0; x < tex.width; x++) {
-                    TexColor pixel = tex.getPixel(x, y);
-                    if(pixel != alpha)
-                        DrawPixel(pixel, xP+x, yP+y);
-                }
-            }
-        }
-
-        // Draws a border around game window
-        public void DrawBorder() {
-            int winWidth = GetWinWidth();
-            int winHeight = GetWinHeight();
-            TexColor whiteColor = new TexColor(255, 255, 255);
-            for (int y = 0; y <  winHeight; y++) {
-                DrawPixel(whiteColor, 0, y);
-                DrawPixel(whiteColor, winWidth-1, y);
-            }
-            for(int x = 0; x < winWidth; x++) {
-                DrawPixel(whiteColor, x, 0);
-                DrawPixel(whiteColor, x, winHeight-1);
-            }
-        }
-
-        // Draws char to specific framebuffer. Used internally by DrawChar
-        // functions.
-        private void DrawToFramebuffer(TexColor col, int x, int y, ref List<TexColor> buffer) {
-            buffer[x + y*GetWinWidth()] = col;
         }
 
         // Swaps the buffers.
