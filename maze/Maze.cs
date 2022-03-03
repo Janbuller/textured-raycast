@@ -102,11 +102,6 @@ namespace textured_raycast.maze
 
                     SpriteCasting(ref game, map.sprites, pos, plane, dir, ZBuffer, visRange);
 
-                    // Console.WriteLine();
-
-                    // not really neccecary
-                    //game.DrawBorder();
-
                     // Add textbox to draw if neccecary
 
                     Sprite spriteToInteract = null;

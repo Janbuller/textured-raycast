@@ -26,6 +26,8 @@ namespace textured_raycast.maze.input.console
                 return pressedKeys[key].State;
             } catch (KeyNotFoundException) {
                 return KeyState.KEY_UP;
+            } catch (NullReferenceException) {
+                return KeyState.KEY_UP;
             }
         }
 
