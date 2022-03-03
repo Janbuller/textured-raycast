@@ -82,8 +82,12 @@ namespace textured_raycast.maze
                     HandleInputUI(ref world);
                 }
 
+                world.lastFrameTime = DateTime.Now.Ticks;
                 while (world.state == states.Game)
                 {
+                    world.dt = (float)(DateTime.Now.Ticks - world.lastFrameTime)/TimeSpan.TicksPerSecond;
+                    world.lastFrameTime = DateTime.Now.Ticks;
+
                     // make sure it knows what map its on
                     map = world.getMapByID(world.currentMap);
 
@@ -93,7 +97,7 @@ namespace textured_raycast.maze
                     //DrawSkybox(ref game, dir, textures[1]);
 
                     // Do the floor/ceiling casting.
-                    FloorCasting(ref game, dir, plane, pos, visRange, map);
+                    FloorCasting(ref game, dir, plane, pos, visRange, map, world);
 
                     // Do the wall casting
                     WallCasting(ref game, ref ZBuffer, dir, plane, pos, visRange, map);
@@ -130,6 +134,11 @@ namespace textured_raycast.maze
                     Console.Write(world.currentMessage == "" ? world.interactMessage : world.currentMessage);
 
                     Console.WriteLine("                                                                  ");
+
+                    world.dayTime += world.dt/60; // 60 = 1 whole day = 60 sec
+                    if (world.dayTime > 1) world.dayTime -= 1;
+
+                    Console.WriteLine(world.dayTime);
 
                     engine.DrawConBuffer(game);
 
@@ -170,7 +179,7 @@ namespace textured_raycast.maze
             }
             if (InputManager.GetKey(Keys.K_DOWN) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_S) == KeyState.KEY_DOWN)
             {
-                world.uiIndex = Math.Max(1, world.uiIndex + 1);
+                world.uiIndex = Math.Min(3, world.uiIndex + 1);
             }
         }
 
@@ -222,6 +231,10 @@ namespace textured_raycast.maze
             }
             if (InputManager.GetKey(Keys.K_E) == KeyState.KEY_DOWN)
             {
+                world.dayTime += 0.05f;
+                if (world.dayTime > 1)
+                    world.dayTime -= 1;
+
                 if (spriteToInteract != null)
                     spriteToInteract.Activate(ref world);
             }
@@ -430,7 +443,7 @@ namespace textured_raycast.maze
             }
         }
 
-        public static void FloorCasting(ref ConsoleBuffer game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map)
+        public static void FloorCasting(ref ConsoleBuffer game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, World world)
         {
             // Grabs the floor and ceiling texture, before the loop, since we
             // don't want differently textured ceiling or floor.
@@ -473,8 +486,11 @@ namespace textured_raycast.maze
                     );
 
                     floor += floorOff;
-
+                    
                     float darken = 0.9f;
+                    if (!map.useSkybox)
+                        darken = 1f;
+                    
                     darken = (float)Math.Min(1, Math.Max(0, darken - lineDist * (visRange * 0.005)));
 
                     TexColor color = floorTex.getPixel(texture.x, texture.y);
@@ -489,7 +505,7 @@ namespace textured_raycast.maze
                     } else {
                         if (y > winHeight / 2)
                         {
-                            var pix = GetSkyboxPixel(winHeight, dir, textures[11], x, winHeight - y - 1);
+                            var pix = GetSkyboxPixel(winHeight, dir, textures[11], x, winHeight - y - 1, world.dayTime);
                             game.DrawPixel(pix, x, winHeight - y - 1);
                         }
                     }
@@ -500,18 +516,18 @@ namespace textured_raycast.maze
         // Draws the skybox to the top half of the game screen. This isn't very
         // optimized, and shouldn't be used, as it draws to pixels, that will
         // later be drawn over.
-        public static void DrawSkybox(ref ConsoleBuffer game, Vector2d dir, Texture skyboxTex) {
+        public static void DrawSkybox(ref ConsoleBuffer game, Vector2d dir, Texture skyboxTex, World world) {
             int winHeight = game.GetWinHeight();
 
             for(int y = 0; y < game.GetWinHeight() / 2; y++) {
                 for(int x = 0; x < game.GetWinWidth(); x++) {
-                    var pix = GetSkyboxPixel(winHeight, dir, skyboxTex, x, y);
+                    var pix = GetSkyboxPixel(winHeight, dir, skyboxTex, x, y, world.dayTime);
                     game.DrawPixel(pix, x, y);
                 }
             }
         }
 
-        public static TexColor GetSkyboxPixel(int winHeight, Vector2d dir, Texture skyboxTex, int x, int y) {
+        public static TexColor GetSkyboxPixel(int winHeight, Vector2d dir, Texture skyboxTex, int x, int y, float dayTime) {
             // The difference between the height of on pixel on the screen and
             // on the texture, were the texture to fill the top helf of the
             // screen.
@@ -535,10 +551,35 @@ namespace textured_raycast.maze
             // x-axis.
             while(cal.x > skyboxTex.width)
                 cal.x -= skyboxTex.width;
-            while(cal.x < skyboxTex.width)
+            while(cal.x < 0)
                 cal.x += skyboxTex.width;
+
+            // getting the rotational position of the pixle
+            float rot = (cal.x / (float)skyboxTex.width) * MathF.PI*2;
+
+            // placing the point in 3d
+            float nX = MathF.Cos(rot);
+            float nY = cal.y;
+            float nZ = MathF.Sin(rot);
+
+            // and then back to 2d, lol
+            float x2D = nZ*80; // also map this so that it seems better
+            float y2D = nY;
+
+            // mapping the time to pi
+            float timeRot = (dayTime / 1) * MathF.PI * 2;
+
+            // getting rot of the 2d point
+            float rot2D = MathF.Atan2(skyboxTex.height-y2D, x2D); // *2 for pix2
+
+            if (rot2D < timeRot && rot2D+MathF.PI > timeRot)
+                return skyboxTex.getPixel(cal.x, cal.y)*0.2f;
+
+
             // Return the pixel at the position.
             return skyboxTex.getPixel(cal.x, cal.y);
+
+
         }
 
         // TODO: Switch to using z-buffer, instead of painters algorithm.

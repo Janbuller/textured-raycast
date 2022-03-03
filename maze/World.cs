@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using textured_raycast.maze.math;
+using System;
 
 namespace textured_raycast.maze
 {
@@ -29,6 +30,11 @@ namespace textured_raycast.maze
 
         public Vector2d plrPos;
         public Vector2d plrRot;
+
+        public float dayTime = 0;
+
+        public float dt;
+        public long lastFrameTime = DateTime.Now.Ticks;
 
         public World()
         {
