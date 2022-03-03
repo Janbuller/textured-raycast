@@ -28,6 +28,16 @@ namespace textured_raycast.maze
             {102, TextureLoaders.loadFromPlainPPM("img/wolfenstein/exit.ppm")}, // Also used for leaving the maze
         };
 
+        static Dictionary<int, Texture> GUITextures = new Dictionary<int, Texture>() {
+            {1,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/chatBox1.ppm")},
+            {2,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/chatBox2.ppm")},
+            {3,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/chatBox3.ppm")},
+            {4,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/Font.ppm")},
+            {5,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/Menu1.ppm")},
+            {6,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/Menu2.ppm")},
+            {7,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/Menu3.ppm")},
+        };
+
         // Returns true if maze is completed, false if exited.
         public static bool StartMaze(World world) {
             return Start(world);
@@ -68,7 +78,7 @@ namespace textured_raycast.maze
                 {
                     ConsoleBuffer ui = new ConsoleBuffer(120, 80);
 
-                    ui.DrawTexture(textures[world.uiIndex], 10, 10);
+                    ui.DrawTexture(GUITextures[world.uiIndex+4], 10, 10);
 
                     engine.DrawConBuffer(game.mixBuffer(ui));
 
