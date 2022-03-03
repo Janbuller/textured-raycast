@@ -141,8 +141,37 @@ namespace textured_raycast.maze
 
                     if (toSend != "")
                     {
-                        UIHolder.DrawTexture(GUITextures[1], 1, UIHolder.GetWinHeight() - GUITextures[1].height - 1);
-                        UIHolder.DrawTexture(GUIText[getCharFromString('A', GUITextStrings)], 3, UIHolder.GetWinHeight() - GUITextures[1].height+1);
+                        
+                        Vector2i start = new Vector2i(0, 0);
+                        int texToUse = 0;
+
+                        if (toSend.Length < 24)
+                        {
+                            texToUse = 1;
+                        }
+                        else if (toSend.Length < 48)
+                        {
+                            texToUse = 2;
+                        }
+                        else
+                        {
+                            texToUse = 3;
+                        }
+
+                        UIHolder.DrawTexture(GUITextures[texToUse], 1, UIHolder.GetWinHeight() - GUITextures[texToUse].height - 1);
+                        start = new Vector2i(3, UIHolder.GetWinHeight() - GUITextures[texToUse].height + 1);
+
+                        while(toSend.Length > 0)
+                        {
+                            addCharToBufferAt(ref UIHolder, GUITextStrings.IndexOf(toSend.Substring(0, 1).ToUpper()), start.x, start.y);
+                            toSend = toSend.Remove(0, 1);
+                            start.x += 4;
+                            if (start.x > 98)
+                            {
+                                start.x = 3;
+                                start.y += 6;
+                            }
+                        }
                     }
 
                     world.dayTime += world.dt/60; // 60 = 1 whole day = 60 sec
@@ -158,6 +187,12 @@ namespace textured_raycast.maze
             }
 
             return false;
+        }
+
+        public static void addCharToBufferAt(ref ConsoleBuffer UIHolder, int charPosition, int x, int y)
+        {
+            if (charPosition != -1)
+                UIHolder.DrawTexture(GUIText[charPosition], x, y, new TexColor(0, 0, 0));
         }
 
         public static void HandleInputUI(ref World world)
@@ -449,19 +484,6 @@ namespace textured_raycast.maze
                 // Set z-buffer
                 ZBuffer[x] = perpWallDist;
             }
-        }
-
-        public static int getCharFromString(Char toFind, string toSearch)
-        {
-            toFind = Char.ToUpper(toFind);
-            for (int i = 0; i < toSearch.Length; i++)
-            {
-                if (toSearch[i] == toFind)
-                {
-                    return i;
-                }
-            }
-            return 0;
         }
 
         public static void FloorCasting(ref ConsoleBuffer game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, World world)

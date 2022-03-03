@@ -27,7 +27,7 @@ namespace textured_raycast.maze.texture
                 {
                     for (int x = 0; x < width; x++)
                     {
-                        texColors.Add(baseTexture.getPixel(x, y));
+                        texColors.Add(baseTexture.getPixel(x + (textures.Count)*width, y));
                     }
                 }
 

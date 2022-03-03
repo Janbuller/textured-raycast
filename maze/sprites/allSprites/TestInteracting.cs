@@ -19,7 +19,7 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override string ActivateMessage()
         {
-            return "Interact";
+            return "Interacklaisjdlajsd adj asdasl jd aksd ja ldkasjdasj das  dasd asdas dt";
         }
     }
 }
