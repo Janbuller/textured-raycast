@@ -70,7 +70,16 @@ namespace textured_raycast.maze
             {
                 while (world.state == states.Paused)
                 {
-                    
+                    ConsoleBuffer ui = new ConsoleBuffer(120, 80);
+
+                    ui.DrawTexture(textures[world.uiIndex], 10, 10);
+
+                    engine.DrawConBuffer(game.mixBuffer(ui));
+
+                    engine.SwapBuffers();
+                    engine.DrawScreen();
+
+                    HandleInputUI(ref world);
                 }
 
                 while (world.state == states.Game)
@@ -122,16 +131,47 @@ namespace textured_raycast.maze
 
                     Console.WriteLine("                                                                  ");
 
-                game.DrawTexture(textures[8], -8, -24, new TexColor(0, 0, 0));
+                    engine.DrawConBuffer(game);
 
-                game.SwapBuffers();
-                game.DrawScreen();
+                    engine.SwapBuffers();
+                    engine.DrawScreen();
 
                     HandleInputGame(ref world, map, pos, ref dir, ref plane, ref spriteToInteract);
                 }
             }
 
             return false;
+        }
+
+        public static void HandleInputUI(ref World world)
+        {
+            if (InputManager.GetKey(Keys.K_E) == KeyState.KEY_DOWN)
+            {
+                switch (world.uiIndex)
+                {
+                    case 1:
+                        world.state = states.Inventory;
+                        break;
+                    case 2:
+                        world.state = states.Settings;
+                        break;
+                    case 3:
+                        world.state = states.Stopping;
+                        break;
+                }
+            }
+            if (InputManager.GetKey(Keys.K_ESC) == KeyState.KEY_DOWN)
+            {
+                world.state = states.Game;
+            }
+            if (InputManager.GetKey(Keys.K_UP) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W) == KeyState.KEY_DOWN)
+            {
+                world.uiIndex = Math.Max(1, world.uiIndex - 1);
+            }
+            if (InputManager.GetKey(Keys.K_DOWN) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_S) == KeyState.KEY_DOWN)
+            {
+                world.uiIndex = Math.Max(1, world.uiIndex + 1);
+            }
         }
 
         public static void HandleInputGame(ref World world, Map map, Vector2d pos, ref Vector2d dir, ref Vector2d plane, ref Sprite spriteToInteract) {
@@ -146,7 +186,7 @@ namespace textured_raycast.maze
             {
                 moveInDir(ref world, ref map, ref pos, dir);
             }
-            if (InputManager.GetKey(Keys.K_DOWN) != KeyState.KEY_UP  || InputManager.GetKey(Keys.K_S) != KeyState.KEY_UP)
+            if (InputManager.GetKey(Keys.K_DOWN) != KeyState.KEY_UP || InputManager.GetKey(Keys.K_S) != KeyState.KEY_UP)
             {
                 moveInDir(ref world, ref map, ref pos, dir * -1);
             }
@@ -187,7 +227,8 @@ namespace textured_raycast.maze
             }
             if (InputManager.GetKey(Keys.K_ESC) == KeyState.KEY_DOWN)
             {
-
+                world.uiIndex = 1;
+                world.state = states.Paused;
             }
         }
 

@@ -42,6 +42,30 @@ namespace textured_raycast.maze
             DrawToFramebuffer(col, x, y, ref buffer);
         }
 
+        // Places an overlay buffer over this one
+        public ConsoleBuffer mixBuffer(ConsoleBuffer overlay)
+        {
+            ConsoleBuffer consoleBuffer = new ConsoleBuffer(width, height);
+
+            List<TexColor> b1 = buffer;
+            List<TexColor> b2 = overlay.getBuffer();
+
+
+            for (int i = 0; i < buffer.Count; i++)
+            {
+                if (b2[i] is null)
+                {
+                    consoleBuffer.buffer[i] = b1[i];
+                }
+                else
+                {
+                    consoleBuffer.buffer[i] = b2[i];
+                }
+            }
+
+            return consoleBuffer;
+        }
+
         // Draws a centered vertical line, width xPos, Height and Color.
         public void DrawVerLine(int x, int height, TexColor color) {
             // Return exception, if char is out of game window.
