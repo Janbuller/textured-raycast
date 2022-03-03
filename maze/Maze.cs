@@ -57,7 +57,7 @@ namespace textured_raycast.maze
             Vector2d plane = new Vector2d(dir.y, -dir.x) * 0.66;
 
             // The visibility distance. Controls the distance-based darkening.
-            int visRange = 25;
+            int visRange = 1;
 
             double[] ZBuffer = new double[engine.GetWinWidth()];
 
@@ -86,6 +86,7 @@ namespace textured_raycast.maze
 
                     // make sure it knows what map its on
                     map = world.getMapByID(world.currentMap);
+                    visRange = map.useSkybox ? 1 : 25;
 
                     pos = world.plrPos;
                     dir = world.plrRot;
@@ -180,7 +181,7 @@ namespace textured_raycast.maze
         }
 
         public static void HandleInputGame(ref World world, Map map, Vector2d pos, ref Vector2d dir, ref Vector2d plane, ref Sprite spriteToInteract) {
-            double rotSpeed = 0.1;
+            double rotSpeed = world.dt*0.8;
 
             // Multiplied with movement speed, during collision check,
             // forcing the player to stay slightly further away from
@@ -243,7 +244,7 @@ namespace textured_raycast.maze
 
         public static void moveInDir(ref World world, ref Map map, ref Vector2d pos, Vector2d dir)
         {
-            double movSpeed = 0.1;
+            double movSpeed = world.dt;
             float extraColDistMult = 1f;
 
             // CellX and CellY holds the cell, the player would move
@@ -550,8 +551,9 @@ namespace textured_raycast.maze
             while(cal.x < 0)
                 cal.x += skyboxTex.width;
 
+            /* This no work :/, we try anohter try, no day-night for us *sadge*
             // getting the rotational position of the pixle
-            float rot = (cal.x / (float)skyboxTex.width) * MathF.PI*2;
+            float rot = -|-;
 
             // placing the point in 3d
             float nX = MathF.Cos(rot);
@@ -570,7 +572,7 @@ namespace textured_raycast.maze
 
             if (rot2D < timeRot && rot2D+MathF.PI > timeRot)
                 return skyboxTex.getPixel(cal.x, cal.y)*0.2f;
-
+            */
 
             // Return the pixel at the position.
             return skyboxTex.getPixel(cal.x, cal.y);
