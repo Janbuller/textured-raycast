@@ -71,6 +71,9 @@ namespace textured_raycast.maze.input.console
                 case ConsoleKey.RightArrow:
                     return Keys.K_RIGHT;
 
+                case ConsoleKey.Escape:
+                    return Keys.K_ESC;
+
                 default:
                     return Keys.UNKNOWN;
             }

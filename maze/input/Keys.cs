@@ -12,6 +12,8 @@ namespace textured_raycast.maze.input
         K_LEFT,
         K_RIGHT,
 
+        K_ESC,
+
         UNKNOWN,
     }
 }

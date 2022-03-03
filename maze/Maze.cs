@@ -67,127 +67,95 @@ namespace textured_raycast.maze
             // Main game loop
             while(world.state != states.Stopping)
             {
-
-                // make sure it knows what map its on
-                map = world.getMapByID(world.currentMap);
-
-                pos = world.plrPos;
-                dir = world.plrRot;
-
-                //DrawSkybox(ref game, dir, textures[1]);
-
-                // Do the floor/ceiling casting.
-                FloorCasting(ref game, dir, plane, pos, visRange, map);
-
-                // Do the wall casting
-                WallCasting(ref game, ref ZBuffer, dir, plane, pos, visRange, map);
-
-
-                SpriteCasting(ref game, map.sprites, pos, plane, dir, ZBuffer, visRange);
-
-                // Console.WriteLine();
-
-                // not really neccecary
-                //game.DrawBorder();
-
-                // Add textbox to draw if neccecary
-
-                Sprite spriteToInteract = null;
-                double distanceToInteract = 9999;
-
-                foreach (Sprite sprite in map.sprites)
+                while (world.state == states.Paused)
                 {
-                    double distance = pos.DistTo(sprite.getPos());
-                    // Console.WriteLine(distance + " : " + sprite.canInteract);
-                    if (distance < interactDist && distance < distanceToInteract && sprite.canInteract)
-                    {
-                        spriteToInteract = sprite;
-                        distanceToInteract = distance;
-                    }
+                    
                 }
 
-                if (spriteToInteract != null)
-                    world.interactMessage = spriteToInteract.ActivateMessage();
-                else
-                    world.interactMessage = "";
+                while (world.state == states.Game)
+                {
+                    // make sure it knows what map its on
+                    map = world.getMapByID(world.currentMap);
 
-                Console.Write(world.currentMessage == "" ? world.interactMessage : world.currentMessage);
+                    pos = world.plrPos;
+                    dir = world.plrRot;
 
-                Console.WriteLine("                                                                  ");
+                    //DrawSkybox(ref game, dir, textures[1]);
 
-                game.DrawTexture(textures[8], -8, -24, new TexColor(0, 0, 0));
+                    // Do the floor/ceiling casting.
+                    FloorCasting(ref game, dir, plane, pos, visRange, map);
 
-                game.SwapBuffers();
-                game.DrawScreen();
+                    // Do the wall casting
+                    WallCasting(ref game, ref ZBuffer, dir, plane, pos, visRange, map);
 
-                HandleInput(ref world, map, pos, ref dir, ref plane, ref spriteToInteract);
 
+                    SpriteCasting(ref game, map.sprites, pos, plane, dir, ZBuffer, visRange);
+
+                    // Console.WriteLine();
+
+                    // not really neccecary
+                    //game.DrawBorder();
+
+                    // Add textbox to draw if neccecary
+
+                    Sprite spriteToInteract = null;
+                    double distanceToInteract = 9999;
+
+                    foreach (Sprite sprite in map.sprites)
+                    {
+                        double distance = pos.DistTo(sprite.getPos());
+                        // Console.WriteLine(distance + " : " + sprite.canInteract);
+                        if (distance < interactDist && distance < distanceToInteract && sprite.canInteract)
+                        {
+                            spriteToInteract = sprite;
+                            distanceToInteract = distance;
+                        }
+                    }
+
+                    if (spriteToInteract != null)
+                        world.interactMessage = spriteToInteract.ActivateMessage();
+                    else
+                        world.interactMessage = "";
+
+                    Console.Write(world.currentMessage == "" ? world.interactMessage : world.currentMessage);
+
+                    Console.WriteLine("                                                                  ");
+
+                    game.DrawTexture(textures[8], -8, -24, new TexColor(0, 0, 0));
+
+                    game.SwapBuffers();
+                    game.DrawScreen();
+
+                    HandleInputGame(ref world, map, pos, ref dir, ref plane, ref spriteToInteract);
+                }
             }
 
             return false;
         }
 
-        public static void HandleInput(ref World world, Map map, Vector2d pos, ref Vector2d dir, ref Vector2d plane, ref Sprite spriteToInteract) {
+        public static void HandleInputGame(ref World world, Map map, Vector2d pos, ref Vector2d dir, ref Vector2d plane, ref Sprite spriteToInteract) {
             double rotSpeed = 0.1;
-            double movSpeed = 0.1;
 
             // Multiplied with movement speed, during collision check,
             // forcing the player to stay slightly further away from
             // walls.
-            float extraColDistMult = 1f;
             world.currentMessage = "";
 
             if (InputManager.GetKey(Keys.K_UP) != KeyState.KEY_UP || InputManager.GetKey(Keys.K_W) != KeyState.KEY_UP)
             {
-                // CellX and CellY holds the cell, the player would move
-                // into, in those directions. Using a vector doesn't
-                // make sense, since they could be different. They are
-                // split up, to allow sliding on walls, when not walking
-                // perpendicular into them.
-                Wall cellX = map.GetWall((int)(pos.x + dir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
-                Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y + dir.y * (movSpeed * extraColDistMult)));
-
-                // Check if cell is empty or a control cell, if so, move.
-                if (!cellX.isWall) pos.x += dir.x * movSpeed;
-                if (!cellY.isWall) pos.y += dir.y * movSpeed;
-
-                cellX.Collide(ref world);
-                cellY.Collide(ref world);
+                moveInDir(ref world, ref map, ref pos, dir);
             }
             if (InputManager.GetKey(Keys.K_DOWN) != KeyState.KEY_UP  || InputManager.GetKey(Keys.K_S) != KeyState.KEY_UP)
             {
-                // Same as before, just backwards, so with subtraction instead of addition.
-                Wall cellX = map.GetWall((int)(pos.x - dir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
-                Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - dir.y * (movSpeed * extraColDistMult)));
-                if (!cellX.isWall) pos.x -= dir.x * movSpeed;
-                if (!cellY.isWall) pos.y -= dir.y * movSpeed;
-
-                cellX.Collide(ref world);
-                cellY.Collide(ref world);
+                moveInDir(ref world, ref map, ref pos, dir * -1);
             }
             if (InputManager.GetKey(Keys.K_D) != KeyState.KEY_UP)
             {
-                Vector2d newDir = new Vector2d(-dir.y, dir.x);
-
-                Wall cellX = map.GetWall((int)(pos.x - newDir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
-                Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - newDir.y * (movSpeed * extraColDistMult)));
-                if (!cellX.isWall) pos.x -= newDir.x * movSpeed;
-                if (!cellY.isWall) pos.y -= newDir.y * movSpeed;
-
-                cellX.Collide(ref world);
-                cellY.Collide(ref world);
+                moveInDir(ref world, ref map, ref pos, new Vector2d(-dir.y, dir.x) * -1);
             }
             if (InputManager.GetKey(Keys.K_A) != KeyState.KEY_UP)
             {
-                Vector2d newDir = new Vector2d(-dir.y, dir.x) * -1;
-
-                Wall cellX = map.GetWall((int)(pos.x - newDir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
-                Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y - newDir.y * (movSpeed * extraColDistMult)));
-                if (!cellX.isWall) pos.x -= newDir.x * movSpeed;
-                if (!cellY.isWall) pos.y -= newDir.y * movSpeed;
-
-                cellX.Collide(ref world);
-                cellY.Collide(ref world);
+                moveInDir(ref world, ref map, ref pos, new Vector2d(-dir.y, dir.x));
             }
             if (InputManager.GetKey(Keys.K_RIGHT) != KeyState.KEY_UP)
             {
@@ -216,6 +184,31 @@ namespace textured_raycast.maze
                 if (spriteToInteract != null)
                     spriteToInteract.Activate(ref world);
             }
+            if (InputManager.GetKey(Keys.K_ESC) == KeyState.KEY_DOWN)
+            {
+
+            }
+        }
+
+        public static void moveInDir(ref World world, ref Map map, ref Vector2d pos, Vector2d dir)
+        {
+            double movSpeed = 0.1;
+            float extraColDistMult = 1f;
+
+            // CellX and CellY holds the cell, the player would move
+            // into, in those directions. Using a vector doesn't
+            // make sense, since they could be different. They are
+            // split up, to allow sliding on walls, when not walking
+            // perpendicular into them.
+            Wall cellX = map.GetWall((int)(pos.x + dir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
+            Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y + dir.y * (movSpeed * extraColDistMult)));
+
+            // Check if cell is empty or a control cell, if so, move.
+            if (!cellX.isWall) pos.x += dir.x * movSpeed;
+            if (!cellY.isWall) pos.y += dir.y * movSpeed;
+
+            cellX.Collide(ref world);
+            cellY.Collide(ref world);
         }
 
         public static void WallCasting(ref ConsoleEngine game, ref double[] ZBuffer, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map)
