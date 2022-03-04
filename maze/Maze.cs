@@ -80,7 +80,7 @@ namespace textured_raycast.maze
                 {
                     UIHolder.Clear();
 
-                    UIHolder.DrawTexture(GUITextures[world.uiIndex+4], 10, 10);
+                    UIHolder.DrawTexture(GUITextures[world.uiIndex+3], 10, 10);
 
                     engine.DrawConBuffer(game.mixBuffer(UIHolder));
 
