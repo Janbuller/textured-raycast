@@ -14,12 +14,39 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void onLoad()
         {
+            if (extraEffects.Count == 0)
+                extraEffects.Add(1);
             canInteract = true;
+        }
+
+        public override void Activate(ref World world)
+        {
+            switch (extraEffects[0])
+            {
+                case 1:
+                    world.currentMessage = "Hello traveler.";
+                    break;
+                case 2:
+                    world.currentMessage = "Welcome to the console, you have been trapped in the console hell.";
+                    break;
+                case 3:
+                    world.currentMessage = "I will kill and eat you alive.";
+                    break;
+                case 4:
+                    world.currentMessage = "MUHAHAHAHAHA";
+                    break;
+                case 5:
+                    world.currentMessage = "bye now...";
+                    doRender = false;
+                    canInteract = false;
+                    break;
+            }
+            extraEffects[0]++;
         }
 
         public override string ActivateMessage()
         {
-            return "Interacklaisjdlajsd adj asdasl jd aksd ja ldkasjdasj das  dasd asdas dt";
+            return "Talk to barrel.";
         }
     }
 }

@@ -1,3 +1,5 @@
+using textured_raycast.maze;
+
 namespace textured_raycast.maze.input
 {
     enum KeyState {
@@ -15,8 +17,14 @@ namespace textured_raycast.maze.input
             InputController.Init();
         }
 
-        public static KeyState GetKey(Keys key) {
-            return InputController.GetKey(key);
+        public static KeyState GetKey(Keys key, World world = null) {
+            KeyState returnKey = InputController.GetKey(key);
+            if (returnKey != KeyState.KEY_UP)
+            {
+                if (!(world is null))
+                    world.currentMessage = "";
+            }
+            return returnKey;
         }
     }
 }

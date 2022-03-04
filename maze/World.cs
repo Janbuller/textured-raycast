@@ -22,7 +22,6 @@ namespace textured_raycast.maze
             {1, new Map("maps/overworld.map")}
         };
 
-        public int uiIndex = 1;
         public states state = states.Game;
 
         public string currentMessage = ""; // this is to show messages to the player or something
