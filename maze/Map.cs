@@ -21,6 +21,8 @@ namespace textured_raycast.maze
         public List<Sprite> sprites = new List<Sprite>();
 
         public Dictionary<int, Vector2d> doorPositions = new Dictionary<int, Vector2d>();
+        public List<int> lightPoitions = new List<int>();
+
 
         public int floorTexID;
         public int ceilTexID;
@@ -30,7 +32,9 @@ namespace textured_raycast.maze
 
         private Dictionary<int, Type> spriteTypes = new Dictionary<int, Type>(){
             {0, typeof(DefaultSprite)},
-            {1, typeof(TestInteracting)}
+            {1, typeof(Door)},
+            {2, typeof(RoofLight)},
+            {3, typeof(TestInteracting)},
         };
 
         public bool useSkybox = true;
@@ -119,8 +123,11 @@ namespace textured_raycast.maze
 
                     sprites.Add(Activator.CreateInstance(spriteTypes[thisID], double.Parse(thisInfo[0], CultureInfo.InvariantCulture), double.Parse(thisInfo[1], CultureInfo.InvariantCulture), int.Parse(thisInfo[2]), int.Parse(thisInfo[3]), thisString) as Sprite);
 
-                    //if (sprites[sprites.Count - 1].effectID == 1)
-                    //    doorPositions.Add(sprites[sprites.Count - 1].extraEffects[2], sprites[sprites.Count - 1].getPos());
+                    if (sprites[sprites.Count - 1].effectID == 1)
+                        doorPositions.Add(sprites[sprites.Count - 1].extraEffects[2], sprites[sprites.Count - 1].getPos());
+
+                    if (sprites[sprites.Count - 1].effectID == 2)
+                        lightPoitions.Add(sprites.Count - 1);
                 }
             }
         }
