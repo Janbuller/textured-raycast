@@ -19,7 +19,7 @@ namespace textured_raycast.maze.input
 
         public static KeyState GetKey(Keys key, World world = null) {
             KeyState returnKey = InputController.GetKey(key);
-            if (returnKey != KeyState.KEY_UP)
+            if (returnKey == KeyState.KEY_DOWN)
             {
                 if (!(world is null))
                     world.currentMessage = "";
