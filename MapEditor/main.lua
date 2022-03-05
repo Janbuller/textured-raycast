@@ -84,6 +84,8 @@ local guiTileSize = 40
 local guiTilediff = 6
 local guiMaxTiles = 30
 
+local gridActive = false;
+
 local spawn = {0, 0}
 local spawnLook = {0, 0}
 local spawnPlacing = 1
@@ -95,9 +97,9 @@ local sprites = {}
 
 local sys = "Win"
 local fileName = "newMap"
-local setSize = ""
+local setSize = "20 20"
 
-local definingSize = true
+local definingSize = false
 
 local editingFName = false
 
@@ -118,6 +120,8 @@ function newGrid(gWin, gHin)
 
     return grid
 end
+
+grid = newGrid(20, 20)
 
 function love.load()
     grid = newGrid(gW, gH)
@@ -147,7 +151,10 @@ function love.draw()
     end
 
     love.graphics.circle("fill", spawn[1], spawn[2], 0.3)
+    love.graphics.setColor(1, 1, 1, 1)
     love.graphics.line(spawn[1], spawn[2], spawn[1]+spawnLook[1], spawn[2]+spawnLook[2])
+    love.graphics.setColor(0, 0, 0, 1)
+    love.graphics.line(spawn[1]+spawnLook[1]/3, spawn[2]+spawnLook[2]/3, spawn[1]+spawnLook[1]/3*2, spawn[2]+spawnLook[2]/3*2)
 
     love.graphics.setColor(1, 1, 1, 1)
     if openMen then
@@ -193,6 +200,11 @@ function love.draw()
     love.graphics.print("[n] Size: "..setSize, 5, h-125)
     love.graphics.print("[z] Sys: "..sys, 5, h-105)
     love.graphics.print("[x] File name: "..fileName, 5, h-85)
+    if gridActive then
+        love.graphics.print("[g] Grid: active", 5, h-65)
+    else
+        love.graphics.print("[g] Grid: not active", 5, h-65)
+    end
     
     local Tmx, Tmy = love.mouse.getPosition()
     local px, py = math.abs((((Tmx-w/2-gridOffsetX)/scale)+gW/2-1)-gW), (((Tmy-h/2-gridOffsetY)/scale)+gH/2-1)
@@ -275,19 +287,26 @@ function love.keypressed(key)
     elseif key == "s" then
         saveFile()
     elseif key == "n" then
+        sprites = {}
         setSize = ""
         definingSize = true
+    elseif key == "g" then
+        gridActive = not gridActive;
     elseif key == "l" then
         loadFile()
     elseif key == "p" then
         local mx, my = love.mouse.getPosition()
         px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
         if spawnPlacing == 1 then
-            spawn = {px, py}
+            if gridActive then
+                spawn = {math.ceil((px-0.25)*2)/2, math.ceil((py-0.25)*2)/2}
+            else
+                spawn = {px, py}
+            end
             spawnPlacing = 2
         else
             local v = math.floor(math.atan2(py-spawn[2], px-spawn[1])/(math.pi/2)+math.pi/8)*(math.pi/2)
-            spawnLook = {math.floor(math.cos(v)), math.floor(math.sin(v))}
+            spawnLook = {math.cos(v), math.sin(v)}
             spawnPlacing = 1
         end
     else
@@ -351,8 +370,11 @@ function love.mousereleased(x, y, b)
         mx, my = -1, -1
     elseif b == 2 then
         px, py = ((x-w/2-gridOffsetX)/scale), ((y-h/2-gridOffsetY)/scale)
-
-        table.insert(sprites, {px, py, selected, ""})
+        if gridActive then
+            table.insert(sprites, {math.ceil((px-0.25)*2)/2, math.ceil((py-0.25)*2)/2, selected, ""})
+        else
+            table.insert(sprites, {px, py, selected, ""})
+        end
     end
 end
 
@@ -365,6 +387,7 @@ function love.update()
     local x, y = love.mouse.getPosition()
     if love.keyboard.isDown("space") and love.mouse.isDown(1) then
         local pointX, pointY = math.floor((x-w/2-gridOffsetX)/scale)+gW/2, math.floor((y-h/2-gridOffsetY)/scale)+gH/2
+        print(pointX, pointY)
         if pointX > 0 and pointX < gW+1 and pointY > 0 and pointY < gH+1 then
             grid[pointX][pointY] = selected
         end
@@ -382,7 +405,7 @@ function saveFile()
         str = str..gW.." "..gH.." "..floor.." "..roof.."\n"
     end
     str = str..math.abs((spawn[1]+gW/2-1)-gW).." "..(spawn[2]+gH/2-1).."\n"
-    str = str..spawnLook[1].." "..spawnLook[2].."\n"
+    str = str..(-spawnLook[1]).." "..spawnLook[2].."\n"
 
     for y = 1,gH do
         for x = gW,1,-1 do
@@ -400,9 +423,11 @@ function saveFile()
 
     str = string.sub(str, 0, #str-1)
 
+    print("a")
     local f = io.open(getPath()..fileName..".map", "w")
     f:write(str)
     f:close()
+    print("b")
 end
 
 function getPath()
@@ -429,7 +454,7 @@ function loadFile()
     nrsL = string.numsplit(lines[2], " ")
     spawn = {(math.abs(nrsL[1]-gW)-gW/2+1), (nrsL[2]-gH/2+1)}
     nrsL = string.numsplit(lines[3], " ")
-    spawnLook = {nrsL[1], nrsL[2]}
+    spawnLook = {-nrsL[1], nrsL[2]}
 
     local count = 0
     for y = 1,gH do

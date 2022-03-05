@@ -22,9 +22,9 @@ namespace textured_raycast.maze
             {8,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/barrel.ppm")},
             {9,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/greenlight.ppm")},
             {10,  TextureLoaders.loadFromPlainPPM("img/wolfenstein/barrelBroken.ppm")},
-            {11,  TextureLoaders.loadFromPlainPPM("img/skybox.ppm")},
-            {12,  TextureLoaders.loadFromPlainPPM("img/shadyman.ppm")},
-            {13,  TextureLoaders.loadFromPlainPPM("img/button.ppm")},
+            {11,  TextureLoaders.loadFromPlainPPM("img/shadyman.ppm")},
+            {12,  TextureLoaders.loadFromPlainPPM("img/button.ppm")},
+            {99,  TextureLoaders.loadFromPlainPPM("img/skybox.ppm")},
             {101, TextureLoaders.loadFromPlainPPM("img/wolfenstein/end.ppm")}, // Also used as collision box for winning.
             {102, TextureLoaders.loadFromPlainPPM("img/wolfenstein/exit.ppm")}, // Also used for leaving the maze
         };
@@ -40,13 +40,11 @@ namespace textured_raycast.maze
             Console.Clear();
             ConsoleEngine engine = new ConsoleEngine(120, 80, "maze");
             ConsoleBuffer game = new ConsoleBuffer(120, 80);
+            ConsoleBuffer fight = new ConsoleBuffer(120, 80);
             ConsoleBuffer UIHolder = new ConsoleBuffer(120, 80);
 
             // Position vector
             Vector2d pos = world.plrPos;
-
-            // The distance of witch the player can interact
-            double interactDist = 0.4;
 
             // Directional unit vector
             Vector2d dir = world.plrRot;
@@ -65,6 +63,32 @@ namespace textured_raycast.maze
             // Main game loop
             while(world.state != states.Stopping)
             {
+                while (world.state == states.Fighting)
+                {
+                    world.dt = (float)(DateTime.Now.Ticks - world.lastFrameTime) / TimeSpan.TicksPerSecond;
+                    world.lastFrameTime = DateTime.Now.Ticks;
+
+                    world.fight.tillFightBegins -= world.dt;
+
+                    if (world.fight.tillFightBegins < 0)
+                    {
+                        world.fight.renderFightToBuffer(ref fight, ref world);
+
+                        engine.DrawConBuffer(fight);
+                        engine.SwapBuffers();
+                        engine.DrawScreen();
+                    }
+                    else
+                    {
+                        UIHolder.Clear();
+                        world.fight.renderFightStartScreenToBuffer(ref UIHolder, world.fight.tillFightBegins/2-0.1f);
+
+                        engine.DrawConBuffer(game.mixBuffer(UIHolder));
+                        engine.SwapBuffers();
+                        engine.DrawScreen();
+                    }
+                }
+
                 while (world.state == states.Paused)
                 {
                     UIHolder.Clear();
@@ -81,6 +105,10 @@ namespace textured_raycast.maze
                 {
                     world.dt = (float)(DateTime.Now.Ticks - world.lastFrameTime)/TimeSpan.TicksPerSecond;
                     world.lastFrameTime = DateTime.Now.Ticks;
+
+                    if (InputManager.GetKey(Keys.K_SHIFT, world) == KeyState.KEY_UP){
+                        world.staminaLVL = MathF.Min(world.staminaLVL + world.dt/4, 1);
+                    }
 
                     // make sure it knows what map its on
                     map = world.getMapByID(world.currentMap);
@@ -107,12 +135,21 @@ namespace textured_raycast.maze
 
                     foreach (Sprite sprite in map.sprites)
                     {
+                        sprite.Update(ref world, world.dt);
+
                         double distance = pos.DistTo(sprite.getPos());
                         // Console.WriteLine(distance + " : " + sprite.canInteract);
-                        if (distance < interactDist && distance < distanceToInteract && sprite.canInteract)
+                        if (distance < sprite.interactDistance && distance < distanceToInteract && sprite.canInteract)
                         {
-                            spriteToInteract = sprite;
-                            distanceToInteract = distance;
+                            if (sprite.autoInteract)
+                            {
+                                sprite.Activate(ref world);
+                            }
+                            else
+                            {
+                                spriteToInteract = sprite;
+                                distanceToInteract = distance;
+                            }
                         }
                     }
 
@@ -128,6 +165,15 @@ namespace textured_raycast.maze
                     if (toSend != "")
                     {
                         GUI.GUI.texBox(ref UIHolder, ref world, toSend);
+                    }
+
+                    for (int i = 0; i < 78; i++)
+                    {
+                        if (world.staminaLVL > (float)i / 78)
+                        {
+                            UIHolder.DrawPixel(new TexColor(0, 1, 0), 117, 1 + i);
+                            UIHolder.DrawPixel(new TexColor(0, 1, 0), 118, 1 + i);
+                        }
                     }
 
                     world.dayTime += world.dt/60; // 60 = 1 whole day = 60 sec
@@ -209,7 +255,15 @@ namespace textured_raycast.maze
 
         public static void moveInDir(ref World world, ref Map map, ref Vector2d pos, Vector2d dir)
         {
-            double movSpeed = world.dt;
+            double movSpeed = world.dt * ((InputManager.GetKey(Keys.K_SHIFT, world) != KeyState.KEY_UP && world.staminaLVL > 0) ? 2 : 1);
+
+            if (InputManager.GetKey(Keys.K_SHIFT, world) != KeyState.KEY_UP && world.staminaLVL > 0)
+            {
+                world.staminaLVL -= world.dt / 2;
+                if (world.staminaLVL < 0)
+                    world.staminaLVL = -0.2f;
+            }
+
             float extraColDistMult = 1f;
 
             // CellX and CellY holds the cell, the player would move
@@ -467,7 +521,7 @@ namespace textured_raycast.maze
                     } else {
                         if (y > (winHeight / 2)-1)
                         {
-                            var pix = GetSkyboxPixel(winHeight, dir, textures[11], x, winHeight - y - 1, world.dayTime);
+                            var pix = GetSkyboxPixel(winHeight, dir, textures[99], x, winHeight - y - 1, world.dayTime);
                             game.DrawPixel(pix, x, winHeight - y - 1);
                         }
                     }

@@ -6,13 +6,15 @@ namespace textured_raycast.maze.sprites
 {
     abstract class Sprite
     {
-        Vector2d pos;
+        public Vector2d pos;
         public int spriteID;
         public int texID;
         public int effectID;
         public bool canInteract = true;
+        public bool autoInteract = false;
         public bool doRender = true;
         public List<int> extraEffects = new List<int>();
+        public float interactDistance = 0.4f;
 
         public Sprite(double posX, double posY, int spriteID, int effectID = 0, string whatsLeft = "")
         {
@@ -39,6 +41,11 @@ namespace textured_raycast.maze.sprites
         }
 
         virtual public void Activate(ref World world)
+        {
+
+        }
+
+        virtual public void Update(ref World world, float dt)
         {
 
         }

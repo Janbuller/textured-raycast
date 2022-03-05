@@ -15,6 +15,8 @@ namespace textured_raycast.maze.input.Windows
             { input.Keys.K_D, Keys.K_D},
             { input.Keys.K_E, Keys.K_E},
 
+            { input.Keys.K_SHIFT, Keys.K_SHIFT},
+
             { input.Keys.K_UP, Keys.K_UP},
             { input.Keys.K_DOWN, Keys.K_DOWN},
             { input.Keys.K_LEFT, Keys.K_LEFT},
