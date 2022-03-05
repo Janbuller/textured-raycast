@@ -8,6 +8,7 @@ using textured_raycast.maze.sprites;
 using textured_raycast.maze.sprites.allSprites;
 using textured_raycast.maze.input;
 using textured_raycast.maze.GUI;
+using System.Threading.Tasks;
 
 namespace textured_raycast.maze
 {
@@ -81,7 +82,7 @@ namespace textured_raycast.maze
 
                         engine.DrawConBuffer(fight);
                         engine.SwapBuffers();
-                        engine.DrawScreen();
+                        DrawScreen(engine);
                     }
                     else
                     {
@@ -90,7 +91,7 @@ namespace textured_raycast.maze
 
                         engine.DrawConBuffer(game.mixBuffer(UIHolder));
                         engine.SwapBuffers();
-                        engine.DrawScreen();
+                        DrawScreen(engine);
                     }
                 }
 
@@ -102,7 +103,7 @@ namespace textured_raycast.maze
 
                     engine.DrawConBuffer(game.mixBuffer(UIHolder));
                     engine.SwapBuffers();
-                    engine.DrawScreen();
+                    DrawScreen(engine);
                 }
 
                 world.lastFrameTime = DateTime.Now.Ticks;
@@ -185,10 +186,8 @@ namespace textured_raycast.maze
                     if (world.dayTime > 1) world.dayTime -= 1;
 
                     engine.DrawConBuffer(game.mixBuffer(UIHolder));
-
                     engine.SwapBuffers();
-                    engine.DrawScreen();
-
+                    DrawScreen(engine);
                     HandleInputGame(ref world, map, pos, ref dir, ref plane, ref spriteToInteract);
                 }
             }
@@ -196,6 +195,21 @@ namespace textured_raycast.maze
             return false;
         }
 
+        // Multi-threaded screen-drawing
+        // =============================
+
+        // Whether the screen is currently being drawn
+        private static bool drawing = false;
+        // Draw the screen asynchronously
+        public static void DrawScreen(ConsoleEngine engine) {
+            if(!drawing) {
+                drawing = true;
+                Task.Run(() => {
+                    engine.DrawScreen();
+                    drawing = false;
+                });
+            }
+        }
 
         public static void HandleInputGame(ref World world, Map map, Vector2d pos, ref Vector2d dir, ref Vector2d plane, ref Sprite spriteToInteract) {
             double rotSpeed = world.dt*0.8;
