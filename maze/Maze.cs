@@ -4,6 +4,7 @@ using System.Linq;
 using textured_raycast.maze.math;
 using textured_raycast.maze.texture;
 using textured_raycast.maze.sprites;
+using textured_raycast.maze.sprites.allSprites;
 using textured_raycast.maze.input;
 using textured_raycast.maze.GUI;
 
@@ -285,6 +286,13 @@ namespace textured_raycast.maze
         public static void WallCasting(ref ConsoleBuffer game, ref double[] ZBuffer, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map)
         {
 
+            List<int> lightIdx = map.lightPoitions;
+            RoofLight[] lights = new RoofLight[lightIdx.Count];
+
+            for(int i = 0; i < lightIdx.Count; i++) {
+                lights[i] = (RoofLight)map.sprites[lightIdx[i]];
+            }
+
             // Loop through every x in the "window", casting a ray for each.
             // ---
             // Raycasting is done using the digital differential analyzer
@@ -450,13 +458,46 @@ namespace textured_raycast.maze
                 // if(side == 0 && rayDir.x > 0) texX = tex.width - texX - 1;
                 // if(side == 1 && rayDir.y < 0) texX = tex.width - texX - 1;
 
+                // Do Lighting
+                // ===========
+
+                // Calculate the map position of the ray hit.
+                Vector2d hitPos = new Vector2d(
+                    pos.x + perpWallDist * rayDir.x,
+                    pos.y + perpWallDist * rayDir.y
+                );
+
+                RoofLightDist[] lightDist = new RoofLightDist[lights.Count()];
+                for(int i = 0; i < lights.Count(); i++) {
+                    lightDist[i] = new RoofLightDist(
+                        lights[i].pos.DistTo(hitPos),
+                        lights[i].thisColor,
+                        lights[i].intesity
+                    );
+                }
+
+                TexColor mixedLight = MixLightDist(lightDist);
+
                 // Draw the ray.
                 if (hitWall.doDraw)
-                    game.DrawVerLine(x, lineHeight, tex, texX, darken);
+                    game.DrawVerLine(x, lineHeight, tex, texX, darken, mixedLight, null);
 
                 // Set z-buffer
                 ZBuffer[x] = perpWallDist;
             }
+        }
+
+        private static TexColor MixLightDist(RoofLightDist[] lights) {
+            TexColor mixedCol = new TexColor(0, 0, 0);
+            for(int i = 0; i < lights.Count(); i++) {
+                RoofLightDist light = lights[i];
+                TexColor curCol = light.col * (float)light.intensity;
+
+                float distScalar = (float)(1 / (0.7 * light.dist + 1.8 * light.dist * light.dist));
+
+                mixedCol += curCol * distScalar;
+            }
+            return mixedCol;
         }
 
         public static void FloorCasting(ref ConsoleBuffer game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, World world)

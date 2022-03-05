@@ -23,7 +23,7 @@ namespace textured_raycast.maze
         private Dictionary<int, Map> maps = new Dictionary<int, Map>()
         {
             {-1, new Map("maps/fightMap.map")},
-            {1, new Map("maps/potentialOverworldMap.map")},
+            {1, new Map("maps/overworld.map")},
         };
 
         public states state = states.Game;

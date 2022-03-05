@@ -8,8 +8,8 @@ namespace textured_raycast.maze.sprites.allSprites
 {
     class RoofLight : Sprite
     {
-        TexColor thisColor;
-        int intesity;
+        public TexColor thisColor;
+        public int intesity;
 
         public RoofLight(double posX, double posY, int spriteID, int effectID = 0, string whatsLeft = "") : base(posX, posY, spriteID, effectID, whatsLeft)
         {
