@@ -9,7 +9,7 @@ namespace textured_raycast.maze.sprites.allSprites
     class RoofLight : Sprite
     {
         public TexColor thisColor;
-        public int intesity;
+        public float intesity;
 
         public RoofLight(double posX, double posY, int spriteID, int effectID = 0, string whatsLeft = "") : base(posX, posY, spriteID, effectID, whatsLeft)
         {
@@ -20,7 +20,7 @@ namespace textured_raycast.maze.sprites.allSprites
         {
             canInteract = false;
             thisColor = new TexColor(extraEffects[0]*255, extraEffects[1]*255, extraEffects[2]*255);
-            intesity = extraEffects[3]/9;
+            intesity = (float)extraEffects[3]/9.0f;
         }
     }
 }
