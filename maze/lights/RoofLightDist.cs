@@ -8,7 +8,7 @@ using textured_raycast.maze.sprites.allSprites;
 using textured_raycast.maze.input;
 using textured_raycast.maze.GUI;
 
-namespace textured_raycast.maze
+namespace textured_raycast.maze.lights
 {
     struct RoofLightDist {
         public double dist;

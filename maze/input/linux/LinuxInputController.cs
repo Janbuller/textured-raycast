@@ -26,7 +26,7 @@ namespace textured_raycast.maze.input.linux
         }
 
         public void Init() {
-            evStream = new FileStream("/dev/input/event3", FileMode.Open, FileAccess.Read);
+            evStream = new FileStream("/dev/input/event22", FileMode.Open, FileAccess.Read);
             Task.Run(() => { InputLoop(); });
         }
 

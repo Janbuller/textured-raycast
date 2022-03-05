@@ -40,7 +40,7 @@ namespace rpg_game.maze.Fight
             List<Sprite> sprites = new List<Sprite>();
             sprites.Add(new DefaultSprite(2.35, 2, spriteID));
 
-            Maze.SpriteCasting(ref buffer, sprites, pos, plane, dir, ZBuffer, 1);
+            Maze.SpriteCasting(ref buffer, sprites, pos, plane, dir, ZBuffer, 1, map);
         }
 
         public void renderFightStartScreenToBuffer(ref ConsoleBuffer buffer, float progress)

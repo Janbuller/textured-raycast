@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using textured_raycast.maze.math;
+using textured_raycast.maze.lights;
 using textured_raycast.maze.texture;
 using textured_raycast.maze.sprites;
 using textured_raycast.maze.sprites.allSprites;
@@ -39,10 +40,13 @@ namespace textured_raycast.maze
             Map map = world.getMapByID(world.currentMap);
 
             Console.Clear();
-            ConsoleEngine engine = new ConsoleEngine(120, 80, "maze");
-            ConsoleBuffer game = new ConsoleBuffer(120, 80);
-            ConsoleBuffer fight = new ConsoleBuffer(120, 80);
-            ConsoleBuffer UIHolder = new ConsoleBuffer(120, 80);
+
+            Vector2i size = new Vector2i(120, 80);
+
+            ConsoleEngine engine = new ConsoleEngine(size.x, size.y, "maze");
+            ConsoleBuffer game = new ConsoleBuffer(size.x, size.y);
+            ConsoleBuffer fight = new ConsoleBuffer(size.x, size.y);
+            ConsoleBuffer UIHolder = new ConsoleBuffer(size.x, size.y);
 
             // Position vector
             Vector2d pos = world.plrPos;
@@ -127,7 +131,7 @@ namespace textured_raycast.maze
                     WallCasting(ref game, ref ZBuffer, dir, plane, pos, visRange, map);
 
 
-                    SpriteCasting(ref game, map.sprites, pos, plane, dir, ZBuffer, visRange);
+                    SpriteCasting(ref game, map.sprites, pos, plane, dir, ZBuffer, visRange, map);
 
                     // Add textbox to draw if neccecary
 
@@ -286,13 +290,7 @@ namespace textured_raycast.maze
         public static void WallCasting(ref ConsoleBuffer game, ref double[] ZBuffer, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map)
         {
 
-            List<int> lightIdx = map.lightPoitions;
-            RoofLight[] lights = new RoofLight[lightIdx.Count];
-
-            for(int i = 0; i < lightIdx.Count; i++) {
-                lights[i] = (RoofLight)map.sprites[lightIdx[i]];
-            }
-
+            RoofLight[] lights = map.GetLights();
             // Loop through every x in the "window", casting a ray for each.
             // ---
             // Raycasting is done using the digital differential analyzer
@@ -467,16 +465,8 @@ namespace textured_raycast.maze
                     pos.y + perpWallDist * rayDir.y
                 );
 
-                RoofLightDist[] lightDist = new RoofLightDist[lights.Count()];
-                for(int i = 0; i < lights.Count(); i++) {
-                    lightDist[i] = new RoofLightDist(
-                        lights[i].pos.DistTo(hitPos),
-                        lights[i].thisColor,
-                        lights[i].intesity
-                    );
-                }
-
-                TexColor mixedLight = MixLightDist(lightDist);
+                RoofLightDist[] lightDists = RoofLightDistHelpers.RoofLightArrayToDistArray(lights, hitPos);
+                TexColor mixedLight = RoofLightDistHelpers.MixLightDist(lightDists);
 
                 // Draw the ray.
                 if (hitWall.doDraw)
@@ -487,21 +477,10 @@ namespace textured_raycast.maze
             }
         }
 
-        private static TexColor MixLightDist(RoofLightDist[] lights) {
-            TexColor mixedCol = new TexColor(0, 0, 0);
-            for(int i = 0; i < lights.Count(); i++) {
-                RoofLightDist light = lights[i];
-                TexColor curCol = light.col * (float)light.intensity;
-
-                float distScalar = (float)(1 / (0.7 * light.dist + 1.8 * light.dist * light.dist));
-
-                mixedCol += curCol * distScalar;
-            }
-            return mixedCol;
-        }
-
         public static void FloorCasting(ref ConsoleBuffer game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, World world)
         {
+            RoofLight[] lights = map.GetLights();
+
             // Grabs the floor and ceiling texture, before the loop, since we
             // don't want differently textured ceiling or floor.
             Texture floorTex =  textures[map.floorTexID];
@@ -534,7 +513,11 @@ namespace textured_raycast.maze
 
                 Vector2d floor = pos + (new Vector2d(lineDist, lineDist) * rayDirLeft);
 
+                bool isFloor = y > (winHeight / 2)-1;
                 for(int x = 0; x < winWidth; x++) {
+                    RoofLightDist[] lightDists = RoofLightDistHelpers.RoofLightArrayToDistArray(lights, floor);
+                    TexColor mixedLight = RoofLightDistHelpers.MixLightDist(lightDists);
+
                     Vector2i cellPos = (Vector2i)floor.Floor();
                     Vector2i texture = (Vector2i)(floorTex.width * (floor - (Vector2d)cellPos)).Floor();
                     texture = new Vector2i(
@@ -550,14 +533,21 @@ namespace textured_raycast.maze
                     
                     darken = (float)Math.Min(1, Math.Max(0, darken - lineDist * (visRange * 0.005)));
 
-                    TexColor color = floorTex.getPixel(texture.x, texture.y);
-                    color *= darken;
-                    if(y > (winHeight / 2)-1)
-                        game.DrawPixel(color, x, y);
+                    TexColor texColor = new TexColor(0, 0, 0);
+                    TexColor color = new TexColor(0, 0, 0);
+                    if(isFloor)
+                        texColor = floorTex.getPixel(texture.x, texture.y);
+                    if (!map.useSkybox)
+                        texColor = ceilingTex.getPixel(texture.x, texture.y);
 
+                    if(isFloor || !map.useSkybox) {
+                        color  = texColor * darken * 0.3f;
+                        color += TexColor.unitMult(texColor, mixedLight) * 0.7f;
+                    }
+
+                    if(isFloor)
+                        game.DrawPixel(color, x, y);
                     if(!map.useSkybox) {
-                        color = ceilingTex.getPixel(texture.x, texture.y);
-                        color *= darken;
                         game.DrawPixel(color, x, winHeight - y - 1);
                     } else {
                         if (y > (winHeight / 2)-1)
@@ -641,7 +631,9 @@ namespace textured_raycast.maze
         }
 
         // TODO: Switch to using z-buffer, instead of painters algorithm.
-        public static void SpriteCasting(ref ConsoleBuffer game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange) {
+        public static void SpriteCasting(ref ConsoleBuffer game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange, Map map) {
+            RoofLight[] lights = map.GetLights();
+
             List<double> spriteDist = new List<double>();
             for(int i = 0; i < sprites.Count; i++) {
                 // Calculate sprite distance from player, using pythagoras.
@@ -666,6 +658,9 @@ namespace textured_raycast.maze
                 // lot, and this should hopefully make it slightly faster and
                 // more understandable.
                 Sprite curSpr = sprites[i];
+
+                RoofLightDist[] lightDists = RoofLightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos);
+                TexColor mixedLight = RoofLightDistHelpers.MixLightDist(lightDists);
 
                 // Don't render the sprite, if it isn't supposed to be rendered.
                 if(!curSpr.doRender)
@@ -752,7 +747,7 @@ namespace textured_raycast.maze
                     // and they were sorted earlier, thereby using the
                     // painters algorihm.
                     if(transformed.y < ZBuffer[x])
-                        game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, new TexColor(0, 0, 0));
+                        game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, mixedLight, new TexColor(0, 0, 0));
                 }
             }
         }

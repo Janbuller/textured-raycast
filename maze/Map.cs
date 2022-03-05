@@ -133,6 +133,17 @@ namespace textured_raycast.maze
             }
         }
 
+        public RoofLight[] GetLights() {
+            List<int> lightIdx = lightPoitions;
+            RoofLight[] lights = new RoofLight[lightIdx.Count];
+
+            for(int i = 0; i < lightIdx.Count; i++) {
+                lights[i] = (RoofLight)sprites[lightIdx[i]];
+            }
+
+            return lights;
+        }
+
         // Return if specific cell is a wall / should be drawn.
         public bool IsWall(int x, int y)
         {
