@@ -51,6 +51,14 @@ namespace textured_raycast.maze.texture
             );
         }
 
+        public static TexColor unitMult(TexColor col1, TexColor col2) {
+            return new TexColor(
+                Convert.ToInt32(col1.r * ((float)col2.r / 255.0f)),
+                Convert.ToInt32(col1.g * ((float)col2.g / 255.0f)),
+                Convert.ToInt32(col1.b * ((float)col2.b / 255.0f))
+            );
+        }
+
         public static bool operator ==(TexColor col1, TexColor col2) {
             if (System.Object.ReferenceEquals(col1, null))
             {

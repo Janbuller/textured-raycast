@@ -140,7 +140,8 @@ namespace textured_raycast.maze
                 // ansi escape sequences.
                 if(alphaCol == color)
                     continue;
-                DrawPixel((color * darken + light), x, i);
+                const float mixBy = 0.3f;
+                DrawPixel((color * darken * mixBy + TexColor.unitMult(color, light) * (1 - mixBy)), x, i);
             }
         }
 
