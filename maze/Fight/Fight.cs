@@ -49,7 +49,7 @@ namespace rpg_game.maze.Fight
             {
                 for (int y = 0; y < buffer.GetWinHeight(); y++)
                 {
-                    if ((MathF.Atan2(buffer.GetWinWidth() / 2 - y, buffer.GetWinHeight() / 2 - x)/MathF.PI+1)/2 > progress)
+                    if ((MathF.Atan2(buffer.GetWinHeight() / 2 - y, buffer.GetWinWidth() / 2 - x)/MathF.PI+1)/2 > progress)
                     {
                         buffer.DrawPixel(new textured_raycast.maze.texture.TexColor(0, 0, 0), x, y);
                     }
