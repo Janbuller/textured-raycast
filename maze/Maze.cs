@@ -22,7 +22,7 @@ namespace textured_raycast.maze
             {6,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/colorstone.ppm")},
             {7,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/pillar.ppm")},
             {8,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/barrel.ppm")},
-            {9,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/greenlight.ppm")},
+            {9,   TextureLoaders.loadFromPlainPPM("img/light.ppm")},
             {10,  TextureLoaders.loadFromPlainPPM("img/wolfenstein/barrelBroken.ppm")},
             {11,  TextureLoaders.loadFromPlainPPM("img/shadyman.ppm")},
             {12,  TextureLoaders.loadFromPlainPPM("img/button.ppm")},
