@@ -10,9 +10,9 @@ namespace textured_raycast.maze.texture
         public int r, g, b;
 
         public TexColor(int r, int g, int b) {
-            this.r = r;
-            this.g = g;
-            this.b = b;
+            this.r = Math.Min(255, r);
+            this.g = Math.Min(255, g);
+            this.b = Math.Min(255, b);
         }
 
         public TexColor(int r, int g, int b, int max) {
@@ -41,6 +41,14 @@ namespace textured_raycast.maze.texture
                 Convert.ToInt32(vec1.r * scalar),
                 Convert.ToInt32(vec1.g * scalar),
                 Convert.ToInt32(vec1.b * scalar));
+        }
+
+        public static TexColor operator +(TexColor col1, TexColor col2) {
+            return new TexColor(
+                col1.r + col2.r,
+                col1.g + col2.g,
+                col1.b + col2.b
+            );
         }
 
         public static bool operator ==(TexColor col1, TexColor col2) {

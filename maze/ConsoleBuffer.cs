@@ -116,6 +116,34 @@ namespace textured_raycast.maze
             }
         }
 
+        public void DrawVerLine(int x, int height, Texture tex, int texX, float darken, TexColor light, TexColor alphaCol = null) {
+            // Return exception, if char is out of game window.
+            if (x < 0 || x > GetWinWidth()) {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            int startY = GetWinHeight()/2 - height/2;
+            int endY = height + startY;
+
+            float sectionHeight = (float)tex.height / height;
+            float texPos = (startY - GetWinHeight() / 2 + height /2) * sectionHeight;
+            if(startY < 0) {
+                texPos += sectionHeight * (startY * -1);
+            }
+            startY = startY < 0 ? 0 : startY;
+            endY = endY > GetWinHeight() ? GetWinHeight() : endY;
+            for(int i = startY; i < endY; i++) {
+                int texY = (int)texPos;
+                texPos += sectionHeight;
+                TexColor color = tex.getPixel(texX, texY);
+                // Draw the line, using NuGet package "Pastel" to color, using
+                // ansi escape sequences.
+                if(alphaCol == color)
+                    continue;
+                DrawPixel((color * darken + light), x, i);
+            }
+        }
+
         /// <summary>
         /// Draws a texture at a specific position.
         /// </summary>
