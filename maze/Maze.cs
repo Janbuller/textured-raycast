@@ -66,6 +66,9 @@ namespace textured_raycast.maze
 
             double[] ZBuffer = new double[engine.GetWinWidth()];
 
+            Random rnd = new Random();
+            double lightBlinkStep = 0;
+            double lightFadeStep  = 0;
             // Main game loop
             while(world.state != states.Stopping)
             {
@@ -122,6 +125,16 @@ namespace textured_raycast.maze
 
                     pos = world.plrPos;
                     dir = world.plrRot;
+                    lightBlinkStep += world.dt*0.1;
+                    lightFadeStep += world.dt*50;
+
+                    if(lightFadeStep > 360) {
+                        lightFadeStep = 0;
+                    }
+
+                    float calcIntensity = (float)Math.Cos(Math.Tan(lightBlinkStep)) * 0.4f + 0.5f;
+                    ((RoofLight)(map.sprites[5])).intesity = calcIntensity;
+                    ((RoofLight)(map.sprites[5])).thisColor.setColorHSV((int)lightFadeStep, 1.0f, 1.0f);
 
                     //DrawSkybox(ref game, dir, textures[1]);
 
