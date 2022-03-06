@@ -194,8 +194,8 @@ namespace textured_raycast.maze
                     {
                         if (world.staminaLVL > (float)i / 78)
                         {
-                            UIHolder.DrawPixel(new TexColor(0, 1, 0), 117, 1 + i);
-                            UIHolder.DrawPixel(new TexColor(0, 1, 0), 118, 1 + i);
+                            UIHolder.DrawPixel(new TexColor(0, 155, 0), 117, 1 + i);
+                            UIHolder.DrawPixel(new TexColor(0, 155, 0), 118, 1 + i);
                         }
                     }
 
