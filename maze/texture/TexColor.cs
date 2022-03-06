@@ -74,17 +74,16 @@ namespace textured_raycast.maze.texture
 
         public static TexColor operator *(TexColor vec1, float scalar) {
             return new TexColor(
-                Convert.ToInt32(vec1.r * scalar),
-                Convert.ToInt32(vec1.g * scalar),
-                Convert.ToInt32(vec1.b * scalar));
+                Convert.ToInt32(MathF.Max(MathF.Min(vec1.r * scalar, 255f), 0f)),
+                Convert.ToInt32(MathF.Max(MathF.Min(vec1.g * scalar, 255f), 0f)),
+                Convert.ToInt32(MathF.Max(MathF.Min(vec1.b * scalar, 255f), 0f)));
         }
 
         public static TexColor operator +(TexColor col1, TexColor col2) {
             return new TexColor(
-                col1.r + col2.r,
-                col1.g + col2.g,
-                col1.b + col2.b
-            );
+                Math.Max(Math.Min(col1.r + col2.r, 255), 0),
+                Math.Max(Math.Min(col1.g + col2.g, 255), 0),
+                Math.Max(Math.Min(col1.b + col2.b, 255), 0));
         }
 
         public static TexColor unitMult(TexColor col1, TexColor col2) {

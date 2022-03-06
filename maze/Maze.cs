@@ -67,8 +67,6 @@ namespace textured_raycast.maze
             double[] ZBuffer = new double[engine.GetWinWidth()];
 
             Random rnd = new Random();
-            double lightBlinkStep = 0;
-            double lightFadeStep  = 0;
             // Main game loop
             while(world.state != states.Stopping)
             {
@@ -115,6 +113,10 @@ namespace textured_raycast.maze
                     world.dt = (float)(DateTime.Now.Ticks - world.lastFrameTime)/TimeSpan.TicksPerSecond;
                     world.lastFrameTime = DateTime.Now.Ticks;
 
+                    // Make time pass
+                    world.dayTime += world.dt / 60; // 60 = 1 whole day = 60 sec
+                    if (world.dayTime > 1) world.dayTime--;
+
                     if (InputManager.GetKey(Keys.K_SHIFT, world) == KeyState.KEY_UP){
                         world.staminaLVL = MathF.Min(world.staminaLVL + world.dt/4, 1);
                     }
@@ -125,30 +127,10 @@ namespace textured_raycast.maze
 
                     pos = world.plrPos;
                     dir = world.plrRot;
-                    lightBlinkStep += world.dt*0.1;
-                    lightFadeStep += world.dt*50;
-
-                    if(lightFadeStep > 360) {
-                        lightFadeStep = 0;
-                    }
-
-                    float calcIntensity = (float)Math.Cos(Math.Tan(lightBlinkStep)) * 0.4f + 0.5f;
-                    ((RoofLight)(map.sprites[5])).intesity = calcIntensity;
-                    ((RoofLight)(map.sprites[5])).thisColor.setColorHSV((int)lightFadeStep, 1.0f, 1.0f);
 
                     //DrawSkybox(ref game, dir, textures[1]);
 
-                    // Do the floor/ceiling casting.
-                    FloorCasting(ref game, dir, plane, pos, visRange, map, world);
-
-                    // Do the wall casting
-                    WallCasting(ref game, ref ZBuffer, dir, plane, pos, visRange, map);
-
-
-                    SpriteCasting(ref game, map.sprites, pos, plane, dir, ZBuffer, visRange, map);
-
-                    // Add textbox to draw if neccecary
-
+                    // find closest sprite that is interactable and display interact message
                     Sprite spriteToInteract = null;
                     double distanceToInteract = 9999;
 
@@ -179,13 +161,16 @@ namespace textured_raycast.maze
 
                     string toSend = world.currentMessage == "" ? world.interactMessage : world.currentMessage;
 
+                    //Clear the UI buffer
                     UIHolder.Clear();
 
+                    // Add text-box to UI buffer if there is a string that should go in it.
                     if (toSend != "")
                     {
                         GUI.GUI.texBox(ref UIHolder, ref world, toSend);
                     }
 
+                    // Draw the stamina bar in the UI Buffer
                     for (int i = 0; i < 78; i++)
                     {
                         if (world.staminaLVL > (float)i / 78)
@@ -195,8 +180,14 @@ namespace textured_raycast.maze
                         }
                     }
 
-                    world.dayTime += world.dt/60; // 60 = 1 whole day = 60 sec
-                    if (world.dayTime > 1) world.dayTime -= 1;
+                    // Do the floor/ceiling casting.
+                    FloorCasting(ref game, dir, plane, pos, visRange, map, world);
+
+                    // Do the wall casting
+                    WallCasting(ref game, ref ZBuffer, dir, plane, pos, visRange, map);
+
+                    // draw sprites
+                    SpriteCasting(ref game, map.sprites, pos, plane, dir, ZBuffer, visRange, map);
 
                     engine.DrawConBuffer(game.mixBuffer(UIHolder));
                     engine.SwapBuffers();
@@ -713,13 +704,11 @@ namespace textured_raycast.maze
                 .ToList();
 
             for(int i = 0; i < sprites.Count; i++) {
+
                 // Grab a reference to the current sprite, since it'll be used a
                 // lot, and this should hopefully make it slightly faster and
                 // more understandable.
                 Sprite curSpr = sprites[i];
-
-                RoofLightDist[] lightDists = RoofLightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos);
-                TexColor mixedLight = RoofLightDistHelpers.MixLightDist(lightDists);
 
                 // Don't render the sprite, if it isn't supposed to be rendered.
                 if(!curSpr.doRender)
@@ -805,8 +794,18 @@ namespace textured_raycast.maze
                     // sprites, since sprites are the only thing using it,
                     // and they were sorted earlier, thereby using the
                     // painters algorihm.
-                    if(transformed.y < ZBuffer[x])
+
+                    if (transformed.y < ZBuffer[x])
+                    {
+                        Vector2d newPlane = (plane*-1) + ((plane*2))/(endX - startX)*x;
+
+                        RoofLightDist[] lightDists = RoofLightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + newPlane);
+                        TexColor mixedLight = RoofLightDistHelpers.MixLightDist(lightDists);
+
                         game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, mixedLight, new TexColor(0, 0, 0));
+
+                        // should also add a thing that dosen add light to lights
+                    }
                 }
             }
         }
