@@ -66,8 +66,17 @@ namespace textured_raycast.maze.math
             x /= dist;
             y /= dist;
         }
+
+        // Using multiplication instead of Math.Pow for this is /literally/ over
+        // 10 times faster.
+        //
+        // Doing this 1.000.000 times takes:
+        // Math.Pow():     ~50-60ms
+        // Multiplication: ~0-5ms
         public double DistTo(Vector2d otherVec2d){
-            return Math.Sqrt(Math.Pow(otherVec2d.x - x, 2) + Math.Pow(otherVec2d.y - y, 2));
+            double x1 = otherVec2d.x - x;
+            double y1 = otherVec2d.y - y;
+            return Math.Sqrt(x1*x1 + y1*y1);
         }
 
         // Following function tests the functionality of the operator overloading.
