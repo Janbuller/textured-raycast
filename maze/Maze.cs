@@ -69,6 +69,8 @@ namespace textured_raycast.maze
             Random rnd = new Random();
             double lightBlinkStep = 0;
             double lightFadeStep  = 0;
+            var startPos = map.sprites[5].pos;
+            startPos = new Vector2d(startPos.x, startPos.y);
             // Main game loop
             while(world.state != states.Stopping)
             {
@@ -135,6 +137,8 @@ namespace textured_raycast.maze
                     float calcIntensity = (float)Math.Cos(Math.Tan(lightBlinkStep)) * 0.4f + 0.5f;
                     ((RoofLight)(map.sprites[5])).intesity = calcIntensity;
                     ((RoofLight)(map.sprites[5])).thisColor.setColorHSV((int)lightFadeStep, 1.0f, 1.0f);
+                    map.sprites[5].pos.x = startPos.x - 1.5 + Math.Cos(lightBlinkStep*15);
+                    map.sprites[5].pos.y = startPos.y + Math.Sin(lightBlinkStep*15);
 
                     //DrawSkybox(ref game, dir, textures[1]);
 
