@@ -797,14 +797,12 @@ namespace textured_raycast.maze
 
                     if (transformed.y < ZBuffer[x])
                     {
-                        Vector2d newPlane = (plane*-1) + ((plane*2))/(endX - startX)*x;
+                        Vector2d newPlane = (plane*-1) + ((plane*2))/(endX - startX)*(x-startX);
 
                         RoofLightDist[] lightDists = RoofLightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + newPlane);
                         TexColor mixedLight = RoofLightDistHelpers.MixLightDist(lightDists);
 
                         game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, mixedLight, new TexColor(0, 0, 0));
-
-                        // should also add a thing that dosen add light to lights
                     }
                 }
             }
