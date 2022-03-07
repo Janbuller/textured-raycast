@@ -327,8 +327,13 @@ namespace textured_raycast.maze
             for (int x = 0; x < game.GetWinWidth(); x++) {
                 WallcastReturn cast = casted[x];
                 // Draw the ray.
-                if (cast.HitWall.doDraw)
-                    game.DrawVerLine(x, cast.LineHeight, cast.Tex, cast.TexX, cast.Darken, cast.MixedLight, null);
+                if (cast.HitWall.doDraw) {
+                    if(lights.Count() > 0)
+                        game.DrawVerLine(x, cast.LineHeight, cast.Tex, cast.TexX, cast.Darken, cast.MixedLight, null);
+                    else {
+                        game.DrawVerLine(x, cast.LineHeight, cast.Tex, cast.TexX, cast.Darken);
+                    }
+                }
 
                 // Set z-buffer
                 ZBuffer[x] = cast.PerpWallDist;
@@ -565,8 +570,12 @@ namespace textured_raycast.maze
 
                 bool isFloor = y > (winHeight / 2)-1;
                 for(int x = 0; x < winWidth; x++) {
-                    RoofLightDist[] lightDists = RoofLightDistHelpers.RoofLightArrayToDistArray(lights, floor);
-                    TexColor mixedLight = RoofLightDistHelpers.MixLightDist(lightDists);
+                    RoofLightDist[] lightDists;
+                    TexColor mixedLight = new TexColor(0, 0, 0);
+                    if(lights.Count() > 0) {
+                        lightDists = RoofLightDistHelpers.RoofLightArrayToDistArray(lights, floor);
+                        mixedLight = RoofLightDistHelpers.MixLightDist(lightDists);
+                    }
 
                     Vector2i cellPos = (Vector2i)floor.Floor();
                     Vector2i texture = (Vector2i)(floorTex.width * (floor - (Vector2d)cellPos)).Floor();
@@ -591,8 +600,12 @@ namespace textured_raycast.maze
                         texColor = ceilingTex.getPixel(texture.x, texture.y);
 
                     if(isFloor || !map.useSkybox) {
-                        color  = texColor * darken * 0.3f;
-                        color += TexColor.unitMult(texColor, mixedLight) * 0.7f;
+                        if(lights.Count() > 0) {
+                            color  = texColor * darken * 0.3f;
+                            color += TexColor.unitMult(texColor, mixedLight) * 0.7f;
+                        } else {
+                            color  = texColor * darken;
+                        }
                     }
 
                     if(isFloor)
@@ -797,12 +810,16 @@ namespace textured_raycast.maze
 
                     if (transformed.y < ZBuffer[x])
                     {
-                        Vector2d newPlane = (plane*-1) + ((plane*2))/(endX - startX)*(x-startX);
+                        if(lights.Count() > 0) {
+                            Vector2d newPlane = (plane*-1) + ((plane*2))/(endX - startX)*(x-startX);
 
-                        RoofLightDist[] lightDists = RoofLightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + newPlane);
-                        TexColor mixedLight = RoofLightDistHelpers.MixLightDist(lightDists);
+                            RoofLightDist[] lightDists = RoofLightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + newPlane);
+                            TexColor mixedLight = RoofLightDistHelpers.MixLightDist(lightDists);
 
-                        game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, mixedLight, new TexColor(0, 0, 0));
+                            game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, mixedLight, new TexColor(0, 0, 0));
+                        } else {
+                            game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, new TexColor(0, 0, 0));
+                        }
                     }
                 }
             }
