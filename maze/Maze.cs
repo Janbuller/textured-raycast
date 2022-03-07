@@ -73,6 +73,11 @@ namespace textured_raycast.maze
 
                     if (world.fight.tillFightBegins < 0)
                     {
+                        foreach (Sprite sprite in map.sprites)
+                        {
+                            sprite.updateAnimation(world.dt);
+                        }
+
                         world.fight.renderFightToBuffer(ref fight, ref world);
 
                         engine.DrawConBuffer(fight);
@@ -131,6 +136,7 @@ namespace textured_raycast.maze
                     foreach (Sprite sprite in map.sprites)
                     {
                         sprite.Update(ref world, world.dt);
+                        sprite.updateAnimation(world.dt);
 
                         double distance = pos.DistTo(sprite.getPos());
                         // Console.WriteLine(distance + " : " + sprite.canInteract);

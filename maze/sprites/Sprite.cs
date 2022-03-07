@@ -14,6 +14,7 @@ namespace textured_raycast.maze.sprites
             {3, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/shadyman.ppm") }},
             {4, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/button.ppm") }},
             {5, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/wolfenstein/pillar.ppm") }},
+            {6, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/enemy/bat1.ppm"), TextureLoaders.loadFromPlainPPM("img/enemy/bat2.ppm") }},
         };
 
         public Vector2d pos;
@@ -28,9 +29,22 @@ namespace textured_raycast.maze.sprites
         public List<int> extraEffects = new List<int>();
         public float interactDistance = 0.4f;
 
+        private float time = 0;
+
         public Sprite(double posX, double posY, int spriteID, int effectID = 0, string whatsLeft = "")
         {
             define(posX, posY, spriteID, effectID, whatsLeft);
+        }
+        virtual public void updateAnimation(float dt)
+        {
+            time += dt;
+            if (time > 1)
+            {
+                time = 0;
+                curTexture++;
+                if (Sprite.IDTextureCorrespondence[texID].Count == curTexture)
+                    curTexture = 0;
+            }
         }
 
         public void define(double posX, double posY, int spriteID, int effectID, string whatsLeft)
