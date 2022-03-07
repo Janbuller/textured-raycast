@@ -531,31 +531,38 @@ function getPath()
     end
 end
 
-function getPath2()
-    if sys == "Win" then
-        return 'dir "bin/Debug/netcoreapp3.1/maps/"'
-    elseif sys == "Lin" then
-        return 'ls "../maps/"'
-    end
-end
-
 function findMachFile()
-    local i, t = 0, ""
-    local pfile = io.popen(getPath2())
-    for str in pfile:lines() do
-        i = i + 1
-        t = t .. str
-    end
-    pfile:close()
-    i = 0
-    for strPart in string.gmatch(t, "%d ([^%d]*).map[^/.]") do
-        i = i + 1
+    if sys == "Win" then
+        local i, t = 0, ""
+        local pfile = io.popen('dir "bin/Debug/netcoreapp3.1/maps/"')
+        for str in pfile:lines() do
+            i = i + 1
+            t = t .. str
+        end
+        pfile:close()
+        i = 0
+        for strPart in string.gmatch(t, "%d ([^%d]*).map[^/.]") do
+            i = i + 1
 
-        if i > ignoreNr then
-            if string.sub(strPart, 0, #fileName) == fileName then
-                return strPart
+            if i > ignoreNr then
+                if string.sub(strPart, 0, #fileName) == fileName then
+                    return strPart
+                end
             end
         end
+    else
+        local i, t = 0, ""
+        local pfile = io.popen('find * "../maps/"')
+        for str in pfile:lines() do
+            i = i + 1
+
+            if i > ignoreNr then
+                if string.sub(str, 0, #fileName) == fileName then
+                    return str
+                end
+            end
+        end
+        pfile:close()
     end
 
 
