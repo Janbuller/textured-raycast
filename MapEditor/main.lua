@@ -278,7 +278,7 @@ function love.keypressed(key)
             end
         end
         
-        while findMachFile() == "" and (ignoreNr == 0) == false do
+        while findMachFile() == "" and (ignoreNr ~= 0) do
             ignoreNr = ignoreNr - 1
         end
         return
@@ -531,7 +531,7 @@ function getPath()
     end
 end
 
-function getPath2()
+function getCMD()
     if sys == "Win" then
         return 'dir "bin/Debug/netcoreapp3.1/maps/"'
     elseif sys == "Lin" then
@@ -539,35 +539,29 @@ function getPath2()
     end
 end
 
+function getGmatch()
+    if sys == "Win" then
+        return "%d ([^%d]*).map[^/.]"
+    elseif sys == "Lin" then
+        return "(%a+).map"
+    end
+end
+
 function findMachFile()
     local i, t = 0, ""
-    local pfile = io.popen(getPath2())
+    local pfile = io.popen(getCMD())
     for str in pfile:lines() do
         i = i + 1
         t = t .. str
     end
     pfile:close()
+    i = 0
 
-    if sys == "Win" then
-        i = 0
-        for strPart in string.gmatch(t, "%d ([^%d]*).map[^/.]") do
+    for strPart in string.gmatch(t, getGmatch()) do
+        if string.sub(strPart, 0, #fileName) == fileName then
             i = i + 1
-
             if i > ignoreNr then
-                if string.sub(strPart, 0, #fileName) == fileName then
-                    return strPart
-                end
-            end
-        end
-    else
-        i = 0
-        for strPart in string.gmatch(t, "(%a+).map") do
-            i = i + 1
-
-            if i > ignoreNr then
-                if string.sub(strPart, 0, #fileName) == fileName then
-                    return strPart
-                end
+                return strPart
             end
         end
     end
