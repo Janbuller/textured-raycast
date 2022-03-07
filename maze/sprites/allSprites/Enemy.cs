@@ -10,7 +10,10 @@ namespace textured_raycast.maze.sprites.allSprites
     class Enemy : Sprite
     {
         float chaseDistance = 2.5f;
+
+        // these are just for testing, and will most properbly be changed...
         public float hp = 100;
+        public float appDamage = 2;
 
         public Enemy(double posX, double posY, int spriteID, int effectID = 0, string whatsLeft = "") : base(posX, posY, spriteID, effectID, whatsLeft)
         {

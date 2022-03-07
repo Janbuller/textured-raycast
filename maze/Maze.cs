@@ -21,12 +21,6 @@ namespace textured_raycast.maze
             {4,   TextureLoaders.loadFromPlainPPM("img/test5.ppm")},
             {5,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/redstone.ppm")},
             {6,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/colorstone.ppm")},
-            {7,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/pillar.ppm")},
-            {8,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/barrel.ppm")},
-            {9,   TextureLoaders.loadFromPlainPPM("img/light.ppm")},
-            {10,  TextureLoaders.loadFromPlainPPM("img/wolfenstein/barrelBroken.ppm")},
-            {11,  TextureLoaders.loadFromPlainPPM("img/shadyman.ppm")},
-            {12,  TextureLoaders.loadFromPlainPPM("img/button.ppm")},
             {99,  TextureLoaders.loadFromPlainPPM("img/skybox.ppm")},
             {101, TextureLoaders.loadFromPlainPPM("img/wolfenstein/end.ppm")}, // Also used as collision box for winning.
             {102, TextureLoaders.loadFromPlainPPM("img/wolfenstein/exit.ppm")}, // Also used for leaving the maze
@@ -533,6 +527,7 @@ namespace textured_raycast.maze
 
             // Grabs the floor and ceiling texture, before the loop, since we
             // don't want differently textured ceiling or floor.
+
             Texture floorTex =  textures[map.floorTexID];
             Texture ceilingTex =  textures[map.useSkybox ? 1 : map.ceilTexID];
 
@@ -715,7 +710,7 @@ namespace textured_raycast.maze
                     continue;
 
                 // Grab a reference of the current sprites texture.
-                Texture sprTex = textures[curSpr.texID];
+                Texture sprTex = curSpr.GetTexture();
                 // The relative sprite position from the camera.
                 Vector2d relSprPos = curSpr.getPos() - pos;
 

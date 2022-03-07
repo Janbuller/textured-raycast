@@ -24,6 +24,8 @@ namespace textured_raycast.maze
         {
             {-1, new Map("maps/fightMap.map")},
             {1, new Map("maps/overworld.map")},
+            {2, new Map("maps/DarkDungeon.map")},
+            {3, new Map("maps/hiddenRoom.map")},
         };
 
         public states state = states.Game;

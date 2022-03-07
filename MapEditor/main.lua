@@ -2,7 +2,7 @@ local love = love
 
 local socket = require("socket")
 
-function loadImage(path)
+function loadImage(path, isWall)
     local str, len = love.filesystem.read(path)
 
     str = string.gsub(str, "#[^\r\n]+\r?\n", "")
@@ -19,7 +19,11 @@ function loadImage(path)
             thisColor[colorPos] = tonumber(strPart)/colorMax
             if i%3 == 0 then
                 local pos = math.ceil(i/3)-2
-                iData:setPixel(pos-math.floor(pos/w)*w, math.floor(pos/w), thisColor[1], thisColor[2], thisColor[3])
+                local a = 1
+                if thisColor[1] == 0 and thisColor[2] == 0 and thisColor[3] == 0 and isWall == false then
+                    a = 0
+                end
+                iData:setPixel(pos-math.floor(pos/w)*w, math.floor(pos/w), thisColor[1], thisColor[2], thisColor[3], a)
             end
         end
         i = i + 1
@@ -36,25 +40,32 @@ function string.numsplit(s, delimiter)
     return result;
 end
 
-local image = {
-    "img/wolfenstein/greystone.ppm",
-    "img/wolfenstein/redbrick.ppm",
-    "img/wolfenstein/bluestone.ppm",
-    "img/test5.ppm",
-    "img/wolfenstein/redstone.ppm",
-    "img/wolfenstein/colorstone.ppm",
-    "img/wolfenstein/pillar.ppm",
-    "img/wolfenstein/barrel.ppm",
-    "img/wolfenstein/greenlight.ppm",
-    "img/wolfenstein/barrelBroken.ppm",
-    "img/shadyman.ppm",
-    "img/button.ppm",
+function string.split(s, delimiter)
+    result = {};
+    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+        table.insert(result, match);
+    end
+    return result;
+end
+
+local image = { -- id, path, isWallTexture
+    {1, "img/wolfenstein/greystone.ppm", true},
+    {2, "img/wolfenstein/redbrick.ppm", true},
+    {3, "img/wolfenstein/bluestone.ppm", true},
+    {4, "img/test5.ppm", true},
+    {5, "img/wolfenstein/redstone.ppm", true},
+    {6, "img/wolfenstein/colorstone.ppm", true},
+    {1, "img/wolfenstein/barrel.ppm", false},
+    {2, "img/wolfenstein/greenlight.ppm", false},
+    {3, "img/shadyman.ppm", false},
+    {4, "img/button.ppm", false},
+    {5, "img/wolfenstein/pillar.ppm", false},
 }
 local images = #image
 
-for i, path in ipairs(image) do
+for i, IMG in ipairs(image) do
 	love.graphics.clear()
-    
+
     love.graphics.setColor(0.6, 0.6, 0.6)
     love.graphics.rectangle("fill", 10, 10, 200, 40)
     love.graphics.setColor(1, 1, 1)
@@ -64,7 +75,7 @@ for i, path in ipairs(image) do
     love.graphics.print(i.."/"..images, 15, 15)
 
 	love.graphics.present()
-    image[i] = loadImage(path)
+    IMG[2] = loadImage(IMG[2], IMG[3])
 end
 
 local w, h = love.graphics.getWidth(), love.graphics.getHeight()
@@ -79,6 +90,8 @@ local openMen = false
 
 local selected = 1
 local drawSelect = true
+
+local cloneSave = {0, 0, ""}
 
 local guiTileSize = 40
 local guiTilediff = 6
@@ -102,6 +115,7 @@ local setSize = "20 20"
 local definingSize = false
 
 local editingFName = false
+local ignoreNr = 0
 
 local keys = "1234567890"
 local keysSize = "1234567890 "
@@ -143,7 +157,7 @@ function love.draw()
                 love.graphics.rectangle("fill", x, y, 1, 1)
             elseif grid[x+gW/2][y+gH/2] ~= 0 then
                 love.graphics.setColor(1, 1, 1)
-                love.graphics.draw(image[grid[x+gW/2][y+gH/2]], x, y, 0, 1/image[grid[x+gW/2][y+gH/2]]:getWidth())
+                love.graphics.draw(image[grid[x+gW/2][y+gH/2]][2], x, y, 0, 1/image[grid[x+gW/2][y+gH/2]][2]:getWidth())
             end
             love.graphics.setColor(1, 1, 1)
             love.graphics.rectangle("line", x, y, 1, 1)
@@ -162,16 +176,16 @@ function love.draw()
     end
 
     for _, sprite in pairs(sprites) do
-        love.graphics.draw(image[sprite[3]], sprite[1]-0.3, sprite[2]-0.3, 0, 0.6/image[sprite[3]]:getWidth(), 0.6/image[sprite[3]]:getHeight())
+        love.graphics.draw(image[sprite[3]][2], sprite[1]-0.3, sprite[2]-0.3, 0, 0.6/image[sprite[3]][2]:getWidth(), 0.6/image[sprite[3]][2]:getHeight())
     end
     
     love.graphics.origin()
     love.graphics.setLineWidth(2)
 
-    love.graphics.draw(image[floor], 5, h-45, 0, 40/image[floor]:getWidth(), 40/image[floor]:getHeight())
+    love.graphics.draw(image[floor][2], 5, h-45, 0, 40/image[floor][2]:getWidth(), 40/image[floor][2]:getHeight())
     
     if roof ~= 0 then
-        love.graphics.draw(image[roof], 50, h-45, 0, 40/image[roof]:getWidth(), 40/image[roof]:getHeight())
+        love.graphics.draw(image[roof][2], 50, h-45, 0, 40/image[roof][2]:getWidth(), 40/image[roof][2]:getHeight())
     end
 
     if editingSprite ~= 0 then
@@ -192,13 +206,22 @@ function love.draw()
                 love.graphics.rectangle("fill", 2+(guiTileSize+guiTilediff)*(i-1)-((math.ceil(i/guiMaxTiles)-1)*(guiTileSize+guiTilediff)*guiMaxTiles)-1, 2+(guiTileSize+guiTilediff)*(math.ceil(i/guiMaxTiles)-1)-1, (guiTileSize+guiTilediff/2),  (guiTileSize+guiTilediff/2))
                 
                 love.graphics.setColor(1, 1, 1)
-                love.graphics.draw(image[i], 2+(guiTileSize+guiTilediff)*(i-1)-((math.ceil(i/guiMaxTiles)-1)*(guiTileSize+guiTilediff)*guiMaxTiles), 2+(guiTileSize+guiTilediff)*(math.ceil(i/guiMaxTiles)-1), 0, guiTileSize/image[i]:getWidth(), guiTileSize/image[i]:getHeight())
+                love.graphics.draw(image[i][2], 2+(guiTileSize+guiTilediff)*(i-1)-((math.ceil(i/guiMaxTiles)-1)*(guiTileSize+guiTilediff)*guiMaxTiles), 2+(guiTileSize+guiTilediff)*(math.ceil(i/guiMaxTiles)-1), 0, guiTileSize/image[i][2]:getWidth(), guiTileSize/image[i][2]:getHeight())
             end
         end
     end
 
+    love.graphics.setColor(1, 1, 1)
     love.graphics.print("[n] Size: "..setSize, 5, h-125)
     love.graphics.print("[z] Sys: "..sys, 5, h-105)
+
+    if editingFName then
+        love.graphics.setColor(0.6, 0.6, 0.6)
+        love.graphics.print("[x] File name: "..findMachFile(), 5, h-85)
+    end
+
+    love.graphics.setColor(1, 1, 1)
+
     love.graphics.print("[x] File name: "..fileName, 5, h-85)
     if gridActive then
         love.graphics.print("[g] Grid: active", 5, h-65)
@@ -237,6 +260,13 @@ function love.keypressed(key)
             fileName = string.sub(fileName, 0, #fileName-1)
         elseif key == "return" then
             editingFName = false
+            ignoreNr = 0
+        elseif key == "tab" then
+            fileName = findMachFile()
+        elseif key == "up" then
+            ignoreNr = math.max(ignoreNr - 1, 0)
+        elseif key == "down" then
+            ignoreNr = ignoreNr + 1
         end
         for i = 1,#txtKeys do
             if key == string.sub(txtKeys, i, i) then
@@ -247,17 +277,25 @@ function love.keypressed(key)
                 end
             end
         end
+        
+        while findMachFile() == "" and (ignoreNr == 0) == false do
+            ignoreNr = ignoreNr - 1
+        end
         return
     end
     if key == "m" then
         drawSelect = not drawSelect
     elseif key == "f" then
-        floor = selected
+        if image[selected][3] then
+            floor = selected
+        end
     elseif key == "r" then
-        if roof == selected then
-            roof = 0
-        else
-            roof = selected
+        if image[selected][3] then
+            if roof == selected then
+                roof = 0
+            else
+                roof = selected
+            end
         end
     elseif key == "z" then
         if sys == "Win" then
@@ -283,6 +321,40 @@ function love.keypressed(key)
 
         if closest ~= 0 then
             editingSprite = closest
+        end
+    elseif key == "c" then
+        local mx, my = love.mouse.getPosition()
+        px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
+
+        local closest = 0
+        local distance = 0.5
+        for i,sprite in ipairs(sprites) do
+            local thisDist = math.dist(sprite[1], sprite[2], px, py)
+            if thisDist < distance then
+                distance = thisDist
+                closest = i
+            end
+        end
+
+        if closest ~= 0 then
+            if cloneSave[1] ~= closest then
+                cloneSave[1] = closest
+                cloneSave[2] = sprites[closest][3]
+                cloneSave[3] = sprites[closest][4]
+            else
+                cloneSave[1] = 0
+            end
+        end
+    elseif key == "b" then
+        local mx, my = love.mouse.getPosition()
+        px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
+
+        if cloneSave[1] ~= 0 then
+            if gridActive then
+                table.insert(sprites, {math.ceil((px-0.25)*2)/2, math.ceil((py-0.25)*2)/2, cloneSave[2], cloneSave[3]})
+            else
+                table.insert(sprites, {px, py, cloneSave[2], cloneSave[3]})
+            end
         end
     elseif key == "s" then
         saveFile()
@@ -311,7 +383,18 @@ function love.keypressed(key)
         end
     else
         if key == "backspace" then
-            sprites[editingSprite][4] = string.sub(sprites[editingSprite][4], 0, math.max(#sprites[editingSprite][4]-2, 0))
+            if editingSprite ~= 0 then
+                local newStrList = string.split(sprites[editingSprite][4], " ")
+                sprites[editingSprite][4] = ""
+
+                for i = 1,#newStrList-1 do
+                    if i == 1 then
+                        sprites[editingSprite][4] = newStrList[i]
+                    else
+                        sprites[editingSprite][4] = sprites[editingSprite][4].." "..newStrList[i]
+                    end
+                end
+            end
         elseif key == "return" then
             editingSprite = 0
         elseif key == "delete" then
@@ -324,7 +407,11 @@ function love.keypressed(key)
                     if #sprites[editingSprite][4] == 0 then
                         sprites[editingSprite][4] = sprites[editingSprite][4] .. key
                     else
-                        sprites[editingSprite][4] = sprites[editingSprite][4] .. " " .. key
+                        if love.keyboard.isDown("lshift") then
+                            sprites[editingSprite][4] = sprites[editingSprite][4] .. key
+                        else
+                            sprites[editingSprite][4] = sprites[editingSprite][4] .. " " .. key
+                        end
                     end
                 end
             end
@@ -370,10 +457,13 @@ function love.mousereleased(x, y, b)
         mx, my = -1, -1
     elseif b == 2 then
         px, py = ((x-w/2-gridOffsetX)/scale), ((y-h/2-gridOffsetY)/scale)
-        if gridActive then
-            table.insert(sprites, {math.ceil((px-0.25)*2)/2, math.ceil((py-0.25)*2)/2, selected, ""})
-        else
-            table.insert(sprites, {px, py, selected, ""})
+
+        if image[selected][3] == false then
+            if gridActive then
+                table.insert(sprites, {math.ceil((px-0.25)*2)/2, math.ceil((py-0.25)*2)/2, selected, ""})
+            else
+                table.insert(sprites, {px, py, selected, ""})
+            end
         end
     end
 end
@@ -387,9 +477,10 @@ function love.update()
     local x, y = love.mouse.getPosition()
     if love.keyboard.isDown("space") and love.mouse.isDown(1) then
         local pointX, pointY = math.floor((x-w/2-gridOffsetX)/scale)+gW/2, math.floor((y-h/2-gridOffsetY)/scale)+gH/2
-        print(pointX, pointY)
-        if pointX > 0 and pointX < gW+1 and pointY > 0 and pointY < gH+1 then
-            grid[pointX][pointY] = selected
+        if image[selected][3] == true then
+            if pointX > 0 and pointX < gW+1 and pointY > 0 and pointY < gH+1 then
+                grid[pointX][pointY] = selected
+            end
         end
     end
 end
@@ -409,25 +500,27 @@ function saveFile()
 
     for y = 1,gH do
         for x = gW,1,-1 do
-            str = str..grid[x][y].."\n"
+            if image[grid[x][y]] then
+                str = str..image[grid[x][y]][1].."\n"
+            else
+                str = str..grid[x][y].."\n"
+            end
         end
     end
 
     for _, sprite in pairs(sprites) do
         if sprite[4] == "" then
-            str = str..math.abs((sprite[1]+gW/2-1)-gW).." "..(sprite[2]+gH/2-1).." "..sprite[3].."\n"
+            str = str..math.abs((sprite[1]+gW/2-1)-gW).." "..(sprite[2]+gH/2-1).." "..image[sprite[3]][1].."\n"
         else
-            str = str..math.abs((sprite[1]+gW/2-1)-gW).." "..(sprite[2]+gH/2-1).." "..sprite[3].." "..sprite[4].."\n"
+            str = str..math.abs((sprite[1]+gW/2-1)-gW).." "..(sprite[2]+gH/2-1).." "..image[sprite[3]][1].." "..sprite[4].."\n"
         end
     end
 
     str = string.sub(str, 0, #str-1)
 
-    print("a")
     local f = io.open(getPath()..fileName..".map", "w")
     f:write(str)
     f:close()
-    print("b")
 end
 
 function getPath()
@@ -436,6 +529,37 @@ function getPath()
     elseif sys == "Lin" then
         return "../maps/"
     end
+end
+
+function getPath2()
+    if sys == "Win" then
+        return 'dir "bin/Debug/netcoreapp3.1/maps/"'
+    elseif sys == "Lin" then
+        return 'ls "../maps/"'
+    end
+end
+
+function findMachFile()
+    local i, t = 0, ""
+    local pfile = io.popen(getPath2())
+    for str in pfile:lines() do
+        i = i + 1
+        t = t .. str
+    end
+    pfile:close()
+    i = 0
+    for strPart in string.gmatch(t, "%d ([^%d]*).map[^/.]") do
+        i = i + 1
+
+        if i > ignoreNr then
+            if string.sub(strPart, 0, #fileName) == fileName then
+                return strPart
+            end
+        end
+    end
+
+
+    return ""
 end
 
 function loadFile()
@@ -468,7 +592,7 @@ function loadFile()
     for i = count+4, #lines do
         nrsL = string.numsplit(lines[i], " ")
         if #nrsL == 3 then
-            table.insert(sprites, {(math.abs(nrsL[1]-gW)-gW/2+1), (nrsL[2]-gH/2+1), nrsL[3], ""})
+            table.insert(sprites, {(math.abs(nrsL[1]-gW)-gW/2+1), (nrsL[2]-gH/2+1), findSpriteInIMG(nrsL[3]), ""})
         else
             local str = ""
             for i2 = 4, #nrsL do
@@ -476,7 +600,23 @@ function loadFile()
             end
             str = string.sub(str, 0, math.max(0, #str-1))
             
-            table.insert(sprites, {(math.abs(nrsL[1]-gW)-gW/2+1), (nrsL[2]-gH/2+1), nrsL[3], str})
+            table.insert(sprites, {(math.abs(nrsL[1]-gW)-gW/2+1), (nrsL[2]-gH/2+1), findSpriteInIMG(nrsL[3]), str})
+        end
+    end
+end
+
+function findWallInIMG(TEXID)
+    for i, data in pairs(image) do
+        if data[1] == tonumber(TEXID) and data[3] == true then
+            return i
+        end
+    end
+end
+
+function findSpriteInIMG(TEXID)
+    for i, data in pairs(image) do
+        if data[1] == tonumber(TEXID) and data[3] == false then
+            return i
         end
     end
 end

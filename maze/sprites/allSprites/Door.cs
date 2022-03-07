@@ -5,6 +5,7 @@ using textured_raycast.maze.sprites;
 
 namespace textured_raycast.maze.sprites.allSprites
 {
+    // IDForMapToGoTo IDForDoorOfMapToGoTo MyDoorID
     class Door : Sprite
     {
         public Door(double posX, double posY, int spriteID, int effectID = 0, string whatsLeft = "") : base(posX, posY, spriteID, effectID, whatsLeft)
@@ -15,6 +16,7 @@ namespace textured_raycast.maze.sprites.allSprites
         public override void onLoad()
         {
             canInteract = true;
+            doRender = false;
         }
 
         public override void Activate(ref World world)

@@ -1,15 +1,27 @@
 using System;
 using System.Collections.Generic;
 using textured_raycast.maze.math;
+using textured_raycast.maze.texture;
 
 namespace textured_raycast.maze.sprites
 {
     abstract class Sprite
     {
+        public static Dictionary<int, List<Texture>> IDTextureCorrespondence = new Dictionary<int, List<Texture>>()
+        {
+            {1, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/wolfenstein/barrel.ppm")}},
+            {2, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/light.ppm") }},
+            {3, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/shadyman.ppm") }},
+            {4, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/button.ppm") }},
+            {5, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/wolfenstein/pillar.ppm") }},
+        };
+
         public Vector2d pos;
         public int spriteID;
         public int texID;
+        public int curTexture = 0;
         public int effectID;
+        public bool effectedByLight = true;
         public bool canInteract = true;
         public bool autoInteract = false;
         public bool doRender = true;
@@ -38,6 +50,11 @@ namespace textured_raycast.maze.sprites
             }
 
             onLoad();
+        }
+
+        virtual public Texture GetTexture()
+        {
+            return IDTextureCorrespondence[texID][curTexture];
         }
 
         virtual public void Activate(ref World world)

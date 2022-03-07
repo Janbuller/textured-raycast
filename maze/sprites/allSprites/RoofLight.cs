@@ -18,9 +18,10 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void onLoad()
         {
+            effectedByLight = false;
             canInteract = false;
-            thisColor = new TexColor(extraEffects[0]*255, extraEffects[1]*255, extraEffects[2]*255);
-            intesity = (float)extraEffects[3]/9.0f;
+            thisColor = new TexColor(extraEffects[0], extraEffects[1], extraEffects[2]);
+            intesity = (float)extraEffects[3]/100f;
         }
     }
 }
