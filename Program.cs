@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Collections.Generic;
 using textured_raycast.maze;
@@ -11,7 +12,10 @@ namespace textured_raycast
     {
         static void Main(string[] args)
         {
-            maze.input.InputManager.SetInputController(new maze.input.Windows.WindowsInputController());
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                maze.input.InputManager.SetInputController(new maze.input.linux.LinuxInputController());
+            else
+                maze.input.InputManager.SetInputController(new maze.input.Windows.WindowsInputController());
             World world = new World();
             Maze.StartMaze(world);
 

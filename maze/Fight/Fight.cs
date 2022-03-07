@@ -18,10 +18,15 @@ namespace rpg_game.maze.Fight
         float hp;
         float maxHp;
 
+        List<Sprite> sprites = new List<Sprite>();
+
         public Fight(Enemy spriteToFight)
         {
             spriteID = spriteToFight.spriteID;
             hp = spriteToFight.hp;
+
+            sprites.Add(new DefaultSprite(2.35, 2, spriteID));
+
         }
 
         public void renderFightToBuffer(ref ConsoleBuffer buffer, ref World world)
@@ -37,8 +42,10 @@ namespace rpg_game.maze.Fight
 
             Maze.WallCasting(ref buffer, ref ZBuffer, dir, plane, pos, 1, map);
 
-            List<Sprite> sprites = new List<Sprite>();
-            sprites.Add(new DefaultSprite(2.35, 2, spriteID));
+            foreach (Sprite sprite in sprites)
+            {
+                sprite.updateAnimation(world.dt);
+            }
 
             Maze.SpriteCasting(ref buffer, sprites, pos, plane, dir, ZBuffer, 1, map);
         }

@@ -73,16 +73,12 @@ namespace textured_raycast.maze
 
                     if (world.fight.tillFightBegins < 0)
                     {
-                        foreach (Sprite sprite in map.sprites)
-                        {
-                            sprite.updateAnimation(world.dt);
-                        }
 
                         world.fight.renderFightToBuffer(ref fight, ref world);
 
                         engine.DrawConBuffer(fight);
                         engine.SwapBuffers();
-                        DrawScreen(engine);
+                        engine.DrawScreen();
                     }
                     else
                     {
@@ -207,11 +203,14 @@ namespace textured_raycast.maze
         // Draw the screen asynchronously
         public static void DrawScreen(ConsoleEngine engine) {
             if(!drawing) {
+
                 drawing = true;
+
                 Task.Run(() => {
                     engine.DrawScreen();
                     drawing = false;
                 });
+
             }
         }
 
