@@ -73,12 +73,12 @@ namespace textured_raycast.maze
 
                     if (world.fight.tillFightBegins < 0)
                     {
-
+                        fight.Clear();
                         world.fight.renderFightToBuffer(ref fight, ref world);
 
                         engine.DrawConBuffer(fight);
                         engine.SwapBuffers();
-                        engine.DrawScreen();
+                        DrawScreen(engine);
                     }
                     else
                     {

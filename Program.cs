@@ -14,8 +14,9 @@ namespace textured_raycast
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 maze.input.InputManager.SetInputController(new maze.input.linux.LinuxInputController());
-            else
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 maze.input.InputManager.SetInputController(new maze.input.Windows.WindowsInputController());
+
             World world = new World();
             Maze.StartMaze(world);
 
