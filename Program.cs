@@ -11,7 +11,7 @@ namespace textured_raycast
     {
         static void Main(string[] args)
         {
-            maze.input.InputManager.SetInputController(new maze.input.Windows.WindowsInputController());
+            maze.input.InputManager.SetInputController(new maze.input.linux.LinuxInputController());
             World world = new World();
             Maze.StartMaze(world);
 

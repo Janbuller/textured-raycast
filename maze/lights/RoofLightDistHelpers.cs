@@ -18,7 +18,7 @@ namespace textured_raycast.maze.lights
                 RoofLightDist light = lights[i];
                 TexColor curCol = light.col * (float)light.intensity;
 
-                float distScalar = (float)(1 / (0.7 * light.dist + 1.8 * light.dist * light.dist));
+                float distScalar = (float)(1 / (0.35 * light.dist + 0.44 * light.dist * light.dist));
 
                 mixedCol += curCol * distScalar;
             }
