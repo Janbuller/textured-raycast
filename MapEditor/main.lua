@@ -566,7 +566,6 @@ function findMachFile()
         end
     end
 
-
     return ""
 end
 

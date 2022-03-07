@@ -9,6 +9,7 @@ namespace textured_raycast.maze.sprites.allSprites
 {
     class Enemy : Sprite
     {
+        float time = 0;
         float chaseDistance = 2.5f;
 
         // these are just for testing, and will most properbly be changed...
@@ -34,6 +35,14 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void Update(ref World world, float dt)
         {
+            time += dt;
+            if (time > 1)
+            {
+                time = 0;
+                curTexture++;
+                if (Sprite.IDTextureCorrespondence[texID].Count == curTexture)
+                    curTexture = 0;
+            }
             double dist = world.plrPos.DistTo(pos);
 
             if (dist < chaseDistance)
