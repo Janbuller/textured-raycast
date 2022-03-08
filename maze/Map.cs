@@ -36,6 +36,7 @@ namespace textured_raycast.maze
             {2, typeof(RoofLight)},
             {3, typeof(Enemy)},
             {4, typeof(TalkingSprite)},
+            {5, typeof(Portal)},
         };
 
         public bool useSkybox = true;

@@ -25,5 +25,52 @@ namespace textured_raycast.maze.texture
 
             return new Texture(imageData, Downscaled.width/2, Downscaled.height/2);
         }
+
+        public static void DrawVerLine(ref Texture texToDraw, int x, int height, Texture tex, int texX, float darken, TexColor drawToCol = null) {
+            int startY = texToDraw.height/2 - height/2;
+            int endY = height + startY;
+
+            float sectionHeight = (float)tex.height / height;
+            float texPos = (startY - texToDraw.height / 2 + height /2) * sectionHeight;
+            if(startY < 0) {
+                texPos += sectionHeight * (startY * -1);
+            }
+            startY = startY < 0 ? 0 : startY;
+            endY = endY > texToDraw.height ? texToDraw.height : endY;
+            for(int i = startY; i < endY; i++) {
+                int texY = (int)texPos;
+                texPos += sectionHeight;
+                TexColor color = tex.getPixel(texX, texY);
+                // Draw the line, using NuGet package "Pastel" to color, using
+                // ansi escape sequences.
+                if(drawToCol == color)
+                    continue;
+                texToDraw.setPixel(x, i, (color * darken));
+            }
+        }
+
+        public static void DrawVerLine(ref Texture texToDraw, int x, int height, Texture tex, int texX, float darken, TexColor light, TexColor drawToCol = null) {
+            int startY = texToDraw.height/2 - height/2;
+            int endY = height + startY;
+
+            float sectionHeight = (float)tex.height / height;
+            float texPos = (startY - texToDraw.height / 2 + height /2) * sectionHeight;
+            if(startY < 0) {
+                texPos += sectionHeight * (startY * -1);
+            }
+            startY = startY < 0 ? 0 : startY;
+            endY = endY > texToDraw.height ? texToDraw.height : endY;
+            for(int i = startY; i < endY; i++) {
+                int texY = (int)texPos;
+                texPos += sectionHeight;
+                TexColor color = tex.getPixel(texX, texY);
+                // Draw the line, using NuGet package "Pastel" to color, using
+                // ansi escape sequences.
+                if(drawToCol == color)
+                    continue;
+                const float mixBy = 0.3f;
+                texToDraw.setPixel(x, i, (color * darken * mixBy + TexColor.unitMult(color, light) * (1 - mixBy)));
+            }
+        }
     }
 }

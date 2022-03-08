@@ -15,6 +15,12 @@ namespace textured_raycast.maze.texture
             this.b = Math.Min(255, b);
         }
 
+        public TexColor() {
+            this.r = 0;
+            this.g = 0;
+            this.b = 0;
+        }
+
         public TexColor(int r, int g, int b, int max) {
             setColorWithMax(r, g, b, max);
         }

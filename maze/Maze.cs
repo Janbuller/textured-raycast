@@ -319,10 +319,16 @@ namespace textured_raycast.maze
             // swtiching between them and always using the current shortest,
             // the first gridcell intersection can be found.
             WallcastReturn[] casted = new WallcastReturn[width];
-            Parallel.For(0, game.GetWinWidth(),
-                         x => {
-                             casted[x] = DoOneWallcast(x, width, height, lights, dir, plane, pos, visRange, map);
-                             });
+
+
+            // Parallel.For(0, game.GetWinWidth(),
+            //              x => {
+            //                  casted[x] = DoOneWallcast(x, width, height, lights, dir, plane, pos, visRange, map);
+            //                  });
+
+            for(int x = 0; x < game.GetWinWidth(); x++) {
+                casted[x] = DoOneWallcast(x, width, height, lights, dir, plane, pos, visRange, map);
+            }
 
             for (int x = 0; x < game.GetWinWidth(); x++) {
                 WallcastReturn cast = casted[x];
@@ -693,7 +699,6 @@ namespace textured_raycast.maze
 
         }
 
-        // TODO: Switch to using z-buffer, instead of painters algorithm.
         public static void SpriteCasting(ref ConsoleBuffer game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange, Map map) {
             RoofLight[] lights = map.GetLights();
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Pastel;
 
 namespace textured_raycast.maze.texture
@@ -12,6 +13,18 @@ namespace textured_raycast.maze.texture
             this.width = width;
             this.height = height;
             this.pixels = pixels;
+        }
+
+        public Texture(int width, int height) {
+            this.width = width;
+            this.height = height;
+            this.pixels = new TexColor[width*height].ToList();
+        }
+
+        public Texture(Texture tex) {
+            this.width = tex.width;
+            this.height = tex.height;
+            this.pixels = new List<TexColor>(tex.pixels);
         }
 
         public TexColor getPixel(int x, int y) {
