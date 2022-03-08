@@ -15,6 +15,7 @@ namespace textured_raycast.maze.sprites
             {4, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/button.ppm") }},
             {5, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/wolfenstein/pillar.ppm") }},
             {6, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/enemy/bat1.ppm"), TextureLoaders.loadFromPlainPPM("img/enemy/bat2.ppm") }},
+            {7, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/tmp-portal.ppm") }},
         };
 
         public Vector2d pos;
@@ -77,6 +78,11 @@ namespace textured_raycast.maze.sprites
         }
 
         virtual public void Update(ref World world, float dt)
+        {
+
+        }
+
+        virtual public void UpdateOnDraw(ref World world, double distToPlayer)
         {
 
         }

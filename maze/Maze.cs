@@ -183,7 +183,7 @@ namespace textured_raycast.maze
                     WallCasting(ref game, ref ZBuffer, dir, plane, pos, visRange, map);
 
                     // draw sprites
-                    SpriteCasting(ref game, map.sprites, pos, plane, dir, ZBuffer, visRange, map);
+                    SpriteCasting(ref game, map.sprites, pos, plane, dir, ZBuffer, visRange, map, ref world);
 
                     engine.DrawConBuffer(game.mixBuffer(UIHolder));
                     engine.SwapBuffers();
@@ -699,7 +699,7 @@ namespace textured_raycast.maze
 
         }
 
-        public static void SpriteCasting(ref ConsoleBuffer game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange, Map map) {
+        public static void SpriteCasting(ref ConsoleBuffer game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange, Map map, ref World world) {
             RoofLight[] lights = map.GetLights();
 
             List<double> spriteDist = new List<double>();
@@ -815,6 +815,7 @@ namespace textured_raycast.maze
 
                     if (transformed.y < ZBuffer[x])
                     {
+                        curSpr.UpdateOnDraw(ref world, transformed.y);
                         if(lights.Count() > 0) {
                             Vector2d newPlane = (plane*-1) + ((plane*2))/(endX - startX)*(x-startX);
 

@@ -21,7 +21,10 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void onLoad()
         {
-            interactDistance = 0.4f;
+            Texture startTex = IDTextureCorrespondence[texID][0];
+            portalTex = new Texture(startTex);
+
+            interactDistance = 0.2f;
             canInteract = true;
             autoInteract = true;
         }
@@ -31,22 +34,38 @@ namespace textured_raycast.maze.sprites.allSprites
             world.plrPos += new Vector2d(extraEffects[0], extraEffects[1]);
         }
 
-        public override void Update(ref World world, float dt)
+        public override void UpdateOnDraw(ref World world, double distToPlayer)
         {
             Texture startTex = IDTextureCorrespondence[texID][0];
             portalTex = new Texture(startTex);
             Map curMap = world.getMapByID(world.currentMap);
 
+            Vector2d portalLocOffset = new Vector2d(extraEffects[0], extraEffects[1]);
+            Vector2d tpToLoc = world.plrPos + portalLocOffset;
+
+            if(tpToLoc.x > curMap.Width-1 || tpToLoc.x < 0 || tpToLoc.y > curMap.Height-1 || tpToLoc.y < 0) {
+                // for(int y = 0; y < portalTex.width; y++) {
+                //     for(int x = 0; x < portalTex.height; x++) {
+                //         if(portalTex.getPixel(x, y) == new TexColor(255, 0, 255))
+                //             portalTex.setPixel(x, y, new TexColor(0, 0, 0));
+                //     }
+                // }
+                // return;
+
+                tpToLoc = getPos() + portalLocOffset;
+            }
+
             Vector2d dir = world.plrRot;
             Vector2d plane = new Vector2d(dir.y, -dir.x) * 0.66;
             for(int x = 0; x < portalTex.width; x++) {
-                Maze.WallcastReturn wcr = Maze.DoOneWallcast(x, portalTex.width, portalTex.height, curMap.GetLights(), dir, plane, world.plrPos + new Vector2d(extraEffects[0], extraEffects[1]), 1, curMap);
+                Maze.WallcastReturn wcr = Maze.DoOneWallcast(x, portalTex.width, portalTex.height, curMap.GetLights(), dir, plane, tpToLoc, 1, curMap);
+                int LineHeight = (int)(portalTex.height / (wcr.PerpWallDist + 1/distToPlayer));
 
                 if (wcr.HitWall.doDraw) {
                     if(curMap.GetLights().Count() > 0) {
-                        TextureHelper.DrawVerLine(ref portalTex, x, wcr.LineHeight, wcr.Tex, wcr.TexX, wcr.Darken, wcr.MixedLight, new TexColor(255, 0, 255));
+                        TextureHelper.DrawVerLine(ref portalTex, x, LineHeight, wcr.Tex, wcr.TexX, wcr.Darken, wcr.MixedLight, new TexColor(255, 0, 255));
                     } else {
-                        TextureHelper.DrawVerLine(ref portalTex, x, wcr.LineHeight, wcr.Tex, wcr.TexX, wcr.Darken, new TexColor(255, 0, 255));
+                        TextureHelper.DrawVerLine(ref portalTex, x, LineHeight, wcr.Tex, wcr.TexX, wcr.Darken, new TexColor(255, 0, 255));
                     }
                 }
             }

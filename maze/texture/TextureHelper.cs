@@ -43,7 +43,7 @@ namespace textured_raycast.maze.texture
                 TexColor color = tex.getPixel(texX, texY);
                 // Draw the line, using NuGet package "Pastel" to color, using
                 // ansi escape sequences.
-                if(drawToCol == color)
+                if(drawToCol != texToDraw.getPixel(x, i))
                     continue;
                 texToDraw.setPixel(x, i, (color * darken));
             }
@@ -66,7 +66,7 @@ namespace textured_raycast.maze.texture
                 TexColor color = tex.getPixel(texX, texY);
                 // Draw the line, using NuGet package "Pastel" to color, using
                 // ansi escape sequences.
-                if(drawToCol == color)
+                if(drawToCol != texToDraw.getPixel(x, i))
                     continue;
                 const float mixBy = 0.3f;
                 texToDraw.setPixel(x, i, (color * darken * mixBy + TexColor.unitMult(color, light) * (1 - mixBy)));

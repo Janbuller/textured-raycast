@@ -47,7 +47,7 @@ namespace rpg_game.maze.Fight
                 sprite.updateAnimation(world.dt);
             }
 
-            Maze.SpriteCasting(ref buffer, sprites, pos, plane, dir, ZBuffer, 1, map);
+            Maze.SpriteCasting(ref buffer, sprites, pos, plane, dir, ZBuffer, 1, map, ref world);
         }
 
         public void renderFightStartScreenToBuffer(ref ConsoleBuffer buffer, float progress)
