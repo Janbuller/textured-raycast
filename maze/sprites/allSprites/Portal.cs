@@ -63,7 +63,7 @@ namespace textured_raycast.maze.sprites.allSprites
 
             for(int x = 0; x < portalTex.width; x++) {
                 Maze.WallcastReturn wcr = Maze.DoOneWallcast(x, portalTex.width, portalTex.height, curMap.GetLights(), dir, plane, tpToLoc, 1, curMap);
-                int LineHeight = (int)(portalTex.height / (wcr.PerpWallDist + 1/distToPlayer));
+                int LineHeight = (int)((portalTex.height * 2) / (wcr.PerpWallDist + 1/distToPlayer));
 
                 if (wcr.HitWall.doDraw) {
                     if(curMap.GetLights().Count() > 0) {
