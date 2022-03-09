@@ -17,15 +17,16 @@ namespace textured_raycast.maze
         public int Height{get => height;}
         // Map is śaved as a list of ints. Different numbers have different
         // functions/colors.
+        public List<Wall> roof = new List<Wall>();
         public List<Wall> map = new List<Wall>();
+        public List<Wall> floor = new List<Wall>();
         public List<Sprite> sprites = new List<Sprite>();
 
         public Dictionary<int, Vector2d> doorPositions = new Dictionary<int, Vector2d>();
         public List<int> lightPoitions = new List<int>();
 
-
-        public int floorTexID;
-        public int ceilTexID;
+        public int floorTexID = 1;
+        public int ceilTexID = 1;
 
         public Vector2d playerStartPos;
         public Vector2d playerStartRot;
@@ -56,14 +57,6 @@ namespace textured_raycast.maze
                 return;
             if (!int.TryParse(imageData[0].Split(' ')[1], out reqHeight))
                 return;
-            if (!int.TryParse(imageData[0].Split(' ')[2], out floorTexID))
-                return;
-            if (imageData[0].Split(' ').Length == 4)
-            {
-                useSkybox = false;
-                if (!int.TryParse(imageData[0].Split(' ')[3], out ceilTexID))
-                    return;
-            }
             if (!double.TryParse(imageData[1].Split(' ')[0], NumberStyles.Any, CultureInfo.InvariantCulture, out plrStartX))
                 return;
             if (!double.TryParse(imageData[1].Split(' ')[1], NumberStyles.Any, CultureInfo.InvariantCulture, out plrStartY))
@@ -80,11 +73,15 @@ namespace textured_raycast.maze
             playerStartRot = new Vector2d(plrStartDX, plrStartDY);
 
             // Initialize map to empty list of correct size.
+            roof = new Wall[width * height].ToList();
             map = new Wall[width * height].ToList();
+            floor = new Wall[width * height].ToList();
 
             for (int i = 3; i < map.Count + 3; i++)
             {
-                map[i - 3] = new Wall(int.Parse(imageData[i]));
+                roof[i - 3] = new Wall(int.Parse(imageData[i].Split(' ')[0]));
+                map[i - 3] = new Wall(int.Parse(imageData[i].Split(' ')[1]));
+                floor[i - 3] = new Wall(int.Parse(imageData[i].Split(' ')[2]));
             }
 
             for (int i = map.Count + 3; i < imageData.Length; i++)
@@ -149,6 +146,15 @@ namespace textured_raycast.maze
         public bool IsWall(int x, int y)
         {
             return map[x + y * width].isWall;
+        }
+
+        public bool GetFloor(int x, int y)
+        {
+            return floor[x + y * width].isWall;
+        }
+        public bool RetRoof(int x, int y)
+        {
+            return roof[x + y * width].isWall;
         }
 
         public void openDoor(ref World world, int myID, int doorID)

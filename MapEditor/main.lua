@@ -83,6 +83,7 @@ end
 local w, h = love.graphics.getWidth(), love.graphics.getHeight()
 local grid = {}
 local gW, gH = 20, 20
+local gridLayer = 2
 local gridOffsetX, gridOffsetY = 0, 0
 local mx, my = -1, -1
 local scale = 10
@@ -126,14 +127,16 @@ local txtKeys = "abcdefghijklmnopqrstuvwxyz"
 function newGrid(gWin, gHin)
     local grid = {}
     gW, gH = gWin, gHin
-
-    for x = 1,gW do
-        grid[x] = {}
-        for y = 1,gH do
-            grid[x][y] = 0
+    for i = 1,3 do
+        grid[i] = {}
+        for x = 1,gW do
+            grid[i][x] = {}
+            for y = 1,gH do
+                grid[i][x][y] = 0
+            end
         end
     end
-
+    
     return grid
 end
 
@@ -144,11 +147,13 @@ function love.load()
 end
 
 function love.draw()
+    local grid = grid[gridLayer]
     love.graphics.setLineWidth(0.02)
     local mX, mY = love.mouse.getPosition()
     if mx == -1 then
         mX, mY = mx, my
     end
+
     love.graphics.translate(gridOffsetX+(mX-mx)+w/2, gridOffsetY+(mY-my)+h/2)
     love.graphics.scale(scale, scale)
 
@@ -231,6 +236,15 @@ function love.draw()
         love.graphics.print("[g] Grid: not active", 5, h-65)
     end
     
+    for i = 1,3 do
+        love.graphics.setColor(0.6, 0.6, 0.6, 0.4)
+        if gridLayer == i then
+            love.graphics.setColor(0.8, 0.8, 0.8, 0.8)
+        end
+        love.graphics.rectangle("fill", w-100, h-60-20*(i-1), 80, 40)
+    end
+
+    love.graphics.setColor(1, 1, 1, 1)
     local Tmx, Tmy = love.mouse.getPosition()
     local px, py = math.abs((((Tmx-w/2-gridOffsetX)/scale)+gW/2-1)-gW), (((Tmy-h/2-gridOffsetY)/scale)+gH/2-1)
     local pointX, pointY = math.floor(px), math.floor(py)
@@ -289,14 +303,11 @@ function love.keypressed(key)
         drawSelect = not drawSelect
     elseif key == "f" then
         if image[selected][3] then
-            floor = selected
-        end
-    elseif key == "r" then
-        if image[selected][3] then
-            if roof == selected then
-                roof = 0
-            else
-                roof = selected
+            for x = 1,gW do
+                grid[gridLayer][x] = {}
+                for y = 1,gH do
+                    grid[gridLayer][x][y] = selected
+                end
             end
         end
     elseif key == "z" then
@@ -307,6 +318,10 @@ function love.keypressed(key)
         end
     elseif key == "x" then
         editingFName = true
+    elseif key == "up" then
+        gridLayer = math.min(gridLayer+1, 3)
+    elseif key == "down" then
+        gridLayer = math.max(gridLayer-1, 1)
     elseif key == "e" then
         local mx, my = love.mouse.getPosition()
         px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
@@ -441,6 +456,7 @@ function love.mousepressed(x, y, b)
 end
 
 function love.mousereleased(x, y, b)
+    local grid = grid[gridLayer]
     openMen = false
     if b == 1 then
         if my ~= -2 then
@@ -476,6 +492,7 @@ function love.wheelmoved(x, y)
 end
 
 function love.update()
+    local grid = grid[gridLayer]
     local x, y = love.mouse.getPosition()
     if love.keyboard.isDown("space") and love.mouse.isDown(1) then
         local pointX, pointY = math.floor((x-w/2-gridOffsetX)/scale)+gW/2, math.floor((y-h/2-gridOffsetY)/scale)+gH/2
@@ -491,21 +508,24 @@ function math.dist(x1,y1, x2,y2) return ((x2-x1)^2+(y2-y1)^2)^0.5 end
 
 function saveFile()
     local str = ""
+    str = str..gW.." "..gH.."\n"
 
-    if roof == 0 then
-        str = str..gW.." "..gH.." "..floor.."\n"
-    else
-        str = str..gW.." "..gH.." "..floor.." "..roof.."\n"
-    end
     str = str..math.abs((spawn[1]+gW/2-1)-gW).." "..(spawn[2]+gH/2-1).."\n"
     str = str..(-spawnLook[1]).." "..spawnLook[2].."\n"
 
     for y = 1,gH do
         for x = gW,1,-1 do
-            if image[grid[x][y]] then
-                str = str..image[grid[x][y]][1].."\n"
-            else
-                str = str..grid[x][y].."\n"
+            for i = 1,3 do
+                if image[grid[i][x][y]] then
+                    str = str..image[grid[i][x][y]][1]
+                else
+                    str = str..grid[i][x][y]
+                end
+                if i == 3 then
+                    str = str.."\n"
+                else
+                    str = str.." "
+                end
             end
         end
     end
@@ -579,10 +599,6 @@ function loadFile()
     end
     local nrsL = string.numsplit(lines[1], " ")
     grid = newGrid(nrsL[1], nrsL[2])
-    floor = nrsL[3]
-    if nrsL[4] then
-        roof = nrsL[4]
-    end
     
     nrsL = string.numsplit(lines[2], " ")
     spawn = {(math.abs(nrsL[1]-gW)-gW/2+1), (nrsL[2]-gH/2+1)}
@@ -592,8 +608,16 @@ function loadFile()
     local count = 0
     for y = 1,gH do
         for x = gW,1,-1 do
-            grid[x][y] = tonumber(lines[4+count])
-            count = count + 1
+            local layers = string.numsplit(lines[4+count], " ")
+            if #layers == 1 then
+                grid[2][x][y] = tonumber(layers[1])
+                count = count + 1
+            else
+                grid[1][x][y] = tonumber(layers[1])
+                grid[2][x][y] = tonumber(layers[2])
+                grid[3][x][y] = tonumber(layers[3])
+                count = count + 1
+            end
         end
     end
 
