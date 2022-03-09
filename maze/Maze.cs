@@ -645,7 +645,11 @@ namespace textured_raycast.maze
                         } else {
                             color  = texColor * darken;
                         }
-                        game.setPixel(x, winHeight - y - 1, color);
+                        game.setPixel(x, winHeight - y + 3, color * 1.00f);
+                        game.setPixel(x, winHeight - y + 2, color * 0.80f);
+                        game.setPixel(x, winHeight - y + 1, color * 0.50f);
+                        game.setPixel(x, winHeight - y + 0, color * 0.20f);
+                        game.setPixel(x, winHeight - y - 1, color * 0.05f);
                     } else {
                         if (y > (winHeight / 2)-1)
                         {
