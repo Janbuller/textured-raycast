@@ -275,6 +275,12 @@ namespace textured_raycast.maze
                 GUI.GUI.pauseUIIndex = 1;
                 world.state = states.Paused;
             }
+
+            if (InputManager.GetKey(Keys.K_CTRL, world) == KeyState.KEY_DOWN)
+            {
+                map.sprites.Add(new Fireball(world.plrPos.x, world.plrPos.y, 8, 6, $"100 {(int)(dir.x*1000)} {(int)(dir.y*1000)}"));
+                map.lightPoitions.Add(map.sprites.Count - 1);
+            }
         }
 
         public static void moveInDir(ref World world, ref Map map, ref Vector2d pos, Vector2d dir)
@@ -311,7 +317,7 @@ namespace textured_raycast.maze
 
             int width = game.GetWinWidth();
             int height = game.GetWinHeight();
-            RoofLight[] lights = map.GetLights();
+            ILight[] lights = map.GetLights();
             // Loop through every x in the "window", casting a ray for each.
             // ---
             // Raycasting is done using the digital differential analyzer
@@ -368,7 +374,7 @@ namespace textured_raycast.maze
             }
         }
 
-        public static WallcastReturn DoOneWallcast(int x, int width, int height, RoofLight[] lights, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, double alreadyDist = 0, int recurseCount = 0) {
+        public static WallcastReturn DoOneWallcast(int x, int width, int height, ILight[] lights, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, double alreadyDist = 0, int recurseCount = 0) {
             // The current x-coordinate on the camera viewport "plane"
             // (line), corresponding to the current viewspace
             // x-coordinate.
@@ -550,7 +556,7 @@ namespace textured_raycast.maze
         public static void FloorCasting(ref Texture game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, World world)
         {
             Map curMap = world.getMapByID(world.currentMap);
-            RoofLight[] lights = map.GetLights();
+            ILight[] lights = map.GetLights();
 
             // Grabs the floor and ceiling texture, before the loop, since we
             // don't want differently textured ceiling or floor.
@@ -722,7 +728,7 @@ namespace textured_raycast.maze
         }
 
         public static void SpriteCasting(ref ConsoleBuffer game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange, Map map, ref World world) {
-            RoofLight[] lights = map.GetLights();
+            ILight[] lights = map.GetLights();
 
             List<double> spriteDist = new List<double>();
             for(int i = 0; i < sprites.Count; i++) {

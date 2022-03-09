@@ -38,6 +38,7 @@ namespace textured_raycast.maze
             {3, typeof(Enemy)},
             {4, typeof(TalkingSprite)},
             {5, typeof(Portal)},
+            {6, typeof(Fireball)},
         };
 
         public bool useSkybox = true;
@@ -131,12 +132,12 @@ namespace textured_raycast.maze
             }
         }
 
-        public RoofLight[] GetLights() {
+        public ILight[] GetLights() {
             List<int> lightIdx = lightPoitions;
-            RoofLight[] lights = new RoofLight[lightIdx.Count];
+            ILight[] lights = new ILight[lightIdx.Count];
 
             for(int i = 0; i < lightIdx.Count; i++) {
-                lights[i] = (RoofLight)sprites[lightIdx[i]];
+                lights[i] = (ILight)sprites[lightIdx[i]];
             }
 
             return lights;
