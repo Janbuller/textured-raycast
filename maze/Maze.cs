@@ -276,7 +276,7 @@ namespace textured_raycast.maze
                 world.state = states.Paused;
             }
 
-            if (InputManager.GetKey(Keys.K_CTRL, world) == KeyState.KEY_DOWN)
+            if (InputManager.GetKey(Keys.K_LCTRL, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_RCTRL, world) == KeyState.KEY_DOWN)
             {
                 map.sprites.Add(new Fireball(world.plrPos.x, world.plrPos.y, 8, 6, $"100 {(int)(dir.x*1000)} {(int)(dir.y*1000)}"));
                 map.lightPoitions.Add(map.sprites.Count - 1);

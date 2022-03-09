@@ -8,7 +8,8 @@ namespace textured_raycast.maze.input
         K_E,
 
         K_SHIFT,
-        K_CTRL,
+        K_LCTRL,
+        K_RCTRL,
 
         K_UP,
         K_DOWN,
