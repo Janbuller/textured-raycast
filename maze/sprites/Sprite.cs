@@ -16,7 +16,7 @@ namespace textured_raycast.maze.sprites
             {5, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/wolfenstein/pillar.ppm") }},
             {6, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/enemy/bat1.ppm"), TextureLoaders.loadFromPlainPPM("img/enemy/bat2.ppm") }},
             {7, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/tmp-portal.ppm") }},
-            {8, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/tmp-fireball.ppm") }},
+            {8, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/mario-fireball.ppm") }},
         };
 
         public Vector2d pos;
