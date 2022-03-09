@@ -368,7 +368,7 @@ namespace textured_raycast.maze
             }
         }
 
-        public static WallcastReturn DoOneWallcast(int x, int width, int height, RoofLight[] lights, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map) {
+        public static WallcastReturn DoOneWallcast(int x, int width, int height, RoofLight[] lights, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, double alreadyDist = 0) {
             // The current x-coordinate on the camera viewport "plane"
             // (line), corresponding to the current viewspace
             // x-coordinate.
@@ -481,7 +481,7 @@ namespace textured_raycast.maze
                 }
 
             }
-            
+
             // Calculate the distance to the wall, depending on which
             // intersection was made. This is because DDA essentially
             // just casts two rays the same direction. On looking for
@@ -501,7 +501,7 @@ namespace textured_raycast.maze
             int lineHeight;
             try
             {
-                lineHeight = Convert.ToInt32(height / perpWallDist);
+                lineHeight = Convert.ToInt32(height / (perpWallDist + alreadyDist));
             }
             catch (Exception)
             {
@@ -524,6 +524,20 @@ namespace textured_raycast.maze
             // if(side == 0 && rayDir.x > 0) texX = tex.width - texX - 1;
             // if(side == 1 && rayDir.y < 0) texX = tex.width - texX - 1;
 
+            // Calculate the map position of the ray hit.
+            Vector2d refPos = new Vector2d(
+                pos.x + (perpWallDist-0.5) * rayDir.x,
+                pos.y + (perpWallDist-0.5) * rayDir.y
+            );
+
+            if(hitWall.wallID == 5) {
+                Vector2d newDir;
+                if(side == 0)
+                    newDir = new Vector2d(-dir.x, dir.y);
+                else
+                    newDir = new Vector2d(dir.x, -dir.y);
+                return DoOneWallcast(x, width, height, lights, newDir, plane, refPos, visRange, map, perpWallDist + alreadyDist);
+            }
             // Do Lighting
             // ===========
 
@@ -536,7 +550,7 @@ namespace textured_raycast.maze
             RoofLightDist[] lightDists = RoofLightDistHelpers.RoofLightArrayToDistArray(lights, hitPos);
             TexColor mixedLight = RoofLightDistHelpers.MixLightDist(lightDists);
 
-            return new WallcastReturn(lineHeight, tex, texX, darken, perpWallDist, mixedLight, hitWall);
+            return new WallcastReturn(lineHeight, tex, texX, darken, perpWallDist + alreadyDist, mixedLight, hitWall);
         }
 
         public static void FloorCasting(ref Texture game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, World world)
