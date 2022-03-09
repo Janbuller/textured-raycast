@@ -32,6 +32,8 @@ namespace textured_raycast.maze.texture
         }
 
         public void setPixel(int x, int y, TexColor pixel) {
+            if(x < 0 || x > width || y < 0 || y > height)
+                return;
             pixels[x + y * width] = pixel;
         }
 

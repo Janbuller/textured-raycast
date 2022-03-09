@@ -110,7 +110,7 @@ namespace textured_raycast.maze
                     world.lastFrameTime = DateTime.Now.Ticks;
 
                     // Make time pass
-                    world.dayTime += world.dt / 60; // 60 = 1 whole day = 60 sec
+                    world.dayTime += world.dt / 20; // 60 = 1 whole day = 60 sec
                     if (world.dayTime > 1) world.dayTime--;
 
                     if (InputManager.GetKey(Keys.K_SHIFT, world) == KeyState.KEY_UP){
@@ -632,8 +632,15 @@ namespace textured_raycast.maze
                         } else {
                             color  = texColor * darken;
                         }
-                        if(!(ceilingTex is null))
+                        if(world.dayTime > 0.5f) {
                             color += new TexColor(-50, -50, -50);
+                        } else {
+                            Vector2d realPosAbove = new Vector2d(floor.x + 0.1, floor.y);
+                            realPosAbove.y += world.dayTime * 2 - 0.5;
+                            Vector2i cellPosAbove = (Vector2i)(realPosAbove.Floor());
+                            if(curMap.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0)
+                                color += new TexColor(-50, -50, -50);
+                        }
                         game.setPixel(x, y, color);
                     }
 
@@ -645,11 +652,11 @@ namespace textured_raycast.maze
                         } else {
                             color  = texColor * darken;
                         }
-                        game.setPixel(x, winHeight - y + 3, color * 1.00f);
-                        game.setPixel(x, winHeight - y + 2, color * 0.80f);
-                        game.setPixel(x, winHeight - y + 1, color * 0.50f);
-                        game.setPixel(x, winHeight - y + 0, color * 0.20f);
-                        game.setPixel(x, winHeight - y - 1, color * 0.05f);
+                        // game.setPixel(x, winHeight - y - 4, color * 0.20f);
+                        // game.setPixel(x, winHeight - y - 3, color * 0.50f);
+                        // game.setPixel(x, winHeight - y - 2, color * 0.80f);
+                        game.setPixel(x, winHeight - y - 1, color * 1.00f);
+                        // game.setPixel(x, winHeight - y - 5, color * 0);
                     } else {
                         if (y > (winHeight / 2)-1)
                         {
