@@ -368,7 +368,7 @@ namespace textured_raycast.maze
             }
         }
 
-        public static WallcastReturn DoOneWallcast(int x, int width, int height, RoofLight[] lights, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, double alreadyDist = 0) {
+        public static WallcastReturn DoOneWallcast(int x, int width, int height, RoofLight[] lights, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, double alreadyDist = 0, int recurseCount = 0) {
             // The current x-coordinate on the camera viewport "plane"
             // (line), corresponding to the current viewspace
             // x-coordinate.
@@ -525,50 +525,45 @@ namespace textured_raycast.maze
             // if(side == 1 && rayDir.y < 0) texX = tex.width - texX - 1;
 
             // Calculate the map position of the ray hit.
-            Vector2d refPos = new Vector2d(
-                pos.x + (perpWallDist-0.5) * rayDir.x,
-                pos.y + (perpWallDist-0.5) * rayDir.y
-            );
-
-            if(hitWall.wallID == 5) {
-                Vector2d newDir;
-                if(side == 0)
-                    newDir = new Vector2d(-dir.x, dir.y);
-                else
-                    newDir = new Vector2d(dir.x, -dir.y);
-                return DoOneWallcast(x, width, height, lights, newDir, plane, refPos, visRange, map, perpWallDist + alreadyDist);
-            }
-            // Do Lighting
-            // ===========
-
-            // Calculate the map position of the ray hit.
             Vector2d hitPos = new Vector2d(
                 pos.x + perpWallDist * rayDir.x,
                 pos.y + perpWallDist * rayDir.y
             );
 
-            RoofLightDist[] lightDists = RoofLightDistHelpers.RoofLightArrayToDistArray(lights, hitPos);
-            TexColor mixedLight = RoofLightDistHelpers.MixLightDist(lightDists);
+            if(hitWall.wallID == 5 && recurseCount < 5) {
+                Vector2d newDir;
+                if(side == 0)
+                    newDir = new Vector2d(-dir.x, dir.y);
+                else
+                    newDir = new Vector2d(dir.x, -dir.y);
+                return DoOneWallcast(x, width, height, lights, newDir, plane, hitPos, visRange, map, perpWallDist + alreadyDist, recurseCount+1);
+            }
+            // Do Lighting
+            // ===========
+
+            LightDist[] lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, hitPos);
+            TexColor mixedLight = LightDistHelpers.MixLightDist(lightDists);
 
             return new WallcastReturn(lineHeight, tex, texX, darken, perpWallDist + alreadyDist, mixedLight, hitWall);
         }
 
         public static void FloorCasting(ref Texture game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, World world)
         {
+            Map curMap = world.getMapByID(world.currentMap);
             RoofLight[] lights = map.GetLights();
 
             // Grabs the floor and ceiling texture, before the loop, since we
             // don't want differently textured ceiling or floor.
 
-            Texture floorTex =  textures[map.floorTexID];
-            Texture ceilingTex =  textures[map.useSkybox ? 1 : map.ceilTexID];
+            Texture floorTex   = textures[map.floorTexID];
+            Texture ceilingTex = textures[map.useSkybox ? 1 : map.ceilTexID];
 
             // Grab the windiw dimensions, since they'll be used a lot.
             int winWidth  = game.width;
             int winHeight = game.height;
 
             // Loop through every row in the window.
-            for(int y = 0; y < winHeight; y++)
+            for(int y = winHeight/2; y < winHeight; y++)
             {
                 // Calculatethe direction vector, for a vector going from the
                 // player position, through the imaginary cameraplane, on both
@@ -592,14 +587,20 @@ namespace textured_raycast.maze
 
                 bool isFloor = y > (winHeight / 2)-1;
                 for(int x = 0; x < winWidth; x++) {
-                    RoofLightDist[] lightDists;
+                    LightDist[] lightDists;
                     TexColor mixedLight = new TexColor(0, 0, 0);
                     if(lights.Count() > 0) {
-                        lightDists = RoofLightDistHelpers.RoofLightArrayToDistArray(lights, floor);
-                        mixedLight = RoofLightDistHelpers.MixLightDist(lightDists);
+                        lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, floor);
+                        mixedLight = LightDistHelpers.MixLightDist(lightDists);
                     }
 
                     Vector2i cellPos = (Vector2i)floor.Floor();
+                    // Console.WriteLine($"{cellPos.x} : {cellPos.y}");
+                    floorTex = textures[curMap.GetFloor(cellPos.x, cellPos.y)];
+
+                    int ceilId = curMap.GetRoof(cellPos.x, cellPos.y);
+                    ceilingTex = ceilId == 0 ? null : textures[ceilId];
+
                     Vector2i texture = (Vector2i)(floorTex.width * (floor - (Vector2d)cellPos)).Floor();
                     texture = new Vector2i(
                         Math.Abs(texture.x),
@@ -616,23 +617,28 @@ namespace textured_raycast.maze
 
                     TexColor texColor = new TexColor(0, 0, 0);
                     TexColor color = new TexColor(0, 0, 0);
-                    if(isFloor)
-                        texColor = floorTex.getPixel(texture.x, texture.y);
-                    if (!map.useSkybox)
-                        texColor = ceilingTex.getPixel(texture.x, texture.y);
 
-                    if(isFloor || !map.useSkybox) {
+                    if(isFloor) {
+                        texColor = floorTex.getPixel(texture.x, texture.y);
                         if(lights.Count() > 0) {
                             color  = texColor * darken * 0.3f;
                             color += TexColor.unitMult(texColor, mixedLight) * 0.7f;
                         } else {
                             color  = texColor * darken;
                         }
+                        if(!(ceilingTex is null))
+                            color += new TexColor(-50, -50, -50);
+                        game.setPixel(x, y, color);
                     }
 
-                    if(isFloor)
-                        game.setPixel(x, y, color);
-                    if(!map.useSkybox) {
+                    if(!(ceilingTex is null)) {
+                        texColor = ceilingTex.getPixel(texture.x, texture.y);
+                        if(lights.Count() > 0) {
+                            color  = texColor * darken * 0.3f;
+                            color += TexColor.unitMult(texColor, mixedLight) * 0.7f;
+                        } else {
+                            color  = texColor * darken;
+                        }
                         game.setPixel(x, winHeight - y - 1, color);
                     } else {
                         if (y > (winHeight / 2)-1)
@@ -835,8 +841,8 @@ namespace textured_raycast.maze
                         if(lights.Count() > 0) {
                             Vector2d newPlane = (plane*-1) + ((plane*2))/(endX - startX)*(x-startX);
 
-                            RoofLightDist[] lightDists = RoofLightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + newPlane);
-                            TexColor mixedLight = RoofLightDistHelpers.MixLightDist(lightDists);
+                            LightDist[] lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + newPlane);
+                            TexColor mixedLight = LightDistHelpers.MixLightDist(lightDists);
 
                             game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, mixedLight, new TexColor(0, 0, 0));
                         } else {

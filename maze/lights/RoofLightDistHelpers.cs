@@ -8,14 +8,14 @@ using System.Diagnostics;
 
 namespace textured_raycast.maze.lights
 {
-    class RoofLightDistHelpers {
-        public static TexColor MixLightDist(RoofLightDist[] lights) {
+    class LightDistHelpers {
+        public static TexColor MixLightDist(LightDist[] lights) {
             TexColor mixedCol = new TexColor(0, 0, 0);
 
             // I tried using a Parallel.For loop, but the overhead of starting
             // threads actually made it slower.
             for(int i = 0; i < lights.Count(); i++) {
-                RoofLightDist light = lights[i];
+                LightDist light = lights[i];
                 TexColor curCol = light.col * (float)light.intensity;
 
                 float distScalar = (float)(1 / (0.35 * light.dist + 0.44 * light.dist * light.dist));
@@ -25,17 +25,17 @@ namespace textured_raycast.maze.lights
             return mixedCol;
         }
 
-        public static RoofLightDist[] RoofLightArrayToDistArray(RoofLight[] lights, Vector2d toPos) {
-            RoofLightDist[] lightDists = new RoofLightDist[lights.Count()];
+        public static LightDist[] RoofLightArrayToDistArray(RoofLight[] lights, Vector2d toPos) {
+            LightDist[] lightDists = new LightDist[lights.Count()];
             // I tried using a Parallel.For loop, but the overhead of starting
             // threads actually made it slower.
             for(int i = 0; i < lights.Count(); i++) {
                 double distTo = lights[i].pos.DistTo(toPos);
                 distTo = distTo == 0 ? 0.00001 : distTo;
-                lightDists[i] = new RoofLightDist(
+                lightDists[i] = new LightDist(
                     distTo,
-                    lights[i].thisColor,
-                    lights[i].intesity
+                    lights[i].GetLightColor(),
+                    lights[i].GetLightIntensity()
                 );
             }
 

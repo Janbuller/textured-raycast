@@ -79,9 +79,9 @@ namespace textured_raycast.maze
 
             for (int i = 3; i < map.Count + 3; i++)
             {
-                roof[i - 3] = new Wall(int.Parse(imageData[i].Split(' ')[0]));
+                floor[i - 3] = new Wall(int.Parse(imageData[i].Split(' ')[0]));
                 map[i - 3] = new Wall(int.Parse(imageData[i].Split(' ')[1]));
-                floor[i - 3] = new Wall(int.Parse(imageData[i].Split(' ')[2]));
+                roof[i - 3] = new Wall(int.Parse(imageData[i].Split(' ')[2]));
             }
 
             for (int i = map.Count + 3; i < imageData.Length; i++)
@@ -148,13 +148,22 @@ namespace textured_raycast.maze
             return map[x + y * width].isWall;
         }
 
-        public bool GetFloor(int x, int y)
+        public int GetFloor(int x, int y)
         {
-            return floor[x + y * width].isWall;
+            try {
+                return floor[x + y * width].wallID;
+            } catch (Exception) {
+                return 1;
+            }
         }
-        public bool RetRoof(int x, int y)
+        public int GetRoof(int x, int y)
         {
-            return roof[x + y * width].isWall;
+            try {
+                int tmp = roof[x + y * width].wallID;
+                return tmp;
+            } catch (Exception) {
+                return 0;
+            }
         }
 
         public void openDoor(ref World world, int myID, int doorID)

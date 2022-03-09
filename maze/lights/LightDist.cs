@@ -10,12 +10,12 @@ using textured_raycast.maze.GUI;
 
 namespace textured_raycast.maze.lights
 {
-    struct RoofLightDist {
+    struct LightDist {
         public double dist;
         public TexColor col;
         public double intensity;
 
-        public RoofLightDist(double dist, TexColor col, double intensity) {
+        public LightDist(double dist, TexColor col, double intensity) {
             this.dist = dist;
             this.col = col;
             this.intensity = intensity;
