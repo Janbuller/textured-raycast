@@ -42,6 +42,7 @@ namespace textured_raycast.maze
             ConsoleBuffer game = new ConsoleBuffer(size.x, size.y);
             ConsoleBuffer fight = new ConsoleBuffer(size.x, size.y);
             ConsoleBuffer UIHolder = new ConsoleBuffer(size.x, size.y);
+            Texture FloorAndRoof = new Texture(size.x, size.y);
 
             // Position vector
             Vector2d pos = world.plrPos;
@@ -177,7 +178,8 @@ namespace textured_raycast.maze
                     }
 
                     // Do the floor/ceiling casting.
-                    FloorCasting(ref game, dir, plane, pos, visRange, map, world);
+                    FloorCasting(ref FloorAndRoof, dir, plane, pos, visRange, map, world);
+                    game.DrawTexture(FloorAndRoof, 0, 0);
 
                     // Do the wall casting
                     WallCasting(ref game, ref ZBuffer, dir, plane, pos, visRange, map);
@@ -537,7 +539,7 @@ namespace textured_raycast.maze
             return new WallcastReturn(lineHeight, tex, texX, darken, perpWallDist, mixedLight, hitWall);
         }
 
-        public static void FloorCasting(ref ConsoleBuffer game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, World world)
+        public static void FloorCasting(ref Texture game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, World world)
         {
             RoofLight[] lights = map.GetLights();
 
@@ -548,8 +550,8 @@ namespace textured_raycast.maze
             Texture ceilingTex =  textures[map.useSkybox ? 1 : map.ceilTexID];
 
             // Grab the windiw dimensions, since they'll be used a lot.
-            int winWidth  = game.GetWinWidth();
-            int winHeight = game.GetWinHeight();
+            int winWidth  = game.width;
+            int winHeight = game.height;
 
             // Loop through every row in the window.
             for(int y = 0; y < winHeight; y++)
@@ -615,14 +617,14 @@ namespace textured_raycast.maze
                     }
 
                     if(isFloor)
-                        game.DrawPixel(color, x, y);
+                        game.setPixel(x, y, color);
                     if(!map.useSkybox) {
-                        game.DrawPixel(color, x, winHeight - y - 1);
+                        game.setPixel(x, winHeight - y - 1, color);
                     } else {
                         if (y > (winHeight / 2)-1)
                         {
                             var pix = GetSkyboxPixel(winHeight, dir, textures[99], x, winHeight - y - 1, world.dayTime);
-                            game.DrawPixel(pix, x, winHeight - y - 1);
+                            game.setPixel(x, winHeight-y-1, pix);
                         }
                     }
                 }

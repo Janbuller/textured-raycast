@@ -57,6 +57,10 @@ namespace textured_raycast.maze.sprites.allSprites
 
             Vector2d dir = world.plrRot;
             Vector2d plane = new Vector2d(dir.y, -dir.x) * 0.66;
+
+            Texture FloorAndRoof = new Texture(portalTex.width, portalTex.height);
+            Maze.FloorCasting(ref FloorAndRoof, dir, plane, pos, 1, curMap, world);
+
             for(int x = 0; x < portalTex.width; x++) {
                 Maze.WallcastReturn wcr = Maze.DoOneWallcast(x, portalTex.width, portalTex.height, curMap.GetLights(), dir, plane, tpToLoc, 1, curMap);
                 int LineHeight = (int)(portalTex.height / (wcr.PerpWallDist + 1/distToPlayer));
@@ -68,6 +72,8 @@ namespace textured_raycast.maze.sprites.allSprites
                         TextureHelper.DrawVerLine(ref portalTex, x, LineHeight, wcr.Tex, wcr.TexX, wcr.Darken, new TexColor(255, 0, 255));
                     }
                 }
+
+                TextureHelper.DrawVerLine(ref portalTex, x, portalTex.height, FloorAndRoof, x, 0.00001f, new TexColor(255, 255, 255), new TexColor(255, 0, 255));
             }
         }
 

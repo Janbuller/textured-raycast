@@ -10,9 +10,6 @@ namespace textured_raycast.maze
     class ConsoleBuffer {
         int width, height;
 
-        // Double buffer system made for futureproofing. Allows for possible
-        // multi-threading. One thread rendering, another running the game.
-        // One buffer is show, while the game thread renders to the other.
         List<TexColor> buffer;
 
         public ConsoleBuffer(int win_width, int win_height) {

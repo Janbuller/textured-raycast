@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using textured_raycast.maze;
+using textured_raycast.maze.texture;
 using textured_raycast.maze.math;
 using textured_raycast.maze.sprites;
 using textured_raycast.maze.sprites.allSprites;
@@ -36,7 +37,9 @@ namespace rpg_game.maze.Fight
             Vector2d plane = new Vector2d(0, 1) * 0.66;
             Map map = world.getMapByID(mapID);
 
-            Maze.FloorCasting(ref buffer, dir, plane, pos, 1, map, world);
+            Texture FloorAndRoof = new Texture(buffer.GetWinWidth(), buffer.GetWinHeight());
+            Maze.FloorCasting(ref FloorAndRoof, dir, plane, pos, 1, map, world);
+            buffer.DrawTexture(FloorAndRoof, 0, 0);
 
             double[] ZBuffer = new double[buffer.GetWinWidth()];
 
