@@ -151,14 +151,14 @@ namespace textured_raycast.maze
 
         public int GetFloor(int x, int y)
         {
-            if(x > width-1 || x < 1 || y > height-1 || y < 1)
+            if(x > width-1 || x < 0 || y > height-1 || y < 0)
                 return 0;
             else
                 return floor[x + y * width].wallID;
         }
         public int GetRoof(int x, int y)
         {
-            if(x > width-1 || x < 1 || y > height-1 || y < 1)
+            if(x > width-1 || x < 0 || y > height-1 || y < 0)
                 return 0;
             else
                 return roof[x + y * width].wallID;
