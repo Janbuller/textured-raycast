@@ -42,5 +42,9 @@ namespace textured_raycast.maze.sprites.allSprites
         public float GetLightIntensity() {
             return intesity;
         }
+
+        public Vector2d GetLightPos() {
+            return pos;
+        }
     }
 }
