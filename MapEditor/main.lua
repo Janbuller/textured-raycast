@@ -61,6 +61,7 @@ local image = { -- id, path, isWallTexture
     {4, "img/button.ppm", false},
     {5, "img/wolfenstein/pillar.ppm", false},
     {6, "img/enemy/bat1.ppm", false},
+    {7, "img/tmp-portal.ppm", false},
 }
 local images = #image
 
@@ -118,8 +119,8 @@ local definingSize = false
 local editingFName = false
 local ignoreNr = 0
 
-local keys = "1234567890"
-local keysSize = "1234567890 "
+local keys = "1234567890-"
+local keysSize = "1234567890- "
 local txtKeys = "abcdefghijklmnopqrstuvwxyz"
 
 function newGrid(gWin, gHin)

@@ -43,7 +43,7 @@ namespace textured_raycast.maze.sprites.allSprites
             Vector2d portalLocOffset = new Vector2d(extraEffects[0], extraEffects[1]);
             Vector2d tpToLoc = world.plrPos + portalLocOffset;
 
-            if(tpToLoc.x > curMap.Width-1 || tpToLoc.x < 0 || tpToLoc.y > curMap.Height-1 || tpToLoc.y < 0) {
+            if(tpToLoc.x > curMap.Width-1 || tpToLoc.x < 1 || tpToLoc.y > curMap.Height-1 || tpToLoc.y < 1) {
                 // for(int y = 0; y < portalTex.width; y++) {
                 //     for(int x = 0; x < portalTex.height; x++) {
                 //         if(portalTex.getPixel(x, y) == new TexColor(255, 0, 255))
