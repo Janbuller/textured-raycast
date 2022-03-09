@@ -31,9 +31,17 @@ namespace textured_raycast.maze.texture
             return pixels[x + y * width];
         }
 
+        public void Clear() {
+            this.pixels = new TexColor[width*height].ToList();
+        }
+
         public void setPixel(int x, int y, TexColor pixel) {
-            if(x < 0 || x > width || y < 0 || y > height)
+            bool pink = false;
+            if(pixel == new TexColor(255, 0, 255))
+                pink = true;
+            if(x < 0 || x > width || y < 0 || y > height) {
                 return;
+            }
             pixels[x + y * width] = pixel;
         }
 

@@ -555,6 +555,8 @@ namespace textured_raycast.maze
 
         public static void FloorCasting(ref Texture game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, World world)
         {
+            game.Clear();
+
             Map curMap = world.getMapByID(world.currentMap);
             ILight[] lights = map.GetLights();
 
@@ -567,7 +569,6 @@ namespace textured_raycast.maze
             // Grab the windiw dimensions, since they'll be used a lot.
             int winWidth  = game.width;
             int winHeight = game.height;
-
 
             LightDist[] lightDists;
             TexColor mixedLight = new TexColor(0, 0, 0);
@@ -647,7 +648,11 @@ namespace textured_raycast.maze
 
                     // Ceiling code
                     // ============
-                    if(!(ceilingTex is null)) {
+                    if(ceilingTex is null) {
+                        var pix = GetSkyboxPixel(winHeight, dir, textures[99], x, winHeight - y - 1, world.dayTime);
+                        if((game.getPixel(x, winHeight-y-1) is null))
+                            game.setPixel(x, winHeight-y-1, pix);
+                    } else {
                         Vector2i texture = (Vector2i)(ceilingTex.width * (floor - (Vector2d)cellPos)).Floor();
                         texture = new Vector2i(
                             Math.Abs(texture.x),
@@ -660,14 +665,11 @@ namespace textured_raycast.maze
                             color *= 0.3f;
                             color += TexColor.unitMult(texColor, mixedLight) * 0.7f;
                         }
-                        // game.setPixel(x, winHeight - y - 4, color * 0.20f);
-                        // game.setPixel(x, winHeight - y - 3, color * 0.50f);
-                        // game.setPixel(x, winHeight - y - 2, color * 0.80f);
+                        game.setPixel(x, winHeight - y - 5, color * 0.20f);
+                        game.setPixel(x, winHeight - y - 4, color * 0.50f);
+                        game.setPixel(x, winHeight - y - 3, color * 0.70f);
+                        game.setPixel(x, winHeight - y - 2, color * 0.90f);
                         game.setPixel(x, winHeight - y - 1, color * 1.00f);
-                        // game.setPixel(x, winHeight - y - 5, color * 0);
-                    } else {
-                        var pix = GetSkyboxPixel(winHeight, dir, textures[99], x, winHeight - y - 1, world.dayTime);
-                        game.setPixel(x, winHeight-y-1, pix);
                     }
 
                     floor += floorOff;
