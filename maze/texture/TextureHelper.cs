@@ -64,8 +64,8 @@ namespace textured_raycast.maze.texture
                 int texY = (int)texPos;
                 texPos += sectionHeight;
                 TexColor color = tex.getPixel(texX, texY);
-                // Draw the line, using NuGet package "Pastel" to color, using
-                // ansi escape sequences.
+                if(color is null)
+                    continue;
                 if(drawToCol != texToDraw.getPixel(x, i))
                     continue;
                 const float mixBy = 0.3f;

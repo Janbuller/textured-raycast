@@ -555,6 +555,8 @@ namespace textured_raycast.maze
 
         public static void FloorCasting(ref Texture game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, World world)
         {
+            game.Clear();
+
             Map curMap = world.getMapByID(world.currentMap);
             ILight[] lights = map.GetLights();
 
@@ -568,6 +570,8 @@ namespace textured_raycast.maze
             int winWidth  = game.width;
             int winHeight = game.height;
 
+            LightDist[] lightDists;
+            TexColor mixedLight = new TexColor(0, 0, 0);
             // Loop through every row in the window.
             for(int y = winHeight/2; y < winHeight; y++)
             {
@@ -591,30 +595,19 @@ namespace textured_raycast.maze
 
                 Vector2d floor = pos + (new Vector2d(lineDist, lineDist) * rayDirLeft);
 
-                bool isFloor = y > (winHeight / 2)-1;
                 for(int x = 0; x < winWidth; x++) {
-                    LightDist[] lightDists;
-                    TexColor mixedLight = new TexColor(0, 0, 0);
                     if(lights.Count() > 0) {
                         lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, floor);
                         mixedLight = LightDistHelpers.MixLightDist(lightDists);
                     }
 
                     Vector2i cellPos = (Vector2i)floor.Floor();
-                    // Console.WriteLine($"{cellPos.x} : {cellPos.y}");
-                    floorTex = textures[curMap.GetFloor(cellPos.x, cellPos.y)];
+                    int floorId = curMap.GetFloor(cellPos.x, cellPos.y);
+                    floorTex = floorId == 0 ? null : textures[floorId];
 
                     int ceilId = curMap.GetRoof(cellPos.x, cellPos.y);
                     ceilingTex = ceilId == 0 ? null : textures[ceilId];
 
-                    Vector2i texture = (Vector2i)(floorTex.width * (floor - (Vector2d)cellPos)).Floor();
-                    texture = new Vector2i(
-                        Math.Abs(texture.x),
-                        Math.Abs(texture.y)
-                    );
-
-                    floor += floorOff;
-                    
                     float darken = 0.9f;
                     if (!map.useSkybox)
                         darken = 1f;
@@ -624,7 +617,16 @@ namespace textured_raycast.maze
                     TexColor texColor = new TexColor(0, 0, 0);
                     TexColor color = new TexColor(0, 0, 0);
 
-                    if(isFloor) {
+
+                    // Floor Code
+                    // ==========
+                    if(!(floorTex is null)) {
+                        Vector2i texture = (Vector2i)(floorTex.width * (floor - (Vector2d)cellPos)).Floor();
+                        texture = new Vector2i(
+                            Math.Abs(texture.x),
+                            Math.Abs(texture.y)
+                        );
+
                         texColor = floorTex.getPixel(texture.x, texture.y);
                         if(lights.Count() > 0) {
                             color  = texColor * darken * 0.3f;
@@ -633,7 +635,7 @@ namespace textured_raycast.maze
                             color  = texColor * darken;
                         }
                         if(world.dayTime > 0.5f) {
-                            color += new TexColor(-50, -50, -50);
+                            color *= 0.6f;
                         } else {
                             Vector2d realPosAbove = new Vector2d(floor.x + 0.1, floor.y);
                             realPosAbove.y += world.dayTime * 100 - 25;
@@ -644,26 +646,33 @@ namespace textured_raycast.maze
                         game.setPixel(x, y, color);
                     }
 
-                    if(!(ceilingTex is null)) {
-                        texColor = ceilingTex.getPixel(texture.x, texture.y);
-                        if(lights.Count() > 0) {
-                            color  = texColor * darken * 0.3f;
-                            color += TexColor.unitMult(texColor, mixedLight) * 0.7f;
-                        } else {
-                            color  = texColor * darken;
-                        }
-                        // game.setPixel(x, winHeight - y - 4, color * 0.20f);
-                        // game.setPixel(x, winHeight - y - 3, color * 0.50f);
-                        // game.setPixel(x, winHeight - y - 2, color * 0.80f);
-                        game.setPixel(x, winHeight - y - 1, color * 1.00f);
-                        // game.setPixel(x, winHeight - y - 5, color * 0);
-                    } else {
-                        if (y > (winHeight / 2)-1)
-                        {
-                            var pix = GetSkyboxPixel(winHeight, dir, textures[99], x, winHeight - y - 1, world.dayTime);
+                    // Ceiling code
+                    // ============
+                    if(ceilingTex is null) {
+                        var pix = GetSkyboxPixel(winHeight, dir, textures[99], x, winHeight - y - 1, world.dayTime);
+                        if((game.getPixel(x, winHeight-y-1) is null))
                             game.setPixel(x, winHeight-y-1, pix);
+                    } else {
+                        Vector2i texture = (Vector2i)(ceilingTex.width * (floor - (Vector2d)cellPos)).Floor();
+                        texture = new Vector2i(
+                            Math.Abs(texture.x),
+                            Math.Abs(texture.y)
+                        );
+
+                        texColor = ceilingTex.getPixel(texture.x, texture.y);
+                        color  = texColor * darken;
+                        if(lights.Count() > 0) {
+                            color *= 0.3f;
+                            color += TexColor.unitMult(texColor, mixedLight) * 0.7f;
                         }
+                        game.setPixel(x, winHeight - y - 5, color * 0.20f);
+                        game.setPixel(x, winHeight - y - 4, color * 0.50f);
+                        game.setPixel(x, winHeight - y - 3, color * 0.70f);
+                        game.setPixel(x, winHeight - y - 2, color * 0.90f);
+                        game.setPixel(x, winHeight - y - 1, color * 1.00f);
                     }
+
+                    floor += floorOff;
                 }
             }
         }
