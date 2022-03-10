@@ -635,13 +635,13 @@ namespace textured_raycast.maze
                             color  = texColor * darken;
                         }
                         if(world.dayTime > 0.5f) {
-                            color += new TexColor(-50, -50, -50);
+                            color *= 0.6f;
                         } else {
                             Vector2d realPosAbove = new Vector2d(floor.x + 0.1, floor.y);
                             realPosAbove.y += world.dayTime * 2 - 0.5;
                             Vector2i cellPosAbove = (Vector2i)realPosAbove;
                             if(curMap.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0)
-                                color += new TexColor(-50, -50, -50);
+                                color *= 0.6f;
                         }
                         game.setPixel(x, y, color);
                     }
