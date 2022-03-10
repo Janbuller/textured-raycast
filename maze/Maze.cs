@@ -877,18 +877,18 @@ namespace textured_raycast.maze
                         if(lights.Count() < 0)
                             mixedLight = LightDistHelpers.MixLightDist(lightDists);
 
-                        if(world.dayTime > 0.5f) {
-                            darken *= 0.6f;
-                        } else {
-                            Vector2d realPosAbove = new Vector2d(curSpr.pos.x, curSpr.pos.y);
+                        // if(world.dayTime > 0.5f) {
+                        //     darken *= 0.6f;
+                        // } else {
+                        //     Vector2d realPosAbove = new Vector2d(curSpr.pos.x, curSpr.pos.y);
 
-                            const float offset = 20;
-                            realPosAbove.x += 0.1;
-                            realPosAbove.y += world.dayTime * offset - offset/4;
-                            Vector2i cellPosAbove = (Vector2i)realPosAbove;
-                            if(map.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0 || map.IsWall(cellPosAbove.x, cellPosAbove.y))
-                                darken *= 0.6f;
-                        }
+                        //     const float offset = 20;
+                        //     realPosAbove.x += 0.1;
+                        //     realPosAbove.y += world.dayTime * offset - offset/4;
+                        //     Vector2i cellPosAbove = (Vector2i)realPosAbove;
+                        //     if(map.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0 || map.IsWall(cellPosAbove.x, cellPosAbove.y))
+                        //         darken *= 0.6f;
+                        // }
 
                         game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, mixedLight, new TexColor(0, 0, 0));
                     }
