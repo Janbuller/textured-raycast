@@ -637,7 +637,8 @@ namespace textured_raycast.maze
                         if(world.dayTime > 0.5f) {
                             color *= 0.6f;
                         } else {
-                            Vector2d realPosAbove = new Vector2d(floor.x + 0.1, floor.y);
+                            Vector2d realPosAbove = new Vector2d(floor.x, floor.y);
+                            realPosAbove.x += 0.1;
                             realPosAbove.y += world.dayTime * 2 - 0.5;
                             Vector2i cellPosAbove = (Vector2i)realPosAbove;
                             if(curMap.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0)
