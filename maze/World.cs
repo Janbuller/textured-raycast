@@ -20,13 +20,7 @@ namespace textured_raycast.maze
     internal class World
     {
         public int currentMap = 1;
-        private Dictionary<int, Map> maps = new Dictionary<int, Map>()
-        {
-            {-1, new Map("maps/fightMap.map")},
-            {1, new Map("maps/overworld.map")},
-            {2, new Map("maps/DarkDungeon.map")},
-            {3, new Map("maps/hiddenRoom.map")},
-        };
+        private Dictionary<int, Map> maps;
 
         public states state = states.Game;
 
@@ -51,6 +45,14 @@ namespace textured_raycast.maze
 
         public World()
         {
+            maps = new Dictionary<int, Map>()
+            {
+                {-1, new Map("maps/fightMap.map", this)},
+                {1, new Map("maps/overworld.map", this)},
+                {2, new Map("maps/DarkDungeon.map", this)},
+                {3, new Map("maps/hiddenRoom.map", this)},
+            };
+
             plrPos = maps[currentMap].playerStartPos;
             plrRot = maps[currentMap].playerStartRot;
         }

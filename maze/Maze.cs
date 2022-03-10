@@ -342,11 +342,7 @@ namespace textured_raycast.maze
                 WallcastReturn cast = casted[x];
                 // Draw the ray.
                 if (cast.HitWall.doDraw) {
-                    if(lights.Count() > 0)
-                        game.DrawVerLine(x, cast.LineHeight, cast.Tex, cast.TexX, cast.Darken, cast.MixedLight, null);
-                    else {
-                        game.DrawVerLine(x, cast.LineHeight, cast.Tex, cast.TexX, cast.Darken);
-                    }
+                    game.DrawVerLine(x, cast.LineHeight, cast.Tex, cast.TexX, cast.Darken, cast.MixedLight, null);
                 }
 
                 // Set z-buffer
@@ -536,6 +532,17 @@ namespace textured_raycast.maze
                 pos.y + perpWallDist * rayDir.y
             );
 
+            if(map.world.dayTime > 0.5f) {
+                darken *= 0.6f;
+            } else {
+                Vector2d realPosAbove = new Vector2d(hitPos.x + 0.1, hitPos.y);
+                const float offset = 20;
+                realPosAbove.y += map.world.dayTime * offset - offset/4;
+                Vector2i cellPosAbove = (Vector2i)realPosAbove;
+                if(map.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0 || map.IsWall(cellPosAbove.x, cellPosAbove.y))
+                    darken *= 0.6f;
+            }
+
             if(hitWall.wallID == 5 && recurseCount < 5) {
                 Vector2d newDir;
                 if(side == 0)
@@ -548,7 +555,11 @@ namespace textured_raycast.maze
             // ===========
 
             LightDist[] lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, hitPos);
-            TexColor mixedLight = LightDistHelpers.MixLightDist(lightDists);
+            TexColor mixedLight = new TexColor(255, 255, 255);
+            // if(lights.Count() <= 0) {
+                mixedLight = LightDistHelpers.MixLightDist(lightDists);
+            // }
+
 
             return new WallcastReturn(lineHeight, tex, texX, darken, perpWallDist + alreadyDist, mixedLight, hitWall);
         }
@@ -628,27 +639,17 @@ namespace textured_raycast.maze
                         );
 
                         texColor = floorTex.getPixel(texture.x, texture.y);
-                        if(lights.Count() > 0) {
-                            color  = texColor * darken * 0.3f;
-                            color += TexColor.unitMult(texColor, mixedLight) * 0.7f;
-                        } else {
-                            color  = texColor * darken;
-                        }
+                        color  = texColor * darken * 0.7f;
+                        color += TexColor.unitMult(texColor, mixedLight) * 0.3f;
                         if(world.dayTime > 0.5f) {
                             color *= 0.6f;
                         } else {
                             Vector2d realPosAbove = new Vector2d(floor.x + 0.1, floor.y);
-<<<<<<< HEAD
-                            realPosAbove.y += world.dayTime * 100 - 25;
-                            Vector2i cellPosAbove = (Vector2i)(realPosAbove.Floor());
-                            if(curMap.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0 || curMap.IsWall(cellPosAbove.x, cellPosAbove.y))
-                                color += new TexColor(-50, -50, -50);
-=======
-                            realPosAbove.y += world.dayTime * 2 - 0.5;
+                            const float offset = 20;
+                            realPosAbove.y += world.dayTime * offset - offset/4;
                             Vector2i cellPosAbove = (Vector2i)realPosAbove;
-                            if(curMap.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0)
+                            if(curMap.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0 || curMap.IsWall(cellPosAbove.x, cellPosAbove.y))
                                 color *= 0.6f;
->>>>>>> parent of ee007a4 (Fix mapeditor and lights)
                         }
                         game.setPixel(x, y, color);
                     }
@@ -668,10 +669,8 @@ namespace textured_raycast.maze
 
                         texColor = ceilingTex.getPixel(texture.x, texture.y);
                         color  = texColor * darken;
-                        if(lights.Count() > 0) {
-                            color *= 0.3f;
-                            color += TexColor.unitMult(texColor, mixedLight) * 0.7f;
-                        }
+                        color *= 0.7f;
+                        color += TexColor.unitMult(texColor, mixedLight) * 0.3f;
                         game.setPixel(x, winHeight - y - 5, color * 0.20f);
                         game.setPixel(x, winHeight - y - 4, color * 0.50f);
                         game.setPixel(x, winHeight - y - 3, color * 0.70f);
@@ -871,16 +870,26 @@ namespace textured_raycast.maze
                     if (transformed.y < ZBuffer[x])
                     {
                         curSpr.UpdateOnDraw(ref world, transformed.y);
-                        if(lights.Count() > 0) {
-                            Vector2d newPlane = (plane*-1) + ((plane*2))/(endX - startX)*(x-startX);
+                        TexColor mixedLight = new TexColor(255, 255, 255);
+                        Vector2d newPlane = ((plane*-1) + ((plane*2))/(endX - startX)*(x-startX));
 
-                            LightDist[] lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + newPlane);
-                            TexColor mixedLight = LightDistHelpers.MixLightDist(lightDists);
+                        LightDist[] lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + newPlane);
+                        mixedLight = LightDistHelpers.MixLightDist(lightDists);
 
-                            game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, mixedLight, new TexColor(0, 0, 0));
+                        if(world.dayTime > 0.5f) {
+                            darken *= 0.6f;
                         } else {
-                            game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, new TexColor(0, 0, 0));
+                            Vector2d realPosAbove = new Vector2d(curSpr.pos.x, curSpr.pos.y);
+
+                            const float offset = 20;
+                            realPosAbove.x += 0.1;
+                            realPosAbove.y += world.dayTime * offset - offset/4;
+                            Vector2i cellPosAbove = (Vector2i)realPosAbove;
+                            if(map.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0 || map.IsWall(cellPosAbove.x, cellPosAbove.y))
+                                darken *= 0.6f;
                         }
+
+                        game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, mixedLight, new TexColor(0, 0, 0));
                     }
                 }
             }

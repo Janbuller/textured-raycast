@@ -31,6 +31,8 @@ namespace textured_raycast.maze
         public Vector2d playerStartPos;
         public Vector2d playerStartRot;
 
+        public World world;
+
         private Dictionary<int, Type> spriteTypes = new Dictionary<int, Type>(){
             {0, typeof(DefaultSprite)},
             {1, typeof(Door)},
@@ -44,8 +46,10 @@ namespace textured_raycast.maze
 
         public bool useSkybox = true;
 
-        public Map(string location)
+        public Map(string location, World world)
         {
+            this.world = world;
+
             string[] imageData = File.ReadAllLines(location);
 
             int reqWidth;
