@@ -35,7 +35,7 @@ namespace textured_raycast.maze.sprites.allSprites
             double sprRot = Math.Atan2(dir.x, dir.y);
             double plrRot = Math.Atan2(world.plrRot.x, world.plrRot.y);
 
-            double rotDiff = (sprRot - plrRot) + radPrTex/2;
+            double rotDiff = ((sprRot - plrRot) + radPrTex/2) - Math.PI;
             if(rotDiff < 0)
                 rotDiff += Math.PI*2;
             if(rotDiff > Math.PI*2)

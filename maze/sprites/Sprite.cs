@@ -25,6 +25,14 @@ namespace textured_raycast.maze.sprites
                                      TextureLoaders.loadFromPlainPPM("img/colored-ball/cb6.ppm"),
                                      TextureLoaders.loadFromPlainPPM("img/colored-ball/cb7.ppm"),
                                      TextureLoaders.loadFromPlainPPM("img/colored-ball/cb8.ppm"),}},
+            {10, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/wolfenstein/guard/guard1.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/wolfenstein/guard/guard2.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/wolfenstein/guard/guard3.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/wolfenstein/guard/guard4.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/wolfenstein/guard/guard5.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/wolfenstein/guard/guard6.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/wolfenstein/guard/guard7.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/wolfenstein/guard/guard8.ppm"),}},
         };
 
         public Vector2d pos;
