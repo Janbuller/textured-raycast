@@ -638,10 +638,17 @@ namespace textured_raycast.maze
                             color *= 0.6f;
                         } else {
                             Vector2d realPosAbove = new Vector2d(floor.x + 0.1, floor.y);
+<<<<<<< HEAD
                             realPosAbove.y += world.dayTime * 100 - 25;
                             Vector2i cellPosAbove = (Vector2i)(realPosAbove.Floor());
                             if(curMap.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0 || curMap.IsWall(cellPosAbove.x, cellPosAbove.y))
                                 color += new TexColor(-50, -50, -50);
+=======
+                            realPosAbove.y += world.dayTime * 2 - 0.5;
+                            Vector2i cellPosAbove = (Vector2i)realPosAbove;
+                            if(curMap.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0)
+                                color *= 0.6f;
+>>>>>>> parent of ee007a4 (Fix mapeditor and lights)
                         }
                         game.setPixel(x, y, color);
                     }
