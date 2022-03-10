@@ -642,7 +642,7 @@ namespace textured_raycast.maze
                         color  = texColor * darken * 0.7f;
                         color += TexColor.unitMult(texColor, mixedLight) * 0.3f;
                         if(world.dayTime > 0.5f) {
-                            color *= 0.6f;
+                            color += new TexColor(-50, -50, -50);
                         } else {
                             Vector2d realPosAbove = new Vector2d(floor.x + 0.1, floor.y);
                             const float offset = 20;
