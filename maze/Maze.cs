@@ -669,7 +669,7 @@ namespace textured_raycast.maze
 
                         texColor = ceilingTex.getPixel(texture.x, texture.y);
                         color  = texColor * darken;
-                        color *= 0.7f;
+                        color *= 0.7f * 0.6f;
                         color += TexColor.unitMult(texColor, mixedLight) * 0.3f;
                         game.setPixel(x, winHeight - y - 5, color * 0.20f);
                         game.setPixel(x, winHeight - y - 4, color * 0.50f);
@@ -874,7 +874,8 @@ namespace textured_raycast.maze
                         Vector2d newPlane = ((plane*-1) + ((plane*2))/(endX - startX)*(x-startX));
 
                         LightDist[] lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + newPlane);
-                        mixedLight = LightDistHelpers.MixLightDist(lightDists);
+                        if(lights.Count() < 0)
+                            mixedLight = LightDistHelpers.MixLightDist(lightDists);
 
                         if(world.dayTime > 0.5f) {
                             darken *= 0.6f;
