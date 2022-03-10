@@ -17,6 +17,14 @@ namespace textured_raycast.maze.sprites
             {6, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/enemy/bat1.ppm"), TextureLoaders.loadFromPlainPPM("img/enemy/bat2.ppm") }},
             {7, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/tmp-portal.ppm") }},
             {8, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/mario-fireball.ppm") }},
+            {9, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/colored-ball/cb1.ppm"),
+                                     TextureLoaders.loadFromPlainPPM("img/colored-ball/cb2.ppm"),
+                                     TextureLoaders.loadFromPlainPPM("img/colored-ball/cb3.ppm"),
+                                     TextureLoaders.loadFromPlainPPM("img/colored-ball/cb4.ppm"),
+                                     TextureLoaders.loadFromPlainPPM("img/colored-ball/cb5.ppm"),
+                                     TextureLoaders.loadFromPlainPPM("img/colored-ball/cb6.ppm"),
+                                     TextureLoaders.loadFromPlainPPM("img/colored-ball/cb7.ppm"),
+                                     TextureLoaders.loadFromPlainPPM("img/colored-ball/cb8.ppm"),}},
         };
 
         public Vector2d pos;
