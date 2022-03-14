@@ -47,8 +47,8 @@ namespace textured_raycast.maze.GUI
                 texToUse = 3;
             }
 
-            guiBuffer.DrawTexture(GUITextures[texToUse], 1, guiBuffer.GetWinHeight() - GUITextures[texToUse].height - 1);
-            start = new Vector2i(3, guiBuffer.GetWinHeight() - GUITextures[texToUse].height + 1);
+            guiBuffer.DrawTexture(GUITextures[texToUse], 1, guiBuffer.Height - GUITextures[texToUse].height - 1);
+            start = new Vector2i(3, guiBuffer.Height - GUITextures[texToUse].height + 1);
 
             while (toSend.Length > 0)
             {

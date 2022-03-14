@@ -59,7 +59,7 @@ namespace textured_raycast.maze
             // The visibility distance. Controls the distance-based darkening.
             int visRange = 25;
 
-            double[] ZBuffer = new double[engine.GetWinWidth()];
+            double[] ZBuffer = new double[engine.Width];
 
             Random rnd = new Random();
             // Main game loop
@@ -315,8 +315,8 @@ namespace textured_raycast.maze
         public static void WallCasting(ref ConsoleBuffer game, ref double[] ZBuffer, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map)
         {
 
-            int width = game.GetWinWidth();
-            int height = game.GetWinHeight();
+            int width = game.Width;
+            int height = game.Height;
             ILight[] lights = map.GetLights();
             // Loop through every x in the "window", casting a ray for each.
             // ---
@@ -329,16 +329,16 @@ namespace textured_raycast.maze
             WallcastReturn[] casted = new WallcastReturn[width];
 
 
-            // Parallel.For(0, game.GetWinWidth(),
+            // Parallel.For(0, game.Width,
             //              x => {
             //                  casted[x] = DoOneWallcast(x, width, height, lights, dir, plane, pos, visRange, map);
             //                  });
 
-            for(int x = 0; x < game.GetWinWidth(); x++) {
+            for(int x = 0; x < game.Width; x++) {
                 casted[x] = DoOneWallcast(x, width, height, lights, dir, plane, pos, visRange, map);
             }
 
-            for (int x = 0; x < game.GetWinWidth(); x++) {
+            for (int x = 0; x < game.Width; x++) {
                 WallcastReturn cast = casted[x];
                 // Draw the ray.
                 if (cast.HitWall.doDraw) {
@@ -687,10 +687,10 @@ namespace textured_raycast.maze
         // optimized, and shouldn't be used, as it draws to pixels, that will
         // later be drawn over.
         public static void DrawSkybox(ref ConsoleBuffer game, Vector2d dir, Texture skyboxTex, World world) {
-            int winHeight = game.GetWinHeight();
+            int winHeight = game.Height;
 
-            for(int y = 0; y < game.GetWinHeight() / 2; y++) {
-                for(int x = 0; x < game.GetWinWidth(); x++) {
+            for(int y = 0; y < game.Height / 2; y++) {
+                for(int x = 0; x < game.Width; x++) {
                     var pix = GetSkyboxPixel(winHeight, dir, skyboxTex, x, y, world.dayTime);
                     game.DrawPixel(pix, x, y);
                 }
@@ -813,7 +813,7 @@ namespace textured_raycast.maze
                     continue;
 
                 // The screen-space middle x-position of the sprite.
-                int spriteScreenX = (int)((game.GetWinWidth() / 2) * (1 + transformed.x / transformed.y));
+                int spriteScreenX = (int)((game.Width / 2) * (1 + transformed.x / transformed.y));
 
                 // The screen-space height of the given sprite. This is
                 // calculated, by dividing the height of the screen, by the
@@ -835,7 +835,7 @@ namespace textured_raycast.maze
                 //
                 // This is called spriteScreenSize, as we assume the width to be
                 // the same as the height.
-                int spriteScreenSize = (int)((game.GetWinHeight() / transformed.y));
+                int spriteScreenSize = (int)((game.Height / transformed.y));
 
                 // The screenspace x-positionm, at which to start drawing the
                 // sprite. This is calculated, by taking away half of the sprite
@@ -849,7 +849,7 @@ namespace textured_raycast.maze
                 // Same as startX, excepts it adds half the width and caps at
                 // screen width, instead.
                 int endX = spriteScreenSize / 2 + spriteScreenX;
-                endX = Math.Min(endX, game.GetWinWidth());
+                endX = Math.Min(endX, game.Width);
 
                 // Calculates the darkening of the sprite, based of the distance
                 // to the camera.

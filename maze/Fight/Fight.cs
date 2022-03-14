@@ -37,11 +37,11 @@ namespace rpg_game.maze.Fight
             Vector2d plane = new Vector2d(0, 1) * 0.66;
             Map map = world.getMapByID(mapID);
 
-            Texture FloorAndRoof = new Texture(buffer.GetWinWidth(), buffer.GetWinHeight());
+            Texture FloorAndRoof = new Texture(buffer.Width, buffer.Height);
             Maze.FloorCasting(ref FloorAndRoof, dir, plane, pos, 1, map, world);
             buffer.DrawTexture(FloorAndRoof, 0, 0);
 
-            double[] ZBuffer = new double[buffer.GetWinWidth()];
+            double[] ZBuffer = new double[buffer.Width];
 
             Maze.WallCasting(ref buffer, ref ZBuffer, dir, plane, pos, 1, map);
 
@@ -55,11 +55,11 @@ namespace rpg_game.maze.Fight
 
         public void renderFightStartScreenToBuffer(ref ConsoleBuffer buffer, float progress)
         {
-            for (int x = 0; x < buffer.GetWinWidth(); x++)
+            for (int x = 0; x < buffer.Width; x++)
             {
-                for (int y = 0; y < buffer.GetWinHeight(); y++)
+                for (int y = 0; y < buffer.Height; y++)
                 {
-                    if ((MathF.Atan2(buffer.GetWinHeight() / 2 - y, buffer.GetWinWidth() / 2 - x)/MathF.PI+1)/2 > progress)
+                    if ((MathF.Atan2(buffer.Height / 2 - y, buffer.Width / 2 - x)/MathF.PI+1)/2 > progress)
                     {
                         buffer.DrawPixel(new textured_raycast.maze.texture.TexColor(0, 0, 0), x, y);
                     }

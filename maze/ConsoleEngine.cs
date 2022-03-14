@@ -23,6 +23,9 @@ namespace textured_raycast.maze
 
         bool firstBuffer = true;
 
+        public int Width { get => parameters.winWidth; set => parameters.winWidth = value; }
+        public int Height { get => parameters.winHeight; set => parameters.winHeight = value; }
+
         public ConsoleEngine(int win_width, int win_height, string game_name) {
             // Used to initialize the buffers to and empty sized list.
             TexColor[] tmp = new TexColor[win_width * win_height];
@@ -37,9 +40,6 @@ namespace textured_raycast.maze
             Console.Title = game_name;
         }
 
-        public int GetWinWidth() { return parameters.winWidth; }
-        public int GetWinHeight() { return parameters.winHeight; }
-
         public void DrawConBuffer(ConsoleBuffer buf) {
             if(firstBuffer) {
                 buffer2 = buf.getBuffer();
@@ -50,7 +50,7 @@ namespace textured_raycast.maze
 
         // Swaps the buffers.
         public void SwapBuffers() {
-            TexColor[] tmp = new TexColor[GetWinWidth() * GetWinHeight()];
+            TexColor[] tmp = new TexColor[Width * Height];
 
             // Clears the buffer, to be rendered to now.
             if(firstBuffer) {
@@ -73,8 +73,8 @@ namespace textured_raycast.maze
 
         // Draws specific buffer.
         private void DrawBuffer(List<TexColor> buffer) {
-            int winWidth = GetWinWidth();
-            int winHeight = GetWinHeight();
+            int winWidth = Width;
+            int winHeight = Height;
 
             Console.CursorVisible = false;
             // Move the cursor to the top, rendering over the previous screen.

@@ -25,9 +25,6 @@ namespace textured_raycast.maze
             Height = win_height;
         }
 
-        public int GetWinWidth() { return Width; }
-        public int GetWinHeight() { return Height; }
-
         public List<TexColor> getBuffer() {
             return buffer;
         }
@@ -35,7 +32,7 @@ namespace textured_raycast.maze
         // Used to draw char to current buffer.
         public void DrawPixel(TexColor col, int x, int y) {
             // Return exception, if char is out of game window.
-            if (x < 0 || x >= GetWinWidth() || y < 0 || y >= GetWinHeight()) {
+            if (x < 0 || x >= Width || y < 0 || y >= Height) {
                 return;
             }
 
@@ -67,20 +64,20 @@ namespace textured_raycast.maze
         }
 
         public void Clear() {
-            TexColor[] tmp = new TexColor[GetWinHeight() * GetWinWidth()];
+            TexColor[] tmp = new TexColor[Height * Width];
             buffer = tmp.ToList();
         }
 
         // Draws a centered vertical line, width xPos, Height and Color.
         public void DrawVerLine(int x, int height, TexColor color) {
             // Return exception, if char is out of game window.
-            if (x < 0 || x > GetWinWidth()) {
+            if (x < 0 || x > Width) {
                 throw new ArgumentOutOfRangeException();
             }
 
             // Draw line, by choosing a starting Y and looping through height in
             // a for loop.
-            int startY = GetWinHeight()/2 - height/2;
+            int startY = Height/2 - height/2;
             for(int i = 0; i < height; i++) {
                 // Draw the line, using NuGet package "Pastel" to color, using
                 // ansi escape sequences.
@@ -90,20 +87,20 @@ namespace textured_raycast.maze
 
         public void DrawVerLine(int x, int height, Texture tex, int texX, float darken, TexColor alphaCol = null) {
             // Return exception, if char is out of game window.
-            if (x < 0 || x > GetWinWidth()) {
+            if (x < 0 || x > Width) {
                 throw new ArgumentOutOfRangeException();
             }
 
-            int startY = GetWinHeight()/2 - height/2;
+            int startY = Height/2 - height/2;
             int endY = height + startY;
 
             float sectionHeight = (float)tex.height / height;
-            float texPos = (startY - GetWinHeight() / 2 + height /2) * sectionHeight;
+            float texPos = (startY - Height / 2 + height /2) * sectionHeight;
             if(startY < 0) {
                 texPos += sectionHeight * (startY * -1);
             }
             startY = startY < 0 ? 0 : startY;
-            endY = endY > GetWinHeight() ? GetWinHeight() : endY;
+            endY = endY > Height ? Height : endY;
             for(int i = startY; i < endY; i++) {
                 int texY = (int)texPos;
                 texPos += sectionHeight;
@@ -118,20 +115,20 @@ namespace textured_raycast.maze
 
         public void DrawVerLine(int x, int height, Texture tex, int texX, float darken, TexColor light, TexColor alphaCol = null) {
             // Return exception, if char is out of game window.
-            if (x < 0 || x > GetWinWidth()) {
+            if (x < 0 || x > Width) {
                 throw new ArgumentOutOfRangeException();
             }
 
-            int startY = GetWinHeight()/2 - height/2;
+            int startY = Height/2 - height/2;
             int endY = height + startY;
 
             float sectionHeight = (float)tex.height / height;
-            float texPos = (startY - GetWinHeight() / 2 + height /2) * sectionHeight;
+            float texPos = (startY - Height / 2 + height /2) * sectionHeight;
             if(startY < 0) {
                 texPos += sectionHeight * (startY * -1);
             }
             startY = startY < 0 ? 0 : startY;
-            endY = endY > GetWinHeight() ? GetWinHeight() : endY;
+            endY = endY > Height ? Height : endY;
             for(int i = startY; i < endY; i++) {
                 int texY = (int)texPos;
                 texPos += sectionHeight;
@@ -184,7 +181,7 @@ namespace textured_raycast.maze
         // Draws char to specific framebuffer. Used internally by DrawChar
         // functions.
         private void DrawToFramebuffer(TexColor col, int x, int y, ref List<TexColor> buffer) {
-            buffer[x + y*GetWinWidth()] = col;
+            buffer[x + y*Width] = col;
         }
     }
 }
