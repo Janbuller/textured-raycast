@@ -62,6 +62,8 @@ namespace textured_raycast.maze
             double[] ZBuffer = new double[engine.Width];
 
             Random rnd = new Random();
+
+            DrawScreen(engine);
             // Main game loop
             while(world.state != states.Stopping)
             {
@@ -79,7 +81,6 @@ namespace textured_raycast.maze
 
                         engine.DrawConBuffer(fight);
                         engine.SwapBuffers();
-                        DrawScreen(engine);
                     }
                     else
                     {
@@ -88,7 +89,6 @@ namespace textured_raycast.maze
 
                         engine.DrawConBuffer(game.mixBuffer(UIHolder));
                         engine.SwapBuffers();
-                        DrawScreen(engine);
                     }
                 }
 
@@ -100,7 +100,6 @@ namespace textured_raycast.maze
 
                     engine.DrawConBuffer(game.mixBuffer(UIHolder));
                     engine.SwapBuffers();
-                    DrawScreen(engine);
                 }
 
                 world.lastFrameTime = DateTime.Now.Ticks;
@@ -189,7 +188,6 @@ namespace textured_raycast.maze
 
                     engine.DrawConBuffer(game.mixBuffer(UIHolder));
                     engine.SwapBuffers();
-                    DrawScreen(engine);
                     HandleInputGame(ref world, map, pos, ref dir, ref plane, ref spriteToInteract);
                 }
             }
@@ -199,21 +197,12 @@ namespace textured_raycast.maze
 
         // Multi-threaded screen-drawing
         // =============================
-
-        // Whether the screen is currently being drawn
-        private static bool drawing = false;
         // Draw the screen asynchronously
         public static void DrawScreen(ConsoleEngine engine) {
-            if(!drawing) {
-
-                drawing = true;
-
-                Task.Run(() => {
+            Task.Run(() => {
+                while(true)
                     engine.DrawScreen();
-                    drawing = false;
-                });
-
-            }
+            });
         }
 
         public static void HandleInputGame(ref World world, Map map, Vector2d pos, ref Vector2d dir, ref Vector2d plane, ref Sprite spriteToInteract) {
