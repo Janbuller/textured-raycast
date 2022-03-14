@@ -12,11 +12,11 @@ namespace textured_raycast.maze.texture
                     TexColor pixel3 = Downscaled.getPixel(x, y+1);
                     TexColor pixel4 = Downscaled.getPixel(x+1, y+1);
 
-                    int newR = pixel1.r + pixel2.r + pixel3.r + pixel4.r;
+                    int newR = pixel1.R + pixel2.R + pixel3.R + pixel4.R;
                     newR /= 4;
-                    int newG = pixel1.g + pixel2.g + pixel3.g + pixel4.g;
+                    int newG = pixel1.G + pixel2.G + pixel3.G + pixel4.G;
                     newG /= 4;
-                    int newB = pixel1.b + pixel2.b + pixel3.b + pixel4.b;
+                    int newB = pixel1.B + pixel2.B + pixel3.B + pixel4.B;
                     newB /= 4;
                     TexColor newPixel = new TexColor(newR, newG, newB);
                     imageData.Add(newPixel);

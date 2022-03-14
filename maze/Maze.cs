@@ -640,7 +640,7 @@ namespace textured_raycast.maze
 
                         texColor = floorTex.getPixel(texture.x, texture.y);
                         color  = texColor * darken * 0.7f;
-                        color += TexColor.unitMult(texColor, mixedLight) * 0.3f;
+                        color += TexColor.unitMultReal(texColor, mixedLight) * 0.3f;
                         if(world.dayTime > 0.5f) {
                             color *= 0.6f;
                         } else {
@@ -670,7 +670,7 @@ namespace textured_raycast.maze
                         texColor = ceilingTex.getPixel(texture.x, texture.y);
                         color  = texColor * darken;
                         color *= 0.7f * 0.6f;
-                        color += TexColor.unitMult(texColor, mixedLight) * 0.3f;
+                        color += TexColor.unitMultReal(texColor, mixedLight) * 0.3f;
                         game.setPixel(x, winHeight - y - 5, color * 0.20f);
                         game.setPixel(x, winHeight - y - 4, color * 0.50f);
                         game.setPixel(x, winHeight - y - 3, color * 0.70f);
@@ -795,6 +795,7 @@ namespace textured_raycast.maze
                 // transformations
                 Matrix2x2d camMat = new Matrix2x2d(new double[] {plane.x, dir.x,
                                                                  plane.y, dir.y});
+
                 // The position of the sprite, transformed by the inverse of the
                 // imaginary camera matrix. The camera matrix holds the position
                 // and rotation of the camera, so by multiplying the sprite pos
