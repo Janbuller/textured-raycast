@@ -113,7 +113,7 @@ namespace textured_raycast.maze
             }
         }
 
-        public void DrawVerLine(int x, int height, Texture tex, int texX, float darken, TexColor light, TexColor alphaCol = null) {
+        public void DrawVerLine(int x, int height, Texture tex, int texX, float darken, TexColor light, float mixBy, TexColor alphaCol = null) {
             // Return exception, if char is out of game window.
             if (x < 0 || x > Width) {
                 throw new ArgumentOutOfRangeException();
@@ -135,7 +135,6 @@ namespace textured_raycast.maze
                 TexColor color = tex.getPixel(texX, texY);
                 if(alphaCol == color)
                     continue;
-                const float mixBy = 0.7f;
                 TexColor lightMul = TexColor.unitMultReal(color, light);
 
                 // This doesn't work right now.

@@ -33,6 +33,8 @@ namespace textured_raycast.maze
 
         public World world;
 
+        public float lightMix = 0.7f;
+
         private Dictionary<int, Type> spriteTypes = new Dictionary<int, Type>(){
             {0, typeof(DefaultSprite)},
             {1, typeof(Door)},

@@ -331,7 +331,7 @@ namespace textured_raycast.maze
                 WallcastReturn cast = casted[x];
                 // Draw the ray.
                 if (cast.HitWall.doDraw) {
-                    game.DrawVerLine(x, cast.LineHeight, cast.Tex, cast.TexX, cast.Darken, cast.MixedLight, null);
+                    game.DrawVerLine(x, cast.LineHeight, cast.Tex, cast.TexX, cast.Darken, cast.MixedLight, map.lightMix, null);
                 }
 
                 // Set z-buffer
@@ -628,8 +628,8 @@ namespace textured_raycast.maze
                         );
 
                         texColor = floorTex.getPixel(texture.x, texture.y);
-                        color  = texColor * darken * 0.7f;
-                        color += TexColor.unitMultReal(texColor, mixedLight) * 0.3f;
+                        color  = texColor * darken * map.lightMix;
+                        color += TexColor.unitMultReal(texColor, mixedLight) * (1-map.lightMix);
                         if(world.dayTime > 0.5f) {
                             color *= 0.6f;
                         } else {
@@ -658,8 +658,8 @@ namespace textured_raycast.maze
 
                         texColor = ceilingTex.getPixel(texture.x, texture.y);
                         color  = texColor * darken;
-                        color *= 0.7f * 0.6f;
-                        color += TexColor.unitMultReal(texColor, mixedLight) * 0.3f;
+                        color *= map.lightMix * 0.6f;
+                        color += TexColor.unitMultReal(texColor, mixedLight) * (1-map.lightMix);
                         game.setPixel(x, winHeight - y - 5, color * 0.20f);
                         game.setPixel(x, winHeight - y - 4, color * 0.50f);
                         game.setPixel(x, winHeight - y - 3, color * 0.70f);
@@ -880,7 +880,7 @@ namespace textured_raycast.maze
                         //         darken *= 0.6f;
                         // }
 
-                        game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, mixedLight, new TexColor(0, 0, 0));
+                        game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, mixedLight, map.lightMix, new TexColor(0, 0, 0));
                     }
                 }
             }
