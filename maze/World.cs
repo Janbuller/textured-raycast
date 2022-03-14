@@ -50,7 +50,7 @@ namespace textured_raycast.maze
                 {-1, new Map("maps/fightMap.map", this)},
                 // {1, new Map("maps/overworld.map", this)},
                 {1, new Map("maps/lightTest.map", this)},
-                // {1, new Map("maps/DarkDungeon.map", this)},
+                // {2, new Map("maps/DarkDungeon.map", this)},
                 {3, new Map("maps/hiddenRoom.map", this)},
             };
 
