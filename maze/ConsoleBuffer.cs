@@ -12,18 +12,21 @@ namespace textured_raycast.maze
 
         List<TexColor> buffer;
 
+        public int Width { get => width; set => width = value; }
+        public int Height { get => height; set => height = value; }
+
         public ConsoleBuffer(int win_width, int win_height) {
             // Used to initialize the buffers to and empty sized list.
             TexColor[] tmp = new TexColor[win_width * win_height];
             buffer = tmp.ToList();
 
             // Sets game parameters.
-            width = win_width;
-            height = win_height;
+            Width = win_width;
+            Height = win_height;
         }
 
-        public int GetWinWidth() { return width; }
-        public int GetWinHeight() { return height; }
+        public int GetWinWidth() { return Width; }
+        public int GetWinHeight() { return Height; }
 
         public List<TexColor> getBuffer() {
             return buffer;
@@ -42,7 +45,7 @@ namespace textured_raycast.maze
         // Places an overlay buffer over this one
         public ConsoleBuffer mixBuffer(ConsoleBuffer overlay)
         {
-            ConsoleBuffer consoleBuffer = new ConsoleBuffer(width, height);
+            ConsoleBuffer consoleBuffer = new ConsoleBuffer(Width, Height);
 
             List<TexColor> b1 = buffer;
             List<TexColor> b2 = overlay.getBuffer();
@@ -133,12 +136,24 @@ namespace textured_raycast.maze
                 int texY = (int)texPos;
                 texPos += sectionHeight;
                 TexColor color = tex.getPixel(texX, texY);
-                // Draw the line, using NuGet package "Pastel" to color, using
-                // ansi escape sequences.
                 if(alphaCol == color)
                     continue;
                 const float mixBy = 0.7f;
-                DrawPixel((color * darken * mixBy + TexColor.unitMultReal(color, light) * (1 - mixBy)), x, i);
+                TexColor lightMul = TexColor.unitMultReal(color, light);
+
+                // This doesn't work right now.
+                // ============================
+                //
+                // double exposure = 1;
+                // double gamma = 2.2;
+                // lightMul.realR = (int)(Math.Pow((1.0f - Math.Exp(-lightMul.realR * exposure)), (1.0f/gamma)) * 255);
+                // lightMul.realG = (int)(Math.Pow((1.0f - Math.Exp(-lightMul.realG * exposure)), (1.0f/gamma)) * 255);
+                // lightMul.realB = (int)(Math.Pow((1.0f - Math.Exp(-lightMul.realB * exposure)), (1.0f/gamma)) * 255);
+                //
+                // Console.WriteLine(lightMul.realB);
+                // Console.WriteLine((Math.Pow((1.0f - Math.Exp(-lightMul.realB * exposure)), (1.0f/gamma)) * 255));
+
+                DrawPixel((color * darken * mixBy + lightMul * (1 - mixBy)), x, i);
             }
         }
 
