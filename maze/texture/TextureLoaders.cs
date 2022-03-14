@@ -35,16 +35,29 @@ namespace textured_raycast.maze.texture
 
             TexColor[] pixels = new TexColor[width * height];
 
+            string[] imageDataNew = new string[width*height*3+4];
+            int curIdx = 0;
+            for(int i = 0; i < imageData.Count(); i++) {
+                string[] splitLine = imageData[i].Split(" ");
+                for(int j = 0; j < splitLine.Count(); j++) {
+                    if(splitLine[j] == "")
+                        continue;
+                    imageDataNew[curIdx] = splitLine[j];
+                    curIdx++;
+                }
+            }
+
             // Load all the pixels.
-            for(int i = 3; i < imageData.Length; i += 3) {
+            for(int i = 4; i < imageDataNew.Length; i += 3) {
                 int[] colors = new int[3];
                 for(int j = 0; j < 3; j++) {
-                    colors[j] = Convert.ToInt32(imageData[i+j]);
-                    colors[j] = Convert.ToInt32(imageData[i+j]);
-                    colors[j] = Convert.ToInt32(imageData[i+j]);
+                    colors[j] = Convert.ToInt32(imageDataNew[i+j]);
+                    colors[j] = Convert.ToInt32(imageDataNew[i+j]);
+                    colors[j] = Convert.ToInt32(imageDataNew[i+j]);
 
                 }
                 TexColor color = new TexColor(colors[0], colors[1], colors[2], maxColorVal);
+
                 pixels[(i-3)/3] = color;
             }
 
