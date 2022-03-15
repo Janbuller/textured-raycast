@@ -9,6 +9,9 @@ using textured_raycast.maze.sprites.allSprites;
 using textured_raycast.maze.input;
 using textured_raycast.maze.GUI;
 using System.Threading.Tasks;
+using rpg_game.maze;
+using rpg_game.maze.ButtonList.Buttons.INV;
+using rpg_game.maze.ButtonList.Buttons.Skills;
 
 namespace textured_raycast.maze
 {
@@ -24,6 +27,31 @@ namespace textured_raycast.maze
             {99,  TextureLoaders.loadFromPlainPPM("img/skybox.ppm")},
             {101, TextureLoaders.loadFromPlainPPM("img/wolfenstein/end.ppm")}, // Also used as collision box for winning.
             {102, TextureLoaders.loadFromPlainPPM("img/wolfenstein/exit.ppm")}, // Also used for leaving the maze
+            {103, TextureLoaders.loadFromPlainPPM("img/INV.ppm")},
+            {104, TextureLoaders.loadFromPlainPPM("img/SkillTree.ppm")},
+        };
+
+        static Button[] invButtons = new Button[]
+        {
+            new Back(1, 1, 11, 11, new int[] {0, 1, 4, 0}), new Skills(13, 1, 23, 11, new int[] {0, 0, 1, -1}),
+            new PlaceHolder(13, 18, 11, 11, new int[] {-1, 1, 3, 0}), new PlaceHolder(44, 18, 11, 11, new int[] {0, 0, 4, -1}),
+            new PlaceHolder(1, 30, 11, 11, new int[] {-4, 1, 4, 0}), new PlaceHolder(13, 30, 11, 11, new int[] {-3, 1, 0, -1}), new PlaceHolder(25, 30, 11, 11, new int[] {-5, 1, 3, -1}), new PlaceHolder(44, 30, 11, 11, new int[] {-4, 0, 3, -1}),
+            new PlaceHolder(1, 42, 11, 11, new int[] {-4, 1, 0, 0}), new PlaceHolder(25, 42, 11, 11, new int[] {-3, 1, 0, -1}), new PlaceHolder(44, 42, 11, 11, new int[] {-3, 0, 0, -1})
+        };
+
+        static Button[] skillButtons = new Button[]
+        {
+            new SkillPlaceHolder(255, 5, 21, 21, new int[] {0, 0, 2, 0}),
+            new SkillPlaceHolder(153, 56, 21, 21, new int[] {0, 1, 9, 0}), new SkillPlaceHolder(255, 56, 21, 21, new int[] {-2, 1, 3, -1}), new SkillPlaceHolder(357, 56, 21, 21, new int[] {0, 0, 11, -1}),
+            new SkillPlaceHolder(0, 107, 21, 21, new int[] {0, 0, 3, 0}), new SkillPlaceHolder(255, 107, 21, 21, new int[] {-3, 0, 7, 0}), new SkillPlaceHolder(510, 107, 21, 21, new int[] {0, 0, 11, 0}),
+
+            new SkillPlaceHolder(0, 158, 21, 21, new int[] {-3, 1, 11, 0}), new SkillPlaceHolder(51, 158, 21, 21, new int[] {0, 1, 0, -1}), new SkillPlaceHolder(102, 158, 21, 21, new int[] {0, 1, 0, -1}), new SkillPlaceHolder(153, 158, 21, 21, new int[] {-9, 1, 11, -1}), new SkillPlaceHolder(204, 158, 21, 21, new int[] {0, 1, 0, -1}),
+            new SkillPlaceHolder(255, 158, 21, 21, new int[] {-7, 1, 7, -1}),
+            new SkillPlaceHolder(306, 158, 21, 21, new int[] {0, 1, 0, -1}), new SkillPlaceHolder(357, 158, 21, 21, new int[] {-11, 1, 9, -1}), new SkillPlaceHolder(408, 158, 21, 21, new int[] {0, 1, 0, -1}), new SkillPlaceHolder(459, 158, 21, 21, new int[] {0, 1, 0, -1}), new SkillPlaceHolder(510, 158, 21, 21, new int[] {-11, 0, 3, -1}),
+
+            new SkillPlaceHolder(0, 209, 21, 21, new int[] {-11, 0, 0, 0}), new SkillPlaceHolder(255, 209, 21, 21, new int[] {-7, 0, 3, 0}), new SkillPlaceHolder(510, 209, 21, 21, new int[] {-3, 0, 0, 0}),
+            new SkillPlaceHolder(153, 260, 21, 21, new int[] {-11, 1, 0, 0}), new SkillPlaceHolder(255, 260, 21, 21, new int[] {-3, 1, 2, -1}), new SkillPlaceHolder(357, 260, 21, 21, new int[] {-9, 0, 0, -1}),
+            new SkillPlaceHolder(255, 310, 21, 21, new int[] {-2, 0, 0, 0}),
         };
 
         public static bool StartMaze(World world) {
@@ -61,6 +89,9 @@ namespace textured_raycast.maze
 
             double[] ZBuffer = new double[engine.Width];
 
+            int curInvButton = 0;
+            int curSkillButton = 0;
+
             Random rnd = new Random();
 
             DrawScreen(engine);
@@ -85,11 +116,88 @@ namespace textured_raycast.maze
                     else
                     {
                         UIHolder.Clear();
-                        world.fight.renderFightStartScreenToBuffer(ref UIHolder, world.fight.tillFightBegins/2-0.1f);
+                        world.fight.renderFightStartScreenToBuffer(ref UIHolder, world.fight.tillFightBegins / 2 - 0.1f);
 
                         engine.DrawConBuffer(game.mixBuffer(UIHolder));
                         engine.SwapBuffers();
                     }
+                }
+
+                while (world.state == states.Inventory)
+                {
+                    UIHolder.Clear();
+
+                    UIHolder.DrawTexture(textures[103], 0, 0);
+
+                    if (InputManager.GetKey(Keys.K_UP, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W, world) == KeyState.KEY_DOWN)
+                    {
+                        curInvButton += invButtons[curInvButton].listOfMovements[0];
+                    }
+                    if (InputManager.GetKey(Keys.K_DOWN, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_S, world) == KeyState.KEY_DOWN)
+                    {
+                        curInvButton += invButtons[curInvButton].listOfMovements[2];
+                    }
+                    if (InputManager.GetKey(Keys.K_RIGHT, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_D, world) == KeyState.KEY_DOWN)
+                    {
+                        curInvButton += invButtons[curInvButton].listOfMovements[1];
+                    }
+                    if (InputManager.GetKey(Keys.K_LEFT, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_A, world) == KeyState.KEY_DOWN)
+                    {
+                        curInvButton += invButtons[curInvButton].listOfMovements[3];
+                    }
+                    if (InputManager.GetKey(Keys.K_E, world) == KeyState.KEY_DOWN)
+                    {
+                        invButtons[curInvButton].onActivate(world);
+                    }
+                    if (InputManager.GetKey(Keys.K_ESC, world) == KeyState.KEY_DOWN)
+                    {
+                        world.state = states.Inventory;
+                    }
+
+                    UIHolder = invButtons[curInvButton].DrawOnBuffer(UIHolder);
+
+                    engine.DrawConBuffer(UIHolder);
+                    engine.SwapBuffers();
+                }
+
+                while (world.state == states.Skills)
+                {
+                    UIHolder.Clear();
+
+                    for (int x = 0; x < 120; x++)
+                        for (int y = 0; y < 80; y++)
+                            UIHolder.DrawPixel(new TexColor(198, 132, 68), x, y);
+
+                    if (InputManager.GetKey(Keys.K_UP, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W, world) == KeyState.KEY_DOWN)
+                    {
+                        curSkillButton += skillButtons[curSkillButton].listOfMovements[0];
+                    }
+                    if (InputManager.GetKey(Keys.K_DOWN, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_S, world) == KeyState.KEY_DOWN)
+                    {
+                        curSkillButton += skillButtons[curSkillButton].listOfMovements[2];
+                    }
+                    if (InputManager.GetKey(Keys.K_RIGHT, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_D, world) == KeyState.KEY_DOWN)
+                    {
+                        curSkillButton += skillButtons[curSkillButton].listOfMovements[1];
+                    }
+                    if (InputManager.GetKey(Keys.K_LEFT, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_A, world) == KeyState.KEY_DOWN)
+                    {
+                        curSkillButton += skillButtons[curSkillButton].listOfMovements[3];
+                    }
+                    if (InputManager.GetKey(Keys.K_E, world) == KeyState.KEY_DOWN)
+                    {
+                        skillButtons[curSkillButton].onActivate(world);
+                    }
+                    if (InputManager.GetKey(Keys.K_ESC, world) == KeyState.KEY_DOWN)
+                    {
+                        curSkillButton = 0;
+                        skillButtons[curSkillButton].onActivate(world);
+                    }
+
+                    UIHolder.DrawTexture(textures[104], 60 - skillButtons[curSkillButton].x - skillButtons[curSkillButton].w / 2, 40 - skillButtons[curSkillButton].y - skillButtons[curSkillButton].w / 2);
+
+                    engine.DrawConBuffer(UIHolder);
+                    engine.SwapBuffers();
                 }
 
                 while (world.state == states.Paused)
@@ -193,6 +301,11 @@ namespace textured_raycast.maze
             }
 
             return false;
+        }
+
+        private static TexColor TexColor(int v1, int v2, int v3)
+        {
+            throw new NotImplementedException();
         }
 
         // Multi-threaded screen-drawing
@@ -629,7 +742,7 @@ namespace textured_raycast.maze
 
                         texColor = floorTex.getPixel(texture.x, texture.y);
                         color  = texColor * darken * map.lightMix;
-                        color += TexColor.unitMultReal(texColor, mixedLight) * (1-map.lightMix);
+                        color += maze.texture.TexColor.unitMultReal(texColor, mixedLight) * (1 - map.lightMix);
                         if(world.dayTime > 0.5f) {
                             color *= 0.6f;
                         } else {
@@ -659,7 +772,7 @@ namespace textured_raycast.maze
                         texColor = ceilingTex.getPixel(texture.x, texture.y);
                         color  = texColor * darken;
                         color *= map.lightMix * 0.6f;
-                        color += TexColor.unitMultReal(texColor, mixedLight) * (1-map.lightMix);
+                        color += maze.texture.TexColor.unitMultReal(texColor, mixedLight) * (1-map.lightMix);
                         game.setPixel(x, winHeight - y - 5, color * 0.20f);
                         game.setPixel(x, winHeight - y - 4, color * 0.50f);
                         game.setPixel(x, winHeight - y - 3, color * 0.70f);

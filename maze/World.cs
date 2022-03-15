@@ -11,6 +11,7 @@ namespace textured_raycast.maze
     {
         Game,
         Inventory,
+        Skills,
         Fighting,
         Paused,
         Settings,

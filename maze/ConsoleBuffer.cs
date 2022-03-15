@@ -30,13 +30,26 @@ namespace textured_raycast.maze
         }
 
         // Used to draw char to current buffer.
-        public void DrawPixel(TexColor col, int x, int y) {
+        public void DrawPixel(TexColor col, int x, int y)
+        {
             // Return exception, if char is out of game window.
-            if (x < 0 || x >= Width || y < 0 || y >= Height) {
+            if (x < 0 || x >= Width || y < 0 || y >= Height)
+            {
                 return;
             }
 
             DrawToFramebuffer(col, x, y, ref buffer);
+        }
+
+        public TexColor GetPixel(int x, int y)
+        {
+            // Return exception, if char is out of game window.
+            if (x < 0 || x >= Width || y < 0 || y >= Height)
+            {
+                return new TexColor(0, 0, 0);
+            }
+
+            return buffer[x + y * Width];
         }
 
         // Places an overlay buffer over this one
