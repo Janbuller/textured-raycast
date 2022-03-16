@@ -54,23 +54,28 @@ namespace textured_raycast.maze
             new SkillPlaceHolder(255, 310, 21, 21, new int[] {-2, 0, 0, 0}),
         };
 
+	static Vector2i size = new Vector2i(120, 80);
+
+	static ConsoleEngine engine;
+	static ConsoleBuffer game;
+	static ConsoleBuffer fight;
+	static ConsoleBuffer UIHolder;
+
         public static bool StartMaze(World world) {
+            engine = new ConsoleEngine(size.x, size.y, "maze");
+            game = new ConsoleBuffer(size.x, size.y);
+            fight = new ConsoleBuffer(size.x, size.y);
+            UIHolder = new ConsoleBuffer(size.x, size.y);
+
+            Console.Clear();
+            DrawScreen(engine);
+
             return Start(world);
         }
 
         private static bool Start(World world) {
 
             Map map = world.getMapByID(world.currentMap);
-
-            Console.Clear();
-
-            Vector2i size = new Vector2i(120, 80);
-
-            ConsoleEngine engine = new ConsoleEngine(size.x, size.y, "maze");
-            ConsoleBuffer game = new ConsoleBuffer(size.x, size.y);
-            ConsoleBuffer fight = new ConsoleBuffer(size.x, size.y);
-            ConsoleBuffer UIHolder = new ConsoleBuffer(size.x, size.y);
-            Texture FloorAndRoof = new Texture(size.x, size.y);
 
             // Position vector
             Vector2d pos = world.plrPos;
@@ -92,9 +97,8 @@ namespace textured_raycast.maze
             int curInvButton = 0;
             int curSkillButton = 0;
 
-            Random rnd = new Random();
 
-            DrawScreen(engine);
+            Texture FloorAndRoof = new Texture(size.x, size.y);
             // Main game loop
             while(world.state != states.Stopping)
             {
