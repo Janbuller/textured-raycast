@@ -49,6 +49,22 @@ namespace textured_raycast.maze.sprites
                                       TextureLoaders.loadFromPlainPPM("img/more-trucks/14.ppm"),
                                       TextureLoaders.loadFromPlainPPM("img/more-trucks/15.ppm"),
                                       TextureLoaders.loadFromPlainPPM("img/more-trucks/16.ppm"),}},
+            {12, new List<Texture>() {TextureLoaders.loadFromPlainPPM("img/mario/1.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/mario/2.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/mario/3.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/mario/4.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/mario/5.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/mario/6.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/mario/7.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/mario/8.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/mario/9.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/mario/10.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/mario/11.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/mario/12.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/mario/13.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/mario/14.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/mario/15.ppm"),
+                                      TextureLoaders.loadFromPlainPPM("img/mario/16.ppm"),}},
         };
 
         public Vector2d pos;
