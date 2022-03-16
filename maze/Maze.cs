@@ -151,7 +151,8 @@ namespace textured_raycast.maze
                     }
                     if (InputManager.GetKey(Keys.K_ESC, world) == KeyState.KEY_DOWN)
                     {
-                        world.state = states.Inventory;
+                        curInvButton = 0;
+                        invButtons[curInvButton].onActivate(world);
                     }
 
                     UIHolder = invButtons[curInvButton].DrawOnBuffer(UIHolder);
@@ -190,8 +191,7 @@ namespace textured_raycast.maze
                     }
                     if (InputManager.GetKey(Keys.K_ESC, world) == KeyState.KEY_DOWN)
                     {
-                        curSkillButton = 0;
-                        skillButtons[curSkillButton].onActivate(world);
+                        world.state = states.Inventory;
                     }
 
                     UIHolder.DrawTexture(textures[104], 60 - skillButtons[curSkillButton].x - skillButtons[curSkillButton].w / 2, 40 - skillButtons[curSkillButton].y - skillButtons[curSkillButton].w / 2);
