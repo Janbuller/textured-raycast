@@ -4,6 +4,7 @@ using System.Text;
 using textured_raycast.maze.sprites;
 using textured_raycast.maze.math;
 using textured_raycast.maze.texture;
+using textured_raycast.maze.resources;
 
 namespace textured_raycast.maze.sprites.allSprites
 {
@@ -33,8 +34,14 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void UpdateOnDraw(ref World world, double distToPlayer)
         {
-            List<Texture> textures = Sprite.IDTextureCorrespondence[texID];
-            int textureCount = textures.Count;
+            List<string> texturePaths = Sprite.IDTextureCorrespondence[texID];
+            Texture[] textures = new Texture[texturePaths.Count];
+            for (int i = 0; i < textures.Length; i++)
+            {
+                textures[i] = ResourceManager.getTexture(texturePaths[i]);
+            }
+
+            int textureCount = textures.Length;
             double radPrTex = (Math.PI * 2) / textureCount;
 
             double sprRot = Math.Atan2(dir.x, dir.y);

@@ -8,6 +8,7 @@ using textured_raycast.maze.sprites;
 using textured_raycast.maze.sprites.allSprites;
 using textured_raycast.maze.input;
 using textured_raycast.maze.GUI;
+using textured_raycast.maze.resources;
 using System.Threading.Tasks;
 using rpg_game.maze;
 using rpg_game.maze.ButtonList.Buttons.INV;
@@ -17,18 +18,18 @@ namespace textured_raycast.maze
 {
     class Maze {
 
-        static Dictionary<int, Texture> textures = new Dictionary<int, Texture>() {
-            {1,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/greystone.ppm")},
-            {2,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/redbrick.ppm")},
-            {3,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/bluestone.ppm")},
-            {4,   TextureLoaders.loadFromPlainPPM("img/test5.ppm")},
-            {5,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/redstone.ppm")},
-            {6,   TextureLoaders.loadFromPlainPPM("img/wolfenstein/colorstone.ppm")},
-            {99,  TextureLoaders.loadFromPlainPPM("img/skybox.ppm")},
-            {101, TextureLoaders.loadFromPlainPPM("img/wolfenstein/end.ppm")}, // Also used as collision box for winning.
-            {102, TextureLoaders.loadFromPlainPPM("img/wolfenstein/exit.ppm")}, // Also used for leaving the maze
-            {103, TextureLoaders.loadFromPlainPPM("img/INV.ppm")},
-            {104, TextureLoaders.loadFromPlainPPM("img/SkillTree.ppm")},
+        static Dictionary<int, string> textures = new Dictionary<int, string>() {
+            {1,   "img/wolfenstein/greystone.ppm"},
+            {2,   "img/wolfenstein/redbrick.ppm"},
+            {3,   "img/wolfenstein/bluestone.ppm"},
+            {4,   "img/test5.ppm"},
+            {5,   "img/wolfenstein/redstone.ppm"},
+            {6,   "img/wolfenstein/colorstone.ppm"},
+            {99,  "img/skybox.ppm"},
+            {101, "img/wolfenstein/end.ppm"}, // Also used as collision box for winning.
+            {102, "img/wolfenstein/exit.ppm"}, // Also used for leaving the maze
+            {103, "img/INV.ppm"},
+            {104, "img/SkillTree.ppm"},
         };
 
         static Button[] invButtons = new Button[]
@@ -56,7 +57,7 @@ namespace textured_raycast.maze
 
 	static Vector2i size = new Vector2i(120, 80);
 
-	static ConsoleEngine engine;
+        static ConsoleEngine engine;
 	static ConsoleBuffer game;
 	static ConsoleBuffer fight;
 	static ConsoleBuffer UIHolder;
@@ -131,7 +132,7 @@ namespace textured_raycast.maze
                 {
                     UIHolder.Clear();
 
-                    UIHolder.DrawTexture(textures[103], 0, 0);
+                    UIHolder.DrawTexture(ResourceManager.getTexture(textures[103]), 0, 0);
 
                     if (InputManager.GetKey(Keys.K_UP, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W, world) == KeyState.KEY_DOWN)
                     {
@@ -198,7 +199,7 @@ namespace textured_raycast.maze
                         world.state = states.Inventory;
                     }
 
-                    UIHolder.DrawTexture(textures[104], 60 - skillButtons[curSkillButton].x - skillButtons[curSkillButton].w / 2, 40 - skillButtons[curSkillButton].y - skillButtons[curSkillButton].w / 2);
+                    UIHolder.DrawTexture(ResourceManager.getTexture(textures[104]), 60 - skillButtons[curSkillButton].x - skillButtons[curSkillButton].w / 2, 40 - skillButtons[curSkillButton].y - skillButtons[curSkillButton].w / 2);
 
                     engine.DrawConBuffer(UIHolder);
                     engine.SwapBuffers();
@@ -620,7 +621,7 @@ namespace textured_raycast.maze
             float darken = 0.9f;
             darken = (float)Math.Max(0, darken - perpWallDist * (visRange * 0.005));
 
-            Texture tex = textures[hitWall == null ? 1 : hitWall.thisTexID];
+            Texture tex = ResourceManager.getTexture(textures[hitWall == null ? 1 : hitWall.thisTexID]);
             double wallX;
             if (side == 0)
                 wallX = pos.y + perpWallDist * rayDir.y;
@@ -680,8 +681,8 @@ namespace textured_raycast.maze
             // Grabs the floor and ceiling texture, before the loop, since we
             // don't want differently textured ceiling or floor.
 
-            Texture floorTex   = textures[map.floorTexID];
-            Texture ceilingTex = textures[map.useSkybox ? 1 : map.ceilTexID];
+            Texture floorTex   = ResourceManager.getTexture(textures[map.floorTexID]);
+	    Texture ceilingTex = ResourceManager.getTexture(textures[map.useSkybox ? 1 : map.ceilTexID]);
 
             // Grab the windiw dimensions, since they'll be used a lot.
             int winWidth  = game.width;
@@ -720,10 +721,10 @@ namespace textured_raycast.maze
 
                     Vector2i cellPos = (Vector2i)floor.Floor();
                     int floorId = curMap.GetFloor(cellPos.x, cellPos.y);
-                    floorTex = floorId == 0 ? null : textures[floorId];
+                    floorTex = floorId == 0 ? null : ResourceManager.getTexture(textures[floorId]);
 
                     int ceilId = curMap.GetRoof(cellPos.x, cellPos.y);
-                    ceilingTex = ceilId == 0 ? null : textures[ceilId];
+                    ceilingTex = ceilId == 0 ? null : ResourceManager.getTexture(textures[ceilId]);
 
                     float darken = 0.9f;
                     if (!map.useSkybox)
@@ -763,7 +764,7 @@ namespace textured_raycast.maze
                     // Ceiling code
                     // ============
                     if(ceilingTex is null) {
-                        var pix = GetSkyboxPixel(winHeight, dir, textures[99], x, winHeight - y - 1, world.dayTime);
+                        var pix = GetSkyboxPixel(winHeight, dir, ResourceManager.getTexture(textures[99]), x, winHeight - y - 1, world.dayTime);
                         if((game.getPixel(x, winHeight-y-1) is null))
                             game.setPixel(x, winHeight-y-1, pix);
                     } else {
