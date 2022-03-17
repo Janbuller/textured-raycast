@@ -18,7 +18,7 @@ namespace textured_raycast.maze.GUI
             {6,   TextureLoaders.loadFromPlainPPM("img/gui/Menu3.ppm")},
         };
 
-        static string GUITextStrings = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        static string GUITextStrings = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         static List<Texture> GUIText = SpriteSheetLoaders.loadHorisontalSpriteSheetFromPlainPPM("img/gui/Font.ppm", 3);
 
         public static int pauseUIIndex = 1;

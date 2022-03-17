@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using textured_raycast.maze;
@@ -16,17 +16,10 @@ using rpg_game.maze;
 using rpg_game.maze.ButtonList.Buttons.INV;
 using rpg_game.maze.ButtonList.Buttons.Skills;
 
-namespace rpg_game.maze.ButtonList.Buttons.Skills
+namespace textured_raycast.maze.skills
 {
-    class SkillPlaceHolder : Button
+    interface IActiveSkill
     {
-        public SkillPlaceHolder(int x, int y, int w, int h, int[] list) : base(x, y, w, h, list)
-        {
-        }
-
-        override public void onActivate(World world)
-        {
-	    
-        }
+        public void Activate();
     }
 }

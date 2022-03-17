@@ -285,7 +285,7 @@ namespace textured_raycast.maze
                         i++;
                     }
 
-
+                    GUI.GUI.text(ref UIHolder, ref world, "the quick brown fox jumps over the lazy dog", 1, 1, 120);
                     engine.DrawConBuffer(UIHolder);
                     engine.SwapBuffers();
                 }
