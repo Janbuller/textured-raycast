@@ -29,6 +29,23 @@ namespace textured_raycast.maze.GUI
 
             HandleInputUI(ref world);
         }
+        public static void text(ref ConsoleBuffer guiBuffer, ref World world, string toSend, int x, int y, int w)
+        {
+            Vector2i start = new Vector2i(x, y);
+
+            while (toSend.Length > 0)
+            {
+                addCharToBufferAt(ref guiBuffer, GUITextStrings.IndexOf(toSend.Substring(0, 1).ToUpper()), start.x, start.y);
+                toSend = toSend.Remove(0, 1);
+                start.x += 4;
+                if (start.x > x+w)
+                {
+                    start.x = x;
+                    start.y += 6;
+                }
+            }
+        }
+
         public static void texBox(ref ConsoleBuffer guiBuffer, ref World world, string toSend)
         {
             Vector2i start = new Vector2i(0, 0);

@@ -34,9 +34,9 @@ namespace textured_raycast.maze
         static Button[] invButtons = new Button[]
         {
             new Back(1, 1, 11, 11, new int[] {0, 1, 4, 0}), new Skills(13, 1, 23, 11, new int[] {0, 0, 1, -1}),
-            new PlaceHolder(13, 18, 11, 11, new int[] {-1, 1, 3, 0}), new PlaceHolder(44, 18, 11, 11, new int[] {0, 0, 4, -1}),
-            new PlaceHolder(1, 30, 11, 11, new int[] {-2, 1, 4, 0}), new PlaceHolder(13, 30, 11, 11, new int[] {-3, 1, 0, -1}), new PlaceHolder(25, 30, 11, 11, new int[] {-4, 1, 3, -1}), new PlaceHolder(44, 30, 11, 11, new int[] {-4, 0, 3, -1}),
-            new PlaceHolder(1, 42, 11, 11, new int[] {-4, 1, 0, 0}), new PlaceHolder(25, 42, 11, 11, new int[] {-3, 1, 0, -1}), new PlaceHolder(44, 42, 11, 11, new int[] {-3, 0, 0, -1})
+            new PlaceHolder(13, 18, 11, 11, new int[] {-1, 1, 3, 0}), new PlaceHolder(44, 18, 11, 11, new int[] {0, 97, 4, -1}),
+            new PlaceHolder(1, 30, 11, 11, new int[] {-2, 1, 4, 0}), new PlaceHolder(13, 30, 11, 11, new int[] {-3, 1, 0, -1}), new PlaceHolder(25, 30, 11, 11, new int[] {-4, 1, 3, -1}), new PlaceHolder(44, 30, 11, 11, new int[] {-4, 98, 3, -1}),
+            new PlaceHolder(1, 42, 11, 11, new int[] {-4, 1, 0, 0}), new PlaceHolder(25, 42, 11, 11, new int[] {-3, 1, 0, -1}), new PlaceHolder(44, 42, 11, 11, new int[] {-3, 100, 0, -1})
         };
 
         static Button[] skillButtons = new Button[]
@@ -54,7 +54,7 @@ namespace textured_raycast.maze
             new SkillPlaceHolder(255, 310, 21, 21, new int[] {-2, 0, 0, 0}),
         };
 
-	static Vector2i size = new Vector2i(120, 80);
+        static Vector2i size = new Vector2i(120, 80);
 
 	static ConsoleEngine engine;
 	static ConsoleBuffer game;
@@ -95,7 +95,7 @@ namespace textured_raycast.maze
             double[] ZBuffer = new double[engine.Width];
 
             int curInvButton = 0;
-            int curSkillButton = 0;
+            int curSkillButton = 12;
 
 
             Texture FloorAndRoof = new Texture(size.x, size.y);
@@ -133,35 +133,108 @@ namespace textured_raycast.maze
 
                     UIHolder.DrawTexture(textures[103], 0, 0);
 
-                    if (InputManager.GetKey(Keys.K_UP, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W, world) == KeyState.KEY_DOWN)
+                    int nowInv = -1;
+                    if (curInvButton > 99) nowInv = curInvButton - 100;
+
+
+                    if (nowInv == -1)
                     {
-                        curInvButton += invButtons[curInvButton].listOfMovements[0];
+                        if (InputManager.GetKey(Keys.K_UP, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W, world) == KeyState.KEY_DOWN)
+                        {
+                            curInvButton += invButtons[curInvButton].listOfMovements[0];
+                        }
+                        if (InputManager.GetKey(Keys.K_DOWN, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_S, world) == KeyState.KEY_DOWN)
+                        {
+                            curInvButton += invButtons[curInvButton].listOfMovements[2];
+                        }
+                        if (InputManager.GetKey(Keys.K_RIGHT, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_D, world) == KeyState.KEY_DOWN)
+                        {
+                            curInvButton += invButtons[curInvButton].listOfMovements[1];
+                        }
+                        if (InputManager.GetKey(Keys.K_LEFT, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_A, world) == KeyState.KEY_DOWN)
+                        {
+                            curInvButton += invButtons[curInvButton].listOfMovements[3];
+                        }
+                        if (InputManager.GetKey(Keys.K_E, world) == KeyState.KEY_DOWN)
+                        {
+                            invButtons[curInvButton].onActivate(world);
+                        }
+                        if (InputManager.GetKey(Keys.K_ESC, world) == KeyState.KEY_DOWN)
+                        {
+                            curInvButton = 0;
+                            world.state = states.Paused;
+                        }
                     }
-                    if (InputManager.GetKey(Keys.K_DOWN, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_S, world) == KeyState.KEY_DOWN)
+                    else
                     {
-                        curInvButton += invButtons[curInvButton].listOfMovements[2];
-                    }
-                    if (InputManager.GetKey(Keys.K_RIGHT, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_D, world) == KeyState.KEY_DOWN)
-                    {
-                        curInvButton += invButtons[curInvButton].listOfMovements[1];
-                    }
-                    if (InputManager.GetKey(Keys.K_LEFT, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_A, world) == KeyState.KEY_DOWN)
-                    {
-                        curInvButton += invButtons[curInvButton].listOfMovements[3];
-                    }
-                    if (InputManager.GetKey(Keys.K_E, world) == KeyState.KEY_DOWN)
-                    {
-                        invButtons[curInvButton].onActivate(world);
-                    }
-                    if (InputManager.GetKey(Keys.K_ESC, world) == KeyState.KEY_DOWN)
-                    {
-                        curInvButton = 0;
-                        invButtons[curInvButton].onActivate(world);
+                        int y = (int)Math.Floor(nowInv / 5f);
+                        int x = nowInv - y * 5;
+                        int pageOffset = (int)Math.Floor(y / 5f);
+                        y = y - pageOffset * 5;
+
+                        if (InputManager.GetKey(Keys.K_UP, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W, world) == KeyState.KEY_DOWN)
+                        {
+                            if (InputManager.GetKey(Keys.K_SHIFT, world) != KeyState.KEY_UP)
+                                pageOffset = Math.Max(pageOffset-1, 0);
+                            else
+                                y -= 1;
+                            if (y == -1 && pageOffset == 0) y = 0;
+                        }
+                        if (InputManager.GetKey(Keys.K_DOWN, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_S, world) == KeyState.KEY_DOWN)
+                        {
+                            if (InputManager.GetKey(Keys.K_SHIFT, world) != KeyState.KEY_UP)
+                                pageOffset += 1;
+                            else
+                                y += 1;
+                        }
+                        if (InputManager.GetKey(Keys.K_RIGHT, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_D, world) == KeyState.KEY_DOWN)
+                        {
+                            x = Math.Min(x+1, 4);
+                        }
+                        if (InputManager.GetKey(Keys.K_LEFT, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_A, world) == KeyState.KEY_DOWN)
+                        {
+                            if (x == 0)
+                            {
+                                if (y == 0)
+                                    curInvButton = 3;
+                                else if (y == 1)
+                                    curInvButton = 7;
+                                else if (y == 2)
+                                    curInvButton = 10;
+                                else
+                                    curInvButton = 10;
+                            }
+
+                            x -= 1;
+                        }
+
+                        if (curInvButton > 99)
+                        {
+                            curInvButton = x + y * 5 + pageOffset * 25 + 100;
+                        }
                     }
 
-                    UIHolder = invButtons[curInvButton].DrawOnBuffer(UIHolder);
+                    nowInv = -1;
+                    if (curInvButton > 99) nowInv = curInvButton - 100;
 
-                    engine.DrawConBuffer(UIHolder);
+
+                    if (nowInv == -1)
+                    {
+                        UIHolder = invButtons[curInvButton].DrawOnBuffer(UIHolder);
+                    }
+                    else
+                    {
+                        int y = (int)Math.Floor(nowInv / 5f);
+                        int x = nowInv - y * 5;
+                        int pageOffset = (int)Math.Floor(y / 5f);
+                        y = y - pageOffset * 5;
+
+                        GUI.GUI.text(ref UIHolder, ref world, "abcdefghijklmnopqrstuvwxyz", 58, 3, 59);
+
+                        UIHolder = new PlaceHolder(58 + x * 12, 18 + y * 12, 11, 11, new int[] { }).DrawOnBuffer(UIHolder);
+                    }
+
+                        engine.DrawConBuffer(UIHolder);
                     engine.SwapBuffers();
                 }
 
@@ -195,10 +268,35 @@ namespace textured_raycast.maze
                     }
                     if (InputManager.GetKey(Keys.K_ESC, world) == KeyState.KEY_DOWN)
                     {
+                        curSkillButton = 12;
                         world.state = states.Inventory;
                     }
 
                     UIHolder.DrawTexture(textures[104], 60 - skillButtons[curSkillButton].x - skillButtons[curSkillButton].w / 2, 40 - skillButtons[curSkillButton].y - skillButtons[curSkillButton].w / 2);
+
+
+                    for (int x = 1; x < 26; x++)
+                    {
+                        for (int y = 62; y < 79; y++)
+                        {
+                            TexColor tc = new TexColor(198, 132, 68);
+                            if(x == 1 || x == 25 || y == 62 || y == 78)
+                                tc = new TexColor(0, 0, 0);
+
+                            UIHolder.DrawPixel(tc, x, y);
+                        }
+                    }
+
+                    int i = 0;
+                    foreach (Button sb in skillButtons)
+                    {
+                        if (i == curSkillButton)
+                            UIHolder.DrawPixel(new TexColor(0, 0, 255), (sb.x / 51) * 2 + 3, (sb.y / 51) * 2 + 64);
+                        else
+                            UIHolder.DrawPixel(new TexColor(0, 0, 0), (sb.x / 51) * 2 + 3, (sb.y / 51) * 2 + 64);
+                        i++;
+                    }
+
 
                     engine.DrawConBuffer(UIHolder);
                     engine.SwapBuffers();
@@ -642,8 +740,6 @@ namespace textured_raycast.maze
                 darken *= 0.6f;
             } else {
                 Vector2d realPosAbove = new Vector2d(hitPos.x + 0.1, hitPos.y);
-                const float offset = 20;
-                realPosAbove.y += map.world.dayTime * offset - offset/4;
                 Vector2i cellPosAbove = (Vector2i)realPosAbove;
                 if(map.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0 || map.IsWall(cellPosAbove.x, cellPosAbove.y))
                     darken *= 0.6f;
@@ -751,8 +847,6 @@ namespace textured_raycast.maze
                             color *= 0.6f;
                         } else {
                             Vector2d realPosAbove = new Vector2d(floor.x + 0.1, floor.y);
-                            const float offset = 20;
-                            realPosAbove.y += world.dayTime * offset - offset/4;
                             Vector2i cellPosAbove = (Vector2i)realPosAbove;
                             if(curMap.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0 || curMap.IsWall(cellPosAbove.x, cellPosAbove.y))
                                 color *= 0.6f;
