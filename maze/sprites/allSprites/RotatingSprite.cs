@@ -4,6 +4,7 @@ using System.Text;
 using textured_raycast.maze.sprites;
 using textured_raycast.maze.math;
 using textured_raycast.maze.texture;
+using textured_raycast.maze.resources;
 
 namespace textured_raycast.maze.sprites.allSprites
 {
@@ -24,28 +25,44 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void updateAnimation(float dt)
         {
-            rot += dt*2;
-            if(rot > Math.PI)
-                rot = -Math.PI;
+            // rot += dt*2;
+            while(rot > Math.PI)
+                rot -= Math.PI*2;
+            while(rot < -Math.PI)
+                rot += Math.PI*2;
             dir.x = Math.Cos(rot+Math.PI);
             dir.y = Math.Sin(rot+Math.PI);
         }
 
         public override void UpdateOnDraw(ref World world, double distToPlayer)
         {
-            List<Texture> textures = Sprite.IDTextureCorrespondence[texID];
-            int textureCount = textures.Count;
+            List<string> texturePaths = Sprite.IDTextureCorrespondence[texID];
+            Texture[] textures = new Texture[texturePaths.Count];
+            for (int i = 0; i < textures.Length; i++)
+            {
+                textures[i] = ResourceManager.getTexture(texturePaths[i]);
+            }
+
+            int textureCount = textures.Length;
             double radPrTex = (Math.PI * 2) / textureCount;
 
             double sprRot = Math.Atan2(dir.x, dir.y);
             double plrRot = Math.Atan2(world.plrRot.x, world.plrRot.y);
 
             double rotDiff = ((sprRot - plrRot) + radPrTex/2) - Math.PI;
+
             while(rotDiff < 0)
                 rotDiff += Math.PI*2;
             while(rotDiff > Math.PI*2)
                 rotDiff -= Math.PI*2;
 
+            if (rotDiff > Math.PI)
+            {
+                rot -= 0.0005f;
+            } else if (rotDiff < Math.PI)
+            {
+                rot += 0.0005f;
+            }
             curTexture = (int)(rotDiff / radPrTex);
         }
     }

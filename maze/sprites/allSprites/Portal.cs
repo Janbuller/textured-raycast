@@ -5,6 +5,7 @@ using textured_raycast.maze;
 using textured_raycast.maze.math;
 using textured_raycast.maze.sprites;
 using textured_raycast.maze.texture;
+using textured_raycast.maze.resources;
 using System.Linq;
 
 namespace textured_raycast.maze.sprites.allSprites
@@ -21,7 +22,7 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void onLoad()
         {
-            Texture startTex = IDTextureCorrespondence[texID][0];
+            Texture startTex = ResourceManager.getTexture(IDTextureCorrespondence[texID][0]);
             portalTex = new Texture(startTex);
 
             interactDistance = 0.2f;
@@ -36,7 +37,7 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void UpdateOnDraw(ref World world, double distToPlayer)
         {
-            Texture startTex = IDTextureCorrespondence[texID][0];
+            Texture startTex = ResourceManager.getTexture(IDTextureCorrespondence[texID][0]);
             portalTex = new Texture(startTex);
             Map curMap = world.getMapByID(world.currentMap);
 
