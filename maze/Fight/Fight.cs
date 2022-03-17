@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using textured_raycast.maze;
+using textured_raycast.maze.graphics;
 using textured_raycast.maze.texture;
 using textured_raycast.maze.math;
 using textured_raycast.maze.sprites;
@@ -38,19 +39,19 @@ namespace rpg_game.maze.Fight
             Map map = world.getMapByID(mapID);
 
             Texture FloorAndRoof = new Texture(buffer.Width, buffer.Height);
-            Maze.FloorCasting(ref FloorAndRoof, dir, plane, pos, 1, map, world);
+            FloorCasting.FloorCast(ref FloorAndRoof, dir, plane, pos, 1, map, world, world.textures);
             buffer.DrawTexture(FloorAndRoof, 0, 0);
 
             double[] ZBuffer = new double[buffer.Width];
 
-            Maze.WallCasting(ref buffer, ref ZBuffer, dir, plane, pos, 1, map);
+            WallCasting.WallCast(ref buffer, ref ZBuffer, dir, plane, pos, 1, map, world.textures);
 
             foreach (Sprite sprite in sprites)
             {
                 sprite.updateAnimation(world.dt);
             }
 
-            Maze.SpriteCasting(ref buffer, sprites, pos, plane, dir, ZBuffer, 1, map, ref world);
+            SpriteCasting.SpriteCast(ref buffer, sprites, pos, plane, dir, ZBuffer, 1, map, ref world);
         }
 
         public void renderFightStartScreenToBuffer(ref ConsoleBuffer buffer, float progress)

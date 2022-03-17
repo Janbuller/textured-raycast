@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using textured_raycast.maze;
 using textured_raycast.maze.math;
+using textured_raycast.maze.graphics;
 using textured_raycast.maze.sprites;
 using textured_raycast.maze.texture;
 using textured_raycast.maze.resources;
@@ -60,10 +61,10 @@ namespace textured_raycast.maze.sprites.allSprites
             Vector2d plane = new Vector2d(dir.y, -dir.x) * 0.66;
 
             Texture FloorAndRoof = new Texture(portalTex.width, portalTex.height);
-            Maze.FloorCasting(ref FloorAndRoof, dir, plane, pos, 1, curMap, world);
+            FloorCasting.FloorCast(ref FloorAndRoof, dir, plane, pos, 1, curMap, world, world.textures);
 
             for(int x = 0; x < portalTex.width; x++) {
-                Maze.WallcastReturn wcr = Maze.DoOneWallcast(x, portalTex.width, portalTex.height, curMap.GetLights(), dir, plane, tpToLoc, 1, curMap);
+                WallCasting.WallcastReturn wcr = WallCasting.DoOneWallcast(x, portalTex.width, portalTex.height, curMap.GetLights(), dir, plane, tpToLoc, 1, curMap, world.textures);
                 int LineHeight = (int)((portalTex.height * 2) / (wcr.PerpWallDist + 1/distToPlayer));
 
                 if (wcr.HitWall.doDraw) {

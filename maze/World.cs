@@ -39,6 +39,20 @@ namespace textured_raycast.maze
         public float dt;
         public long lastFrameTime = DateTime.Now.Ticks;
 
+        public Dictionary<int, string> textures = new Dictionary<int, string>() {
+            {1,   "img/wolfenstein/greystone.ppm"},
+            {2,   "img/wolfenstein/redbrick.ppm"},
+            {3,   "img/wolfenstein/bluestone.ppm"},
+            {4,   "img/test5.ppm"},
+            {5,   "img/wolfenstein/redstone.ppm"},
+            {6,   "img/wolfenstein/colorstone.ppm"},
+            {99,  "img/skybox.ppm"},
+            {101, "img/wolfenstein/end.ppm"}, // Also used as collision box for winning.
+            {102, "img/wolfenstein/exit.ppm"}, // Also used for leaving the maze
+            {103, "img/INV.ppm"},
+            {104, "img/SkillTree.ppm"},
+        };
+
         public void startFight(Sprite sprite)
         {
             state = states.Fighting;
