@@ -13,6 +13,7 @@ namespace rpg_game.maze.Items
             addDAM = 3;
 
             tags[equipSlots.MainHand] = true;
+            tags[equipSlots.OffHand] = true;
         }
     }
 }

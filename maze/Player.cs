@@ -68,6 +68,12 @@ namespace textured_raycast.maze
             { 49, new Iron_Broadsword()},
             { 50, new Iron_Broadsword()},
             { 62, new Iron_Broadsword()},
+            { 2, new Ruby_Ring()},
+            { 3, new Ruby_Ring()},
+            { 5, new Ruby_Ring()},
+            { 10, new Iron_Armor()},
+            { 11, new Iron_Armor()},
+            { 12, new Iron_Armor()},
         };
         int skillPoints = 25;
     }
