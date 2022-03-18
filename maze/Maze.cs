@@ -130,6 +130,9 @@ namespace textured_raycast.maze
 
                 while (world.state == states.Inventory)
                 {
+                    int y;
+                    int x;
+                    int pageOffset;
                     UIHolder.Clear();
 
                     UIHolder.DrawTexture(ResourceManager.getTexture(textures[103]), 0, 0);
@@ -156,21 +159,12 @@ namespace textured_raycast.maze
                         {
                             curInvButton += invButtons[curInvButton].listOfMovements[3];
                         }
-                        if (InputManager.GetKey(Keys.K_E, world) == KeyState.KEY_DOWN)
-                        {
-                            invButtons[curInvButton].onActivate(world);
-                        }
-                        if (InputManager.GetKey(Keys.K_ESC, world) == KeyState.KEY_DOWN)
-                        {
-                            curInvButton = 0;
-                            world.state = states.Paused;
-                        }
                     }
                     else
                     {
-                        int y = (int)Math.Floor(nowInv / 5f);
-                        int x = nowInv - y * 5;
-                        int pageOffset = (int)Math.Floor(y / 5f);
+                        y = (int)Math.Floor(nowInv / 5f);
+                        x = nowInv - y * 5;
+                        pageOffset = (int)Math.Floor(y / 5f);
                         y = y - pageOffset * 5;
 
                         if (InputManager.GetKey(Keys.K_UP, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W, world) == KeyState.KEY_DOWN)
@@ -218,24 +212,141 @@ namespace textured_raycast.maze
                     nowInv = -1;
                     if (curInvButton > 99) nowInv = curInvButton - 100;
 
+                    y = (int)Math.Floor(nowInv / 5f);
+                    x = nowInv - y * 5;
+                    pageOffset = (int)Math.Floor(y / 5f);
+                    y = y - pageOffset * 5;
+
+                    if (curInvButton < 100)
+                        pageOffset = 0;
+
+                    for (int xN = 0; xN < 5; xN++)
+                        for (int yN = 0; yN < 5; yN++)
+                            if (world.player.inv.ContainsKey(xN + yN * 5 + pageOffset * 25))
+                                UIHolder.DrawTexture(ResourceManager.getTexture(Item.itemTextures[world.player.inv[xN + yN * 5 + pageOffset*25].imageID]), 59 + xN * 12, 19 + yN * 12);
+
 
                     if (nowInv == -1)
                     {
                         UIHolder = invButtons[curInvButton].DrawOnBuffer(UIHolder);
+                        if (InputManager.GetKey(Keys.K_E, world) == KeyState.KEY_DOWN)
+                        {
+                            if (world.player.invSelectedSpot == -1)
+                            {
+                                invButtons[curInvButton].onActivate(world);
+
+                                if (world.player.guiToEquipped.ContainsKey(curInvButton))
+                                {
+                                    if (!(world.player.equipped[world.player.guiToEquipped[curInvButton]] is null))
+                                    {
+                                        world.player.addToInv(world.player.equipped[world.player.guiToEquipped[curInvButton]]);
+
+                                        world.player.equipped[world.player.guiToEquipped[curInvButton]].onUnEquip(ref world);
+                                        world.player.equipped[world.player.guiToEquipped[curInvButton]] = null;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (world.player.guiToEquipped.ContainsKey(curInvButton))
+                                {
+                                    equipSlots es = world.player.guiToEquipped[curInvButton];
+
+                                    if (world.player.inv[world.player.invSelectedSpot].tags[es] == true)
+                                    {
+                                        if (world.player.equipped[es] is null)
+                                        {
+                                            world.player.equipped[es] = world.player.inv[world.player.invSelectedSpot];
+                                            world.player.inv.Remove(world.player.invSelectedSpot);
+
+                                            world.player.equipped[es].onEquip(ref world);
+                                            world.player.invSelectedSpot = -1;
+                                        }
+                                        else
+                                        {
+                                            Item i = world.player.equipped[es];
+                                            world.player.equipped[es] = world.player.inv[world.player.invSelectedSpot];
+                                            world.player.inv[nowInv] = i;
+
+                                            world.player.equipped[es].onEquip(ref world);
+                                            world.player.inv[nowInv].onUnEquip(ref world);
+                                            world.player.invSelectedSpot = -1;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                     else
                     {
-                        int y = (int)Math.Floor(nowInv / 5f);
-                        int x = nowInv - y * 5;
-                        int pageOffset = (int)Math.Floor(y / 5f);
-                        y = y - pageOffset * 5;
-
-                        GUI.GUI.text(ref UIHolder, ref world, "abcdefghijklmnopqrstuvwxyz", 58, 3, 59);
+                        if (world.player.inv.ContainsKey(nowInv))
+                            GUI.GUI.text(ref UIHolder, ref world, world.player.inv[nowInv].name, 58, 3, 59);
 
                         UIHolder = new PlaceHolder(58 + x * 12, 18 + y * 12, 11, 11, new int[] { }).DrawOnBuffer(UIHolder);
+
+                        if (InputManager.GetKey(Keys.K_E, world) == KeyState.KEY_DOWN)
+                        {
+                            if (world.player.invSelectedSpot == -1)
+                            {
+                                if (world.player.inv.ContainsKey(nowInv))
+                                    world.player.invSelectedSpot = nowInv;
+                            }
+                            else
+                            {
+                                if (!world.player.inv.ContainsKey(nowInv))
+                                {
+                                    world.player.inv[nowInv] = world.player.inv[world.player.invSelectedSpot];
+                                    world.player.inv.Remove(world.player.invSelectedSpot);
+                                    world.player.invSelectedSpot = -1;
+                                }
+                                else
+                                {
+                                    Item i = world.player.inv[nowInv];
+                                    world.player.inv[nowInv] = world.player.inv[world.player.invSelectedSpot];
+                                    world.player.inv[world.player.invSelectedSpot] = i;
+                                    world.player.invSelectedSpot = -1;
+                                }
+                            }
+                        }
                     }
 
-                        engine.DrawConBuffer(UIHolder);
+                    int loop = 0;
+                    for (int hp = 0; hp < world.player.hp; hp++)
+                    {
+                        if (hp - loop * 36 == 36)
+                            loop++;
+
+                        for (int i = 0; i < 5; i++)
+                        {
+                            UIHolder.DrawPixel(new TexColor(loop * 50, 255, loop * 50), 17 + hp - loop * 36, 59 + i);
+                        }
+                    }
+
+                    loop = 0;
+                    for (int dam = 0; dam < world.player.dam; dam++)
+                    {
+                        if (dam - loop * 36 == 36)
+                            loop++;
+
+                        for (int i = 0; i < 5; i++)
+                        {
+                            UIHolder.DrawPixel(new TexColor(255, loop * 50, loop * 50), 17 + dam - loop * 36, 65 + i);
+                        }
+                    }
+
+                    loop = 0;
+                    for (int mag = 0; mag < world.player.mag; mag++)
+                    {
+                        if (mag - loop * 36 == 36)
+                            loop++;
+
+                        for (int i = 0; i < 5; i++)
+                        {
+                            UIHolder.DrawPixel(new TexColor(loop * 50, loop * 50, 255), 17 + mag - loop * 36, 72 + i);
+                        }
+                    }
+
+                    engine.DrawConBuffer(UIHolder);
                     engine.SwapBuffers();
                 }
 

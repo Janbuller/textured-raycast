@@ -4,6 +4,7 @@ using System;
 using rpg_game.maze.Fight;
 using textured_raycast.maze.sprites;
 using textured_raycast.maze.sprites.allSprites;
+using rpg_game.maze;
 
 namespace textured_raycast.maze
 {
@@ -29,6 +30,8 @@ namespace textured_raycast.maze
         public string interactMessage = ""; // This takes priority over current message
 
         public Fight fight;
+
+        public Player player = new Player();
 
         public Vector2d plrPos;
         public Vector2d plrRot;
