@@ -88,6 +88,14 @@ namespace textured_raycast.maze.texture
             return Color.FromArgb(R, G, B);
         }
 
+        public static int getBrightness(TexColor col)
+        {
+            double R = col.r / 255.0;
+            double G = col.g / 255.0;
+            double B = col.b / 255.0;
+            return (int)((0.2126 * R + 0.7152 * G + 0.0722 * B) * 255);
+        }
+
         public static TexColor operator *(TexColor vec1, float scalar) {
             return new TexColor(
                 Math.Max(0, Convert.ToInt32(vec1.realR * scalar)),

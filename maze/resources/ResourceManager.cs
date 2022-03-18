@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using textured_raycast.maze.math;
 using textured_raycast.maze.lights;
 using textured_raycast.maze.texture;
@@ -26,11 +27,25 @@ namespace textured_raycast.maze.resources
             bool exists = cachedTextures.TryGetValue(path, out tex);
             if (!exists)
             {
-                tex = TextureLoaders.loadFromPlainPPM(path);
+                try
+                {
+                    tex = TextureLoaders.loadFromPlainPPM(path);
+                } catch (FileNotFoundException)
+                {
+                    return null;
+                }
                 cachedTextures.Add(path, tex);
             }
 
             return tex;
+        }
+
+	/// Adds a texture to the texture cache. Make sure, /NOT/ to
+	/// add multiple textures to the same path or to the path of
+	/// and existing or futurely loaded texture.
+        public static void cacheTexture(string path, Texture tex)
+        {
+	    cachedTextures.Add(path, tex);
         }
 
         public static Map getMap(string path)

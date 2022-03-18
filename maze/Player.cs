@@ -75,6 +75,8 @@ namespace textured_raycast.maze
             { 11, new Iron_Armor()},
             { 12, new Iron_Armor()},
         };
-        int skillPoints = 25;
+
+        public int skillPoints = 25;
+        public List<int> UnlockedSkills = new List<int>() { 12 };
     }
 }

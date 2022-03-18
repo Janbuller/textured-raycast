@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using textured_raycast.maze.resources;
 
 namespace textured_raycast.maze.texture
 {
@@ -14,7 +15,7 @@ namespace textured_raycast.maze.texture
         /// Creates a list of textures from a PPM image
         /// </summary>
         public static List<Texture> loadHorisontalSpriteSheetFromPlainPPM(string location, int width) {
-            Texture baseTexture = TextureLoaders.loadFromPlainPPM(location);
+            Texture baseTexture = ResourceManager.getTexture(location);
 
             List<Texture> textures = new List<Texture>();
 

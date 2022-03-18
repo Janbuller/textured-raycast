@@ -35,6 +35,16 @@ namespace textured_raycast.maze.texture
             this.pixels = new TexColor[width*height].ToList();
         }
 
+        public Texture getGreyscale()
+        {
+            TexColor[] pixels = new TexColor[this.pixels.Count];
+            for (int i = 0; i < this.pixels.Count; i++)
+            {
+		int value = TexColor.getBrightness(this.pixels[i]);
+                pixels[i] = new TexColor(value, value, value);
+            }
+            return new Texture(pixels.ToList(), width, height);
+        }
         public void setPixel(int x, int y, TexColor pixel) {
             bool pink = false;
             if(pixel == new TexColor(255, 0, 255))

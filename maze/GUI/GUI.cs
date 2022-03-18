@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using textured_raycast.maze.input;
+using textured_raycast.maze.resources;
 using textured_raycast.maze.math;
 using textured_raycast.maze.texture;
 
@@ -9,13 +10,13 @@ namespace textured_raycast.maze.GUI
 {
     internal class GUI
     {
-        static Dictionary<int, Texture> GUITextures = new Dictionary<int, Texture>() {
-            {1,   TextureLoaders.loadFromPlainPPM("img/gui/chatBox1.ppm")},
-            {2,   TextureLoaders.loadFromPlainPPM("img/gui/chatBox2.ppm")},
-            {3,   TextureLoaders.loadFromPlainPPM("img/gui/chatBox3.ppm")},
-            {4,   TextureLoaders.loadFromPlainPPM("img/gui/Menu1.ppm")},
-            {5,   TextureLoaders.loadFromPlainPPM("img/gui/Menu2.ppm")},
-            {6,   TextureLoaders.loadFromPlainPPM("img/gui/Menu3.ppm")},
+        static Dictionary<int, string> GUITextures = new Dictionary<int, string>() {
+            {1,   "img/gui/chatBox1.ppm"},
+            {2,   "img/gui/chatBox2.ppm"},
+            {3,   "img/gui/chatBox3.ppm"},
+            {4,   "img/gui/Menu1.ppm"},
+            {5,   "img/gui/Menu2.ppm"},
+            {6,   "img/gui/Menu3.ppm"},
         };
 
         static string GUITextStrings = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -25,7 +26,7 @@ namespace textured_raycast.maze.GUI
 
         public static void pauseGUI(ref ConsoleBuffer guiBuffer)
         {
-            guiBuffer.DrawTexture(GUITextures[pauseUIIndex + 3], 10, 10, new TexColor(0, 0, 0));
+            guiBuffer.DrawTexture(ResourceManager.getTexture(GUITextures[pauseUIIndex + 3]), 10, 10, new TexColor(0, 0, 0));
 
             HandleInputUI();
         }
@@ -49,23 +50,24 @@ namespace textured_raycast.maze.GUI
         public static void texBox(ref ConsoleBuffer guiBuffer, string toSend)
         {
             Vector2i start = new Vector2i(0, 0);
-            int texToUse = 0;
+            int texToUseIdx = 0;
 
             if (toSend.Length < 24)
             {
-                texToUse = 1;
+                texToUseIdx = 1;
             }
             else if (toSend.Length < 48)
             {
-                texToUse = 2;
+                texToUseIdx = 2;
             }
             else
             {
-                texToUse = 3;
+                texToUseIdx = 3;
             }
 
-            guiBuffer.DrawTexture(GUITextures[texToUse], 1, guiBuffer.Height - GUITextures[texToUse].height - 1);
-            start = new Vector2i(3, guiBuffer.Height - GUITextures[texToUse].height + 1);
+            Texture texToUse = ResourceManager.getTexture(GUITextures[texToUseIdx]);
+            guiBuffer.DrawTexture(texToUse, 1, guiBuffer.Height - texToUse.height - 1);
+            start = new Vector2i(3, guiBuffer.Height - texToUse.height + 1);
 
             while (toSend.Length > 0)
             {

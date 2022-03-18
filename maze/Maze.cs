@@ -5,6 +5,7 @@ using textured_raycast.maze.math;
 using textured_raycast.maze.graphics;
 using textured_raycast.maze.lights;
 using textured_raycast.maze.texture;
+using textured_raycast.maze.skills;
 using textured_raycast.maze.sprites;
 using textured_raycast.maze.sprites.allSprites;
 using textured_raycast.maze.input;
@@ -374,7 +375,23 @@ namespace textured_raycast.maze
                         World.state = states.Inventory;
                     }
 
-                    UIHolder.DrawTexture(ResourceManager.getTexture(World.textures[104]), 60 - skillButtons[curSkillButton].x - skillButtons[curSkillButton].w / 2, 40 - skillButtons[curSkillButton].y - skillButtons[curSkillButton].w / 2);
+                    Vector2i screenOffset = new Vector2i(
+			60 - skillButtons[curSkillButton].x - skillButtons[curSkillButton].w / 2,
+			40 - skillButtons[curSkillButton].y - skillButtons[curSkillButton].w / 2
+		    );
+
+                    UIHolder.DrawTexture(ResourceManager.getTexture(World.textures[104]), screenOffset.x, screenOffset.y);
+
+                    foreach (SkillPlaceHolder skillButton in skillButtons)
+                    {
+                        try
+                        {
+                            Skill curSkill = Skill.Skills[skillButton.id];
+                            UIHolder.DrawTexture(curSkill.getTexture(), screenOffset.x + skillButton.x, screenOffset.y + skillButton.y);
+                        } catch (Exception e)
+                        {
+                        }
+                    }
 
 
                     for (int x = 1; x < 26; x++)
@@ -399,7 +416,7 @@ namespace textured_raycast.maze
                         i++;
                     }
 
-                    GUI.GUI.text(ref UIHolder, "the quick brown fox jumps over the lazy dog", 1, 1, 120);
+                    GUI.GUI.text(ref UIHolder, World.player.skillPoints.ToString(), 1, 1, 120);
                     engine.DrawConBuffer(UIHolder);
                     engine.SwapBuffers();
                 }
