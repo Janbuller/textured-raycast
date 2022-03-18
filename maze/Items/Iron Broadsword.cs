@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using textured_raycast.maze;
 
 namespace rpg_game.maze.Items
 {

@@ -1,4 +1,5 @@
-﻿using rpg_game.maze.Items;
+﻿using rpg_game.maze;
+using rpg_game.maze.Items;
 using System;
 using System.Collections.Generic;
 using System.Text;
