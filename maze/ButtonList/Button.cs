@@ -38,7 +38,7 @@ namespace rpg_game.maze
             return editBuffer;
         }
 
-        virtual public void onActivate(World world)
+        virtual public void onActivate()
         {
 
         }

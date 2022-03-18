@@ -34,7 +34,7 @@ namespace textured_raycast.maze.sprites.allSprites
             dir.y = Math.Sin(rot+Math.PI);
         }
 
-        public override void UpdateOnDraw(ref World world, double distToPlayer)
+        public override void UpdateOnDraw(double distToPlayer)
         {
             List<string> texturePaths = Sprite.IDTextureCorrespondence[texID];
             Texture[] textures = new Texture[texturePaths.Count];
@@ -47,7 +47,7 @@ namespace textured_raycast.maze.sprites.allSprites
             double radPrTex = (Math.PI * 2) / textureCount;
 
             double sprRot = Math.Atan2(dir.x, dir.y);
-            double plrRot = Math.Atan2(world.plrRot.x, world.plrRot.y);
+            double plrRot = Math.Atan2(World.plrRot.x, World.plrRot.y);
 
             double rotDiff = ((sprRot - plrRot) + radPrTex/2) - Math.PI;
 

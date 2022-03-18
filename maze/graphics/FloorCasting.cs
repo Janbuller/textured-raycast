@@ -18,11 +18,14 @@ namespace textured_raycast.maze.graphics
 {
     class FloorCasting
     {
-        public static void FloorCast(ref Texture game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, World world, Dictionary<int, string> textures)
+        public static void FloorCast(ref Texture game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange)
         {
+            Map map = World.getMapByID(World.currentMap);
+            Dictionary<int, string> textures = World.textures;
+
             game.Clear();
 
-            Map curMap = world.getMapByID(world.currentMap);
+            Map curMap = World.getMapByID(World.currentMap);
             ILight[] lights = map.GetLights();
 
             // Grabs the floor and ceiling texture, before the loop, since we
@@ -95,7 +98,7 @@ namespace textured_raycast.maze.graphics
                         texColor = floorTex.getPixel(texture.x, texture.y);
                         color  = texColor * darken * map.lightMix;
                         color += maze.texture.TexColor.unitMultReal(texColor, mixedLight) * (1 - map.lightMix);
-                        if(world.dayTime > 0.5f) {
+                        if(World.dayTime > 0.5f) {
                             color *= 0.6f;
                         } else {
                             Vector2d realPosAbove = new Vector2d(floor.x + 0.1, floor.y);
@@ -109,7 +112,7 @@ namespace textured_raycast.maze.graphics
                     // Ceiling code
                     // ============
                     if(ceilingTex is null) {
-                        var pix = Skybox.GetSkyboxPixel(winHeight, dir, ResourceManager.getTexture(textures[99]), x, winHeight - y - 1, world.dayTime);
+                        var pix = Skybox.GetSkyboxPixel(winHeight, dir, ResourceManager.getTexture(textures[99]), x, winHeight - y - 1, World.dayTime);
                         if((game.getPixel(x, winHeight-y-1) is null))
                             game.setPixel(x, winHeight-y-1, pix);
                     } else {

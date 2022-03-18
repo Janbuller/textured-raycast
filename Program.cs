@@ -17,8 +17,8 @@ namespace textured_raycast
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 maze.input.InputManager.SetInputController(new maze.input.Windows.WindowsInputController());
 
-            World world = new World();
-            Maze.StartMaze(world);
+            World.setupMapsInWorld();
+            Maze.StartMaze();
 
 
             // var watch = new System.Diagnostics.Stopwatch();

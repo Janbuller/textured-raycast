@@ -49,7 +49,7 @@ namespace textured_raycast.maze
 	static ConsoleBuffer fight;
 	static ConsoleBuffer UIHolder;
 
-        public static bool StartMaze(World world) {
+        public static bool StartMaze() {
             engine = new ConsoleEngine(size.x, size.y, "maze");
             game = new ConsoleBuffer(size.x, size.y);
             fight = new ConsoleBuffer(size.x, size.y);
@@ -58,18 +58,18 @@ namespace textured_raycast.maze
             Console.Clear();
             DrawScreen(engine);
 
-            return Start(world);
+            return Start();
         }
 
-        private static bool Start(World world) {
+        private static bool Start() {
 
-            Map map = world.getMapByID(world.currentMap);
+            Map map = World.getMapByID(World.currentMap);
 
             // Position vector
-            Vector2d pos = world.plrPos;
+            Vector2d pos = World.plrPos;
 
             // Directional unit vector
-            Vector2d dir = world.plrRot;
+            Vector2d dir = World.plrRot;
 
             // Camera view plane, held as 2d vector line.
             // Were this actually 3d, not raycasting, it would be a plane,
@@ -88,19 +88,19 @@ namespace textured_raycast.maze
 
             Texture FloorAndRoof = new Texture(size.x, size.y);
             // Main game loop
-            while(world.state != states.Stopping)
+            while(World.state != states.Stopping)
             {
-                while (world.state == states.Fighting)
+                while (World.state == states.Fighting)
                 {
-                    world.dt = (float)(DateTime.Now.Ticks - world.lastFrameTime) / TimeSpan.TicksPerSecond;
-                    world.lastFrameTime = DateTime.Now.Ticks;
+                    World.dt = (float)(DateTime.Now.Ticks - World.lastFrameTime) / TimeSpan.TicksPerSecond;
+                    World.lastFrameTime = DateTime.Now.Ticks;
 
-                    world.fight.tillFightBegins -= world.dt;
+                    World.fight.tillFightBegins -= World.dt;
 
-                    if (world.fight.tillFightBegins < 0)
+                    if (World.fight.tillFightBegins < 0)
                     {
                         fight.Clear();
-                        world.fight.renderFightToBuffer(ref fight, ref world);
+                        World.fight.renderFightToBuffer(ref fight);
 
                         engine.DrawConBuffer(fight);
                         engine.SwapBuffers();
@@ -108,21 +108,21 @@ namespace textured_raycast.maze
                     else
                     {
                         UIHolder.Clear();
-                        world.fight.renderFightStartScreenToBuffer(ref UIHolder, world.fight.tillFightBegins / 2 - 0.1f);
+                        World.fight.renderFightStartScreenToBuffer(ref UIHolder, World.fight.tillFightBegins / 2 - 0.1f);
 
                         engine.DrawConBuffer(game.mixBuffer(UIHolder));
                         engine.SwapBuffers();
                     }
                 }
 
-                while (world.state == states.Inventory)
+                while (World.state == states.Inventory)
                 {
                     int y;
                     int x;
                     int pageOffset;
                     UIHolder.Clear();
 
-                    UIHolder.DrawTexture(ResourceManager.getTexture(world.textures[103]), 0, 0);
+                    UIHolder.DrawTexture(ResourceManager.getTexture(World.textures[103]), 0, 0);
 
                     int nowInv = -1;
                     if (curInvButton > 99) nowInv = curInvButton - 100;
@@ -130,19 +130,19 @@ namespace textured_raycast.maze
 
                     if (nowInv == -1)
                     {
-                        if (InputManager.GetKey(Keys.K_UP, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W, world) == KeyState.KEY_DOWN)
+                        if (InputManager.GetKey(Keys.K_UP) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W) == KeyState.KEY_DOWN)
                         {
                             curInvButton += invButtons[curInvButton].listOfMovements[0];
                         }
-                        if (InputManager.GetKey(Keys.K_DOWN, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_S, world) == KeyState.KEY_DOWN)
+                        if (InputManager.GetKey(Keys.K_DOWN) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_S) == KeyState.KEY_DOWN)
                         {
                             curInvButton += invButtons[curInvButton].listOfMovements[2];
                         }
-                        if (InputManager.GetKey(Keys.K_RIGHT, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_D, world) == KeyState.KEY_DOWN)
+                        if (InputManager.GetKey(Keys.K_RIGHT) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_D) == KeyState.KEY_DOWN)
                         {
                             curInvButton += invButtons[curInvButton].listOfMovements[1];
                         }
-                        if (InputManager.GetKey(Keys.K_LEFT, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_A, world) == KeyState.KEY_DOWN)
+                        if (InputManager.GetKey(Keys.K_LEFT) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_A) == KeyState.KEY_DOWN)
                         {
                             curInvButton += invButtons[curInvButton].listOfMovements[3];
                         }
@@ -154,26 +154,26 @@ namespace textured_raycast.maze
                         pageOffset = (int)Math.Floor(y / 5f);
                         y = y - pageOffset * 5;
 
-                        if (InputManager.GetKey(Keys.K_UP, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W, world) == KeyState.KEY_DOWN)
+                        if (InputManager.GetKey(Keys.K_UP) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W) == KeyState.KEY_DOWN)
                         {
-                            if (InputManager.GetKey(Keys.K_SHIFT, world) != KeyState.KEY_UP)
+                            if (InputManager.GetKey(Keys.K_SHIFT) != KeyState.KEY_UP)
                                 pageOffset = Math.Max(pageOffset-1, 0);
                             else
                                 y -= 1;
                             if (y == -1 && pageOffset == 0) y = 0;
                         }
-                        if (InputManager.GetKey(Keys.K_DOWN, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_S, world) == KeyState.KEY_DOWN)
+                        if (InputManager.GetKey(Keys.K_DOWN) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_S) == KeyState.KEY_DOWN)
                         {
-                            if (InputManager.GetKey(Keys.K_SHIFT, world) != KeyState.KEY_UP)
+                            if (InputManager.GetKey(Keys.K_SHIFT) != KeyState.KEY_UP)
                                 pageOffset += 1;
                             else
                                 y += 1;
                         }
-                        if (InputManager.GetKey(Keys.K_RIGHT, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_D, world) == KeyState.KEY_DOWN)
+                        if (InputManager.GetKey(Keys.K_RIGHT) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_D) == KeyState.KEY_DOWN)
                         {
                             x = Math.Min(x+1, 4);
                         }
-                        if (InputManager.GetKey(Keys.K_LEFT, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_A, world) == KeyState.KEY_DOWN)
+                        if (InputManager.GetKey(Keys.K_LEFT) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_A) == KeyState.KEY_DOWN)
                         {
                             if (x == 0)
                             {
@@ -209,55 +209,55 @@ namespace textured_raycast.maze
 
                     for (int xN = 0; xN < 5; xN++)
                         for (int yN = 0; yN < 5; yN++)
-                            if (world.player.inv.ContainsKey(xN + yN * 5 + pageOffset * 25))
-                                UIHolder.DrawTexture(ResourceManager.getTexture(Item.itemTextures[world.player.inv[xN + yN * 5 + pageOffset*25].imageID]), 59 + xN * 12, 19 + yN * 12);
+                            if (World.player.inv.ContainsKey(xN + yN * 5 + pageOffset * 25))
+                                UIHolder.DrawTexture(ResourceManager.getTexture(Item.itemTextures[World.player.inv[xN + yN * 5 + pageOffset*25].imageID]), 59 + xN * 12, 19 + yN * 12);
 
 
                     if (nowInv == -1)
                     {
                         UIHolder = invButtons[curInvButton].DrawOnBuffer(UIHolder);
-                        if (InputManager.GetKey(Keys.K_E, world) == KeyState.KEY_DOWN)
+                        if (InputManager.GetKey(Keys.K_E) == KeyState.KEY_DOWN)
                         {
-                            if (world.player.invSelectedSpot == -1)
+                            if (World.player.invSelectedSpot == -1)
                             {
-                                invButtons[curInvButton].onActivate(world);
+                                invButtons[curInvButton].onActivate();
 
-                                if (world.player.guiToEquipped.ContainsKey(curInvButton))
+                                if (World.player.guiToEquipped.ContainsKey(curInvButton))
                                 {
-                                    if (!(world.player.equipped[world.player.guiToEquipped[curInvButton]] is null))
+                                    if (!(World.player.equipped[World.player.guiToEquipped[curInvButton]] is null))
                                     {
-                                        world.player.addToInv(world.player.equipped[world.player.guiToEquipped[curInvButton]]);
+                                        World.player.addToInv(World.player.equipped[World.player.guiToEquipped[curInvButton]]);
 
-                                        world.player.equipped[world.player.guiToEquipped[curInvButton]].onUnEquip(ref world);
-                                        world.player.equipped[world.player.guiToEquipped[curInvButton]] = null;
+                                        World.player.equipped[World.player.guiToEquipped[curInvButton]].onUnEquip();
+                                        World.player.equipped[World.player.guiToEquipped[curInvButton]] = null;
                                     }
                                 }
                             }
                             else
                             {
-                                if (world.player.guiToEquipped.ContainsKey(curInvButton))
+                                if (World.player.guiToEquipped.ContainsKey(curInvButton))
                                 {
-                                    equipSlots es = world.player.guiToEquipped[curInvButton];
+                                    equipSlots es = World.player.guiToEquipped[curInvButton];
 
-                                    if (world.player.inv[world.player.invSelectedSpot].tags[es] == true)
+                                    if (World.player.inv[World.player.invSelectedSpot].tags[es] == true)
                                     {
-                                        if (world.player.equipped[es] is null)
+                                        if (World.player.equipped[es] is null)
                                         {
-                                            world.player.equipped[es] = world.player.inv[world.player.invSelectedSpot];
-                                            world.player.inv.Remove(world.player.invSelectedSpot);
+                                            World.player.equipped[es] = World.player.inv[World.player.invSelectedSpot];
+                                            World.player.inv.Remove(World.player.invSelectedSpot);
 
-                                            world.player.equipped[es].onEquip(ref world);
-                                            world.player.invSelectedSpot = -1;
+                                            World.player.equipped[es].onEquip();
+                                            World.player.invSelectedSpot = -1;
                                         }
                                         else
                                         {
-                                            Item i = world.player.equipped[es];
-                                            world.player.equipped[es] = world.player.inv[world.player.invSelectedSpot];
-                                            world.player.inv[nowInv] = i;
+                                            Item i = World.player.equipped[es];
+                                            World.player.equipped[es] = World.player.inv[World.player.invSelectedSpot];
+                                            World.player.inv[nowInv] = i;
 
-                                            world.player.equipped[es].onEquip(ref world);
-                                            world.player.inv[nowInv].onUnEquip(ref world);
-                                            world.player.invSelectedSpot = -1;
+                                            World.player.equipped[es].onEquip();
+                                            World.player.inv[nowInv].onUnEquip();
+                                            World.player.invSelectedSpot = -1;
                                         }
                                     }
                                 }
@@ -266,32 +266,32 @@ namespace textured_raycast.maze
                     }
                     else
                     {
-                        if (world.player.inv.ContainsKey(nowInv))
-                            GUI.GUI.text(ref UIHolder, ref world, world.player.inv[nowInv].name, 58, 3, 59);
+                        if (World.player.inv.ContainsKey(nowInv))
+                            GUI.GUI.text(ref UIHolder, World.player.inv[nowInv].name, 58, 3, 59);
 
                         UIHolder = new PlaceHolder(58 + x * 12, 18 + y * 12, 11, 11, new int[] { }).DrawOnBuffer(UIHolder);
 
-                        if (InputManager.GetKey(Keys.K_E, world) == KeyState.KEY_DOWN)
+                        if (InputManager.GetKey(Keys.K_E) == KeyState.KEY_DOWN)
                         {
-                            if (world.player.invSelectedSpot == -1)
+                            if (World.player.invSelectedSpot == -1)
                             {
-                                if (world.player.inv.ContainsKey(nowInv))
-                                    world.player.invSelectedSpot = nowInv;
+                                if (World.player.inv.ContainsKey(nowInv))
+                                    World.player.invSelectedSpot = nowInv;
                             }
                             else
                             {
-                                if (!world.player.inv.ContainsKey(nowInv))
+                                if (!World.player.inv.ContainsKey(nowInv))
                                 {
-                                    world.player.inv[nowInv] = world.player.inv[world.player.invSelectedSpot];
-                                    world.player.inv.Remove(world.player.invSelectedSpot);
-                                    world.player.invSelectedSpot = -1;
+                                    World.player.inv[nowInv] = World.player.inv[World.player.invSelectedSpot];
+                                    World.player.inv.Remove(World.player.invSelectedSpot);
+                                    World.player.invSelectedSpot = -1;
                                 }
                                 else
                                 {
-                                    Item i = world.player.inv[nowInv];
-                                    world.player.inv[nowInv] = world.player.inv[world.player.invSelectedSpot];
-                                    world.player.inv[world.player.invSelectedSpot] = i;
-                                    world.player.invSelectedSpot = -1;
+                                    Item i = World.player.inv[nowInv];
+                                    World.player.inv[nowInv] = World.player.inv[World.player.invSelectedSpot];
+                                    World.player.inv[World.player.invSelectedSpot] = i;
+                                    World.player.invSelectedSpot = -1;
                                 }
                             }
                         }
@@ -299,15 +299,15 @@ namespace textured_raycast.maze
 
                     for (int i = 0; i < invButtons.Length; i++)
                     {
-                        if (world.player.guiToEquipped.ContainsKey(i))
+                        if (World.player.guiToEquipped.ContainsKey(i))
                         {
-                            if (!(world.player.equipped[world.player.guiToEquipped[i]] is null))
-                                UIHolder.DrawTexture(ResourceManager.getTexture(Item.itemTextures[world.player.equipped[world.player.guiToEquipped[i]].imageID]), invButtons[i].x+1, invButtons[i].y+1);
+                            if (!(World.player.equipped[World.player.guiToEquipped[i]] is null))
+                                UIHolder.DrawTexture(ResourceManager.getTexture(Item.itemTextures[World.player.equipped[World.player.guiToEquipped[i]].imageID]), invButtons[i].x+1, invButtons[i].y+1);
                         }
                     }
 
                     int loop = 0;
-                    for (int hp = 0; hp < world.player.hp; hp++)
+                    for (int hp = 0; hp < World.player.hp; hp++)
                     {
                         if (hp - loop * 36 == 36)
                             loop++;
@@ -319,7 +319,7 @@ namespace textured_raycast.maze
                     }
 
                     loop = 0;
-                    for (int dam = 0; dam < world.player.dam; dam++)
+                    for (int dam = 0; dam < World.player.dam; dam++)
                     {
                         if (dam - loop * 36 == 36)
                             loop++;
@@ -331,7 +331,7 @@ namespace textured_raycast.maze
                     }
 
                     loop = 0;
-                    for (int mag = 0; mag < world.player.mag; mag++)
+                    for (int mag = 0; mag < World.player.mag; mag++)
                     {
                         if (mag - loop * 36 == 36)
                             loop++;
@@ -346,7 +346,7 @@ namespace textured_raycast.maze
                     engine.SwapBuffers();
                 }
 
-                while (world.state == states.Skills)
+                while (World.state == states.Skills)
                 {
                     UIHolder.Clear();
 
@@ -354,33 +354,33 @@ namespace textured_raycast.maze
                         for (int y = 0; y < 80; y++)
                             UIHolder.DrawPixel(new TexColor(198, 132, 68), x, y);
 
-                    if (InputManager.GetKey(Keys.K_UP, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W, world) == KeyState.KEY_DOWN)
+                    if (InputManager.GetKey(Keys.K_UP) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W) == KeyState.KEY_DOWN)
                     {
                         curSkillButton += skillButtons[curSkillButton].listOfMovements[0];
                     }
-                    if (InputManager.GetKey(Keys.K_DOWN, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_S, world) == KeyState.KEY_DOWN)
+                    if (InputManager.GetKey(Keys.K_DOWN) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_S) == KeyState.KEY_DOWN)
                     {
                         curSkillButton += skillButtons[curSkillButton].listOfMovements[2];
                     }
-                    if (InputManager.GetKey(Keys.K_RIGHT, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_D, world) == KeyState.KEY_DOWN)
+                    if (InputManager.GetKey(Keys.K_RIGHT) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_D) == KeyState.KEY_DOWN)
                     {
                         curSkillButton += skillButtons[curSkillButton].listOfMovements[1];
                     }
-                    if (InputManager.GetKey(Keys.K_LEFT, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_A, world) == KeyState.KEY_DOWN)
+                    if (InputManager.GetKey(Keys.K_LEFT) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_A) == KeyState.KEY_DOWN)
                     {
                         curSkillButton += skillButtons[curSkillButton].listOfMovements[3];
                     }
-                    if (InputManager.GetKey(Keys.K_E, world) == KeyState.KEY_DOWN)
+                    if (InputManager.GetKey(Keys.K_E) == KeyState.KEY_DOWN)
                     {
-                        skillButtons[curSkillButton].onActivate(world);
+                        skillButtons[curSkillButton].onActivate();
                     }
-                    if (InputManager.GetKey(Keys.K_ESC, world) == KeyState.KEY_DOWN)
+                    if (InputManager.GetKey(Keys.K_ESC) == KeyState.KEY_DOWN)
                     {
                         curSkillButton = 12;
-                        world.state = states.Inventory;
+                        World.state = states.Inventory;
                     }
 
-                    UIHolder.DrawTexture(ResourceManager.getTexture(world.textures[104]), 60 - skillButtons[curSkillButton].x - skillButtons[curSkillButton].w / 2, 40 - skillButtons[curSkillButton].y - skillButtons[curSkillButton].w / 2);
+                    UIHolder.DrawTexture(ResourceManager.getTexture(World.textures[104]), 60 - skillButtons[curSkillButton].x - skillButtons[curSkillButton].w / 2, 40 - skillButtons[curSkillButton].y - skillButtons[curSkillButton].w / 2);
 
 
                     for (int x = 1; x < 26; x++)
@@ -405,41 +405,41 @@ namespace textured_raycast.maze
                         i++;
                     }
 
-                    GUI.GUI.text(ref UIHolder, ref world, "the quick brown fox jumps over the lazy dog", 1, 1, 120);
+                    GUI.GUI.text(ref UIHolder, "the quick brown fox jumps over the lazy dog", 1, 1, 120);
                     engine.DrawConBuffer(UIHolder);
                     engine.SwapBuffers();
                 }
 
-                while (world.state == states.Paused)
+                while (World.state == states.Paused)
                 {
                     UIHolder.Clear();
 
-                    GUI.GUI.pauseGUI(ref UIHolder, ref world);
+                    GUI.GUI.pauseGUI(ref UIHolder);
 
                     engine.DrawConBuffer(game.mixBuffer(UIHolder));
                     engine.SwapBuffers();
                 }
 
-                world.lastFrameTime = DateTime.Now.Ticks;
-                while (world.state == states.Game)
+                World.lastFrameTime = DateTime.Now.Ticks;
+                while (World.state == states.Game)
                 {
-                    world.dt = (float)(DateTime.Now.Ticks - world.lastFrameTime)/TimeSpan.TicksPerSecond;
-                    world.lastFrameTime = DateTime.Now.Ticks;
+                    World.dt = (float)(DateTime.Now.Ticks - World.lastFrameTime)/TimeSpan.TicksPerSecond;
+                    World.lastFrameTime = DateTime.Now.Ticks;
 
                     // Make time pass
-                    world.dayTime += world.dt / 60; // 60 = 1 whole day = 60 sec
-                    if (world.dayTime > 1) world.dayTime--;
+                    World.dayTime += World.dt / 60; // 60 = 1 whole day = 60 sec
+                    if (World.dayTime > 1) World.dayTime--;
 
-                    if (InputManager.GetKey(Keys.K_SHIFT, world) == KeyState.KEY_UP){
-                        world.staminaLVL = MathF.Min(world.staminaLVL + world.dt/4, 1);
+                    if (InputManager.GetKey(Keys.K_SHIFT) == KeyState.KEY_UP){
+                        World.staminaLVL = MathF.Min(World.staminaLVL + World.dt/4, 1);
                     }
 
                     // make sure it knows what map its on
-                    map = world.getMapByID(world.currentMap);
+                    map = World.getMapByID(World.currentMap);
                     visRange = map.useSkybox ? 1 : 25;
 
-                    pos = world.plrPos;
-                    dir = world.plrRot;
+                    pos = World.plrPos;
+                    dir = World.plrRot;
 
                     //DrawSkybox(ref game, dir, textures[1]);
 
@@ -449,8 +449,8 @@ namespace textured_raycast.maze
 
                     foreach (Sprite sprite in map.sprites)
                     {
-                        sprite.Update(ref world, world.dt);
-                        sprite.updateAnimation(world.dt);
+                        sprite.Update(World.dt);
+                        sprite.updateAnimation(World.dt);
 
                         double distance = pos.DistTo(sprite.getPos());
                         // Console.WriteLine(distance + " : " + sprite.canInteract);
@@ -458,7 +458,7 @@ namespace textured_raycast.maze
                         {
                             if (sprite.autoInteract)
                             {
-                                sprite.Activate(ref world);
+                                sprite.Activate();
                             }
                             else
                             {
@@ -469,11 +469,11 @@ namespace textured_raycast.maze
                     }
 
                     if (spriteToInteract != null)
-                        world.interactMessage = spriteToInteract.ActivateMessage();
+                        World.interactMessage = spriteToInteract.ActivateMessage();
                     else
-                        world.interactMessage = "";
+                        World.interactMessage = "";
 
-                    string toSend = world.currentMessage == "" ? world.interactMessage : world.currentMessage;
+                    string toSend = World.currentMessage == "" ? World.interactMessage : World.currentMessage;
 
                     //Clear the UI buffer
                     UIHolder.Clear();
@@ -481,13 +481,13 @@ namespace textured_raycast.maze
                     // Add text-box to UI buffer if there is a string that should go in it.
                     if (toSend != "")
                     {
-                        GUI.GUI.texBox(ref UIHolder, ref world, toSend);
+                        GUI.GUI.texBox(ref UIHolder, toSend);
                     }
 
                     // Draw the stamina bar in the UI Buffer
                     for (int i = 0; i < 78; i++)
                     {
-                        if (world.staminaLVL > (float)i / 78)
+                        if (World.staminaLVL > (float)i / 78)
                         {
                             UIHolder.DrawPixel(new TexColor(0, 155, 0), 117, 1 + i);
                             UIHolder.DrawPixel(new TexColor(0, 155, 0), 118, 1 + i);
@@ -495,18 +495,18 @@ namespace textured_raycast.maze
                     }
 
                     // Do the floor/ceiling casting.
-                    FloorCasting.FloorCast(ref FloorAndRoof, dir, plane, pos, visRange, map, world, world.textures);
+                    FloorCasting.FloorCast(ref FloorAndRoof, dir, plane, pos, visRange);
                     game.DrawTexture(FloorAndRoof, 0, 0);
 
                     // Do the wall casting
-                    WallCasting.WallCast(ref game, ref ZBuffer, dir, plane, pos, visRange, map, world.textures);
+                    WallCasting.WallCast(ref game, ref ZBuffer, dir, plane, pos, visRange);
 
                     // draw sprites
-                    SpriteCasting.SpriteCast(ref game, map.sprites, pos, plane, dir, ZBuffer, visRange, map, ref world);
+                    SpriteCasting.SpriteCast(ref game, map.sprites, pos, plane, dir, ZBuffer, visRange, map);
 
                     engine.DrawConBuffer(game.mixBuffer(UIHolder));
                     engine.SwapBuffers();
-                    HandleInputGame(ref world, map, pos, ref dir, ref plane, ref spriteToInteract);
+                    HandleInputGame(map, pos, ref dir, ref plane, ref spriteToInteract);
                 }
             }
 
@@ -528,30 +528,30 @@ namespace textured_raycast.maze
             });
         }
 
-        public static void HandleInputGame(ref World world, Map map, Vector2d pos, ref Vector2d dir, ref Vector2d plane, ref Sprite spriteToInteract) {
-            double rotSpeed = world.dt*0.8;
+        public static void HandleInputGame(Map map, Vector2d pos, ref Vector2d dir, ref Vector2d plane, ref Sprite spriteToInteract) {
+            double rotSpeed = World.dt*0.8;
 
             // Multiplied with movement speed, during collision check,
             // forcing the player to stay slightly further away from
             // walls.
 
-            if (InputManager.GetKey(Keys.K_UP, world) != KeyState.KEY_UP || InputManager.GetKey(Keys.K_W, world) != KeyState.KEY_UP)
+            if (InputManager.GetKey(Keys.K_UP) != KeyState.KEY_UP || InputManager.GetKey(Keys.K_W) != KeyState.KEY_UP)
             {
-                moveInDir(ref world, ref map, ref pos, dir);
+                moveInDir(ref map, ref pos, dir);
             }
-            if (InputManager.GetKey(Keys.K_DOWN, world) != KeyState.KEY_UP || InputManager.GetKey(Keys.K_S, world) != KeyState.KEY_UP)
+            if (InputManager.GetKey(Keys.K_DOWN) != KeyState.KEY_UP || InputManager.GetKey(Keys.K_S) != KeyState.KEY_UP)
             {
-                moveInDir(ref world, ref map, ref pos, dir * -1);
+                moveInDir(ref map, ref pos, dir * -1);
             }
-            if (InputManager.GetKey(Keys.K_D, world) != KeyState.KEY_UP)
+            if (InputManager.GetKey(Keys.K_D) != KeyState.KEY_UP)
             {
-                moveInDir(ref world, ref map, ref pos, new Vector2d(-dir.y, dir.x) * -1);
+                moveInDir(ref map, ref pos, new Vector2d(-dir.y, dir.x) * -1);
             }
-            if (InputManager.GetKey(Keys.K_A, world) != KeyState.KEY_UP)
+            if (InputManager.GetKey(Keys.K_A) != KeyState.KEY_UP)
             {
-                moveInDir(ref world, ref map, ref pos, new Vector2d(-dir.y, dir.x));
+                moveInDir(ref map, ref pos, new Vector2d(-dir.y, dir.x));
             }
-            if (InputManager.GetKey(Keys.K_RIGHT, world) != KeyState.KEY_UP)
+            if (InputManager.GetKey(Keys.K_RIGHT) != KeyState.KEY_UP)
             {
                 // Use too much math, to calculate the direction unit vector.
                 double oldDirX = dir.x;
@@ -562,7 +562,7 @@ namespace textured_raycast.maze
                 plane.x = plane.x * Math.Cos(-rotSpeed) - plane.y * Math.Sin(-rotSpeed);
                 plane.y = oldPlaneX * Math.Sin(-rotSpeed) + plane.y * Math.Cos(-rotSpeed);
             }
-            if (InputManager.GetKey(Keys.K_LEFT, world) != KeyState.KEY_UP)
+            if (InputManager.GetKey(Keys.K_LEFT) != KeyState.KEY_UP)
             {
                 // Use too much math, to calculate the direction unit vector.
                 double oldDirX = dir.x;
@@ -573,37 +573,37 @@ namespace textured_raycast.maze
                 plane.x = plane.x * Math.Cos(rotSpeed) - plane.y * Math.Sin(rotSpeed);
                 plane.y = oldPlaneX * Math.Sin(rotSpeed) + plane.y * Math.Cos(rotSpeed);
             }
-            if (InputManager.GetKey(Keys.K_E, world) == KeyState.KEY_DOWN)
+            if (InputManager.GetKey(Keys.K_E) == KeyState.KEY_DOWN)
             {
-                world.dayTime += 0.05f;
-                if (world.dayTime > 1)
-                    world.dayTime -= 1;
+                World.dayTime += 0.05f;
+                if (World.dayTime > 1)
+                    World.dayTime -= 1;
 
                 if (spriteToInteract != null)
-                    spriteToInteract.Activate(ref world);
+                    spriteToInteract.Activate();
             }
-            if (InputManager.GetKey(Keys.K_ESC, world) == KeyState.KEY_DOWN)
+            if (InputManager.GetKey(Keys.K_ESC) == KeyState.KEY_DOWN)
             {
                 GUI.GUI.pauseUIIndex = 1;
-                world.state = states.Paused;
+                World.state = states.Paused;
             }
 
-            if (InputManager.GetKey(Keys.K_LCTRL, world) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_RCTRL, world) == KeyState.KEY_DOWN)
+            if (InputManager.GetKey(Keys.K_LCTRL) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_RCTRL) == KeyState.KEY_DOWN)
             {
-                map.sprites.Add(new Fireball(world.plrPos.x, world.plrPos.y, 8, 6, $"100 {(int)(dir.x*1000)} {(int)(dir.y*1000)}"));
+                map.sprites.Add(new Fireball(World.plrPos.x, World.plrPos.y, 8, 6, $"100 {(int)(dir.x*1000)} {(int)(dir.y*1000)}"));
                 map.lightPoitions.Add(map.sprites.Count - 1);
             }
         }
 
-        public static void moveInDir(ref World world, ref Map map, ref Vector2d pos, Vector2d dir)
+        public static void moveInDir(ref Map map, ref Vector2d pos, Vector2d dir)
         {
-            double movSpeed = world.dt * ((InputManager.GetKey(Keys.K_SHIFT, world) != KeyState.KEY_UP && world.staminaLVL > 0) ? 2 : 1);
+            double movSpeed = World.dt * ((InputManager.GetKey(Keys.K_SHIFT) != KeyState.KEY_UP && World.staminaLVL > 0) ? 2 : 1);
 
-            if (InputManager.GetKey(Keys.K_SHIFT, world) != KeyState.KEY_UP && world.staminaLVL > 0)
+            if (InputManager.GetKey(Keys.K_SHIFT) != KeyState.KEY_UP && World.staminaLVL > 0)
             {
-                world.staminaLVL -= world.dt / 2;
-                if (world.staminaLVL < 0)
-                    world.staminaLVL = -0.2f;
+                World.staminaLVL -= World.dt / 2;
+                if (World.staminaLVL < 0)
+                    World.staminaLVL = -0.2f;
             }
 
             float extraColDistMult = 1f;
@@ -620,8 +620,8 @@ namespace textured_raycast.maze
             if (!cellX.isWall) pos.x += dir.x * movSpeed;
             if (!cellY.isWall) pos.y += dir.y * movSpeed;
 
-            cellX.Collide(ref world);
-            cellY.Collide(ref world);
+            cellX.Collide();
+            cellY.Collide();
         }
 
 

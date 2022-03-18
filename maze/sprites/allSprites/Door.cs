@@ -19,9 +19,9 @@ namespace textured_raycast.maze.sprites.allSprites
             doRender = false;
         }
 
-        public override void Activate(ref World world)
+        public override void Activate()
         {
-            world.getMapByID(extraEffects[0]).openDoor(ref world, extraEffects[0], extraEffects[1]);
+            World.getMapByID(extraEffects[0]).openDoor(extraEffects[0], extraEffects[1]);
         }
 
         public override string ActivateMessage()

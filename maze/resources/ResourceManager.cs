@@ -33,13 +33,13 @@ namespace textured_raycast.maze.resources
             return tex;
         }
 
-        public static Map getMap(string path, World world)
+        public static Map getMap(string path)
         {
             Map map;
             bool exists = cachedMaps.TryGetValue(path, out map);
             if (!exists)
             {
-                map = new Map(path, world);
+                map = new Map(path);
                 cachedMaps.Add(path, map);
             }
 

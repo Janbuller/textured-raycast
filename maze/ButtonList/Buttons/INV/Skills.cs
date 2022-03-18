@@ -9,9 +9,9 @@ namespace rpg_game.maze.ButtonList.Buttons.INV
     {
         public Skills(int x, int y, int w, int h, int[] list) : base(x, y, w, h, list) {}
 
-        public override void onActivate(World world)
+        public override void onActivate()
         {
-            world.state = states.Skills;
+            World.state = states.Skills;
         }
     }
 }

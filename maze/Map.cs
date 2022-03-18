@@ -31,8 +31,6 @@ namespace textured_raycast.maze
         public Vector2d playerStartPos;
         public Vector2d playerStartRot;
 
-        public World world;
-
         public float lightMix = 0.7f;
 
         private Dictionary<int, Type> spriteTypes = new Dictionary<int, Type>(){
@@ -48,10 +46,8 @@ namespace textured_raycast.maze
 
         public bool useSkybox = true;
 
-        public Map(string location, World world)
+        public Map(string location)
         {
-            this.world = world;
-
             string[] imageData = File.ReadAllLines(location);
 
             int reqWidth;
@@ -178,11 +174,11 @@ namespace textured_raycast.maze
                 return roof[x + y * width].wallID;
         }
 
-        public void openDoor(ref World world, int myID, int doorID)
+        public void openDoor(int myID, int doorID)
         {
             resetSprites();
-            world.currentMap = myID;
-            world.plrPos = new Vector2d(doorPositions[doorID].x, doorPositions[doorID].y);
+            World.currentMap = myID;
+            World.plrPos = new Vector2d(doorPositions[doorID].x, doorPositions[doorID].y);
         }
 
         public void resetSprites()

@@ -19,9 +19,9 @@ namespace textured_raycast.maze.sprites.allSprites
                 extraEffects.Add(0);
         }
 
-        public override void Activate(ref World world)
+        public override void Activate()
         {
-            world.currentMessage = TextHolder.Text[extraEffects[0]][extraEffects[1]];
+            World.currentMessage = TextHolder.Text[extraEffects[0]][extraEffects[1]];
             extraEffects[1]++;
             if (TextHolder.Text[extraEffects[0]].Count == extraEffects[1])
                 extraEffects[1]--;

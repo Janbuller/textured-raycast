@@ -27,18 +27,18 @@ namespace textured_raycast.maze.sprites.allSprites
             autoInteract = true;
         }
 
-        public override void Activate(ref World world)
+        public override void Activate()
         {
-            world.startFight(this);
+            World.startFight(this);
         }
 
-        public override void Update(ref World world, float dt)
+        public override void Update(float dt)
         {
-            double dist = world.plrPos.DistTo(pos);
+            double dist = World.plrPos.DistTo(pos);
 
             if (dist < chaseDistance)
             {
-                Vector2d vDist = world.plrPos - pos;
+                Vector2d vDist = World.plrPos - pos;
                 vDist.Normalize();
 
                 pos += vDist * dt*1.42; // 1.42 so that its a little faster than the player, (the player can straphe giving him/her like 1.41 movementspeed)

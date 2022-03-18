@@ -31,19 +31,19 @@ namespace textured_raycast.maze.sprites.allSprites
             autoInteract = true;
         }
 
-        public override void Activate(ref World world)
+        public override void Activate()
         {
-            world.plrPos += new Vector2d(extraEffects[0], extraEffects[1]);
+            World.plrPos += new Vector2d(extraEffects[0], extraEffects[1]);
         }
 
-        public override void UpdateOnDraw(ref World world, double distToPlayer)
+        public override void UpdateOnDraw(double distToPlayer)
         {
             Texture startTex = ResourceManager.getTexture(IDTextureCorrespondence[texID][0]);
             portalTex = new Texture(startTex);
-            Map curMap = world.getMapByID(world.currentMap);
+            Map curMap = World.getMapByID(World.currentMap);
 
             Vector2d portalLocOffset = new Vector2d(extraEffects[0], extraEffects[1]);
-            Vector2d tpToLoc = world.plrPos + portalLocOffset;
+            Vector2d tpToLoc = World.plrPos + portalLocOffset;
 
             if(tpToLoc.x > curMap.Width-1 || tpToLoc.x < 1 || tpToLoc.y > curMap.Height-1 || tpToLoc.y < 1) {
                 // for(int y = 0; y < portalTex.width; y++) {
@@ -57,14 +57,14 @@ namespace textured_raycast.maze.sprites.allSprites
                 tpToLoc = getPos() + portalLocOffset;
             }
 
-            Vector2d dir = world.plrRot;
+            Vector2d dir = World.plrRot;
             Vector2d plane = new Vector2d(dir.y, -dir.x) * 0.66;
 
             Texture FloorAndRoof = new Texture(portalTex.width, portalTex.height);
-            FloorCasting.FloorCast(ref FloorAndRoof, dir, plane, pos, 1, curMap, world, world.textures);
+            FloorCasting.FloorCast(ref FloorAndRoof, dir, plane, pos, 1);
 
             for(int x = 0; x < portalTex.width; x++) {
-                WallCasting.WallcastReturn wcr = WallCasting.DoOneWallcast(x, portalTex.width, portalTex.height, curMap.GetLights(), dir, plane, tpToLoc, 1, curMap, world.textures);
+                WallCasting.WallcastReturn wcr = WallCasting.DoOneWallcast(x, portalTex.width, portalTex.height, curMap.GetLights(), dir, plane, tpToLoc, 1);
                 int LineHeight = (int)((portalTex.height * 2) / (wcr.PerpWallDist + 1/distToPlayer));
 
                 if (wcr.HitWall.doDraw) {

@@ -31,27 +31,27 @@ namespace rpg_game.maze.Fight
 
         }
 
-        public void renderFightToBuffer(ref ConsoleBuffer buffer, ref World world)
+        public void renderFightToBuffer(ref ConsoleBuffer buffer)
         {
             Vector2d dir = new Vector2d(-1, 0);
             Vector2d pos = new Vector2d(3.65, 2);
             Vector2d plane = new Vector2d(0, 1) * 0.66;
-            Map map = world.getMapByID(mapID);
+            Map map = World.getMapByID(mapID);
 
             Texture FloorAndRoof = new Texture(buffer.Width, buffer.Height);
-            FloorCasting.FloorCast(ref FloorAndRoof, dir, plane, pos, 1, map, world, world.textures);
+            FloorCasting.FloorCast(ref FloorAndRoof, dir, plane, pos, 1);
             buffer.DrawTexture(FloorAndRoof, 0, 0);
 
             double[] ZBuffer = new double[buffer.Width];
 
-            WallCasting.WallCast(ref buffer, ref ZBuffer, dir, plane, pos, 1, map, world.textures);
+            WallCasting.WallCast(ref buffer, ref ZBuffer, dir, plane, pos, 1);
 
             foreach (Sprite sprite in sprites)
             {
-                sprite.updateAnimation(world.dt);
+                sprite.updateAnimation(World.dt);
             }
 
-            SpriteCasting.SpriteCast(ref buffer, sprites, pos, plane, dir, ZBuffer, 1, map, ref world);
+            SpriteCasting.SpriteCast(ref buffer, sprites, pos, plane, dir, ZBuffer, 1, map);
         }
 
         public void renderFightStartScreenToBuffer(ref ConsoleBuffer buffer, float progress)

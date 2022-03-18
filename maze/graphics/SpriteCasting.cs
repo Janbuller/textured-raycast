@@ -18,7 +18,7 @@ namespace textured_raycast.maze.graphics
 {
     class SpriteCasting
     {
-        public static void SpriteCast(ref ConsoleBuffer game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange, Map map, ref World world)
+        public static void SpriteCast(ref ConsoleBuffer game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange, Map map)
         {
             ILight[] lights = map.GetLights();
 
@@ -139,7 +139,7 @@ namespace textured_raycast.maze.graphics
 
                     if (transformed.y < ZBuffer[x])
                     {
-                        curSpr.UpdateOnDraw(ref world, transformed.y);
+                        curSpr.UpdateOnDraw(transformed.y);
                         TexColor mixedLight = new TexColor(255, 255, 255);
                         Vector2d newPlane = ((plane * -1) + ((plane * 2)) / (endX - startX) * (x - startX));
 
@@ -147,14 +147,14 @@ namespace textured_raycast.maze.graphics
                         if (lights.Count() < 0)
                             mixedLight = LightDistHelpers.MixLightDist(lightDists);
 
-                        // if(world.dayTime > 0.5f) {
+                        // if(World.dayTime > 0.5f) {
                         //     darken *= 0.6f;
                         // } else {
                         //     Vector2d realPosAbove = new Vector2d(curSpr.pos.x, curSpr.pos.y);
 
                         //     const float offset = 20;
                         //     realPosAbove.x += 0.1;
-                        //     realPosAbove.y += world.dayTime * offset - offset/4;
+                        //     realPosAbove.y += World.dayTime * offset - offset/4;
                         //     Vector2i cellPosAbove = (Vector2i)realPosAbove;
                         //     if(map.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0 || map.IsWall(cellPosAbove.x, cellPosAbove.y))
                         //         darken *= 0.6f;

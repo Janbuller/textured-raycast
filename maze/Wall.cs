@@ -21,11 +21,11 @@
                 doDraw = false;
         }
 
-        public void Collide(ref World world)
+        public void Collide()
         {
             if (wallID == -1)
             {
-                world.currentMessage = "Your inner desires compel you to stay.";
+                World.currentMessage = "Your inner desires compel you to stay.";
             }
         }
     }

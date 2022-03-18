@@ -18,8 +18,10 @@ namespace textured_raycast.maze.graphics
 {
     class WallCasting
     {
-        public static void WallCast(ref ConsoleBuffer game, ref double[] ZBuffer, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, Dictionary<int, string> textures)
+        public static void WallCast(ref ConsoleBuffer game, ref double[] ZBuffer, Vector2d dir, Vector2d plane, Vector2d pos, float visRange)
         {
+            Map map = World.getMapByID(World.currentMap);
+            Dictionary<int, string> textures = World.textures;
 
             int width = game.Width;
             int height = game.Height;
@@ -41,7 +43,7 @@ namespace textured_raycast.maze.graphics
             //                  });
 
             for (int x = 0; x < game.Width; x++) {
-                casted[x] = DoOneWallcast(x, width, height, lights, dir, plane, pos, visRange, map, textures);
+                casted[x] = DoOneWallcast(x, width, height, lights, dir, plane, pos, visRange);
                 WallcastReturn cast = casted[x];
                 // Draw the ray.
                 if (cast.HitWall.doDraw) {
@@ -73,7 +75,11 @@ namespace textured_raycast.maze.graphics
             }
         }
 
-        public static WallcastReturn DoOneWallcast(int x, int width, int height, ILight[] lights, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, Map map, Dictionary<int, string> textures, double alreadyDist = 0, int recurseCount = 0) {
+        public static WallcastReturn DoOneWallcast(int x, int width, int height, ILight[] lights, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, double alreadyDist = 0, int recurseCount = 0) {
+
+            Map map = World.getMapByID(World.currentMap);
+            Dictionary<int, string> textures = World.textures;
+
             // The current x-coordinate on the camera viewport "plane"
             // (line), corresponding to the current viewspace
             // x-coordinate.
@@ -235,7 +241,7 @@ namespace textured_raycast.maze.graphics
                 pos.y + perpWallDist * rayDir.y
             );
 
-            if(map.world.dayTime > 0.5f) {
+            if(World.dayTime > 0.5f) {
                 darken *= 0.6f;
             } else {
                 Vector2d realPosAbove = new Vector2d(hitPos.x + 0.1, hitPos.y);
@@ -250,7 +256,7 @@ namespace textured_raycast.maze.graphics
                     newDir = new Vector2d(-dir.x, dir.y);
                 else
                     newDir = new Vector2d(dir.x, -dir.y);
-                return DoOneWallcast(x, width, height, lights, newDir, plane, hitPos, visRange, map, textures, perpWallDist + alreadyDist, recurseCount+1);
+                return DoOneWallcast(x, width, height, lights, newDir, plane, hitPos, visRange, perpWallDist + alreadyDist, recurseCount+1);
             }
             // Do Lighting
             // ===========

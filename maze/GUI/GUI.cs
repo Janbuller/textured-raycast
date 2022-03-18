@@ -23,13 +23,13 @@ namespace textured_raycast.maze.GUI
 
         public static int pauseUIIndex = 1;
 
-        public static void pauseGUI(ref ConsoleBuffer guiBuffer, ref World world)
+        public static void pauseGUI(ref ConsoleBuffer guiBuffer)
         {
             guiBuffer.DrawTexture(GUITextures[pauseUIIndex + 3], 10, 10, new TexColor(0, 0, 0));
 
-            HandleInputUI(ref world);
+            HandleInputUI();
         }
-        public static void text(ref ConsoleBuffer guiBuffer, ref World world, string toSend, int x, int y, int w)
+        public static void text(ref ConsoleBuffer guiBuffer, string toSend, int x, int y, int w)
         {
             Vector2i start = new Vector2i(x, y);
 
@@ -46,7 +46,7 @@ namespace textured_raycast.maze.GUI
             }
         }
 
-        public static void texBox(ref ConsoleBuffer guiBuffer, ref World world, string toSend)
+        public static void texBox(ref ConsoleBuffer guiBuffer, string toSend)
         {
             Vector2i start = new Vector2i(0, 0);
             int texToUse = 0;
@@ -86,26 +86,26 @@ namespace textured_raycast.maze.GUI
                 UIHolder.DrawTexture(GUIText[charPosition], x, y, new TexColor(0, 0, 0));
         }
 
-        public static void HandleInputUI(ref World world)
+        public static void HandleInputUI()
         {
             if (InputManager.GetKey(Keys.K_E) == KeyState.KEY_DOWN)
             {
                 switch (pauseUIIndex)
                 {
                     case 1:
-                        world.state = states.Inventory;
+                        World.state = states.Inventory;
                         break;
                     case 2:
-                        world.state = states.Settings;
+                        World.state = states.Settings;
                         break;
                     case 3:
-                        world.state = states.Stopping;
+                        World.state = states.Stopping;
                         break;
                 }
             }
             if (InputManager.GetKey(Keys.K_ESC) == KeyState.KEY_DOWN)
             {
-                world.state = states.Game;
+                World.state = states.Game;
             }
             if (InputManager.GetKey(Keys.K_UP) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W) == KeyState.KEY_DOWN)
             {

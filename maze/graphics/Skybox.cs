@@ -22,12 +22,12 @@ namespace textured_raycast.maze.graphics
         // Draws the skybox to the top half of the game screen. This isn't very
         // optimized, and shouldn't be used, as it draws to pixels, that will
         // later be drawn over.
-        public static void DrawSkybox(ref ConsoleBuffer game, Vector2d dir, Texture skyboxTex, World world) {
+        public static void DrawSkybox(ref ConsoleBuffer game, Vector2d dir, Texture skyboxTex) {
             int winHeight = game.Height;
 
             for(int y = 0; y < game.Height / 2; y++) {
                 for(int x = 0; x < game.Width; x++) {
-                    var pix = GetSkyboxPixel(winHeight, dir, skyboxTex, x, y, world.dayTime);
+                    var pix = GetSkyboxPixel(winHeight, dir, skyboxTex, x, y, World.dayTime);
                     game.DrawPixel(pix, x, y);
                 }
             }

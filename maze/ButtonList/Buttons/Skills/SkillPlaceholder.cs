@@ -24,7 +24,7 @@ namespace rpg_game.maze.ButtonList.Buttons.Skills
         {
         }
 
-        override public void onActivate(World world)
+        override public void onActivate()
         {
 	    
         }

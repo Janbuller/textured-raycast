@@ -29,18 +29,18 @@ namespace rpg_game.maze
         public int addDAM = 0;
         public int addMAG = 0;
 
-        public void onEquip(ref World world)
+        public void onEquip()
         {
-            world.player.hp += addHP;
-            world.player.dam += addDAM;
-            world.player.mag += addMAG;
+            World.player.hp += addHP;
+            World.player.dam += addDAM;
+            World.player.mag += addMAG;
         }
 
-        public void onUnEquip(ref World world)
+        public void onUnEquip()
         {
-            world.player.hp -= addHP;
-            world.player.dam -= addDAM;
-            world.player.mag -= addMAG;
+            World.player.hp -= addHP;
+            World.player.dam -= addDAM;
+            World.player.mag -= addMAG;
         }
     }
 }

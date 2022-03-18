@@ -122,17 +122,17 @@ namespace textured_raycast.maze.sprites
             return ResourceManager.getTexture(IDTextureCorrespondence[texID][curTexture]);
         }
 
-        virtual public void Activate(ref World world)
+        virtual public void Activate()
         {
 
         }
 
-        virtual public void Update(ref World world, float dt)
+        virtual public void Update(float dt)
         {
 
         }
 
-        virtual public void UpdateOnDraw(ref World world, double distToPlayer)
+        virtual public void UpdateOnDraw(double distToPlayer)
         {
 
         }

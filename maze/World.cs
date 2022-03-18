@@ -20,29 +20,29 @@ namespace textured_raycast.maze
         Stopping,
     }
 
-    internal class World
+    class World
     {
-        public int currentMap = 1;
-        private Dictionary<int, string> maps;
+        public static int currentMap = 1;
+        private static Dictionary<int, string> maps;
 
-        public states state = states.Game;
+        public static states state = states.Game;
 
-        public string currentMessage = ""; // this is to show messages to the player or something
-        public string interactMessage = ""; // This takes priority over current message
+        public static string currentMessage = ""; // this is to show messages to the player or something
+        public static string interactMessage = ""; // This takes priority over current message
 
-        public Fight fight;
+        public static Fight fight;
 
-        public Player player = new Player();
+        public static Player player = new Player();
 
-        public Vector2d plrPos;
-        public Vector2d plrRot;
-        public float staminaLVL = 1;
-        public float dayTime = 0;
+        public static Vector2d plrPos;
+        public static Vector2d plrRot;
+        public static float staminaLVL = 1;
+        public static float dayTime = 0;
 
-        public float dt;
-        public long lastFrameTime = DateTime.Now.Ticks;
+        public static float dt;
+        public static long lastFrameTime = DateTime.Now.Ticks;
 
-        public Dictionary<int, string> textures = new Dictionary<int, string>() {
+        public static Dictionary<int, string> textures = new Dictionary<int, string>() {
             {1,   "img/wolfenstein/greystone.ppm"},
             {2,   "img/wolfenstein/redbrick.ppm"},
             {3,   "img/wolfenstein/bluestone.ppm"},
@@ -56,31 +56,31 @@ namespace textured_raycast.maze
             {104, "img/SkillTree.ppm"},
         };
 
-        public void startFight(Sprite sprite)
+        public static void startFight(Sprite sprite)
         {
             state = states.Fighting;
             fight = new Fight(sprite as Enemy);
         }
 
-        public World()
+        public static void setupMapsInWorld()
         {
             maps = new Dictionary<int, string>()
             {
                 {-1, "maps/fightMap.map"},
-                // {1, "maps/overworld.map"},
+                // {1, "maps/overWorld.map"},
                 {1, "maps/lightTest.map"},
                 // {2, "maps/DarkDungeon.map"},
                 {3, "maps/hiddenRoom.map"},
             };
 
-            Map curMap = ResourceManager.getMap(maps[currentMap], this);
+            Map curMap = ResourceManager.getMap(maps[currentMap]);
             plrPos = curMap.playerStartPos;
             plrRot = curMap.playerStartRot;
         }
 
-        public Map getMapByID(int id)
+        public static Map getMapByID(int id)
         {
-            return ResourceManager.getMap(maps[id], this);
+            return ResourceManager.getMap(maps[id]);
         }
     }
 }

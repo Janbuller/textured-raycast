@@ -17,12 +17,11 @@ namespace textured_raycast.maze.input
             InputController.Init();
         }
 
-        public static KeyState GetKey(Keys key, World world = null) {
+        public static KeyState GetKey(Keys key) {
             KeyState returnKey = InputController.GetKey(key);
             if (returnKey == KeyState.KEY_DOWN)
             {
-                if (!(world is null))
-                    world.currentMessage = "";
+                World.currentMessage = "";
             }
             return returnKey;
         }
