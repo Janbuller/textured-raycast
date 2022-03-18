@@ -297,6 +297,15 @@ namespace textured_raycast.maze
                         }
                     }
 
+                    for (int i = 0; i < invButtons.Length; i++)
+                    {
+                        if (world.player.guiToEquipped.ContainsKey(i))
+                        {
+                            if (!(world.player.equipped[world.player.guiToEquipped[i]] is null))
+                                UIHolder.DrawTexture(ResourceManager.getTexture(Item.itemTextures[world.player.equipped[world.player.guiToEquipped[i]].imageID]), invButtons[i].x+1, invButtons[i].y+1);
+                        }
+                    }
+
                     int loop = 0;
                     for (int hp = 0; hp < world.player.hp; hp++)
                     {
