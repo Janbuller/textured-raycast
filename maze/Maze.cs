@@ -43,7 +43,7 @@ namespace textured_raycast.maze
             new SkillPlaceHolder(255, 310, 21, 21, new int[] {-2, 0, 0, 0}),
         };
 
-        static Vector2i size = new Vector2i(120, 80);
+        static Vector2i size = new Vector2i(240, 160);
 
         static ConsoleEngine engine;
 	static ConsoleBuffer game;
@@ -345,8 +345,8 @@ namespace textured_raycast.maze
                 {
                     UIHolder.Clear();
 
-                    for (int x = 0; x < 120; x++)
-                        for (int y = 0; y < 80; y++)
+                    for (int x = 0; x < size.x; x++)
+                        for (int y = 0; y < size.y; y++)
                             UIHolder.DrawPixel(new TexColor(198, 132, 68), x, y);
 
                     if (InputManager.GetKey(Keys.K_UP) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W) == KeyState.KEY_DOWN)
@@ -376,8 +376,8 @@ namespace textured_raycast.maze
                     }
 
                     Vector2i screenOffset = new Vector2i(
-			60 - skillButtons[curSkillButton].x - skillButtons[curSkillButton].w / 2,
-			40 - skillButtons[curSkillButton].y - skillButtons[curSkillButton].w / 2
+			size.x/2 - skillButtons[curSkillButton].x - skillButtons[curSkillButton].w / 2,
+			size.y/2 - skillButtons[curSkillButton].y - skillButtons[curSkillButton].w / 2
 		    );
 
                     UIHolder.DrawTexture(ResourceManager.getTexture(World.textures[104]), screenOffset.x, screenOffset.y);
