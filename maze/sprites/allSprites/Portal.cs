@@ -38,45 +38,48 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void UpdateOnDraw(double distToPlayer)
         {
-            Texture startTex = ResourceManager.getTexture(IDTextureCorrespondence[texID][0]);
-            portalTex = new Texture(startTex);
-            Map curMap = World.getMapByID(World.currentMap);
+	    // This doesn't work due to large changes in rendering code from turning World static.
+	    // ===================================================================================
 
-            Vector2d portalLocOffset = new Vector2d(extraEffects[0], extraEffects[1]);
-            Vector2d tpToLoc = World.plrPos + portalLocOffset;
+            // Texture startTex = ResourceManager.getTexture(IDTextureCorrespondence[texID][0]);
+            // portalTex = new Texture(startTex);
+            // Map curMap = World.getMapByID(World.currentMap);
 
-            if(tpToLoc.x > curMap.Width-1 || tpToLoc.x < 1 || tpToLoc.y > curMap.Height-1 || tpToLoc.y < 1) {
-                // for(int y = 0; y < portalTex.width; y++) {
-                //     for(int x = 0; x < portalTex.height; x++) {
-                //         if(portalTex.getPixel(x, y) == new TexColor(255, 0, 255))
-                //             portalTex.setPixel(x, y, new TexColor(0, 0, 0));
-                //     }
-                // }
-                // return;
+            // Vector2d portalLocOffset = new Vector2d(extraEffects[0], extraEffects[1]);
+            // Vector2d tpToLoc = World.plrPos + portalLocOffset;
 
-                tpToLoc = getPos() + portalLocOffset;
-            }
+            // if(tpToLoc.x > curMap.Width-1 || tpToLoc.x < 1 || tpToLoc.y > curMap.Height-1 || tpToLoc.y < 1) {
+            //     // for(int y = 0; y < portalTex.width; y++) {
+            //     //     for(int x = 0; x < portalTex.height; x++) {
+            //     //         if(portalTex.getPixel(x, y) == new TexColor(255, 0, 255))
+            //     //             portalTex.setPixel(x, y, new TexColor(0, 0, 0));
+            //     //     }
+            //     // }
+            //     // return;
 
-            Vector2d dir = World.plrRot;
-            Vector2d plane = new Vector2d(dir.y, -dir.x) * 0.66;
+            //     tpToLoc = getPos() + portalLocOffset;
+            // }
 
-            Texture FloorAndRoof = new Texture(portalTex.width, portalTex.height);
-            FloorCasting.FloorCast(ref FloorAndRoof, dir, plane, pos, 1);
+            // Vector2d dir = World.plrRot;
+            // Vector2d plane = new Vector2d(dir.y, -dir.x) * 0.66;
 
-            for(int x = 0; x < portalTex.width; x++) {
-                WallCasting.WallcastReturn wcr = WallCasting.DoOneWallcast(x, portalTex.width, portalTex.height, curMap.GetLights(), dir, plane, tpToLoc, 1);
-                int LineHeight = (int)((portalTex.height * 2) / (wcr.PerpWallDist + 1/distToPlayer));
+            // Texture FloorAndRoof = new Texture(portalTex.width, portalTex.height);
+            // FloorCasting.FloorCast(ref FloorAndRoof, dir, plane, pos, 1);
 
-                if (wcr.HitWall.doDraw) {
-                    if(curMap.GetLights().Count() > 0) {
-                        TextureHelper.DrawVerLine(ref portalTex, x, LineHeight, wcr.Tex, wcr.TexX, wcr.Darken, wcr.MixedLight, new TexColor(255, 0, 255));
-                    } else {
-                        TextureHelper.DrawVerLine(ref portalTex, x, LineHeight, wcr.Tex, wcr.TexX, wcr.Darken, new TexColor(255, 0, 255));
-                    }
-                }
+            // for(int x = 0; x < portalTex.width; x++) {
+            //     WallCasting.WallcastReturn wcr = WallCasting.DoOneWallcast(x, portalTex.width, portalTex.height, curMap.GetLights(), dir, plane, tpToLoc, 1);
+            //     int LineHeight = (int)((portalTex.height * 2) / (wcr.PerpWallDist + 1/distToPlayer));
 
-                TextureHelper.DrawVerLine(ref portalTex, x, portalTex.height, FloorAndRoof, x, 0.00001f, new TexColor(255, 255, 255), new TexColor(255, 0, 255));
-            }
+            //     if (wcr.HitWall.doDraw) {
+            //         if(curMap.GetLights().Count() > 0) {
+            //             TextureHelper.DrawVerLine(ref portalTex, x, LineHeight, wcr.Tex, wcr.TexX, wcr.Darken, wcr.MixedLight, new TexColor(255, 0, 255));
+            //         } else {
+            //             TextureHelper.DrawVerLine(ref portalTex, x, LineHeight, wcr.Tex, wcr.TexX, wcr.Darken, new TexColor(255, 0, 255));
+            //         }
+            //     }
+
+            //     TextureHelper.DrawVerLine(ref portalTex, x, portalTex.height, FloorAndRoof, x, 0.00001f, new TexColor(255, 255, 255), new TexColor(255, 0, 255));
+            // }
         }
 
         public override Texture GetTexture() {

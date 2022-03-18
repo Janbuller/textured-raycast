@@ -22,18 +22,18 @@ namespace textured_raycast.maze.graphics
         // Draws the skybox to the top half of the game screen. This isn't very
         // optimized, and shouldn't be used, as it draws to pixels, that will
         // later be drawn over.
-        public static void DrawSkybox(ref ConsoleBuffer game, Vector2d dir, Texture skyboxTex) {
+        public static void DrawSkybox(ref ConsoleBuffer game, Texture skyboxTex) {
             int winHeight = game.Height;
 
             for(int y = 0; y < game.Height / 2; y++) {
                 for(int x = 0; x < game.Width; x++) {
-                    var pix = GetSkyboxPixel(winHeight, dir, skyboxTex, x, y, World.dayTime);
+                    var pix = GetSkyboxPixel(winHeight, skyboxTex, x, y, World.dayTime);
                     game.DrawPixel(pix, x, y);
                 }
             }
         }
 
-        public static TexColor GetSkyboxPixel(int winHeight, Vector2d dir, Texture skyboxTex, int x, int y, float dayTime)
+        public static TexColor GetSkyboxPixel(int winHeight, Texture skyboxTex, int x, int y, float dayTime)
         {
             // The difference between the height of on pixel on the screen and
             // on the texture, were the texture to fill the top helf of the
@@ -44,7 +44,7 @@ namespace textured_raycast.maze.graphics
             Vector2i cal = new Vector2i((int)(x * heightDiff), (int)(y * heightDiff));
 
             // Get the players rotation in radians.
-            double dirRad = Math.Atan2(dir.x, dir.y);
+            double dirRad = Math.Atan2(World.plrRot.x, World.plrRot.y);
             // The players rotation, mapped from the range [0, 2PI] to [0, 1].
             double dirMapped = dirRad / (Math.PI * 2);
             // The offset to the skybox texture, based of the mapped direction.

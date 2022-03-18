@@ -18,7 +18,7 @@ namespace textured_raycast.maze.graphics
 {
     class SpriteCasting
     {
-        public static void SpriteCast(ref ConsoleBuffer game, List<Sprite> sprites, Vector2d pos, Vector2d plane, Vector2d dir, double[] ZBuffer, int visRange, Map map)
+        public static void SpriteCast(ref ConsoleBuffer game, List<Sprite> sprites, Vector2d plane, double[] ZBuffer, int visRange, Map map)
         {
             ILight[] lights = map.GetLights();
 
@@ -27,8 +27,8 @@ namespace textured_raycast.maze.graphics
             {
                 // Calculate sprite distance from player, using pythagoras.
                 // Since it's only used for comparing with itself, sqrt isn't required.
-                double xDist = pos.x - sprites[i].getX();
-                double yDist = pos.y - sprites[i].getY();
+                double xDist = World.plrPos.x - sprites[i].getX();
+                double yDist = World.plrPos.y - sprites[i].getY();
 
                 spriteDist.Add(xDist * xDist + yDist * yDist);
             }
@@ -57,12 +57,12 @@ namespace textured_raycast.maze.graphics
                 // Grab a reference of the current sprites texture.
                 Texture sprTex = curSpr.GetTexture();
                 // The relative sprite position from the camera.
-                Vector2d relSprPos = curSpr.getPos() - pos;
+                Vector2d relSprPos = curSpr.getPos() - World.plrPos;
 
                 // The imaginary camera matrix, which will be used for the
                 // transformations
-                Matrix2x2d camMat = new Matrix2x2d(new double[] {plane.x, dir.x,
-                                                                 plane.y, dir.y});
+                Matrix2x2d camMat = new Matrix2x2d(new double[] {plane.x, World.plrRot.x,
+                                                                 plane.y, World.plrRot.y});
 
                 // The position of the sprite, transformed by the inverse of the
                 // imaginary camera matrix. The camera matrix holds the position

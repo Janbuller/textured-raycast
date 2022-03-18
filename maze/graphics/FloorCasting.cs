@@ -18,10 +18,9 @@ namespace textured_raycast.maze.graphics
 {
     class FloorCasting
     {
-        public static void FloorCast(ref Texture game, Vector2d dir, Vector2d plane, Vector2d pos, float visRange)
+        public static void FloorCast(ref Texture game, Vector2d plane, float visRange)
         {
             Map map = World.getMapByID(World.currentMap);
-            Dictionary<int, string> textures = World.textures;
 
             game.Clear();
 
@@ -31,8 +30,8 @@ namespace textured_raycast.maze.graphics
             // Grabs the floor and ceiling texture, before the loop, since we
             // don't want differently textured ceiling or floor.
 
-            Texture floorTex   = ResourceManager.getTexture(textures[map.floorTexID]);
-	    Texture ceilingTex = ResourceManager.getTexture(textures[map.useSkybox ? 1 : map.ceilTexID]);
+            Texture floorTex   = ResourceManager.getTexture(World.textures[map.floorTexID]);
+	    Texture ceilingTex = ResourceManager.getTexture(World.textures[map.useSkybox ? 1 : map.ceilTexID]);
 
             // Grab the windiw dimensions, since they'll be used a lot.
             int winWidth  = game.width;
@@ -46,8 +45,8 @@ namespace textured_raycast.maze.graphics
                 // Calculatethe direction vector, for a vector going from the
                 // player position, through the imaginary cameraplane, on both
                 // sides of said plane.
-                Vector2d rayDirLeft = dir - plane;
-                Vector2d rayDirRight = dir + plane;
+                Vector2d rayDirLeft = World.plrRot - plane;
+                Vector2d rayDirRight = World.plrRot + plane;
 
                 // Calculate the current rows offset from the middle of the
                 // screen.
@@ -61,7 +60,7 @@ namespace textured_raycast.maze.graphics
 
                 Vector2d floorOff = lineDist * (rayDirRight - rayDirLeft) / winWidth;
 
-                Vector2d floor = pos + (new Vector2d(lineDist, lineDist) * rayDirLeft);
+                Vector2d floor = World.plrPos + (new Vector2d(lineDist, lineDist) * rayDirLeft);
 
                 for(int x = 0; x < winWidth; x++) {
                     if(lights.Count() > 0) {
@@ -71,10 +70,10 @@ namespace textured_raycast.maze.graphics
 
                     Vector2i cellPos = (Vector2i)floor.Floor();
                     int floorId = curMap.GetFloor(cellPos.x, cellPos.y);
-                    floorTex = floorId == 0 ? null : ResourceManager.getTexture(textures[floorId]);
+                    floorTex = floorId == 0 ? null : ResourceManager.getTexture(World.textures[floorId]);
 
                     int ceilId = curMap.GetRoof(cellPos.x, cellPos.y);
-                    ceilingTex = ceilId == 0 ? null : ResourceManager.getTexture(textures[ceilId]);
+                    ceilingTex = ceilId == 0 ? null : ResourceManager.getTexture(World.textures[ceilId]);
 
                     float darken = 0.9f;
                     if (!map.useSkybox)
@@ -112,7 +111,7 @@ namespace textured_raycast.maze.graphics
                     // Ceiling code
                     // ============
                     if(ceilingTex is null) {
-                        var pix = Skybox.GetSkyboxPixel(winHeight, dir, ResourceManager.getTexture(textures[99]), x, winHeight - y - 1, World.dayTime);
+                        var pix = Skybox.GetSkyboxPixel(winHeight, ResourceManager.getTexture(World.textures[99]), x, winHeight - y - 1, World.dayTime);
                         if((game.getPixel(x, winHeight-y-1) is null))
                             game.setPixel(x, winHeight-y-1, pix);
                     } else {

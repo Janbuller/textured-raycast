@@ -65,17 +65,11 @@ namespace textured_raycast.maze
 
             Map map = World.getMapByID(World.currentMap);
 
-            // Position vector
-            Vector2d pos = World.plrPos;
-
-            // Directional unit vector
-            Vector2d dir = World.plrRot;
-
             // Camera view plane, held as 2d vector line.
             // Were this actually 3d, not raycasting, it would be a plane,
             // represtented by 2 vectors.
             // Vector2d plane = new Vector2d(0.66f, 0);
-            Vector2d plane = new Vector2d(dir.y, -dir.x) * 0.66;
+            Vector2d plane = new Vector2d(World.plrRot.y, -World.plrRot.x) * 0.66;
 
             // The visibility distance. Controls the distance-based darkening.
             int visRange = 25;
@@ -438,9 +432,6 @@ namespace textured_raycast.maze
                     map = World.getMapByID(World.currentMap);
                     visRange = map.useSkybox ? 1 : 25;
 
-                    pos = World.plrPos;
-                    dir = World.plrRot;
-
                     //DrawSkybox(ref game, dir, textures[1]);
 
                     // find closest sprite that is interactable and display interact message
@@ -452,7 +443,7 @@ namespace textured_raycast.maze
                         sprite.Update(World.dt);
                         sprite.updateAnimation(World.dt);
 
-                        double distance = pos.DistTo(sprite.getPos());
+                        double distance = World.plrPos.DistTo(sprite.getPos());
                         // Console.WriteLine(distance + " : " + sprite.canInteract);
                         if (distance < sprite.interactDistance && distance < distanceToInteract && sprite.canInteract)
                         {
@@ -495,18 +486,18 @@ namespace textured_raycast.maze
                     }
 
                     // Do the floor/ceiling casting.
-                    FloorCasting.FloorCast(ref FloorAndRoof, dir, plane, pos, visRange);
+                    FloorCasting.FloorCast(ref FloorAndRoof, plane, visRange);
                     game.DrawTexture(FloorAndRoof, 0, 0);
 
                     // Do the wall casting
-                    WallCasting.WallCast(ref game, ref ZBuffer, dir, plane, pos, visRange);
+                    WallCasting.WallCast(ref game, ref ZBuffer, plane, visRange);
 
                     // draw sprites
-                    SpriteCasting.SpriteCast(ref game, map.sprites, pos, plane, dir, ZBuffer, visRange, map);
+                    SpriteCasting.SpriteCast(ref game, map.sprites, plane, ZBuffer, visRange, map);
 
                     engine.DrawConBuffer(game.mixBuffer(UIHolder));
                     engine.SwapBuffers();
-                    HandleInputGame(map, pos, ref dir, ref plane, ref spriteToInteract);
+                    HandleInputGame(map, World.plrPos, ref World.plrRot, ref plane, ref spriteToInteract);
                 }
             }
 
