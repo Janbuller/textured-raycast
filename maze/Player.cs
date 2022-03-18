@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace rpg_game.maze
+namespace textured_raycast.maze
 {
     enum equipSlots
     {
@@ -68,5 +68,6 @@ namespace rpg_game.maze
             { 50, new Iron_Broadsword()},
             { 62, new Iron_Broadsword()},
         };
+        int skillPoints = 25;
     }
 }

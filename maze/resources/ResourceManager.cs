@@ -17,10 +17,8 @@ namespace textured_raycast.maze.resources
 {
     class ResourceManager
     {
-        private static Dictionary<string, Texture> cachedTextures = new Dictionary<string, Texture>()
-        {
-
-        };
+        private static Dictionary<string, Texture> cachedTextures = new Dictionary<string, Texture>(){};
+        private static Dictionary<string, Map> cachedMaps = new Dictionary<string, Map>(){};
 
         public static Texture getTexture(string path)
         {
@@ -33,6 +31,19 @@ namespace textured_raycast.maze.resources
             }
 
             return tex;
+        }
+
+        public static Map getMap(string path, World world)
+        {
+            Map map;
+            bool exists = cachedMaps.TryGetValue(path, out map);
+            if (!exists)
+            {
+                map = new Map(path, world);
+                cachedMaps.Add(path, map);
+            }
+
+            return map;
         }
     }
 }
