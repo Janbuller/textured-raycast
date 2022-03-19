@@ -46,9 +46,9 @@ namespace textured_raycast.maze
         static Vector2i size = new Vector2i(120, 80);
 
         static ConsoleEngine engine;
-	static ConsoleBuffer game;
-	static ConsoleBuffer fight;
-	static ConsoleBuffer UIHolder;
+	    static ConsoleBuffer game;
+	    static ConsoleBuffer fight;
+	    static ConsoleBuffer UIHolder;
 
         public static bool StartMaze() {
             engine = new ConsoleEngine(size.x, size.y, "maze");
