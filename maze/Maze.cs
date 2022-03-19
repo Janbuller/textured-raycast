@@ -43,7 +43,7 @@ namespace textured_raycast.maze
             new SkillPlaceHolder(255, 310, 21, 21, new int[] {-2, 0, 0, 0}),
         };
 
-        static Vector2i size = new Vector2i(240, 160);
+        static Vector2i size = new Vector2i(120, 80);
 
         static ConsoleEngine engine;
 	static ConsoleBuffer game;

@@ -43,7 +43,7 @@ namespace textured_raycast.maze.skills
 	    if(isBought())
 		return;
 
-            bool oneOwned = false;
+            int fufilledReqs = 0;
 
             var UnlockedSkills = World.player.UnlockedSkills;
             if (requiredSkills != null)
@@ -52,11 +52,11 @@ namespace textured_raycast.maze.skills
                 {
                     if (UnlockedSkills.Contains(skill))
                     {
-                        oneOwned = true;
+                        fufilledReqs++;
                     }
                 }
 
-                if (!oneOwned)
+                if (fufilledReqs != requiredSkills.Count())
                     return;
             }
             World.player.skillPoints -= price;
