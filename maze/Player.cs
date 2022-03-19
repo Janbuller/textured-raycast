@@ -3,6 +3,7 @@ using rpg_game.maze.Items;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using textured_raycast.maze.skills;
 
 namespace textured_raycast.maze
 {
@@ -78,5 +79,12 @@ namespace textured_raycast.maze
 
         public int skillPoints = 25;
         public List<int> UnlockedSkills = new List<int>() { 12 };
+
+        public int[] equippedSkills =
+        {
+            -1,
+            -1,
+            -1,
+        };
     }
 }

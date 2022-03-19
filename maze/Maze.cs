@@ -293,13 +293,9 @@ namespace textured_raycast.maze
                     }
 
                     for (int i = 0; i < invButtons.Length; i++)
-                    {
                         if (World.player.guiToEquipped.ContainsKey(i))
-                        {
                             if (!(World.player.equipped[World.player.guiToEquipped[i]] is null))
-                                UIHolder.DrawTexture(ResourceManager.getTexture(Item.itemTextures[World.player.equipped[World.player.guiToEquipped[i]].imageID]), invButtons[i].x+1, invButtons[i].y+1, new TexColor(0, 0, 0));
-                        }
-                    }
+                                UIHolder.DrawTexture(ResourceManager.getTexture(Item.itemTextures[World.player.equipped[World.player.guiToEquipped[i]].imageID]), invButtons[i].x + 1, invButtons[i].y + 1, new TexColor(0, 0, 0));
 
                     int loop = 0;
                     for (int hp = 0; hp < World.player.hp; hp++)
@@ -336,6 +332,10 @@ namespace textured_raycast.maze
                             UIHolder.DrawPixel(new TexColor(loop * 50, loop * 50, 255), 17 + mag - loop * 36, 72 + i);
                         }
                     }
+
+                    for (int i = 0; i < 3; i++)
+                        if (World.player.equippedSkills[i] != -1)
+                            UIHolder.DrawTexture(Skill.Skills[World.player.equippedSkills[i]].getTexture(), 45, 19 + 12 * i, new TexColor(0, 0, 0));
 
                     engine.DrawConBuffer(UIHolder);
                     engine.SwapBuffers();
@@ -374,11 +374,18 @@ namespace textured_raycast.maze
                         curSkillButton = 12;
                         World.state = states.Inventory;
                     }
+                    SkillPlaceHolder sph = skillButtons[curSkillButton] as SkillPlaceHolder;
+                    if (InputManager.GetKey(Keys.K_1) == KeyState.KEY_DOWN)
+                        sph.assignSkill(0);
+                    if (InputManager.GetKey(Keys.K_2) == KeyState.KEY_DOWN)
+                        sph.assignSkill(1);
+                    if (InputManager.GetKey(Keys.K_3) == KeyState.KEY_DOWN)
+                        sph.assignSkill(2);
 
                     Vector2i screenOffset = new Vector2i(
-			size.x/2 - skillButtons[curSkillButton].x - skillButtons[curSkillButton].w / 2,
-			size.y/2 - skillButtons[curSkillButton].y - skillButtons[curSkillButton].w / 2
-		    );
+			            size.x/2 - skillButtons[curSkillButton].x - skillButtons[curSkillButton].w / 2,
+			            size.y/2 - skillButtons[curSkillButton].y - skillButtons[curSkillButton].w / 2
+		            );
 
                     UIHolder.DrawTexture(ResourceManager.getTexture(World.textures[104]), screenOffset.x, screenOffset.y);
 

@@ -7,6 +7,10 @@ namespace textured_raycast.maze.input
         K_D,
         K_E,
 
+        K_1,
+        K_2,
+        K_3,
+
         K_SHIFT,
         K_LCTRL,
         K_RCTRL,

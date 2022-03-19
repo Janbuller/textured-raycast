@@ -96,6 +96,10 @@ namespace textured_raycast.maze.input.Windows
 		K_D = 0x44,
 		K_E = 0x45,
 
+		K_1 = 0x31,
+		K_2 = 0x32,
+		K_3 = 0x33,
+
 		K_SHIFT = 0x10,
 
 		K_UP = 0x26,

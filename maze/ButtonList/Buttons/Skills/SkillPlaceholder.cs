@@ -34,5 +34,15 @@ namespace rpg_game.maze.ButtonList.Buttons.Skills
         {
             Skill.Skills[id].TryBuy();
         }
+
+        public void assignSkill(int assignToNr)
+        {
+            Skill.Skills[id].assignTo(assignToNr);
+        }
+
+        public bool isBought()
+        {
+            return Skill.Skills[id].isBought();
+        }
     }
 }

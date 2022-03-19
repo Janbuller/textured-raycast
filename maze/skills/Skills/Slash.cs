@@ -11,7 +11,6 @@ using textured_raycast.maze.resources;
 using textured_raycast.maze.sprites.allSprites;
 using textured_raycast.maze.input;
 using textured_raycast.maze.GUI;
-using textured_raycast.maze.resources;
 using System.Threading.Tasks;
 using rpg_game.maze;
 using rpg_game.maze.ButtonList.Buttons.INV;
