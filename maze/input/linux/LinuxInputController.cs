@@ -70,6 +70,10 @@ namespace textured_raycast.maze.input.linux
         K_SHIFT = 42,
         K_LCTRL = 29,
         K_RCTRL = 97,
+
+        K_1 = 2,
+        K_2 = 3,
+        K_3 = 4,
     }
 
     public enum types : short {
