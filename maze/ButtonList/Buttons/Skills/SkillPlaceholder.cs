@@ -37,7 +37,8 @@ namespace rpg_game.maze.ButtonList.Buttons.Skills
 
         public void assignSkill(int assignToNr)
         {
-            Skill.Skills[id].assignTo(assignToNr);
+            if (Skill.Skills[id] is IActiveSkill)
+                Skill.Skills[id].assignTo(assignToNr);
         }
 
         public bool isBought()

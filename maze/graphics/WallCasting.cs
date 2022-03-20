@@ -18,7 +18,7 @@ namespace textured_raycast.maze.graphics
 {
     class WallCasting
     {
-        public static void WallCast(ref ConsoleBuffer game, ref double[] ZBuffer, Vector2d plane, float visRange)
+        public static void WallCast(ref ConsoleBuffer game, ref double[] ZBuffer, float visRange)
         {
             Map map = World.getMapByID(World.currentMap);
 
@@ -42,7 +42,7 @@ namespace textured_raycast.maze.graphics
             //                  });
 
             for (int x = 0; x < game.Width; x++) {
-                casted[x] = DoOneWallcast(x, width, height, lights, World.plrRot, plane, World.plrPos, visRange);
+                casted[x] = DoOneWallcast(x, width, height, lights, World.plrRot, World.plrPos, visRange);
                 WallcastReturn cast = casted[x];
                 // Draw the ray.
                 if (cast.HitWall.doDraw) {
@@ -74,7 +74,7 @@ namespace textured_raycast.maze.graphics
             }
         }
 
-        public static WallcastReturn DoOneWallcast(int x, int width, int height, ILight[] lights, Vector2d dir, Vector2d plane, Vector2d pos, float visRange, double alreadyDist = 0, int recurseCount = 0) {
+        public static WallcastReturn DoOneWallcast(int x, int width, int height, ILight[] lights, Vector2d dir, Vector2d pos, float visRange, double alreadyDist = 0, int recurseCount = 0) {
 
             Map map = World.getMapByID(World.currentMap);
 
@@ -92,7 +92,7 @@ namespace textured_raycast.maze.graphics
             // A unit vector, representing the direction of the
             // currently cast ray. Calculated by the player direction
             // plus part of the viewport "plane".
-            Vector2d rayDir = dir + (plane * cameraX);
+            Vector2d rayDir = dir + (World.plrPlane * cameraX);
 
             // The player position in map-coordinates.
             Vector2i mapPos = (Vector2i)pos.Floor();
@@ -254,7 +254,7 @@ namespace textured_raycast.maze.graphics
                     newDir = new Vector2d(-dir.x, dir.y);
                 else
                     newDir = new Vector2d(dir.x, -dir.y);
-                return DoOneWallcast(x, width, height, lights, newDir, plane, hitPos, visRange, perpWallDist + alreadyDist, recurseCount+1);
+                return DoOneWallcast(x, width, height, lights, newDir, hitPos, visRange, perpWallDist + alreadyDist, recurseCount+1);
             }
             // Do Lighting
             // ===========

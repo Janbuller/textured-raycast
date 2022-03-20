@@ -23,6 +23,8 @@ namespace textured_raycast.maze
         public int hp = 10;
         public int mag = 2;
 
+        public float actualHp = 10;
+
         public Dictionary<equipSlots, Item> equipped = new Dictionary<equipSlots, Item>()
         {
             {equipSlots.Head, null},
@@ -42,6 +44,28 @@ namespace textured_raycast.maze
             {6, equipSlots.OffHand},
             {5, equipSlots.Torso},
         };
+
+        public void reset()
+        {
+            actualHp = hp;
+            xp = 0;
+        }
+
+        public void useSkill(int nr)
+        {
+            if (equippedSkills[nr] != -1)
+            {
+                if (Skill.Skills[equippedSkills[nr]] is IActiveSkill)
+                {
+                    (Skill.Skills[equippedSkills[nr]] as IActiveSkill).Activate();
+
+                    if (World.fight.hp <= 0)
+                        World.fight.enemyDead();
+
+                    World.fight.enemyDoAction();
+                }
+            }
+        }
 
         public void addToInv(Item item)
         {
@@ -77,12 +101,14 @@ namespace textured_raycast.maze
             { 12, new Iron_Armor()},
         };
 
-        public int skillPoints = 25;
+        public int lvl = 1;
+        public float xp = 0;
+        public int skillPoints = 0;
         public List<int> UnlockedSkills = new List<int>() { 12 };
 
         public int[] equippedSkills =
         {
-            -1,
+            12,
             -1,
             -1,
         };

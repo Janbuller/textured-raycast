@@ -66,12 +66,6 @@ namespace textured_raycast.maze
 
             Map map = World.getMapByID(World.currentMap);
 
-            // Camera view plane, held as 2d vector line.
-            // Were this actually 3d, not raycasting, it would be a plane,
-            // represtented by 2 vectors.
-            // Vector2d plane = new Vector2d(0.66f, 0);
-            Vector2d plane = new Vector2d(World.plrRot.y, -World.plrRot.x) * 0.66;
-
             // The visibility distance. Controls the distance-based darkening.
             int visRange = 25;
 
@@ -95,6 +89,14 @@ namespace textured_raycast.maze
                     if (World.fight.tillFightBegins < 0)
                     {
                         fight.Clear();
+
+                        if (InputManager.GetKey(Keys.K_1) == KeyState.KEY_DOWN)
+                            World.player.useSkill(0);
+                        if (InputManager.GetKey(Keys.K_2) == KeyState.KEY_DOWN)
+                            World.player.useSkill(1);
+                        if (InputManager.GetKey(Keys.K_3) == KeyState.KEY_DOWN)
+                            World.player.useSkill(2);
+
                         World.fight.renderFightToBuffer(ref fight);
 
                         engine.DrawConBuffer(fight);
@@ -290,6 +292,11 @@ namespace textured_raycast.maze
                                 }
                             }
                         }
+                    }
+                    if (InputManager.GetKey(Keys.K_ESC) == KeyState.KEY_DOWN)
+                    {
+                        curInvButton = 0;
+                        World.state = states.Paused;
                     }
 
                     for (int i = 0; i < invButtons.Length; i++)
@@ -510,18 +517,18 @@ namespace textured_raycast.maze
                     }
 
                     // Do the floor/ceiling casting.
-                    FloorCasting.FloorCast(ref FloorAndRoof, plane, visRange);
+                    FloorCasting.FloorCast(ref FloorAndRoof, visRange);
                     game.DrawTexture(FloorAndRoof, 0, 0);
 
                     // Do the wall casting
-                    WallCasting.WallCast(ref game, ref ZBuffer, plane, visRange);
+                    WallCasting.WallCast(ref game, ref ZBuffer, visRange);
 
                     // draw sprites
-                    SpriteCasting.SpriteCast(ref game, map.sprites, plane, ZBuffer, visRange, map);
+                    SpriteCasting.SpriteCast(ref game, map.sprites, ZBuffer, visRange, map);
 
                     engine.DrawConBuffer(game.mixBuffer(UIHolder));
                     engine.SwapBuffers();
-                    HandleInputGame(map, World.plrPos, ref World.plrRot, ref plane, ref spriteToInteract);
+                    HandleInputGame(map, World.plrPos, ref World.plrRot, ref spriteToInteract);
                 }
             }
 
@@ -543,7 +550,7 @@ namespace textured_raycast.maze
             });
         }
 
-        public static void HandleInputGame(Map map, Vector2d pos, ref Vector2d dir, ref Vector2d plane, ref Sprite spriteToInteract) {
+        public static void HandleInputGame(Map map, Vector2d pos, ref Vector2d dir, ref Sprite spriteToInteract) {
             double rotSpeed = World.dt*0.8;
 
             // Multiplied with movement speed, during collision check,
@@ -573,9 +580,9 @@ namespace textured_raycast.maze
                 dir.x = dir.x * Math.Cos(-rotSpeed) - dir.y * Math.Sin(-rotSpeed);
                 dir.y = oldDirX * Math.Sin(-rotSpeed) + dir.y * Math.Cos(-rotSpeed);
                 // Use too much math, to calculate the camera viewport plane.
-                double oldPlaneX = plane.x;
-                plane.x = plane.x * Math.Cos(-rotSpeed) - plane.y * Math.Sin(-rotSpeed);
-                plane.y = oldPlaneX * Math.Sin(-rotSpeed) + plane.y * Math.Cos(-rotSpeed);
+                double oldPlaneX = World.plrPlane.x;
+                World.plrPlane.x = World.plrPlane.x * Math.Cos(-rotSpeed) - World.plrPlane.y * Math.Sin(-rotSpeed);
+                World.plrPlane.y = oldPlaneX * Math.Sin(-rotSpeed) + World.plrPlane.y * Math.Cos(-rotSpeed);
             }
             if (InputManager.GetKey(Keys.K_LEFT) != KeyState.KEY_UP)
             {
@@ -584,9 +591,9 @@ namespace textured_raycast.maze
                 dir.x = dir.x * Math.Cos(rotSpeed) - dir.y * Math.Sin(rotSpeed);
                 dir.y = oldDirX * Math.Sin(rotSpeed) + dir.y * Math.Cos(rotSpeed);
                 // Use too much math, to calculate the camera viewport plane.
-                double oldPlaneX = plane.x;
-                plane.x = plane.x * Math.Cos(rotSpeed) - plane.y * Math.Sin(rotSpeed);
-                plane.y = oldPlaneX * Math.Sin(rotSpeed) + plane.y * Math.Cos(rotSpeed);
+                double oldPlaneX = World.plrPlane.x;
+                World.plrPlane.x = World.plrPlane.x * Math.Cos(rotSpeed) - World.plrPlane.y * Math.Sin(rotSpeed);
+                World.plrPlane.y = oldPlaneX * Math.Sin(rotSpeed) + World.plrPlane.y * Math.Cos(rotSpeed);
             }
             if (InputManager.GetKey(Keys.K_E) == KeyState.KEY_DOWN)
             {

@@ -190,6 +190,14 @@ namespace textured_raycast.maze
             }
         }
 
+        // Draws a box.
+        public void DrawBox(int xS, int yS, int w, int h, TexColor tc)
+        {
+            for (int x = xS; x < xS + w; x++)
+                for (int y = yS; y < yS + h; y++)
+                    DrawPixel(tc, x, y);
+        }
+
         // Draws char to specific framebuffer. Used internally by DrawChar
         // functions.
         private void DrawToFramebuffer(TexColor col, int x, int y, ref List<TexColor> buffer) {

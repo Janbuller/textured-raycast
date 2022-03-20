@@ -7,6 +7,7 @@ using textured_raycast.maze.texture;
 using textured_raycast.maze.math;
 using textured_raycast.maze.sprites;
 using textured_raycast.maze.sprites.allSprites;
+using textured_raycast.maze.skills;
 
 namespace rpg_game.maze.Fight
 {
@@ -17,41 +18,86 @@ namespace rpg_game.maze.Fight
 
         public float tillFightBegins = 2;
 
-        float hp;
-        float maxHp;
+        public float hp;
+        public float maxHp;
 
         List<Sprite> sprites = new List<Sprite>();
 
         public Fight(Enemy spriteToFight)
         {
+            maxHp = spriteToFight.hp;
+            hp = maxHp;
+
             spriteID = spriteToFight.spriteID;
             hp = spriteToFight.hp;
 
             sprites.Add(new DefaultSprite(2.35, 2, spriteID));
+        }
 
+        public void enemyDoAction()
+        {
+            World.player.actualHp--;
+
+            if (World.player.actualHp <= 0)
+                plrDead();
+        }
+
+        public void enemyDead()
+        {
+            World.state = states.Game;
+
+            World.player.xp++;
+        }
+
+        public void plrDead()
+        {
+            World.state = states.Game;
+            World.player.reset();
+            World.getMapByID(World.currentMap).fullReset();
         }
 
         public void renderFightToBuffer(ref ConsoleBuffer buffer)
         {
-            Vector2d dir = new Vector2d(-1, 0);
-            Vector2d pos = new Vector2d(3.65, 2);
-            Vector2d plane = new Vector2d(0, 1) * 0.66;
+            Vector2d dir = World.plrRot;
+            World.plrRot = new Vector2d(-1, 0);
+            Vector2d pos = World.plrPos;
+            World.plrPos = new Vector2d(3.65, 2);
+            Vector2d plane = World.plrPlane;
+            World.plrPlane = new Vector2d(World.plrRot.y, -World.plrRot.x) * 0.66;
             Map map = World.getMapByID(mapID);
 
             Texture FloorAndRoof = new Texture(buffer.Width, buffer.Height);
-            FloorCasting.FloorCast(ref FloorAndRoof, plane, 1);
+            FloorCasting.FloorCast(ref FloorAndRoof, 1);
             buffer.DrawTexture(FloorAndRoof, 0, 0);
 
             double[] ZBuffer = new double[buffer.Width];
 
-            WallCasting.WallCast(ref buffer, ref ZBuffer, plane, 1);
+            WallCasting.WallCast(ref buffer, ref ZBuffer, 1);
 
             foreach (Sprite sprite in sprites)
             {
                 sprite.updateAnimation(World.dt);
             }
 
-            SpriteCasting.SpriteCast(ref buffer, sprites, plane, ZBuffer, 1, map);
+            SpriteCasting.SpriteCast(ref buffer, sprites, ZBuffer, 1, map);
+            World.plrRot = dir;
+            World.plrPos = pos;
+            World.plrPlane = plane;
+
+            buffer.DrawBox(1, 1, 60, 6 , new TexColor(0, 0, 0));
+            buffer.DrawBox(59, 73, 60, 6, new TexColor(0, 0, 0));
+
+            buffer.DrawBox(2, 2, (int)(58 * (hp / maxHp)), 4, new TexColor(0, 255, 0));
+            buffer.DrawBox(60, 74, (int)(58 * (World.player.actualHp / World.player.hp)), 4, new TexColor(0, 255, 0));
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (World.player.equippedSkills[i] != -1)
+                {
+                    buffer.DrawBox(1 + i * 12, 68, 11, 11, new TexColor(0, 0, 0));
+                    buffer.DrawTexture(Skill.Skills[World.player.equippedSkills[i]].getTexture(), 2 + i * 13, 68, new TexColor(0, 0, 0));
+                }
+            }
         }
 
         public void renderFightStartScreenToBuffer(ref ConsoleBuffer buffer, float progress)

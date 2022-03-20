@@ -18,7 +18,7 @@ namespace textured_raycast.maze.graphics
 {
     class FloorCasting
     {
-        public static void FloorCast(ref Texture game, Vector2d plane, float visRange)
+        public static void FloorCast(ref Texture game, float visRange)
         {
             Map map = World.getMapByID(World.currentMap);
 
@@ -45,8 +45,8 @@ namespace textured_raycast.maze.graphics
                 // Calculatethe direction vector, for a vector going from the
                 // player position, through the imaginary cameraplane, on both
                 // sides of said plane.
-                Vector2d rayDirLeft = World.plrRot - plane;
-                Vector2d rayDirRight = World.plrRot + plane;
+                Vector2d rayDirLeft = World.plrRot - World.plrPlane;
+                Vector2d rayDirRight = World.plrRot + World.plrPlane;
 
                 // Calculate the current rows offset from the middle of the
                 // screen.

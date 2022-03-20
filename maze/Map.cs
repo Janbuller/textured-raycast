@@ -90,7 +90,6 @@ namespace textured_raycast.maze
 
             for (int i = map.Count + 3; i < imageData.Length; i++)
             {
-                Console.Write(imageData[i]);
                 string[] thisInfo = imageData[i].Split(' ');
                 int thisID = 0;
 
@@ -179,6 +178,12 @@ namespace textured_raycast.maze
             resetSprites();
             World.currentMap = myID;
             World.plrPos = new Vector2d(doorPositions[doorID].x, doorPositions[doorID].y);
+        }
+
+        public void fullReset()
+        {
+            resetSprites();
+            World.resetPlrPos();
         }
 
         public void resetSprites()

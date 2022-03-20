@@ -75,10 +75,7 @@ namespace textured_raycast.maze.input.Windows
                     }
                     else
                     {
-                        if (pressedKeys[keyValuePair.Key] != KeyState.KEY_DOWN)
-                        {
-                            pressedKeys[keyValuePair.Key] = KeyState.KEY_UP;
-                        }
+                        pressedKeys[keyValuePair.Key] = KeyState.KEY_UP;
                     }
                 }
             }

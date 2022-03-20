@@ -36,6 +36,7 @@ namespace textured_raycast.maze
 
         public static Vector2d plrPos;
         public static Vector2d plrRot;
+        public static Vector2d plrPlane;
         public static float staminaLVL = 1;
         public static float dayTime = 0;
 
@@ -62,20 +63,26 @@ namespace textured_raycast.maze
             fight = new Fight(sprite as Enemy);
         }
 
+        public static void resetPlrPos()
+        {
+            Map curMap = ResourceManager.getMap(maps[currentMap]);
+            plrPos = curMap.playerStartPos;
+            plrRot = curMap.playerStartRot;
+            plrPlane = new Vector2d(plrRot.y, -plrRot.x) * 0.66;
+        }
+
         public static void setupMapsInWorld()
         {
             maps = new Dictionary<int, string>()
             {
                 {-1, "maps/fightMap.map"},
-                // {1, "maps/overWorld.map"},
-                {1, "maps/lightTest.map"},
-                // {2, "maps/DarkDungeon.map"},
+                {1, "maps/overWorld.map"},
+                // {1, "maps/lightTest.map"},
+                {2, "maps/DarkDungeon.map"},
                 {3, "maps/hiddenRoom.map"},
             };
 
-            Map curMap = ResourceManager.getMap(maps[currentMap]);
-            plrPos = curMap.playerStartPos;
-            plrRot = curMap.playerStartRot;
+            resetPlrPos();
         }
 
         public static Map getMapByID(int id)

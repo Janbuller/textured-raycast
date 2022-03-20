@@ -18,7 +18,7 @@ namespace textured_raycast.maze.graphics
 {
     class SpriteCasting
     {
-        public static void SpriteCast(ref ConsoleBuffer game, List<Sprite> sprites, Vector2d plane, double[] ZBuffer, int visRange, Map map)
+        public static void SpriteCast(ref ConsoleBuffer game, List<Sprite> sprites, double[] ZBuffer, int visRange, Map map)
         {
             ILight[] lights = map.GetLights();
 
@@ -61,8 +61,8 @@ namespace textured_raycast.maze.graphics
 
                 // The imaginary camera matrix, which will be used for the
                 // transformations
-                Matrix2x2d camMat = new Matrix2x2d(new double[] {plane.x, World.plrRot.x,
-                                                                 plane.y, World.plrRot.y});
+                Matrix2x2d camMat = new Matrix2x2d(new double[] {World.plrPlane.x, World.plrRot.x,
+                                                                 World.plrPlane.y, World.plrRot.y});
 
                 // The position of the sprite, transformed by the inverse of the
                 // imaginary camera matrix. The camera matrix holds the position
@@ -141,7 +141,7 @@ namespace textured_raycast.maze.graphics
                     {
                         curSpr.UpdateOnDraw(transformed.y);
                         TexColor mixedLight = new TexColor(255, 255, 255);
-                        Vector2d newPlane = ((plane * -1) + ((plane * 2)) / (endX - startX) * (x - startX));
+                        Vector2d newPlane = ((World.plrPlane * -1) + ((World.plrPlane * 2)) / (endX - startX) * (x - startX));
 
                         LightDist[] lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + newPlane);
                         if (lights.Count() < 0)

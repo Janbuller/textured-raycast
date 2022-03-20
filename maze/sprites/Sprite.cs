@@ -69,6 +69,7 @@ namespace textured_raycast.maze.sprites
         };
 
         public Vector2d pos;
+        public Vector2d orgPos;
         public int spriteID;
         public int texID;
         public int curTexture = 0;
@@ -101,6 +102,7 @@ namespace textured_raycast.maze.sprites
         public void define(double posX, double posY, int spriteID, int effectID, string whatsLeft)
         {
             this.pos = new Vector2d(posX, posY);
+            this.orgPos = new Vector2d(posX, posY);
             this.spriteID = spriteID;
             this.texID = spriteID;
             this.effectID = effectID;
@@ -144,7 +146,7 @@ namespace textured_raycast.maze.sprites
 
         virtual public void resetSprite()
         {
-
+            pos = new Vector2d(orgPos.x, orgPos.y);
         }
 
         virtual public string ActivateMessage()

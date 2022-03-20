@@ -15,6 +15,7 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void onLoad()
         {
+            interactDistance = 1f;
             canInteract = true;
             doRender = false;
         }
