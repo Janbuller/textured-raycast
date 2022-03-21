@@ -8,9 +8,9 @@ namespace rpg_game.maze
     abstract class Item
     {
         public static Dictionary<int, string> itemTextures = new Dictionary<int, string>() {
-            {0,   "img/items/sword.ppm"},
-            {1,   "img/items/ring.ppm"},
-            {2,   "img/items/armor.ppm"},
+            {0,   "img/items/metalsword.ppm"},
+            {1,   "img/items/rubyring.ppm"},
+            {2,   "img/items/metalarmor.ppm"},
         };
 
 
