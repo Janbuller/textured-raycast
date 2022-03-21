@@ -126,7 +126,7 @@ namespace textured_raycast.maze.graphics
                         color *= map.lightMix * 0.6f;
                         color += maze.texture.TexColor.unitMultReal(texColor, mixedLight) * (1-map.lightMix);
 
-                        int shownLines = Math.Max(0, Math.Min((int)((float)10 / (lineDist)), 5));
+                        int shownLines = Math.Max(0, Math.Min((int)((float)15 / (lineDist)), 5));
                         for (int i = 1; i <= shownLines; i++)
                         {
                             game.setPixel(x, winHeight - y - i, color * (1.0f - (0.2f * (i-1))));
