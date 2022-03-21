@@ -125,11 +125,16 @@ namespace textured_raycast.maze.graphics
                         color  = texColor * darken;
                         color *= map.lightMix * 0.6f;
                         color += maze.texture.TexColor.unitMultReal(texColor, mixedLight) * (1-map.lightMix);
-                        game.setPixel(x, winHeight - y - 5, color * 0.20f);
-                        game.setPixel(x, winHeight - y - 4, color * 0.50f);
-                        game.setPixel(x, winHeight - y - 3, color * 0.70f);
-                        game.setPixel(x, winHeight - y - 2, color * 0.90f);
-                        game.setPixel(x, winHeight - y - 1, color * 1.00f);
+
+                        int shownLines = Math.Min(5, (int)((float)10 / (lineDist)));
+                        // game.setPixel(x, winHeight - y - 5, color * 0.20f);
+                        // game.setPixel(x, winHeight - y - 4, color * 0.50f);
+                        // game.setPixel(x, winHeight - y - 3, color * 0.70f);
+                        // game.setPixel(x, winHeight - y - 2, color * 0.90f);
+                        for (int i = 1; i <= shownLines; i++)
+                        {
+                            game.setPixel(x, winHeight - y - i, color * (1.0f - (0.2f * (i-1))));
+                        }
                     }
 
                     floor += floorOff;
