@@ -12,6 +12,11 @@ namespace textured_raycast.maze.math
             this.y = y;
         }
 
+        public Vector2d(Vector2d vec) {
+            this.x = vec.x;
+            this.y = vec.y;
+        }
+
         // Bunch of operator overloading, making vector math easier.
         // Equality operator: Checks if two vectors are equal.
         public static bool operator ==(Vector2d vec1, Vector2d vec2) {

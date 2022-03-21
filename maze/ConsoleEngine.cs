@@ -7,12 +7,14 @@ using textured_raycast.maze.texture;
 
 namespace textured_raycast.maze
 {
-    struct GameParams {
+    struct GameParams
+    {
         public int winWidth, winHeight;
         public string name;
     }
 
-    class ConsoleEngine {
+    class ConsoleEngine
+    {
         GameParams parameters = new GameParams();
 
         // Double buffer system made for futureproofing. Allows for possible
@@ -26,7 +28,8 @@ namespace textured_raycast.maze
         public int Width { get => parameters.winWidth; set => parameters.winWidth = value; }
         public int Height { get => parameters.winHeight; set => parameters.winHeight = value; }
 
-        public ConsoleEngine(int win_width, int win_height, string game_name) {
+        public ConsoleEngine(int win_width, int win_height, string game_name)
+        {
             // Used to initialize the buffers to and empty sized list.
             TexColor[] tmp = new TexColor[win_width * win_height];
             buffer1 = tmp.ToList();
@@ -40,22 +43,30 @@ namespace textured_raycast.maze
             Console.Title = game_name;
         }
 
-        public void DrawConBuffer(ConsoleBuffer buf) {
-            if(firstBuffer) {
+        public void DrawConBuffer(ConsoleBuffer buf)
+        {
+            if (firstBuffer)
+            {
                 buffer2 = buf.getBuffer();
-            } else {
+            }
+            else
+            {
                 buffer1 = buf.getBuffer();
             }
         }
 
         // Swaps the buffers.
-        public void SwapBuffers() {
+        public void SwapBuffers()
+        {
             TexColor[] tmp = new TexColor[Width * Height];
 
             // Clears the buffer, to be rendered to now.
-            if(firstBuffer) {
+            if (firstBuffer)
+            {
                 buffer1 = tmp.ToList();
-            } else {
+            }
+            else
+            {
                 buffer2 = tmp.ToList();
             }
 
@@ -63,16 +74,21 @@ namespace textured_raycast.maze
         }
 
         // Draws the active buffer, using DrawBuffer.
-        public void DrawScreen() {
-            if(firstBuffer) {
+        public void DrawScreen()
+        {
+            if (firstBuffer)
+            {
                 DrawBuffer(buffer1);
-            } else {
+            }
+            else
+            {
                 DrawBuffer(buffer2);
             }
         }
 
         // Draws specific buffer.
-        private void DrawBuffer(List<TexColor> buffer) {
+        private void DrawBuffer(List<TexColor> buffer)
+        {
             int winWidth = Width;
             int winHeight = Height;
 
@@ -82,10 +98,13 @@ namespace textured_raycast.maze
             // problems on Windows.
             Console.CursorTop = 0;
             // Draw buffer, line by line. This improves performance.
-            for (int y = 0; y <  winHeight; y+=2) {
+            for (int y = 0; y < winHeight; y += 2)
+            {
                 string line = "";
-                for(int x = 0; x < winWidth; x++) {
-                    if(buffer[x + y*winWidth] is null || buffer[x + (y + 1) * winWidth] is null) {
+                for (int x = 0; x < winWidth; x++)
+                {
+                    if (buffer[x + y * winWidth] is null || buffer[x + (y + 1) * winWidth] is null)
+                    {
                         line += " ".PastelBg(Color.Black);
                     }
                     else

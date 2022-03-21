@@ -66,8 +66,8 @@ namespace textured_raycast.maze
         public static void resetPlrPos()
         {
             Map curMap = ResourceManager.getMap(maps[currentMap]);
-            plrPos = curMap.playerStartPos;
-            plrRot = curMap.playerStartRot;
+            plrPos = new Vector2d(curMap.playerStartPos);
+            plrRot = new Vector2d(curMap.playerStartRot);
             plrPlane = new Vector2d(plrRot.y, -plrRot.x) * 0.66;
         }
 

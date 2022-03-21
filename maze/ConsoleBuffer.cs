@@ -7,7 +7,8 @@ using textured_raycast.maze.texture;
 
 namespace textured_raycast.maze
 {
-    class ConsoleBuffer {
+    class ConsoleBuffer
+    {
         int width, height;
 
         List<TexColor> buffer;
@@ -15,7 +16,8 @@ namespace textured_raycast.maze
         public int Width { get => width; set => width = value; }
         public int Height { get => height; set => height = value; }
 
-        public ConsoleBuffer(int win_width, int win_height) {
+        public ConsoleBuffer(int win_width, int win_height)
+        {
             // Used to initialize the buffers to and empty sized list.
             TexColor[] tmp = new TexColor[win_width * win_height];
             buffer = tmp.ToList();
@@ -25,7 +27,8 @@ namespace textured_raycast.maze
             Height = win_height;
         }
 
-        public List<TexColor> getBuffer() {
+        public List<TexColor> getBuffer()
+        {
             return buffer;
         }
 
@@ -76,77 +79,89 @@ namespace textured_raycast.maze
             return consoleBuffer;
         }
 
-        public void Clear() {
+        public void Clear()
+        {
             TexColor[] tmp = new TexColor[Height * Width];
             buffer = tmp.ToList();
         }
 
         // Draws a centered vertical line, width xPos, Height and Color.
-        public void DrawVerLine(int x, int height, TexColor color) {
+        public void DrawVerLine(int x, int height, TexColor color)
+        {
             // Return exception, if char is out of game window.
-            if (x < 0 || x > Width) {
+            if (x < 0 || x > Width)
+            {
                 throw new ArgumentOutOfRangeException();
             }
 
             // Draw line, by choosing a starting Y and looping through height in
             // a for loop.
-            int startY = Height/2 - height/2;
-            for(int i = 0; i < height; i++) {
+            int startY = Height / 2 - height / 2;
+            for (int i = 0; i < height; i++)
+            {
                 // Draw the line, using NuGet package "Pastel" to color, using
                 // ansi escape sequences.
-                DrawPixel(color, x, startY+i);
+                DrawPixel(color, x, startY + i);
             }
         }
 
-        public void DrawVerLine(int x, int height, Texture tex, int texX, float darken, TexColor alphaCol = null) {
+        public void DrawVerLine(int x, int height, Texture tex, int texX, float darken, TexColor alphaCol = null)
+        {
             // Return exception, if char is out of game window.
-            if (x < 0 || x > Width) {
+            if (x < 0 || x > Width)
+            {
                 throw new ArgumentOutOfRangeException();
             }
 
-            int startY = Height/2 - height/2;
+            int startY = Height / 2 - height / 2;
             int endY = height + startY;
 
             float sectionHeight = (float)tex.height / height;
-            float texPos = (startY - Height / 2 + height /2) * sectionHeight;
-            if(startY < 0) {
+            float texPos = (startY - Height / 2 + height / 2) * sectionHeight;
+            if (startY < 0)
+            {
                 texPos += sectionHeight * (startY * -1);
             }
             startY = startY < 0 ? 0 : startY;
             endY = endY > Height ? Height : endY;
-            for(int i = startY; i < endY; i++) {
+            for (int i = startY; i < endY; i++)
+            {
                 int texY = (int)texPos;
                 texPos += sectionHeight;
                 TexColor color = tex.getPixel(texX, texY);
                 // Draw the line, using NuGet package "Pastel" to color, using
                 // ansi escape sequences.
-                if(alphaCol == color)
+                if (alphaCol == color)
                     continue;
                 DrawPixel((color * darken), x, i);
             }
         }
 
-        public void DrawVerLine(int x, int height, Texture tex, int texX, float darken, TexColor light, float mixBy, TexColor alphaCol = null) {
+        public void DrawVerLine(int x, int height, Texture tex, int texX, float darken, TexColor light, float mixBy, TexColor alphaCol = null)
+        {
             // Return exception, if char is out of game window.
-            if (x < 0 || x > Width) {
+            if (x < 0 || x > Width)
+            {
                 throw new ArgumentOutOfRangeException();
             }
 
-            int startY = Height/2 - height/2;
+            int startY = Height / 2 - height / 2;
             int endY = height + startY;
 
             float sectionHeight = (float)tex.height / height;
-            float texPos = (startY - Height / 2 + height /2) * sectionHeight;
-            if(startY < 0) {
+            float texPos = (startY - Height / 2 + height / 2) * sectionHeight;
+            if (startY < 0)
+            {
                 texPos += sectionHeight * (startY * -1);
             }
             startY = startY < 0 ? 0 : startY;
             endY = endY > Height ? Height : endY;
-            for(int i = startY; i < endY; i++) {
+            for (int i = startY; i < endY; i++)
+            {
                 int texY = (int)texPos;
                 texPos += sectionHeight;
                 TexColor color = tex.getPixel(texX, texY);
-                if(alphaCol == color)
+                if (alphaCol == color)
                     continue;
                 TexColor lightMul = TexColor.unitMultReal(color, light);
 
@@ -169,10 +184,13 @@ namespace textured_raycast.maze
         /// <summary>
         /// Draws a texture at a specific position.
         /// </summary>
-        public void DrawTexture(Texture tex, int xP, int yP) {
-            for(int y = 0; y < tex.height; y++) {
-                for(int x = 0; x < tex.width; x++) {
-                    DrawPixel(tex.getPixel(x, y), xP+x, yP+y);
+        public void DrawTexture(Texture tex, int xP, int yP)
+        {
+            for (int y = 0; y < tex.height; y++)
+            {
+                for (int x = 0; x < tex.width; x++)
+                {
+                    DrawPixel(tex.getPixel(x, y), xP + x, yP + y);
                 }
             }
         }
@@ -180,12 +198,15 @@ namespace textured_raycast.maze
         /// <summary>
         /// Draws a texture at a specific position, ignoring any pixels of color <c>alpha</c>.
         /// </summary>
-        public void DrawTexture(Texture tex, int xP, int yP, TexColor alpha) {
-            for(int y = 0; y < tex.height; y++) {
-                for(int x = 0; x < tex.width; x++) {
+        public void DrawTexture(Texture tex, int xP, int yP, TexColor alpha)
+        {
+            for (int y = 0; y < tex.height; y++)
+            {
+                for (int x = 0; x < tex.width; x++)
+                {
                     TexColor pixel = tex.getPixel(x, y);
-                    if(pixel != alpha)
-                        DrawPixel(pixel, xP+x, yP+y);
+                    if (pixel != alpha)
+                        DrawPixel(pixel, xP + x, yP + y);
                 }
             }
         }
@@ -200,8 +221,9 @@ namespace textured_raycast.maze
 
         // Draws char to specific framebuffer. Used internally by DrawChar
         // functions.
-        private void DrawToFramebuffer(TexColor col, int x, int y, ref List<TexColor> buffer) {
-            buffer[x + y*Width] = col;
+        private void DrawToFramebuffer(TexColor col, int x, int y, ref List<TexColor> buffer)
+        {
+            buffer[x + y * Width] = col;
         }
     }
 }
