@@ -66,8 +66,8 @@ namespace textured_raycast.maze
         public static void resetPlrPos()
         {
             Map curMap = ResourceManager.getMap(maps[currentMap]);
-            plrPos = curMap.playerStartPos;
-            plrRot = curMap.playerStartRot;
+            plrPos = new Vector2d(curMap.playerStartPos);
+            plrRot = new Vector2d(curMap.playerStartRot);
             plrPlane = new Vector2d(plrRot.y, -plrRot.x) * 0.66;
         }
 
@@ -76,7 +76,7 @@ namespace textured_raycast.maze
             maps = new Dictionary<int, string>()
             {
                 {-1, "maps/fightMap.map"},
-                {1, "maps/overWorld.map"},
+                {1, "maps/overworld.map"},
                 // {1, "maps/lightTest.map"},
                 {2, "maps/DarkDungeon.map"},
                 {3, "maps/hiddenRoom.map"},

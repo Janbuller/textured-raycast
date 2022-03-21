@@ -9,12 +9,13 @@ using textured_raycast.maze.sprites.allSprites;
 
 namespace textured_raycast.maze
 {
-    class Map {
+    class Map
+    {
         // Save width and height.
         int width, height;
         // Don't allow changing.
-        public int Width{get => width;}
-        public int Height{get => height;}
+        public int Width { get => width; }
+        public int Height { get => height; }
         // Map is śaved as a list of ints. Different numbers have different
         // functions/colors.
         public List<Wall> roof = new List<Wall>();
@@ -117,7 +118,7 @@ namespace textured_raycast.maze
                     string thisString = "";
                     for (int i2 = 4; i2 < thisInfo.Length; i2++)
                     {
-                        thisString+=thisInfo[i2]+" ";
+                        thisString += thisInfo[i2] + " ";
                     }
                     if (thisString.Length > 0)
                         thisString = thisString.Substring(0, thisString.Length - 1);
@@ -134,11 +135,13 @@ namespace textured_raycast.maze
             }
         }
 
-        public ILight[] GetLights() {
+        public ILight[] GetLights()
+        {
             List<int> lightIdx = lightPoitions;
             ILight[] lights = new ILight[lightIdx.Count];
 
-            for(int i = 0; i < lightIdx.Count; i++) {
+            for (int i = 0; i < lightIdx.Count; i++)
+            {
                 lights[i] = (ILight)sprites[lightIdx[i]];
             }
 
@@ -160,14 +163,14 @@ namespace textured_raycast.maze
 
         public int GetFloor(int x, int y)
         {
-            if(x > width-1 || x < 0 || y > height-1 || y < 0)
+            if (x > width - 1 || x < 0 || y > height - 1 || y < 0)
                 return 0;
             else
                 return floor[x + y * width].wallID;
         }
         public int GetRoof(int x, int y)
         {
-            if(x > width-1 || x < 0 || y > height-1 || y < 0)
+            if (x > width - 1 || x < 0 || y > height - 1 || y < 0)
                 return 0;
             else
                 return roof[x + y * width].wallID;
@@ -202,13 +205,15 @@ namespace textured_raycast.maze
 
         // Original SetCell function. Different X and Y from GetCell, since
         // GetCell was changed to flip horizontally.
-        public void SetCell(int x, int y, int wallIDIn) {
+        public void SetCell(int x, int y, int wallIDIn)
+        {
             map[x + y * width] = new Wall(wallIDIn);
         }
 
         // SetCell relative to GetCell.
-        public void SetCellRel(int x, int y, int wallIDIn) {
-            map[width-x + y * width] = new Wall(wallIDIn);
+        public void SetCellRel(int x, int y, int wallIDIn)
+        {
+            map[width - x + y * width] = new Wall(wallIDIn);
         }
     }
 }
