@@ -209,6 +209,15 @@ namespace textured_raycast.maze
                             if (World.player.inv.ContainsKey(xN + yN * 5 + pageOffset * 25))
                                 UIHolder.DrawTexture(ResourceManager.getTexture(Item.itemTextures[World.player.inv[xN + yN * 5 + pageOffset*25].imageID]), 59 + xN * 12, 19 + yN * 12, new TexColor(0, 0, 0));
 
+                    for (int i = 0; i < 3; i++)
+                        if (World.player.equippedSkills[i] != -1)
+                            UIHolder.DrawBox(45, 19 + 12 * i, 9, 9, new TexColor(198, 132, 68));
+
+                    for (int i = 0; i < invButtons.Length; i++)
+                        if (World.player.guiToEquipped.ContainsKey(i))
+                            if (!(World.player.equipped[World.player.guiToEquipped[i]] is null))
+                                UIHolder.DrawBox(invButtons[i].x + 1, invButtons[i].y + 1, 9, 9, new TexColor(198, 132, 68));
+
 
                     if (nowInv == -1)
                     {
@@ -304,6 +313,7 @@ namespace textured_raycast.maze
                             if (!(World.player.equipped[World.player.guiToEquipped[i]] is null))
                                 UIHolder.DrawTexture(ResourceManager.getTexture(Item.itemTextures[World.player.equipped[World.player.guiToEquipped[i]].imageID]), invButtons[i].x + 1, invButtons[i].y + 1, new TexColor(0, 0, 0));
 
+                    
                     int loop = 0;
                     for (int hp = 0; hp < World.player.hp; hp++)
                     {
@@ -343,6 +353,7 @@ namespace textured_raycast.maze
                     for (int i = 0; i < 3; i++)
                         if (World.player.equippedSkills[i] != -1)
                             UIHolder.DrawTexture(Skill.Skills[World.player.equippedSkills[i]].getTexture(), 45, 19 + 12 * i, new TexColor(0, 0, 0));
+
 
                     engine.DrawConBuffer(UIHolder);
                     engine.SwapBuffers();

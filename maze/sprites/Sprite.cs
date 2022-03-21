@@ -146,7 +146,7 @@ namespace textured_raycast.maze.sprites
 
         virtual public void resetSprite()
         {
-            pos = new Vector2d(orgPos.x, orgPos.y);
+
         }
 
         virtual public string ActivateMessage()

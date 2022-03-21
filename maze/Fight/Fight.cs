@@ -16,6 +16,8 @@ namespace rpg_game.maze.Fight
         int spriteID;
         int mapID = -1;
 
+        Enemy sTF;
+
         public float tillFightBegins = 2;
 
         public float hp;
@@ -25,11 +27,11 @@ namespace rpg_game.maze.Fight
 
         public Fight(Enemy spriteToFight)
         {
-            maxHp = spriteToFight.hp;
-            hp = maxHp;
+            sTF = spriteToFight;
 
-            spriteID = spriteToFight.spriteID;
-            hp = spriteToFight.hp;
+            spriteID = sTF.spriteID;
+            maxHp = sTF.hp;
+            hp = maxHp;
 
             sprites.Add(new DefaultSprite(2.35, 2, spriteID));
         }
@@ -47,6 +49,9 @@ namespace rpg_game.maze.Fight
             World.state = states.Game;
 
             World.player.xp++;
+
+            sTF.canInteract = false;
+            sTF.doRender = false;
         }
 
         public void plrDead()

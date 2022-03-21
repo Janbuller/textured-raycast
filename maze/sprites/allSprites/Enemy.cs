@@ -1,4 +1,5 @@
-﻿using System;
+﻿using rpg_game.maze;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using textured_raycast.maze.math;
@@ -7,14 +8,16 @@ using textured_raycast.maze.texture;
 
 namespace textured_raycast.maze.sprites.allSprites
 {
-    class Enemy : Sprite
+    class Enemy : Sprite // Hp, AppxDmg, VarInDam, xpGiven
     {
         float chaseDistance = 2.5f;
-
+        
         // these are just for testing, and will most properbly be changed...
-        public float hp = 100;
-        public float appDamage = 2;
-
+        public float hp;
+        public float appDamage;
+        public float damageVar;
+        public float xpGiven;
+        
         public Enemy(double posX, double posY, int spriteID, int effectID = 0, string whatsLeft = "") : base(posX, posY, spriteID, effectID, whatsLeft)
         {
             define(posX, posY, spriteID, effectID, whatsLeft);
@@ -22,9 +25,22 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void onLoad()
         {
-            interactDistance = 0.1f;
+            hp = extraEffects[0];
+            appDamage = extraEffects[1];
+            damageVar = extraEffects[2];
+            xpGiven = extraEffects[3];
+
+            interactDistance = 0.2f;
             canInteract = true;
             autoInteract = true;
+        }
+
+        public override void resetSprite()
+        {
+            pos = new Vector2d(orgPos.x, orgPos.y);
+
+            canInteract = true;
+            doRender = true;
         }
 
         public override void Activate()
