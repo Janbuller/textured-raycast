@@ -546,11 +546,6 @@ namespace textured_raycast.maze
             return false;
         }
 
-        private static TexColor TexColor(int v1, int v2, int v3)
-        {
-            throw new NotImplementedException();
-        }
-
         // Multi-threaded screen-drawing
         // =============================
         // Draw the screen asynchronously
