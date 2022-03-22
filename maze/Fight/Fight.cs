@@ -85,9 +85,10 @@ namespace rpg_game.maze.Fight
             }
 
             SpriteCasting.SpriteCast(ref buffer, sprites, ZBuffer, 1, map);
-            World.plrRot = dir;
-            World.plrPos = pos;
-            World.plrPlane = plane;
+
+            World.plrRot = new Vector2d(dir);
+            World.plrPos = new Vector2d(pos);
+            World.plrPlane = new Vector2d(plane);
 
             buffer.DrawBox(1, 1, 60, 6 , new TexColor(0, 0, 0));
             buffer.DrawBox(59, 73, 60, 6, new TexColor(0, 0, 0));
