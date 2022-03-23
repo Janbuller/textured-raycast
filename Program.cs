@@ -15,7 +15,6 @@ namespace textured_raycast
             World.setupMapsInWorld();
             Maze.StartMaze();
 
-
             // var watch = new System.Diagnostics.Stopwatch();
             // watch.Start();
             // Texture test = TextureLoaders.loadFromPlainPPM("img/test4.ppm");

@@ -402,7 +402,7 @@ namespace textured_raycast.maze
 		            );
 
                     UIHolder.DrawTexture(ResourceManager.getTexture(World.textures[104]), screenOffset.x, screenOffset.y);
-
+                    
                     foreach (SkillPlaceHolder skillButton in skillButtons)
                     {
                         try
@@ -413,7 +413,6 @@ namespace textured_raycast.maze
                         {
                         }
                     }
-
 
                     for (int x = 1; x < 26; x++)
                     {
