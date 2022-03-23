@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using textured_raycast.maze.math;
 using System;
-using rpg_game.maze.Fight;
 using textured_raycast.maze.sprites;
 using textured_raycast.maze.resources;
 using textured_raycast.maze.sprites.allSprites;
-using rpg_game.maze;
 
 namespace textured_raycast.maze
 {
@@ -30,7 +28,7 @@ namespace textured_raycast.maze
         public static string currentMessage = ""; // this is to show messages to the player or something
         public static string interactMessage = ""; // This takes priority over current message
 
-        public static Fight fight;
+        public static Fight.Fight fight;
 
         public static Player player = new Player();
 
@@ -60,7 +58,7 @@ namespace textured_raycast.maze
         public static void startFight(Sprite sprite)
         {
             state = states.Fighting;
-            fight = new Fight(sprite as Enemy);
+            fight = new Fight.Fight(sprite as Enemy);
         }
 
         public static void resetPlrPos()

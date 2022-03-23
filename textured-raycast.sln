@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "rpg-game", "rpg-game.csproj", "{6837D949-62DD-4B62-8030-9DF92A326FE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "textured-raycast", "textured-raycast.csproj", "{6837D949-62DD-4B62-8030-9DF92A326FE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using textured_raycast.maze;
-
-namespace rpg_game.maze.Items
+﻿namespace textured_raycast.maze.Items
 {
     class Iron_Armor : Item
     {
@@ -14,7 +9,7 @@ namespace rpg_game.maze.Items
 
             imageID = 2;
 
-            tags[equipSlots.Torso] = true;
+            tags[EquipSlots.Torso] = true;
         }
     }
 }

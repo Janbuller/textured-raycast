@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace rpg_game.maze.ButtonList.Buttons.INV
+﻿namespace textured_raycast.maze.ButtonList.Buttons.INV
 {
     class PlaceHolder : Button
     {

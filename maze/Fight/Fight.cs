@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using textured_raycast.maze;
 using textured_raycast.maze.graphics;
-using textured_raycast.maze.texture;
 using textured_raycast.maze.math;
+using textured_raycast.maze.skills;
 using textured_raycast.maze.sprites;
 using textured_raycast.maze.sprites.allSprites;
-using textured_raycast.maze.skills;
+using textured_raycast.maze.texture;
 
-namespace rpg_game.maze.Fight
+namespace textured_raycast.maze.Fight
 {
     internal class Fight
     {

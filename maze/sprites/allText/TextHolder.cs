@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace rpg_game.maze.sprites.allText
+namespace textured_raycast.maze.sprites.allText
 {
     internal class TextHolder
     {

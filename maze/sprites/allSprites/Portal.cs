@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using textured_raycast.maze;
 using textured_raycast.maze.math;
-using textured_raycast.maze.graphics;
-using textured_raycast.maze.sprites;
 using textured_raycast.maze.texture;
 using textured_raycast.maze.resources;
-using System.Linq;
 
 namespace textured_raycast.maze.sprites.allSprites
 {

@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Pastel;
-using System.Drawing;
 using textured_raycast.maze.texture;
 
 namespace textured_raycast.maze

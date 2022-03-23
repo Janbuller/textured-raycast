@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using textured_raycast.maze.sprites;
-
-namespace textured_raycast.maze.sprites.allSprites
+﻿namespace textured_raycast.maze.sprites.allSprites
 {
     // IDForMapToGoTo IDForDoorOfMapToGoTo MyDoorID
     class Door : Sprite

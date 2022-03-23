@@ -1,5 +1,3 @@
-using textured_raycast.maze;
-
 namespace textured_raycast.maze.input
 {
     enum KeyState {

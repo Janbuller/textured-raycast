@@ -1,13 +1,10 @@
-﻿using rpg_game.maze;
-using rpg_game.maze.Items;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using textured_raycast.maze.Items;
 using textured_raycast.maze.skills;
 
 namespace textured_raycast.maze
 {
-    enum equipSlots
+    enum EquipSlots
     {
         Head,
         Accessory1,
@@ -25,24 +22,24 @@ namespace textured_raycast.maze
 
         public float actualHp = 10;
 
-        public Dictionary<equipSlots, Item> equipped = new Dictionary<equipSlots, Item>()
+        public Dictionary<EquipSlots, Item> equipped = new Dictionary<EquipSlots, Item>()
         {
-            {equipSlots.Head, null},
-            {equipSlots.Accessory1, null},
-            {equipSlots.Accessory2, null},
-            {equipSlots.MainHand, null},
-            {equipSlots.OffHand, null},
-            {equipSlots.Torso, null},
+            {EquipSlots.Head, null},
+            {EquipSlots.Accessory1, null},
+            {EquipSlots.Accessory2, null},
+            {EquipSlots.MainHand, null},
+            {EquipSlots.OffHand, null},
+            {EquipSlots.Torso, null},
         };
 
-        public Dictionary<int, equipSlots> guiToEquipped = new Dictionary<int, equipSlots>()
+        public Dictionary<int, EquipSlots> guiToEquipped = new Dictionary<int, EquipSlots>()
         {
-            {2, equipSlots.Head},
-            {8, equipSlots.Accessory1},
-            {9, equipSlots.Accessory2},
-            {4, equipSlots.MainHand},
-            {6, equipSlots.OffHand},
-            {5, equipSlots.Torso},
+            {2, EquipSlots.Head},
+            {8, EquipSlots.Accessory1},
+            {9, EquipSlots.Accessory2},
+            {4, EquipSlots.MainHand},
+            {6, EquipSlots.OffHand},
+            {5, EquipSlots.Torso},
         };
 
         public void reset()

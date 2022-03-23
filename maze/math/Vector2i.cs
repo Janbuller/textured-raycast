@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace textured_raycast.maze.math
 {
@@ -11,16 +12,40 @@ namespace textured_raycast.maze.math
             this.x = x;
             this.y = y;
         }
+        public static bool Equals(Vector2i vec1, Vector2i vec2)
+        {
+            if (ReferenceEquals(vec1, vec2)) return true;
+            if (ReferenceEquals(vec1, null)) return false;
+            if (ReferenceEquals(vec2, null)) return false;
+            if (vec1.GetType() != vec2.GetType()) return false;
+            return vec1.x == vec2.x && vec1.y == vec2.y;
+        }
 
+        public static int GetHashCode(Vector2i obj)
+        {
+            return HashCode.Combine(obj.x, obj.y);
+        }
+
+        public override bool Equals(object vec)
+        {
+            return Vector2i.Equals(this, vec);
+        }
+        
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(x, y);
+        }
+        
         // Bunch of operator overloading, making vector math easier.
         // Equality operator: Checks if two vectors are equal.
-        public static bool operator ==(Vector2i vec1, Vector2i vec2) {
-            return (vec1.x == vec2.x) && (vec1.y == vec2.y);
+        public static bool operator ==(Vector2i vec1, Vector2i vec2)
+        {
+            return Vector2i.Equals(vec1, vec2);
         }
 
         // Inequality operator: Checks if two vectors are /not/ equal
         public static bool operator !=(Vector2i vec1, Vector2i vec2) {
-            return !((vec1.x == vec2.x) && (vec1.y == vec2.y));
+            return !Vector2i.Equals(vec1, vec2);
         }
 
         // Addition operator: Adds X to X and Y to Y

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using textured_raycast.maze;
-
-namespace rpg_game.maze.ButtonList.Buttons.INV
+﻿namespace textured_raycast.maze.ButtonList.Buttons.INV
 {
     class Back : Button
     {

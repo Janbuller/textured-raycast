@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace textured_raycast.maze.texture
@@ -126,20 +127,44 @@ namespace textured_raycast.maze.texture
             );
         }
 
+        public static bool Equals(TexColor col1, TexColor col2)
+        {
+            if (ReferenceEquals(col1, col2)) return true;
+            if (ReferenceEquals(col1, null)) return false;
+            if (ReferenceEquals(col2, null)) return false;
+            if (col1.GetType() != col2.GetType()) return false;
+            return col1.r == col2.r && col1.g == col2.g && col1.b == col2.b;
+        }
+
+        public static int GetHashCode(TexColor obj)
+        {
+            return HashCode.Combine(obj.r, obj.g, obj.b);
+        }
+
+        public override int GetHashCode()
+        {
+            return TexColor.GetHashCode(this);
+        }
+        public override bool Equals(object color)
+        {
+            return TexColor.Equals(this, color);
+        }
+
         public static bool operator ==(TexColor col1, TexColor col2) {
-            if (System.Object.ReferenceEquals(col1, null))
-            {
-                if (System.Object.ReferenceEquals(col2, null))
-                {
-                    return true;
-                }
-
-                return false;
-            }
-
-            return col1.R == col2.R &&
-                   col1.G == col2.G &&
-                   col1.B == col2.B;
+            // if (System.Object.ReferenceEquals(col1, null))
+            // {
+            //     if (System.Object.ReferenceEquals(col2, null))
+            //     {
+            //         return true;
+            //     }
+            //
+            //     return false;
+            // }
+            //
+            // return col1.R == col2.R &&
+            //        col1.G == col2.G &&
+            //        col1.B == col2.B;
+            return TexColor.Equals(col1, col2);
         }
         public static bool operator !=(TexColor col1, TexColor col2) {
             return !(col1 == col2);

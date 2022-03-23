@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using textured_raycast.maze;
-
-namespace rpg_game.maze.Items
+﻿namespace textured_raycast.maze.Items
 {
     class Iron_Broadsword : Item
     {
@@ -12,8 +7,8 @@ namespace rpg_game.maze.Items
             name = "Iron Broadsword";
             addDAM = 3;
 
-            tags[equipSlots.MainHand] = true;
-            tags[equipSlots.OffHand] = true;
+            tags[EquipSlots.MainHand] = true;
+            tags[EquipSlots.OffHand] = true;
         }
     }
 }

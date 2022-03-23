@@ -3,7 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>rpg_game</RootNamespace>
+    <RootNamespace>textured_raycast</RootNamespace>
+    <AssemblyName>textured_raycast</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

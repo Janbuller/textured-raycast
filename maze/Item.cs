@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using textured_raycast.maze;
+﻿using System.Collections.Generic;
 
-namespace rpg_game.maze
+namespace textured_raycast.maze
 {
     abstract class Item
     {
@@ -17,14 +14,14 @@ namespace rpg_game.maze
         public string name = "";
         public int imageID = 0;
 
-        public Dictionary<equipSlots, bool> tags = new Dictionary<equipSlots, bool>()
+        public Dictionary<EquipSlots, bool> tags = new Dictionary<EquipSlots, bool>()
         {
-            {equipSlots.Head, false},
-            {equipSlots.Accessory1, false},
-            {equipSlots.Accessory2, false},
-            {equipSlots.MainHand, false},
-            {equipSlots.OffHand, false},
-            {equipSlots.Torso, false},
+            {EquipSlots.Head, false},
+            {EquipSlots.Accessory1, false},
+            {EquipSlots.Accessory2, false},
+            {EquipSlots.MainHand, false},
+            {EquipSlots.OffHand, false},
+            {EquipSlots.Torso, false},
         };
 
         public int addHP = 0;

@@ -1,10 +1,4 @@
-﻿using rpg_game.maze;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using textured_raycast.maze.math;
-using textured_raycast.maze.sprites;
-using textured_raycast.maze.texture;
+﻿using textured_raycast.maze.math;
 
 namespace textured_raycast.maze.sprites.allSprites
 {

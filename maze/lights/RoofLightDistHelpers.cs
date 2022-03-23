@@ -1,10 +1,7 @@
-using System;
 using System.Linq;
 using textured_raycast.maze.texture;
 using textured_raycast.maze.math;
 using textured_raycast.maze.sprites.allSprites;
-using System.Threading.Tasks;
-using System.Diagnostics;
 
 namespace textured_raycast.maze.lights
 {

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Collections.Generic;
+﻿using System.Runtime.InteropServices;
 using textured_raycast.maze;
-using textured_raycast.maze.math;
-using textured_raycast.maze.texture;
 
 namespace textured_raycast
 {

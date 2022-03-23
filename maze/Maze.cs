@@ -1,20 +1,16 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using textured_raycast.maze.math;
 using textured_raycast.maze.graphics;
-using textured_raycast.maze.lights;
 using textured_raycast.maze.texture;
 using textured_raycast.maze.skills;
 using textured_raycast.maze.sprites;
 using textured_raycast.maze.sprites.allSprites;
 using textured_raycast.maze.input;
-using textured_raycast.maze.GUI;
 using textured_raycast.maze.resources;
 using System.Threading.Tasks;
-using rpg_game.maze;
-using rpg_game.maze.ButtonList.Buttons.INV;
-using rpg_game.maze.ButtonList.Buttons.Skills;
+using textured_raycast.maze.ButtonList;
+using textured_raycast.maze.ButtonList.Buttons.INV;
+using textured_raycast.maze.ButtonList.Buttons.Skills;
 
 namespace textured_raycast.maze
 {
@@ -243,7 +239,7 @@ namespace textured_raycast.maze
                             {
                                 if (World.player.guiToEquipped.ContainsKey(curInvButton))
                                 {
-                                    equipSlots es = World.player.guiToEquipped[curInvButton];
+                                    EquipSlots es = World.player.guiToEquipped[curInvButton];
 
                                     if (World.player.inv[World.player.invSelectedSpot].tags[es] == true)
                                     {
@@ -413,7 +409,7 @@ namespace textured_raycast.maze
                         {
                             Skill curSkill = Skill.Skills[skillButton.id];
                             UIHolder.DrawTexture(curSkill.getTexture(), screenOffset.x + skillButton.x, screenOffset.y + skillButton.y);
-                        } catch (Exception e)
+                        } catch (Exception)
                         {
                         }
                     }

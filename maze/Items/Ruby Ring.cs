@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using textured_raycast.maze;
-
-namespace rpg_game.maze.Items
+﻿namespace textured_raycast.maze.Items
 {
     class Ruby_Ring : Item
     {
@@ -14,8 +9,8 @@ namespace rpg_game.maze.Items
 
             imageID = 1;
 
-            tags[equipSlots.Accessory1] = true;
-            tags[equipSlots.Accessory2] = true;
+            tags[EquipSlots.Accessory1] = true;
+            tags[EquipSlots.Accessory2] = true;
         }
     }
 }

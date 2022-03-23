@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using textured_raycast.maze;
-using textured_raycast.maze.texture;
+﻿using textured_raycast.maze.texture;
 
-namespace rpg_game.maze
+namespace textured_raycast.maze.ButtonList
 {
     abstract class Button
     {

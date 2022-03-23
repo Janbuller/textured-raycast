@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using textured_raycast.maze.math;
 using textured_raycast.maze.texture;
