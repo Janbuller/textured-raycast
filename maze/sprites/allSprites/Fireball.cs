@@ -46,5 +46,15 @@ namespace textured_raycast.maze.sprites.allSprites
         public Vector2d GetLightPos() {
             return pos;
         }
+
+        public float GetAttenuationLinear()
+        {
+	    return 0.22f;
+        }
+
+        public float GetAttenuationQuadratic()
+        {
+            return 0.20f;
+        }
     }
 }

@@ -12,5 +12,8 @@ namespace textured_raycast.maze.sprites.allSprites
         public TexColor GetLightColor();
         public float GetLightIntensity();
         public Vector2d GetLightPos();
+
+        public float GetAttenuationLinear();
+        public float GetAttenuationQuadratic();
     }
 }

@@ -64,6 +64,8 @@ local image = { -- id, path, isWallTexture
     {7, "img/tmp-portal.ppm", false},
     {10, "img/wolfenstein/guard/guard1.ppm", false},
     {11, "img/truck/truck1.ppm", false},
+    {13, "img/castle.ppm", false},
+    {14, "img/torch.ppm", false},
 }
 local images = #image
 

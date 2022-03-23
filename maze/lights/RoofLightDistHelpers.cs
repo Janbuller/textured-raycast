@@ -18,7 +18,7 @@ namespace textured_raycast.maze.lights
                 LightDist light = lights[i];
                 TexColor curCol = light.col * (float)light.intensity;
 
-                float distScalar = (float)(1 / (1 + 0.22 * light.dist + 0.20 * light.dist * light.dist));
+                float distScalar = (float)(1 / (light.linear * light.dist + light.quadratic * light.dist * light.dist));
 
                 mixedCol += curCol * distScalar;
             }
@@ -35,7 +35,9 @@ namespace textured_raycast.maze.lights
                 lightDists[i] = new LightDist(
                     distTo,
                     lights[i].GetLightColor(),
-                    lights[i].GetLightIntensity()
+                    lights[i].GetLightIntensity(),
+		    lights[i].GetAttenuationLinear(),
+		    lights[i].GetAttenuationQuadratic()
                 );
             }
 

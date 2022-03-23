@@ -15,10 +15,16 @@ namespace textured_raycast.maze.lights
         public TexColor col;
         public double intensity;
 
-        public LightDist(double dist, TexColor col, double intensity) {
+        public double linear;
+        public double quadratic;
+
+        public LightDist(double dist, TexColor col, double intensity, double linear, double quadratic) {
             this.dist = dist;
             this.col = col;
             this.intensity = intensity;
+
+	    this.linear = linear;
+	    this.quadratic = quadratic;
         }
     }
 }
