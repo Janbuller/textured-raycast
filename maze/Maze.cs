@@ -42,12 +42,12 @@ namespace textured_raycast.maze
         static Vector2i size = new Vector2i(120, 80);
 
         static ConsoleEngine engine;
-	    static ConsoleBuffer game;
-	    static ConsoleBuffer fight;
-	    static ConsoleBuffer UIHolder;
+	static ConsoleBuffer game;
+	static ConsoleBuffer fight;
+	static ConsoleBuffer UIHolder;
 
         public static bool StartMaze() {
-            engine = new ConsoleEngine(size.x, size.y, "maze");
+            engine = new ConsoleEngine(size.x, size.y, "very dumb game");
             game = new ConsoleBuffer(size.x, size.y);
             fight = new ConsoleBuffer(size.x, size.y);
             UIHolder = new ConsoleBuffer(size.x, size.y);
@@ -335,7 +335,7 @@ namespace textured_raycast.maze
                     }
 
                     loop = 0;
-                    for (int mag = 0; mag < World.player.mag; mag++)
+		    for (int mag = 0; mag < World.player.mag; mag++)
                     {
                         if (mag - loop * 36 == 36)
                             loop++;
@@ -469,16 +469,14 @@ namespace textured_raycast.maze
                     map = World.getMapByID(World.currentMap);
                     visRange = map.useSkybox ? 1 : 25;
 
-                    //DrawSkybox(ref game, dir, textures[1]);
-
                     // find closest sprite that is interactable and display interact message
                     Sprite spriteToInteract = null;
                     double distanceToInteract = 9999;
 
                     foreach (Sprite sprite in map.sprites)
                     {
-                        sprite.Update(World.dt);
-                        sprite.updateAnimation(World.dt);
+                        sprite.Update();
+                        sprite.updateAnimation();
 
                         double distance = World.plrPos.DistTo(sprite.getPos());
                         // Console.WriteLine(distance + " : " + sprite.canInteract);
@@ -546,8 +544,10 @@ namespace textured_raycast.maze
         // Draw the screen asynchronously
         public static void DrawScreen(ConsoleEngine engine) {
             Task.Run(() => {
-                while(true)
+                while (true)
+                {
                     engine.DrawScreen();
+                }
             });
         }
 

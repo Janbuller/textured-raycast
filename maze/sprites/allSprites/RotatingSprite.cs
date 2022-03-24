@@ -21,7 +21,7 @@ namespace textured_raycast.maze.sprites.allSprites
             canInteract = false;
         }
 
-        public override void updateAnimation(float dt)
+        public override void updateAnimation()
         {
             // rot += dt*2;
             while(rot > Math.PI)

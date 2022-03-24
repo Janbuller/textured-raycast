@@ -79,7 +79,7 @@ namespace textured_raycast.maze.Fight
 
             foreach (Sprite sprite in sprites)
             {
-                sprite.updateAnimation(World.dt);
+                sprite.updateAnimation();
             }
 
             SpriteCasting.SpriteCast(ref buffer, sprites, ZBuffer, 1, map);

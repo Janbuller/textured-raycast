@@ -42,7 +42,7 @@ namespace textured_raycast.maze.sprites.allSprites
             World.startFight(this);
         }
 
-        public override void Update(float dt)
+        public override void Update()
         {
             double dist = World.plrPos.DistTo(pos);
 
@@ -51,7 +51,7 @@ namespace textured_raycast.maze.sprites.allSprites
                 Vector2d vDist = World.plrPos - pos;
                 vDist.Normalize();
 
-                pos += vDist * dt*1.42; // 1.42 so that its a little faster than the player, (the player can straphe giving him/her like 1.41 movementspeed)
+                pos += vDist * World.dt*1.42; // 1.42 so that its a little faster than the player, (the player can straphe giving him/her like 1.41 movementspeed)
             }
         }
     }

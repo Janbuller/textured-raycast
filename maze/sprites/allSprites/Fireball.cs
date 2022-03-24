@@ -22,10 +22,10 @@ namespace textured_raycast.maze.sprites.allSprites
             vel = new Vector2d(extraEffects[1]/100.0, extraEffects[2]/100.0);
         }
 
-        public override void Update(float dt)
+        public override void Update()
         {
             Map curMap = World.getMapByID(World.currentMap);
-            pos += vel * dt;
+            pos += vel * World.dt;
             if(pos.x > curMap.Width || pos.x < 0 || pos.y > curMap.Height || pos.y < 0) {
 
             }

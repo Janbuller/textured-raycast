@@ -88,9 +88,9 @@ namespace textured_raycast.maze.sprites
         {
             define(posX, posY, spriteID, effectID, whatsLeft);
         }
-        virtual public void updateAnimation(float dt)
+        virtual public void updateAnimation()
         {
-            time += dt;
+            time += World.dt;
             if (time > 1)
             {
                 time = 0;
@@ -130,7 +130,7 @@ namespace textured_raycast.maze.sprites
 
         }
 
-        virtual public void Update(float dt)
+        virtual public void Update()
         {
 
         }
