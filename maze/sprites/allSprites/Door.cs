@@ -1,4 +1,6 @@
-﻿namespace textured_raycast.maze.sprites.allSprites
+﻿using textured_raycast.maze.sprites.allText;
+
+namespace textured_raycast.maze.sprites.allSprites
 {
     // IDForMapToGoTo IDForDoorOfMapToGoTo MyDoorID
     class Door : Sprite
@@ -22,7 +24,10 @@
 
         public override string ActivateMessage()
         {
-            return "Traverse the door";
+            if (extraEffects.Count == 2)
+                return "Traverse the door";
+
+            return MessageTextHolder.Text[extraEffects[3]];
         }
     }
 }

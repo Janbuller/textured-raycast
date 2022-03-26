@@ -75,6 +75,7 @@ namespace textured_raycast.maze
             {
                 {-1, "maps/fightMap.map"},
                 {1, "maps/TheHolyLands.map"},
+                {2, "maps/Castle.map"},
             };
 
             resetPlrPos();
