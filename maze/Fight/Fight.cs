@@ -61,11 +61,8 @@ namespace textured_raycast.maze.Fight
 
         public void renderFightToBuffer(ref ConsoleBuffer buffer)
         {
-            Vector2d dir = World.plrRot;
             World.plrRot = new Vector2d(-1, 0);
-            Vector2d pos = World.plrPos;
             World.plrPos = new Vector2d(3.65, 2);
-            Vector2d plane = World.plrPlane;
             World.plrPlane = new Vector2d(World.plrRot.y, -World.plrRot.x) * 0.66;
             Map map = World.getMapByID(mapID);
 
@@ -83,10 +80,6 @@ namespace textured_raycast.maze.Fight
             }
 
             SpriteCasting.SpriteCast(ref buffer, sprites, ZBuffer, 1, map);
-
-            World.plrRot = new Vector2d(dir);
-            World.plrPos = new Vector2d(pos);
-            World.plrPlane = new Vector2d(plane);
 
             buffer.DrawBox(1, 1, 60, 6 , new TexColor(0, 0, 0));
             buffer.DrawBox(59, 73, 60, 6, new TexColor(0, 0, 0));
