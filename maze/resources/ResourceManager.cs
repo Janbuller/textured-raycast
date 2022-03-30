@@ -22,7 +22,7 @@ namespace textured_raycast.maze.resources
                 {
                     return null;
                 }
-                cachedTextures.Add(path, tex);
+                cacheTexture(path, tex);
             }
 
             return tex;
@@ -33,7 +33,13 @@ namespace textured_raycast.maze.resources
 	/// and existing or futurely loaded texture.
         public static void cacheTexture(string path, Texture tex)
         {
-	    cachedTextures.Add(path, tex);
+            try
+            {
+                cachedTextures.Add(path, tex);
+            } catch (System.ArgumentException)
+            {
+
+            }
         }
 
         public static Map getMap(string path)
