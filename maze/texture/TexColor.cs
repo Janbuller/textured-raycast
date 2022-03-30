@@ -27,7 +27,7 @@ namespace textured_raycast.maze.texture
         }
 
         public TexColor() {
-            this.R = 0;
+            this.R = 255;
             this.G = 0;
             this.B = 0;
         }

@@ -40,20 +40,19 @@ namespace textured_raycast.maze
         };
 
         static Vector2i size = new Vector2i(120, 80);
-
-        static ConsoleEngine engine;
-	static ConsoleBuffer game;
-	static ConsoleBuffer fight;
-	static ConsoleBuffer UIHolder;
+        
+	    static ConsoleBuffer game;
+	    static ConsoleBuffer fight;
+	    static ConsoleBuffer UIHolder;
 
         public static bool StartMaze() {
-            engine = new ConsoleEngine(size.x, size.y, "very dumb game");
+            World.ce = new ConsoleEngine(size.x, size.y, "very dumb game");
             game = new ConsoleBuffer(size.x, size.y);
             fight = new ConsoleBuffer(size.x, size.y);
             UIHolder = new ConsoleBuffer(size.x, size.y);
 
             Console.Clear();
-            DrawScreen(engine);
+            DrawScreen();
 
             return Start();
         }
@@ -65,7 +64,7 @@ namespace textured_raycast.maze
             // The visibility distance. Controls the distance-based darkening.
             int visRange = 25;
 
-            double[] ZBuffer = new double[engine.Width];
+            double[] ZBuffer = new double[World.ce.Width];
 
             int curInvButton = 0;
             int curSkillButton = 12;
@@ -95,16 +94,16 @@ namespace textured_raycast.maze
 
                         World.fight.renderFightToBuffer(ref fight);
 
-                        engine.DrawConBuffer(fight);
-                        engine.SwapBuffers();
+                        World.ce.DrawConBuffer(fight);
+                        World.ce.SwapBuffers();
                     }
                     else
                     {
                         UIHolder.Clear();
                         World.fight.renderFightStartScreenToBuffer(ref UIHolder, World.fight.tillFightBegins / 2 - 0.1f);
 
-                        engine.DrawConBuffer(game.mixBuffer(UIHolder));
-                        engine.SwapBuffers();
+                        World.ce.DrawConBuffer(game.mixBuffer(UIHolder));
+                        World.ce.SwapBuffers();
                     }
                 }
 
@@ -335,7 +334,7 @@ namespace textured_raycast.maze
                     }
 
                     loop = 0;
-		    for (int mag = 0; mag < World.player.mag; mag++)
+		            for (int mag = 0; mag < World.player.mag; mag++)
                     {
                         if (mag - loop * 36 == 36)
                             loop++;
@@ -351,8 +350,8 @@ namespace textured_raycast.maze
                             UIHolder.DrawTexture(Skill.Skills[World.player.equippedSkills[i]].getTexture(), 45, 19 + 12 * i, new TexColor(0, 0, 0));
 
 
-                    engine.DrawConBuffer(UIHolder);
-                    engine.SwapBuffers();
+                    World.ce.DrawConBuffer(UIHolder);
+                    World.ce.SwapBuffers();
                 }
 
                 while (World.state == states.Skills)
@@ -437,8 +436,8 @@ namespace textured_raycast.maze
                     }
 
                     GUI.GUI.text(ref UIHolder, World.player.skillPoints.ToString(), 1, 1, 120);
-                    engine.DrawConBuffer(UIHolder);
-                    engine.SwapBuffers();
+                    World.ce.DrawConBuffer(UIHolder);
+                    World.ce.SwapBuffers();
                 }
 
                 while (World.state == states.Paused)
@@ -447,8 +446,8 @@ namespace textured_raycast.maze
 
                     GUI.GUI.pauseGUI(ref UIHolder);
 
-                    engine.DrawConBuffer(game.mixBuffer(UIHolder));
-                    engine.SwapBuffers();
+                    World.ce.DrawConBuffer(game.mixBuffer(UIHolder));
+                    World.ce.SwapBuffers();
                 }
 
                 World.lastFrameTime = DateTime.Now.Ticks;
@@ -530,8 +529,8 @@ namespace textured_raycast.maze
                     // draw sprites
                     SpriteCasting.SpriteCast(ref game, map.sprites, ZBuffer, visRange, map);
 
-                    engine.DrawConBuffer(game.mixBuffer(UIHolder));
-                    engine.SwapBuffers();
+                    World.ce.DrawConBuffer(game.mixBuffer(UIHolder));
+                    World.ce.SwapBuffers();
                     HandleInputGame(map, World.plrPos, ref World.plrRot, ref spriteToInteract);
                 }
             }
@@ -542,11 +541,11 @@ namespace textured_raycast.maze
         // Multi-threaded screen-drawing
         // =============================
         // Draw the screen asynchronously
-        public static void DrawScreen(ConsoleEngine engine) {
+        public static void DrawScreen() {
             Task.Run(() => {
                 while (true)
                 {
-                    engine.DrawScreen();
+                    World.ce.DrawScreen();
                 }
             });
         }

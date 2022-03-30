@@ -20,6 +20,8 @@ namespace textured_raycast.maze
 
     class World
     {
+        public static ConsoleEngine ce;
+
         public static int currentMap = 1;
         private static Dictionary<int, string> maps;
 

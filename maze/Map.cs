@@ -43,6 +43,7 @@ namespace textured_raycast.maze
             {5, typeof(Portal)},
             {6, typeof(Fireball)},
             {7, typeof(RotatingSprite)},
+            {8, typeof(ChoiceTP)},
         };
 
         public bool useSkybox = true;
