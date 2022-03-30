@@ -83,6 +83,16 @@ namespace textured_raycast.maze
             buffer = tmp.ToList();
         }
 
+        public void Fill(TexColor fillColor)
+        {
+            TexColor[] tmp = new TexColor[Height * Width];
+            for (int i = 0; i < tmp.Length; i++)
+            {
+                tmp[i] = fillColor;
+            }
+            buffer = tmp.ToList();
+        }
+
         // Draws a centered vertical line, width xPos, Height and Color.
         public void DrawVerLine(int x, int height, TexColor color)
         {
