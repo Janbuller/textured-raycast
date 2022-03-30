@@ -9,7 +9,7 @@ namespace textured_raycast.maze
     {
         int width, height;
 
-        List<TexColor> buffer;
+        public List<TexColor> buffer;
 
         public int Width { get => width; set => width = value; }
         public int Height { get => height; set => height = value; }
