@@ -56,7 +56,7 @@ namespace textured_raycast.maze.Fight
         {
             World.state = states.Game;
             World.player.reset();
-            World.getMapByID(World.currentMap).fullReset();
+            World.getCurMap().fullReset();
         }
 
         public void renderFightToBuffer(ref ConsoleBuffer buffer)

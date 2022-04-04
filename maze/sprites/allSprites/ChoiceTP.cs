@@ -10,16 +10,16 @@ namespace textured_raycast.maze.sprites.allSprites
     // IDForMapToGoTo IDForDoorOfMapToGoTo MyDoorID
     class ChoiceTP : Sprite
     {
-        private List<string> strings = new List<string>()
+        private Dictionary<string, string> strings = new Dictionary<string, string>()
         {
-            "Castle",
-            "Church",
-            "Blacksmith",
-            "Library",
-            "Arena",
-            "Market",
-            "Adventurers Guild",
-            "Back",
+            {"Castle", "maps/Castle.map"},
+            {"Church", "maps/Church.map"},
+            {"Blacksmith", "maps/Blacksmith.map"},
+            {"Library", "maps/Library.map"},
+            {"Arena", "maps/Arena.map"},
+            {"Market", "maps/Market.map"},
+            {"Adventurers Guild", "maps/AG.map"},
+            {"Back", ""},
         };
 
         public ChoiceTP(double posX, double posY, int spriteID, int effectID = 0, string whatsLeft = "") : base(posX, posY, spriteID, effectID, whatsLeft)
@@ -40,27 +40,43 @@ namespace textured_raycast.maze.sprites.allSprites
 
             int selected = -1;
             int hover = 0;
+            string selectedVal = "";
 
             while (selected == -1)
             {
                 buffer.Fill(new TexColor(100, 100, 100));
-
-                int i = 0;
-                foreach (string str in strings)
-                {
-                    GUI.GUI.text(ref buffer, str, 7, 1+i*6, 120);
-                    i++;
-                }
-
+                
                 if (InputManager.GetKey(Keys.K_UP) == KeyState.KEY_DOWN ||
                     InputManager.GetKey(Keys.K_W) == KeyState.KEY_DOWN)
                     hover = Math.Max(0, hover - 1);
 
                 if (InputManager.GetKey(Keys.K_DOWN) == KeyState.KEY_DOWN ||
                     InputManager.GetKey(Keys.K_S) == KeyState.KEY_DOWN)
-                    hover = Math.Min(strings.Count-1, hover + 1);
+                    hover = Math.Min(strings.Count - 1, hover + 1);
 
+                int i = 0;
+                foreach (KeyValuePair<string, string> var in strings)
+                {
+                    GUI.GUI.text(ref buffer, var.Key, 7, 1+i*6, 120);
+                    if (i == hover)
+                        selectedVal = var.Value;
+                    i++;
+                }
 
+                if (InputManager.GetKey(Keys.K_E) == KeyState.KEY_DOWN)
+                {
+                    if (selectedVal != "")
+                        World.openMapAtStartPos(ResourceManager.getMap(selectedVal));
+                    else
+                    {
+                        World.openMapAtStartPos(ResourceManager.getMap("maps/TheHolyLands.map"));
+
+                        World.plrPos = new math.Vector2d(70.5, 31.5);
+                    }
+
+                    selected = 0;
+                }
+                
                 buffer.DrawTexture(ResourceManager.getTexture("img/arrow.ppm"), 1, 1+hover*6, new TexColor(0, 0, 0));
 
                 World.ce.DrawConBuffer(buffer);

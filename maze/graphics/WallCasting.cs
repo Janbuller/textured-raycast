@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using textured_raycast.maze.math;
 using textured_raycast.maze.lights;
 using textured_raycast.maze.texture;
@@ -11,7 +12,7 @@ namespace textured_raycast.maze.graphics
     {
         public static void WallCast(ref ConsoleBuffer game, ref double[] ZBuffer, float visRange)
         {
-            Map map = World.getMapByID(World.currentMap);
+            Map map = World.getCurMap();
 
             int width = game.Width;
             int height = game.Height;
@@ -67,7 +68,7 @@ namespace textured_raycast.maze.graphics
 
         public static WallcastReturn DoOneWallcast(int x, int width, int height, ILight[] lights, Vector2d dir, Vector2d pos, float visRange, double alreadyDist = 0, int recurseCount = 0) {
 
-            Map map = World.getMapByID(World.currentMap);
+            Map map = World.getCurMap();
 
             // The current x-coordinate on the camera viewport "plane"
             // (line), corresponding to the current viewspace
@@ -213,6 +214,7 @@ namespace textured_raycast.maze.graphics
             darken = (float)Math.Max(0, darken - perpWallDist * (visRange * 0.005));
 
             Texture tex = ResourceManager.getTexture(World.textures[hitWall == null ? 1 : hitWall.thisTexID]);
+
             double wallX;
             if (side == 0)
                 wallX = pos.y + perpWallDist * rayDir.y;

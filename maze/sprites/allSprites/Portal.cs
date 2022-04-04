@@ -36,7 +36,7 @@ namespace textured_raycast.maze.sprites.allSprites
 
             // Texture startTex = ResourceManager.getTexture(IDTextureCorrespondence[texID][0]);
             // portalTex = new Texture(startTex);
-            // Map curMap = World.getMapByID(World.currentMap);
+            // Map curMap = World.getCurMap();
 
             // Vector2d portalLocOffset = new Vector2d(extraEffects[0], extraEffects[1]);
             // Vector2d tpToLoc = World.plrPos + portalLocOffset;

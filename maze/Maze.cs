@@ -59,7 +59,7 @@ namespace textured_raycast.maze
 
         private static bool Start() {
 
-            Map map = World.getMapByID(World.currentMap);
+            Map map = World.getCurMap();
 
             // The visibility distance. Controls the distance-based darkening.
             int visRange = 25;
@@ -465,7 +465,7 @@ namespace textured_raycast.maze
                     }
 
                     // make sure it knows what map its on
-                    map = World.getMapByID(World.currentMap);
+                    map = World.getCurMap();
                     visRange = map.useSkybox ? 1 : 25;
 
                     // find closest sprite that is interactable and display interact message

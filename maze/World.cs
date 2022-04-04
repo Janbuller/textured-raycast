@@ -34,6 +34,8 @@ namespace textured_raycast.maze
 
         public static Player player = new Player();
 
+        public static Map curMap;
+
         public static Vector2d plrPos;
         public static Vector2d plrRot;
         public static Vector2d plrPlane;
@@ -65,7 +67,7 @@ namespace textured_raycast.maze
 
         public static void resetPlrPos()
         {
-            Map curMap = ResourceManager.getMap(maps[currentMap]);
+            curMap = ResourceManager.getMap(maps[currentMap]);
             plrPos = new Vector2d(curMap.playerStartPos);
             plrRot = new Vector2d(curMap.playerStartRot);
             plrPlane = new Vector2d(plrRot.y, -plrRot.x) * 0.66;
@@ -82,10 +84,22 @@ namespace textured_raycast.maze
 
             resetPlrPos();
         }
+        public static void openMapAtStartPos(Map map)
+        {
+            curMap = map;
+            plrPos = new Vector2d(curMap.playerStartPos);
+            plrRot = new Vector2d(curMap.playerStartRot);
+            plrPlane = new Vector2d(plrRot.y, -plrRot.x) * 0.66;
+        }
 
         public static Map getMapByID(int id)
         {
             return ResourceManager.getMap(maps[id]);
+        }
+        
+        public static Map getCurMap()
+        {
+            return curMap;
         }
     }
 }

@@ -12,11 +12,11 @@ namespace textured_raycast.maze.graphics
     {
         public static void FloorCast(ref Texture game, float visRange)
         {
-            Map map = World.getMapByID(World.currentMap);
+            Map map = World.getCurMap();
 
             game.Clear();
 
-            Map curMap = World.getMapByID(World.currentMap);
+            Map curMap = World.getCurMap();
             ILight[] lights = map.GetLights();
 
             // Grabs the floor and ceiling texture, before the loop, since we

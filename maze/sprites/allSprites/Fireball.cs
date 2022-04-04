@@ -24,7 +24,7 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void Update()
         {
-            Map curMap = World.getMapByID(World.currentMap);
+            Map curMap = World.getCurMap();
             pos += vel * World.dt;
             if(pos.x > curMap.Width || pos.x < 0 || pos.y > curMap.Height || pos.y < 0) {
 
