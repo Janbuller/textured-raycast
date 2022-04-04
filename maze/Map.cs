@@ -34,6 +34,8 @@ namespace textured_raycast.maze
 
         public float lightMix = 0.7f;
 
+	public string Path;
+
         private Dictionary<int, Type> spriteTypes = new Dictionary<int, Type>(){
             {0, typeof(DefaultSprite)},
             {1, typeof(Door)},
@@ -51,6 +53,8 @@ namespace textured_raycast.maze
         public Map(string location)
         {
             string[] imageData = File.ReadAllLines(location);
+
+            Path = location;
 
             int reqWidth;
             int reqHeight;
