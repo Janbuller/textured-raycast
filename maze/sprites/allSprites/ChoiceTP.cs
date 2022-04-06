@@ -44,8 +44,8 @@ namespace textured_raycast.maze.sprites.allSprites
 
             while (selected == -1)
             {
-                buffer.Fill(new TexColor(100, 100, 100));
-                
+                buffer.Fill(new TexColor(198, 132, 68));
+
                 if (InputManager.GetKey(Keys.K_UP) == KeyState.KEY_DOWN ||
                     InputManager.GetKey(Keys.K_W) == KeyState.KEY_DOWN)
                     hover = Math.Max(0, hover - 1);
@@ -57,7 +57,7 @@ namespace textured_raycast.maze.sprites.allSprites
                 int i = 0;
                 foreach (KeyValuePair<string, string> var in strings)
                 {
-                    GUI.GUI.text(ref buffer, var.Key, 7, 1+i*6, 120);
+                    GUI.GUI.text(ref buffer, var.Key, 7, 1 + i * 6, 120);
                     if (i == hover)
                         selectedVal = var.Value;
                     i++;
@@ -76,8 +76,8 @@ namespace textured_raycast.maze.sprites.allSprites
 
                     selected = 0;
                 }
-                
-                buffer.DrawTexture(ResourceManager.getTexture("img/arrow.ppm"), 1, 1+hover*6, new TexColor(0, 0, 0));
+
+                buffer.DrawTexture(ResourceManager.getTexture("img/arrow.ppm"), 1, 1 + hover * 6, new TexColor(0, 0, 0));
 
                 World.ce.DrawConBuffer(buffer);
                 World.ce.SwapBuffers();

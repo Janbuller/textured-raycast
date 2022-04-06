@@ -2,7 +2,7 @@
 
 namespace textured_raycast.maze.sprites.allSprites
 {
-    class Enemy : Sprite // Hp, AppxDmg, VarInDam, xpGiven
+    class Enemy : Sprite // Hp, AppxDmg, VarInDam, xpGiven, MoneyRecived, MoneyVar
     {
         float chaseDistance = 2.5f;
         
@@ -11,7 +11,9 @@ namespace textured_raycast.maze.sprites.allSprites
         public float appDamage;
         public float damageVar;
         public float xpGiven;
-        
+        public float moneyRecived;
+        public float moneyVar;
+
         public Enemy(double posX, double posY, int spriteID, int effectID = 0, string whatsLeft = "") : base(posX, posY, spriteID, effectID, whatsLeft)
         {
             define(posX, posY, spriteID, effectID, whatsLeft);
@@ -23,6 +25,8 @@ namespace textured_raycast.maze.sprites.allSprites
             appDamage = extraEffects[1];
             damageVar = extraEffects[2];
             xpGiven = extraEffects[3];
+            moneyRecived = extraEffects[4];
+            moneyVar = extraEffects[5];
 
             interactDistance = 0.2f;
             canInteract = true;
