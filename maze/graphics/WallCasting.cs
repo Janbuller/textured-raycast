@@ -10,9 +10,10 @@ namespace textured_raycast.maze.graphics
 {
     class WallCasting
     {
-        public static void WallCast(ref ConsoleBuffer game, ref double[] ZBuffer, float visRange)
+        public static void WallCast(ref ConsoleBuffer game, ref double[] ZBuffer, float visRange, Map map = null)
         {
-            Map map = World.getCurMap();
+	    if(map is null)
+		map = World.getMapByID(World.currentMap);
 
             int width = game.Width;
             int height = game.Height;
@@ -34,7 +35,7 @@ namespace textured_raycast.maze.graphics
             //                  });
 
             for (int x = 0; x < game.Width; x++) {
-                casted[x] = DoOneWallcast(x, width, height, lights, World.plrRot, World.plrPos, visRange);
+                casted[x] = DoOneWallcast(x, width, height, lights, World.plrRot, World.plrPos, visRange, 0, 0, map);
                 WallcastReturn cast = casted[x];
                 // Draw the ray.
                 if (cast.HitWall.doDraw) {
@@ -66,9 +67,10 @@ namespace textured_raycast.maze.graphics
             }
         }
 
-        public static WallcastReturn DoOneWallcast(int x, int width, int height, ILight[] lights, Vector2d dir, Vector2d pos, float visRange, double alreadyDist = 0, int recurseCount = 0) {
+        public static WallcastReturn DoOneWallcast(int x, int width, int height, ILight[] lights, Vector2d dir, Vector2d pos, float visRange, double alreadyDist = 0, int recurseCount = 0, Map map = null) {
 
-            Map map = World.getCurMap();
+	    if(map is null)
+		map = World.getMapByID(World.currentMap);
 
             // The current x-coordinate on the camera viewport "plane"
             // (line), corresponding to the current viewspace

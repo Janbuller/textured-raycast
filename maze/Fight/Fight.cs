@@ -6,6 +6,7 @@ using textured_raycast.maze.skills;
 using textured_raycast.maze.sprites;
 using textured_raycast.maze.sprites.allSprites;
 using textured_raycast.maze.texture;
+using textured_raycast.maze.resources;
 
 namespace textured_raycast.maze.Fight
 {
@@ -22,6 +23,10 @@ namespace textured_raycast.maze.Fight
         public float maxHp;
 
         List<Sprite> sprites = new List<Sprite>();
+
+        Vector2d startRot;
+        Vector2d startPos;
+        Vector2d startPlane;
 
         public Fight(Enemy spriteToFight)
         {
@@ -61,18 +66,22 @@ namespace textured_raycast.maze.Fight
 
         public void renderFightToBuffer(ref ConsoleBuffer buffer)
         {
+	    startRot = World.plrRot;
+	    startPos = World.plrPos;
+	    startPlane = World.plrPlane;
+
             World.plrRot = new Vector2d(-1, 0);
             World.plrPos = new Vector2d(3.65, 2);
             World.plrPlane = new Vector2d(World.plrRot.y, -World.plrRot.x) * 0.66;
             Map map = World.getMapByID(mapID);
 
             Texture FloorAndRoof = new Texture(buffer.Width, buffer.Height);
-            FloorCasting.FloorCast(ref FloorAndRoof, 1);
+            FloorCasting.FloorCast(ref FloorAndRoof, 1, map);
             buffer.DrawTexture(FloorAndRoof, 0, 0);
 
             double[] ZBuffer = new double[buffer.Width];
 
-            WallCasting.WallCast(ref buffer, ref ZBuffer, 1);
+            WallCasting.WallCast(ref buffer, ref ZBuffer, 1, map);
 
             foreach (Sprite sprite in sprites)
             {
@@ -95,6 +104,10 @@ namespace textured_raycast.maze.Fight
                     buffer.DrawTexture(Skill.Skills[World.player.equippedSkills[i]].getTexture(), 2 + i * 13, 68, new TexColor(0, 0, 0));
                 }
             }
+
+            World.plrRot = startRot;
+            World.plrPos = startPos;
+            World.plrPlane = startPlane;
         }
 
         public void renderFightStartScreenToBuffer(ref ConsoleBuffer buffer, float progress)

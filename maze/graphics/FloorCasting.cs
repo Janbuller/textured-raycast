@@ -10,13 +10,13 @@ namespace textured_raycast.maze.graphics
 {
     class FloorCasting
     {
-        public static void FloorCast(ref Texture game, float visRange)
+        public static void FloorCast(ref Texture game, float visRange, Map map = null)
         {
-            Map map = World.getCurMap();
+	    if(map is null)
+		map = World.getMapByID(World.currentMap);
 
             game.Clear();
 
-            Map curMap = World.getCurMap();
             ILight[] lights = map.GetLights();
 
             // Grabs the floor and ceiling texture, before the loop, since we
@@ -61,10 +61,10 @@ namespace textured_raycast.maze.graphics
                     }
 
                     Vector2i cellPos = (Vector2i)floor.Floor();
-                    int floorId = curMap.GetFloor(cellPos.x, cellPos.y);
+                    int floorId = map.GetFloor(cellPos.x, cellPos.y);
                     floorTex = floorId == 0 ? null : ResourceManager.getTexture(World.textures[floorId]);
 
-                    int ceilId = curMap.GetRoof(cellPos.x, cellPos.y);
+                    int ceilId = map.GetRoof(cellPos.x, cellPos.y);
                     ceilingTex = ceilId == 0 ? null : ResourceManager.getTexture(World.textures[ceilId]);
 
                     float darken = 0.9f;
@@ -94,7 +94,7 @@ namespace textured_raycast.maze.graphics
                         } else {
                             Vector2d realPosAbove = new Vector2d(floor.x + 0.1, floor.y);
                             Vector2i cellPosAbove = (Vector2i)realPosAbove;
-                            if(curMap.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0 || curMap.IsWall(cellPosAbove.x, cellPosAbove.y))
+                            if(map.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0 || map.IsWall(cellPosAbove.x, cellPosAbove.y))
                                 color *= 0.6f;
                         }
                         game.setPixel(x, y, color);
