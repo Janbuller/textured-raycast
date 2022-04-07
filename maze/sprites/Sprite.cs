@@ -67,6 +67,9 @@ namespace textured_raycast.maze.sprites
                                       "img/mario/16.ppm",}},
             {13,  new List<string>() {"img/castle2.ppm" }},
             {14,  new List<string>() {"img/torch.ppm" }},
+            {15,  new List<string>() {"img/bs/bs1.ppm",
+				      "img/bs/bs2.ppm",
+				      "img/bs/bs3.ppm",}},
         };
 
         public Vector2d pos;

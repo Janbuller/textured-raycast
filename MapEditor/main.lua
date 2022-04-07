@@ -49,23 +49,24 @@ function string.split(s, delimiter)
 end
 
 local image = { -- id, path, isWallTexture
-    {1, "img/wolfenstein/greystone.ppm", true},
-    {2, "img/wolfenstein/redbrick.ppm", true},
-    {3, "img/wolfenstein/bluestone.ppm", true},
-    {4, "img/test5.ppm", true},
-    {5, "img/wolfenstein/redstone.ppm", true},
-    {6, "img/wolfenstein/colorstone.ppm", true},
-    {1, "img/wolfenstein/barrel.ppm", false},
-    {2, "img/wolfenstein/greenlight.ppm", false},
-    {3, "img/shadyman.ppm", false},
-    {4, "img/button.ppm", false},
-    {5, "img/wolfenstein/pillar.ppm", false},
-    {6, "img/enemy/bat1.ppm", false},
-    {7, "img/tmp-portal.ppm", false},
+    {1,  "img/wolfenstein/greystone.ppm", true},
+    {2,  "img/wolfenstein/redbrick.ppm", true},
+    {3,  "img/wolfenstein/bluestone.ppm", true},
+    {4,  "img/test5.ppm", true},
+    {5,  "img/wolfenstein/redstone.ppm", true},
+    {6,  "img/wolfenstein/colorstone.ppm", true},
+    {1,  "img/wolfenstein/barrel.ppm", false},
+    {2,  "img/wolfenstein/greenlight.ppm", false},
+    {3,  "img/shadyman.ppm", false},
+    {4,  "img/button.ppm", false},
+    {5,  "img/wolfenstein/pillar.ppm", false},
+    {6,  "img/enemy/bat1.ppm", false},
+    {7,  "img/tmp-portal.ppm", false},
     {10, "img/wolfenstein/guard/guard1.ppm", false},
     {11, "img/truck/truck1.ppm", false},
     {13, "img/castle.ppm", false},
     {14, "img/torch.ppm", false},
+    {15, "img/bs/bs2.ppm", false},
 }
 local images = #image
 

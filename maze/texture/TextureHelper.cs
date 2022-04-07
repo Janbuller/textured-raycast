@@ -26,6 +26,35 @@ namespace textured_raycast.maze.texture
             return new Texture(imageData, Downscaled.width/2, Downscaled.height/2);
         }
 
+        public static Texture DoubleScale(Texture Upscaled) {
+            List<TexColor> imageData = new List<TexColor>();
+            for(int y = 0; y < Upscaled.height*2; y++) {
+                for(int x = 0; x < Upscaled.width; x++) {
+                    TexColor pixel = Upscaled.getPixel(x, (int)(y/2));
+
+                    imageData.Add(pixel);
+                    imageData.Add(pixel);
+                }
+            }
+
+            return new Texture(imageData, Upscaled.width*2, Upscaled.height*2);
+        }
+
+        public static Texture TripleScale(Texture Upscaled) {
+            List<TexColor> imageData = new List<TexColor>();
+            for(int y = 0; y < Upscaled.height*3; y++) {
+                for(int x = 0; x < Upscaled.width; x++) {
+                    TexColor pixel = Upscaled.getPixel(x, (int)(y/3));
+
+                    imageData.Add(pixel);
+                    imageData.Add(pixel);
+                    imageData.Add(pixel);
+                }
+            }
+
+            return new Texture(imageData, Upscaled.width*3, Upscaled.height*3);
+        }
+
         public static void DrawVerLine(ref Texture texToDraw, int x, int height, Texture tex, int texX, float darken, TexColor drawToCol = null) {
             int startY = texToDraw.height/2 - height/2;
             int endY = height + startY;

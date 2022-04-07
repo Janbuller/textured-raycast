@@ -407,7 +407,7 @@ namespace textured_raycast.maze
                         try
                         {
                             Skill curSkill = Skill.Skills[skillButton.id];
-                            UIHolder.DrawTexture(curSkill.getTexture(), screenOffset.x + skillButton.x, screenOffset.y + skillButton.y);
+                            UIHolder.DrawTexture(TextureHelper.TripleScale(curSkill.getTexture()), screenOffset.x + skillButton.x-3, screenOffset.y + skillButton.y-3, new TexColor(0, 0, 0));
                         } catch (Exception)
                         {
                         }
