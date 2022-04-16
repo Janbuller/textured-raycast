@@ -456,6 +456,8 @@ namespace textured_raycast.maze
                     World.dt = (float)(DateTime.Now.Ticks - World.lastFrameTime)/TimeSpan.TicksPerSecond;
                     World.lastFrameTime = DateTime.Now.Ticks;
 
+                    // World.plrBob = Math.Max(0, World.plrBob - World.dt * 10);
+
                     // Make time pass
                     World.dayTime += World.dt / 60; // 60 = 1 whole day = 60 sec
                     if (World.dayTime > 1) World.dayTime--;
@@ -619,7 +621,11 @@ namespace textured_raycast.maze
 
         public static void moveInDir(ref Map map, ref Vector2d pos, Vector2d dir)
         {
-            double movSpeed = World.dt * ((InputManager.GetKey(Keys.K_SHIFT) != KeyState.KEY_UP && World.staminaLVL > 0) ? 2 : 1);
+            double movSpeed = ((InputManager.GetKey(Keys.K_SHIFT) != KeyState.KEY_UP && World.staminaLVL > 0) ? 2 : 1);
+            double curMovSpeed = World.dt * movSpeed;
+
+            World.plrBobTime += World.dt * 1000 * (float)movSpeed;
+            World.plrBob = (float)(Math.Sin(World.plrBobTime * 0.01) + 1);
 
             if (InputManager.GetKey(Keys.K_SHIFT) != KeyState.KEY_UP && World.staminaLVL > 0)
             {
@@ -635,12 +641,12 @@ namespace textured_raycast.maze
             // make sense, since they could be different. They are
             // split up, to allow sliding on walls, when not walking
             // perpendicular into them.
-            Wall cellX = map.GetWall((int)(pos.x + dir.x * (movSpeed * extraColDistMult)), (int)(pos.y));
-            Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y + dir.y * (movSpeed * extraColDistMult)));
+            Wall cellX = map.GetWall((int)(pos.x + dir.x * (curMovSpeed * extraColDistMult)), (int)(pos.y));
+            Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y + dir.y * (curMovSpeed * extraColDistMult)));
 
             // Check if cell is empty or a control cell, if so, move.
-            if (!cellX.isWall) pos.x += dir.x * movSpeed;
-            if (!cellY.isWall) pos.y += dir.y * movSpeed;
+            if (!cellX.isWall) pos.x += dir.x * curMovSpeed;
+            if (!cellY.isWall) pos.y += dir.y * curMovSpeed;
 
             cellX.Collide();
             cellY.Collide();

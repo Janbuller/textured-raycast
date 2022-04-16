@@ -31,6 +31,43 @@ namespace textured_raycast.maze.texture
             return pixels[x + y * width];
         }
 
+        public enum GetPixelMode
+        {
+	    BLACK,
+	    REPEAT,
+        }
+        public TexColor getPixel(int x, int y, GetPixelMode mode) {
+            TexColor retPixel = null;
+
+            if (x > 0 && x < width &&
+                y > 0 && y < height)
+            {
+                retPixel = pixels[x + y * width];
+            } else
+            {
+                if (mode == GetPixelMode.BLACK)
+                {
+		    retPixel = new TexColor(0, 0, 0);
+                } else if(mode == GetPixelMode.REPEAT)
+		{
+                    int newX = 0, newY = 0;
+		    while(x < 0)
+			newX += width;
+		    while(x > width)
+                        newX -= width;
+
+		    while(y < 0)
+			newY += width;
+		    while(y > width)
+                        newY -= width;
+
+                    retPixel = pixels[newX + newY * width];
+                }
+            }
+
+            return retPixel;
+        }
+
         public void Clear() {
             this.pixels = new TexColor[width*height].ToList();
         }

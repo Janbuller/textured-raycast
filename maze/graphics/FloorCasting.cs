@@ -45,7 +45,7 @@ namespace textured_raycast.maze.graphics
                 int midOff = y - (winHeight / 2)+1;
                 // Get the camera height, assuming it to be in the middle of the
                 // screen.
-                float camHeight = 0.5f * winHeight;
+                float camHeight = 0.5f * winHeight - World.plrBob * 2;
                 float lineDist = camHeight / midOff;
                 // Cap lineDist, since it'll be casted to an int later.
                 lineDist = lineDist < 1000000000 ? lineDist : 1000000000;
@@ -121,7 +121,7 @@ namespace textured_raycast.maze.graphics
                         int shownLines = Math.Max(0, Math.Min((int)((float)15 / (lineDist)), 5));
                         for (int i = 1; i <= shownLines; i++)
                         {
-                            game.setPixel(x, winHeight - y - i, color * (1.0f - (0.2f * (i-1))));
+                            game.setPixel(x, winHeight - y - i - (int)(World.plrBob * 2), color * (1.0f - (0.2f * (i-1))));
                         }
                     }
 

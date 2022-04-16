@@ -36,6 +36,8 @@ namespace textured_raycast.maze
 
         public static Map curMap;
 
+        public static float plrBobTime = 0;
+        public static float plrBob = 0;
         public static Vector2d plrPos;
         public static Vector2d plrRot;
         public static Vector2d plrPlane;

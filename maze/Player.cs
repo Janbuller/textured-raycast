@@ -87,6 +87,7 @@ namespace textured_raycast.maze
         public Dictionary<int, Item> inv = new Dictionary<int, Item>()
         {
             { 4, new Iron_Broadsword()},
+            { 7, new Iron_Helmet()},
             { 6, new Iron_Broadsword()},
             { 26, new Iron_Broadsword()},
             { 49, new Iron_Broadsword()},

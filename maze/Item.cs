@@ -8,6 +8,7 @@ namespace textured_raycast.maze
             {0,   "img/items/metalsword.ppm"},
             {1,   "img/items/rubyring.ppm"},
             {2,   "img/items/metalarmor.ppm"},
+            {3,   "img/items/metalhelmet.ppm"},
         };
 
 

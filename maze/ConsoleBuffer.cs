@@ -145,7 +145,7 @@ namespace textured_raycast.maze
             }
         }
 
-        public void DrawVerLine(int x, int height, Texture tex, int texX, float darken, TexColor light, float mixBy, TexColor alphaCol = null)
+        public void DrawVerLine(int x, int lineHeight, Texture tex, int texX, float darken, TexColor light, float mixBy, TexColor alphaCol = null)
         {
             // Return exception, if char is out of game window.
             if (x < 0 || x > Width)
@@ -153,11 +153,15 @@ namespace textured_raycast.maze
                 throw new ArgumentOutOfRangeException();
             }
 
-            int startY = Height / 2 - height / 2;
-            int endY = height + startY;
+            int startY = Height / 2 - lineHeight / 2;
+            int endY = lineHeight + startY;
 
-            float sectionHeight = (float)tex.height / height;
-            float texPos = (startY - Height / 2 + height / 2) * sectionHeight;
+            float sectionHeight = (float)tex.height / lineHeight;
+            float texPos = (startY - Height / 2 + lineHeight / 2) * sectionHeight;
+
+            startY -= (int)World.plrBob;
+            endY   -= (int)World.plrBob;
+
             if (startY < 0)
             {
                 texPos += sectionHeight * (startY * -1);
@@ -168,7 +172,7 @@ namespace textured_raycast.maze
             {
                 int texY = (int)texPos;
                 texPos += sectionHeight;
-                TexColor color = tex.getPixel(texX, texY);
+                TexColor color = tex.getPixel(texX, texY, Texture.GetPixelMode.REPEAT);
                 if (alphaCol == color)
                     continue;
                 TexColor lightMul = TexColor.unitMultReal(color, light);
