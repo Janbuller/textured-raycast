@@ -561,11 +561,11 @@ namespace textured_raycast.maze
 
             if (InputManager.GetKey(Keys.K_UP) != KeyState.KEY_UP || InputManager.GetKey(Keys.K_W) != KeyState.KEY_UP)
             {
-                moveInDir(ref map, ref pos, dir);
+                moveInDir(ref map, ref pos, dir, true);
             }
             if (InputManager.GetKey(Keys.K_DOWN) != KeyState.KEY_UP || InputManager.GetKey(Keys.K_S) != KeyState.KEY_UP)
             {
-                moveInDir(ref map, ref pos, dir * -1);
+                moveInDir(ref map, ref pos, dir * -1, true);
             }
             if (InputManager.GetKey(Keys.K_D) != KeyState.KEY_UP)
             {
@@ -619,13 +619,16 @@ namespace textured_raycast.maze
             }
         }
 
-        public static void moveInDir(ref Map map, ref Vector2d pos, Vector2d dir)
+        public static void moveInDir(ref Map map, ref Vector2d pos, Vector2d dir, bool doViewBob = false)
         {
             double movSpeed = ((InputManager.GetKey(Keys.K_SHIFT) != KeyState.KEY_UP && World.staminaLVL > 0) ? 2 : 1);
             double curMovSpeed = World.dt * movSpeed;
 
-            World.plrBobTime += World.dt * 1000 * (float)movSpeed;
-            World.plrBob = (float)(Math.Sin(World.plrBobTime * 0.01) + 1);
+            if (doViewBob)
+            {
+                World.plrBobTime += World.dt * 1000 * (float)movSpeed;
+                World.plrBob = (float)(Math.Sin(World.plrBobTime * 0.01) + 1);
+            }
 
             if (InputManager.GetKey(Keys.K_SHIFT) != KeyState.KEY_UP && World.staminaLVL > 0)
             {
