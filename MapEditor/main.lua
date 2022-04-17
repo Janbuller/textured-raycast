@@ -1,14 +1,15 @@
 local love = love
 
 local socket = require("socket")
+local directory = {}
 
-function loadImage(path, isWall)
+function loadImage(path)
     local str, len = love.filesystem.read(path)
 
     str = string.gsub(str, "#[^\r\n]+\r?\n", "")
 
     local _,start, w, h, colorMax = string.find(str, "(%d+) (%d+)\r?\n(%d+)")
-    local iData = love.image.newImageData(tonumber(h), tonumber(w))
+    local iData = love.image.newImageData(tonumber(w), tonumber(h))
     colorMax = tonumber(colorMax)
 
     local i = 0
@@ -19,11 +20,7 @@ function loadImage(path, isWall)
             thisColor[colorPos] = tonumber(strPart)/colorMax
             if i%3 == 0 then
                 local pos = math.ceil(i/3)-2
-                local a = 1
-                if thisColor[1] == 0 and thisColor[2] == 0 and thisColor[3] == 0 and isWall == false then
-                    a = 0
-                end
-                iData:setPixel(pos-math.floor(pos/w)*w, math.floor(pos/w), thisColor[1], thisColor[2], thisColor[3], a)
+                iData:setPixel(pos-math.floor(pos/w)*w, math.floor(pos/w), thisColor[1], thisColor[2], thisColor[3], 1)
             end
         end
         i = i + 1
@@ -33,58 +30,38 @@ function loadImage(path, isWall)
 end
 
 function string.numsplit(s, delimiter)
-    result = {};
+    local result = {}
     for match in (s..delimiter):gmatch("(.-)"..delimiter) do
-        table.insert(result, tonumber(match));
+        table.insert(result, tonumber(match))
     end
-    return result;
+    return result
 end
 
 function string.split(s, delimiter)
-    result = {};
+    local result = {}
     for match in (s..delimiter):gmatch("(.-)"..delimiter) do
-        table.insert(result, match);
+        table.insert(result, match)
     end
-    return result;
+    return result
 end
 
-local image = { -- id, path, isWallTexture
-    {1,  "img/wolfenstein/greystone.ppm", true},
-    {2,  "img/wolfenstein/redbrick.ppm", true},
-    {3,  "img/wolfenstein/bluestone.ppm", true},
-    {4,  "img/test5.ppm", true},
-    {5,  "img/wolfenstein/redstone.ppm", true},
-    {6,  "img/wolfenstein/colorstone.ppm", true},
-    {1,  "img/wolfenstein/barrel.ppm", false},
-    {2,  "img/wolfenstein/greenlight.ppm", false},
-    {3,  "img/shadyman.ppm", false},
-    {4,  "img/button.ppm", false},
-    {5,  "img/wolfenstein/pillar.ppm", false},
-    {6,  "img/enemy/bat1.ppm", false},
-    {7,  "img/tmp-portal.ppm", false},
-    {10, "img/wolfenstein/guard/guard1.ppm", false},
-    {11, "img/truck/truck1.ppm", false},
-    {13, "img/castle.ppm", false},
-    {14, "img/torch.ppm", false},
-    {15, "img/bs/bs2.ppm", false},
-}
-local images = #image
+-- load all files in the img folder
+local namesOfFiles = love.filesystem.getDirectoryItems("img")
+local folders = {}
 
-for i, IMG in ipairs(image) do
-	love.graphics.clear()
-
-    love.graphics.setColor(0.6, 0.6, 0.6)
-    love.graphics.rectangle("fill", 10, 10, 200, 40)
-    love.graphics.setColor(1, 1, 1)
-    love.graphics.rectangle("fill", 10, 10, 200/images*i, 40)
-    love.graphics.setColor(0, 0, 0)
-    love.graphics.rectangle("line", 10, 10, 200, 40)
-    love.graphics.print(i.."/"..images, 15, 15)
-
-	love.graphics.present()
-    IMG[2] = loadImage(IMG[2], IMG[3])
+for _, fileName in pairs(namesOfFiles) do
+    if love.filesystem.getInfo("img/"..fileName).type == "directory" then
+        local namesOfFiles2 = love.filesystem.getDirectoryItems("img/"..fileName)
+        folders[fileName] = {}
+        for _, fileName2 in pairs(namesOfFiles2) do
+            if string.sub(fileName2, #fileName2-3, #fileName2) == ".ppm" then
+                folders[fileName][fileName2] = {loadImage("img/"..fileName.."/"..fileName2), "img/"..fileName.."/"..fileName2, {fileName, fileName2}}
+            end
+        end
+    end
 end
 
+-- declare variables
 local w, h = love.graphics.getWidth(), love.graphics.getHeight()
 local grid = {}
 local gW, gH = 20, 20
@@ -96,8 +73,7 @@ local px, py = 0, 0
 local selectedForMenuX, selectedForMenuY = 0, 0
 local openMen = false
 
-local selected = 1
-local drawSelect = true
+local selected = {"", ""}
 
 local cloneSave = {0, 0, ""}
 
@@ -110,8 +86,8 @@ local gridActive = false;
 local spawn = {0, 0}
 local spawnLook = {0, 0}
 local spawnPlacing = 1
-local floor = 1
-local roof = 0
+
+local directoryName = ""
 
 local editingSprite = 0
 local sprites = {}
@@ -137,7 +113,7 @@ function newGrid(gWin, gHin)
         for x = 1,gW do
             grid[i][x] = {}
             for y = 1,gH do
-                grid[i][x][y] = 0
+                grid[i][x][y] = {"", {"", ""}}
             end
         end
     end
@@ -152,24 +128,37 @@ function love.load()
 end
 
 function love.draw()
+    -- layer of the grid
     local grid = grid[gridLayer]
+
+    -- since we scale a lot, the lines will need to be reaaal small
     love.graphics.setLineWidth(0.02)
+
+    -- get mouse position
     local mX, mY = love.mouse.getPosition()
+
+    -- do this for making screen drag work
     if mx == -1 then
         mX, mY = mx, my
     end
 
+    -- translate everything so when it gets drawn, it gets drawn in the right way
+    -- also scale it...
     love.graphics.translate(gridOffsetX+(mX-mx)+w/2, gridOffsetY+(mY-my)+h/2)
     love.graphics.scale(scale, scale)
 
+    -- draw the whole grid, and images in it if needed
     for x = -gW/2+1,gW/2 do
         for y = -gH/2+1,gH/2 do
-            if grid[x+gW/2][y+gH/2] == -1 then
+            local thisFile = grid[x+gW/2][y+gH/2]
+            if thisFile[2][1] == "" then
                 love.graphics.setColor(0.6, 0.6, 0.6)
                 love.graphics.rectangle("fill", x, y, 1, 1)
-            elseif grid[x+gW/2][y+gH/2] ~= 0 then
+            elseif thisFile[2][1] ~= "" then
+                local thisImg = folders[thisFile[2][1]][thisFile[2][2]]
+                
                 love.graphics.setColor(1, 1, 1)
-                love.graphics.draw(image[grid[x+gW/2][y+gH/2]][2], x, y, 0, 1/image[grid[x+gW/2][y+gH/2]][2]:getWidth())
+                love.graphics.draw(thisImg[1], x, y, 0, 1/thisImg[1]:getWidth(), 1/thisImg[1]:getHeight())
             end
             love.graphics.setColor(1, 1, 1)
             love.graphics.rectangle("line", x, y, 1, 1)
@@ -188,17 +177,13 @@ function love.draw()
     end
 
     for _, sprite in pairs(sprites) do
-        love.graphics.draw(image[sprite[3]][2], sprite[1]-0.3, sprite[2]-0.3, 0, 0.6/image[sprite[3]][2]:getWidth(), 0.6/image[sprite[3]][2]:getHeight())
+        local thisImg = folders[sprite[3][1]][sprite[3][2]]
+
+        love.graphics.draw(thisImg[1], sprite[1]-0.3, sprite[2]-0.3, 0, 0.6/thisImg[1]:getWidth(), 0.6/thisImg[1]:getHeight())
     end
     
     love.graphics.origin()
     love.graphics.setLineWidth(2)
-
-    love.graphics.draw(image[floor][2], 5, h-45, 0, 40/image[floor][2]:getWidth(), 40/image[floor][2]:getHeight())
-    
-    if roof ~= 0 then
-        love.graphics.draw(image[roof][2], 50, h-45, 0, 40/image[roof][2]:getWidth(), 40/image[roof][2]:getHeight())
-    end
 
     if editingSprite ~= 0 then
         love.graphics.setColor(0, 0, 0, 0.2)
@@ -209,16 +194,31 @@ function love.draw()
         love.graphics.setColor(0, 0, 0)
         love.graphics.printf(sprites[editingSprite][4], 0, h/2-6, w, "center")
     else
-        if drawSelect then
-            for i = 1,images do
+        if directoryName == "" then
+            local i = 0
+            for _, folderName in pairs(folders) do
+                i = i + 1
+
+                love.graphics.setColor(0.6, 0.6, 0.6)
+                love.graphics.rectangle("fill", 2+(guiTileSize+guiTilediff)*(i-1)-((math.ceil(i/guiMaxTiles)-1)*(guiTileSize+guiTilediff)*guiMaxTiles)-1, 2+(guiTileSize+guiTilediff)*(math.ceil(i/guiMaxTiles)-1)-1, (guiTileSize+guiTilediff/2),  (guiTileSize+guiTilediff/2))
+                
+                love.graphics.setColor(0, 0, 0)
+                love.graphics.printf(_, 2+(guiTileSize+guiTilediff)*(i-1)-((math.ceil(i/guiMaxTiles)-1)*(guiTileSize+guiTilediff)*guiMaxTiles), 2+(guiTileSize+guiTilediff)*(math.ceil(i/guiMaxTiles)-1), (guiTileSize+guiTilediff/2), "center")
+            end
+        else
+            local i = 0
+            for _, imageNPath in pairs(folders[directoryName]) do
+                i = i + 1
+
                 love.graphics.setColor(1, 1, 1)
-                if selected == i then
+                if selected[1] == imageNPath[3][1] and selected[2] == imageNPath[3][2] then
                     love.graphics.setColor(1, 1, 0)
                 end
+
                 love.graphics.rectangle("fill", 2+(guiTileSize+guiTilediff)*(i-1)-((math.ceil(i/guiMaxTiles)-1)*(guiTileSize+guiTilediff)*guiMaxTiles)-1, 2+(guiTileSize+guiTilediff)*(math.ceil(i/guiMaxTiles)-1)-1, (guiTileSize+guiTilediff/2),  (guiTileSize+guiTilediff/2))
                 
                 love.graphics.setColor(1, 1, 1)
-                love.graphics.draw(image[i][2], 2+(guiTileSize+guiTilediff)*(i-1)-((math.ceil(i/guiMaxTiles)-1)*(guiTileSize+guiTilediff)*guiMaxTiles), 2+(guiTileSize+guiTilediff)*(math.ceil(i/guiMaxTiles)-1), 0, guiTileSize/image[i][2]:getWidth(), guiTileSize/image[i][2]:getHeight())
+                love.graphics.draw(imageNPath[1], 2+(guiTileSize+guiTilediff)*(i-1)-((math.ceil(i/guiMaxTiles)-1)*(guiTileSize+guiTilediff)*guiMaxTiles), 2+(guiTileSize+guiTilediff)*(math.ceil(i/guiMaxTiles)-1), 0, guiTileSize/imageNPath[1]:getWidth(), guiTileSize/imageNPath[1]:getHeight())
             end
         end
     end
@@ -304,9 +304,7 @@ function love.keypressed(key)
         end
         return
     end
-    if key == "m" then
-        drawSelect = not drawSelect
-    elseif key == "f" then
+    if key == "f" then
         if image[selected][3] then
             for x = 1,gW do
                 grid[gridLayer][x] = {}
@@ -323,6 +321,9 @@ function love.keypressed(key)
         end
     elseif key == "x" then
         editingFName = true
+    elseif key == "escape" then
+        directoryName = ""
+        selected = {"", ""}
     elseif key == "up" then
         gridLayer = math.min(gridLayer+1, 3)
     elseif key == "down" then
@@ -442,15 +443,37 @@ function love.keypressed(key)
 end
 
 function love.mousepressed(x, y, b)
-    if b == 1 and drawSelect and y < 2+(guiTileSize+guiTilediff)*(math.ceil(images/guiMaxTiles)) then
-        for i = 1,images do
+    if b == 1 and y < 2+(guiTileSize+guiTilediff)*(math.ceil(getLenOfCurImage()/guiMaxTiles)) then
+        for i = 1, getLenOfCurImage() do
             if x > 2+(guiTileSize+guiTilediff)*(i-1)-((math.ceil(i/guiMaxTiles)-1)*(guiTileSize+guiTilediff)*guiMaxTiles)-1 and x < 2+(guiTileSize+guiTilediff)*(i-1)-((math.ceil(i/guiMaxTiles)-1)*(guiTileSize+guiTilediff)*guiMaxTiles)-1 + (guiTileSize+guiTilediff/2) then
                 if y > 2+(guiTileSize+guiTilediff)*(math.ceil(i/guiMaxTiles)-1)-1 and y < 2+(guiTileSize+guiTilediff)*(math.ceil(i/guiMaxTiles)-1)-1 + (guiTileSize+guiTilediff/2) then
-                    selected = i
+                    if directoryName == "" then
+                        local i2 = 0;
+                        for folderName, _ in pairs(folders) do
+                            i2 = i2 + 1
+                            if i2 == i then
+                                directoryName = folderName
+                            end
+                        end
+                    else
+                        local i2 = 0;
+                        for dirName, _  in pairs(folders[directoryName]) do
+                            i2 = i2 + 1
+                            if i2 == i then
+                                selected = {directoryName, dirName}
+                            end
+                        end
+                    end
                 end
             end
         end
         my = -2
+    elseif b == 3 then -- clone this tile to selected
+        local pointX, pointY = math.floor((x-w/2-gridOffsetX)/scale)+gW/2, math.floor((y-h/2-gridOffsetY)/scale)+gH/2
+        if pointX > 0 and pointX < gW+1 and pointY > 0 and pointY < gH+1 then
+            directoryName = grid[pointX][pointY][2][1]
+            selected = {grid[pointX][pointY][2][1], grid[pointX][pointY][2][2]}
+        end
     else
         if b == 1 and not love.keyboard.isDown("space") then
             mx, my = x, y
@@ -466,13 +489,14 @@ function love.mousereleased(x, y, b)
     if b == 1 then
         if my ~= -2 then
             gridOffsetX, gridOffsetY = gridOffsetX+(x-mx), gridOffsetY+(y-my)
-            if mx-x == 0 and my-y == 0 then
+            print(gridOffsetX, gridOffsetY)
+            if mx-x == 0 and my-y == 0 and selected[1] ~= "" then
                 local pointX, pointY = math.floor((x-w/2-gridOffsetX)/scale)+gW/2, math.floor((y-h/2-gridOffsetY)/scale)+gH/2
                 if pointX > 0 and pointX < gW+1 and pointY > 0 and pointY < gH+1 then
                     if love.keyboard.isDown("lshift") then
-                        grid[pointX][pointY] = -1
+                        grid[pointX][pointY][2] = {"", ""}
                     else
-                        grid[pointX][pointY] = 0
+                        grid[pointX][pointY][2] = selected
                     end
                 end
             end
@@ -481,7 +505,7 @@ function love.mousereleased(x, y, b)
     elseif b == 2 then
         px, py = ((x-w/2-gridOffsetX)/scale), ((y-h/2-gridOffsetY)/scale)
 
-        if image[selected][3] == false then
+        if selected[1] ~= "" then
             if gridActive then
                 table.insert(sprites, {math.ceil((px-0.25)*2)/2, math.ceil((py-0.25)*2)/2, selected, ""})
             else
@@ -501,9 +525,13 @@ function love.update()
     local x, y = love.mouse.getPosition()
     if love.keyboard.isDown("space") and love.mouse.isDown(1) then
         local pointX, pointY = math.floor((x-w/2-gridOffsetX)/scale)+gW/2, math.floor((y-h/2-gridOffsetY)/scale)+gH/2
-        if image[selected][3] == true then
+        if selected[1] ~= "" then
             if pointX > 0 and pointX < gW+1 and pointY > 0 and pointY < gH+1 then
-                grid[pointX][pointY] = selected
+                if love.keyboard.isDown("lshift") then
+                    grid[pointX][pointY][2] = {"", ""}
+                else
+                    grid[pointX][pointY][2] = selected
+                end
             end
         end
     end
@@ -594,6 +622,26 @@ function findMachFile()
     end
 
     return ""
+end
+
+function getLenOfCurImage()
+    local len = 0
+
+    if directoryName == "" then
+        len = lenOfPAIRSList(folders)
+    else
+        len = lenOfPAIRSList(folders[directoryName])
+    end
+
+    return len
+end
+
+function lenOfPAIRSList(list)
+    local len = 0
+    for i, v in pairs(list) do
+        len = len + 1
+    end
+    return len
 end
 
 function loadFile()
