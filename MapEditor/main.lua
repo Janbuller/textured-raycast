@@ -20,7 +20,11 @@ function loadImage(path)
             thisColor[colorPos] = tonumber(strPart)/colorMax
             if i%3 == 0 then
                 local pos = math.ceil(i/3)-2
-                iData:setPixel(pos-math.floor(pos/w)*w, math.floor(pos/w), thisColor[1], thisColor[2], thisColor[3], 1)
+                local a = 1
+                if thisColor[1]==0 and thisColor[2]==0 and thisColor[3]==0 then
+                    a = 0
+                end
+                iData:setPixel(pos-math.floor(pos/w)*w, math.floor(pos/w), thisColor[1], thisColor[2], thisColor[3], a)
             end
         end
         i = i + 1
@@ -28,6 +32,8 @@ function loadImage(path)
 
     return love.graphics.newImage(iData)
 end
+
+local globalSpriteIndexHelper = 1;
 
 function string.numsplit(s, delimiter)
     local result = {}
@@ -105,6 +111,10 @@ local keys = "1234567890-"
 local keysSize = "1234567890- "
 local txtKeys = "abcdefghijklmnopqrstuvwxyz"
 
+local animations = {
+
+}
+
 function newGrid(gWin, gHin)
     local grid = {}
     gW, gH = gWin, gHin
@@ -120,6 +130,8 @@ function newGrid(gWin, gHin)
     
     return grid
 end
+
+local multiSelect = {}
 
 grid = newGrid(20, 20)
 
@@ -177,7 +189,11 @@ function love.draw()
     end
 
     for _, sprite in pairs(sprites) do
-        local thisImg = folders[sprite[3][1]][sprite[3][2]]
+        local roundDown = math.floor(globalSpriteIndexHelper)
+        local maxSprites = #sprite[3]
+        local thisIndex = roundDown%maxSprites+1
+        
+        thisImg = folders[sprite[3][thisIndex][1]][sprite[3][thisIndex][2]]
 
         love.graphics.draw(thisImg[1], sprite[1]-0.3, sprite[2]-0.3, 0, 0.6/thisImg[1]:getWidth(), 0.6/thisImg[1]:getHeight())
     end
@@ -211,8 +227,11 @@ function love.draw()
                 i = i + 1
 
                 love.graphics.setColor(1, 1, 1)
-                if selected[1] == imageNPath[3][1] and selected[2] == imageNPath[3][2] then
-                    love.graphics.setColor(1, 1, 0)
+
+                for _, selected in pairs(multiSelect) do
+                    if selected[1] == imageNPath[3][1] and selected[2] == imageNPath[3][2] then
+                        love.graphics.setColor(1, 1, 0)
+                    end
                 end
 
                 love.graphics.rectangle("fill", 2+(guiTileSize+guiTilediff)*(i-1)-((math.ceil(i/guiMaxTiles)-1)*(guiTileSize+guiTilediff)*guiMaxTiles)-1, 2+(guiTileSize+guiTilediff)*(math.ceil(i/guiMaxTiles)-1)-1, (guiTileSize+guiTilediff/2),  (guiTileSize+guiTilediff/2))
@@ -305,12 +324,9 @@ function love.keypressed(key)
         return
     end
     if key == "f" then
-        if image[selected][3] then
-            for x = 1,gW do
-                grid[gridLayer][x] = {}
-                for y = 1,gH do
-                    grid[gridLayer][x][y] = selected
-                end
+        for x = 1,gW do
+            for y = 1,gH do
+                grid[gridLayer][x][y][2] = selected
             end
         end
     elseif key == "z" then
@@ -460,7 +476,13 @@ function love.mousepressed(x, y, b)
                         for dirName, _  in pairs(folders[directoryName]) do
                             i2 = i2 + 1
                             if i2 == i then
-                                selected = {directoryName, dirName}
+                                if love.keyboard.isDown("lshift") then
+                                    table.insert(multiSelect, {directoryName, dirName})
+                                else
+                                    multiSelect = {}
+                                    table.insert(multiSelect, {directoryName, dirName})
+                                    selected = {directoryName, dirName}
+                                end
                             end
                         end
                     end
@@ -471,8 +493,8 @@ function love.mousepressed(x, y, b)
     elseif b == 3 then -- clone this tile to selected
         local pointX, pointY = math.floor((x-w/2-gridOffsetX)/scale)+gW/2, math.floor((y-h/2-gridOffsetY)/scale)+gH/2
         if pointX > 0 and pointX < gW+1 and pointY > 0 and pointY < gH+1 then
-            directoryName = grid[pointX][pointY][2][1]
-            selected = {grid[pointX][pointY][2][1], grid[pointX][pointY][2][2]}
+            directoryName = grid[gridLayer][pointX][pointY][2][1]
+            selected = grid[gridLayer][pointX][pointY][2]
         end
     else
         if b == 1 and not love.keyboard.isDown("space") then
@@ -489,15 +511,10 @@ function love.mousereleased(x, y, b)
     if b == 1 then
         if my ~= -2 then
             gridOffsetX, gridOffsetY = gridOffsetX+(x-mx), gridOffsetY+(y-my)
-            print(gridOffsetX, gridOffsetY)
             if mx-x == 0 and my-y == 0 and selected[1] ~= "" then
                 local pointX, pointY = math.floor((x-w/2-gridOffsetX)/scale)+gW/2, math.floor((y-h/2-gridOffsetY)/scale)+gH/2
                 if pointX > 0 and pointX < gW+1 and pointY > 0 and pointY < gH+1 then
-                    if love.keyboard.isDown("lshift") then
-                        grid[pointX][pointY][2] = {"", ""}
-                    else
-                        grid[pointX][pointY][2] = selected
-                    end
+                    placeAt(pointX, pointY)
                 end
             end
         end
@@ -507,9 +524,13 @@ function love.mousereleased(x, y, b)
 
         if selected[1] ~= "" then
             if gridActive then
-                table.insert(sprites, {math.ceil((px-0.25)*2)/2, math.ceil((py-0.25)*2)/2, selected, ""})
+                table.insert(sprites, {math.ceil((px-0.25)*2)/2, math.ceil((py-0.25)*2)/2, {}, ""})
             else
-                table.insert(sprites, {px, py, selected, ""})
+                table.insert(sprites, {px, py, {}, ""})
+            end
+
+            for i, selected in ipairs(multiSelect) do
+                sprites[#sprites][3][i] = selected
             end
         end
     end
@@ -520,26 +541,62 @@ function love.wheelmoved(x, y)
     scale = scale + y
 end
 
-function love.update()
+function love.update(dt)
+    globalSpriteIndexHelper = globalSpriteIndexHelper + dt;
     local grid = grid[gridLayer]
     local x, y = love.mouse.getPosition()
     if love.keyboard.isDown("space") and love.mouse.isDown(1) then
         local pointX, pointY = math.floor((x-w/2-gridOffsetX)/scale)+gW/2, math.floor((y-h/2-gridOffsetY)/scale)+gH/2
-        if selected[1] ~= "" then
-            if pointX > 0 and pointX < gW+1 and pointY > 0 and pointY < gH+1 then
-                if love.keyboard.isDown("lshift") then
-                    grid[pointX][pointY][2] = {"", ""}
+        if pointX > 0 and pointX < gW+1 and pointY > 0 and pointY < gH+1 then
+            placeAt(pointX, pointY)
+        end
+    end
+end
+
+function placeAt(x, y)
+    if selected[1] ~= "" then
+        if love.keyboard.isDown("lshift") then
+            grid[gridLayer][x][y][2] = {"", ""}
+        else
+            grid[gridLayer][x][y][2] = selected
+
+            --[[
+            if #multiSelect == 1 then
+                grid[gridLayer][x][y][2] = selected
+            else
+                grid[gridLayer][x][y][2] = {}
+                for i, selected in ipairs(multiSelect) do
+                    grid[gridLayer][x][y][2][i] = selected
+                end
+
+
+            end
+            ]]-- we dont have animated wall ground and roof textures, lol...
+        end
+    else
+        grid[gridLayer][x][y][2] = {"", ""}
+    end
+end
+
+function math.dist(x1,y1, x2,y2) return ((x2-x1)^2+(y2-y1)^2)^0.5 end
+
+function gridMakePath()
+    for y = 1,gH do
+        for x = gW,1,-1 do
+            for i = 1,3 do
+                if grid[i][x][y][2][1] ~= "" then
+                    grid[i][x][y][1] = folders[grid[i][x][y][2][1]][grid[i][x][y][2][2]][2]
                 else
-                    grid[pointX][pointY][2] = selected
+                    grid[i][x][y][1] = "";
                 end
             end
         end
     end
 end
 
-function math.dist(x1,y1, x2,y2) return ((x2-x1)^2+(y2-y1)^2)^0.5 end
-
 function saveFile()
+    gridMakePath()
+
     local str = ""
     str = str..gW.." "..gH.."\n"
 
@@ -549,11 +606,7 @@ function saveFile()
     for y = 1,gH do
         for x = gW,1,-1 do
             for i = 1,3 do
-                if image[grid[i][x][y]] then
-                    str = str..image[grid[i][x][y]][1]
-                else
-                    str = str..grid[i][x][y]
-                end
+                str = str..grid[i][x][y][1]
                 if i == 3 then
                     str = str.."\n"
                 else
@@ -565,9 +618,9 @@ function saveFile()
 
     for _, sprite in pairs(sprites) do
         if sprite[4] == "" then
-            str = str..math.abs((sprite[1]+gW/2-1)-gW).." "..(sprite[2]+gH/2-1).." "..image[sprite[3]][1].."\n"
+            str = str..math.abs((sprite[1]+gW/2-1)-gW).." "..(sprite[2]+gH/2-1).." "..pathListToString(sprite[3]).."\n"
         else
-            str = str..math.abs((sprite[1]+gW/2-1)-gW).." "..(sprite[2]+gH/2-1).." "..image[sprite[3]][1].." "..sprite[4].."\n"
+            str = str..math.abs((sprite[1]+gW/2-1)-gW).." "..(sprite[2]+gH/2-1).." "..pathListToString(sprite[3]).." "..sprite[4].."\n"
         end
     end
 
@@ -576,6 +629,15 @@ function saveFile()
     local f = io.open(getPath()..fileName..".map", "w")
     f:write(str)
     f:close()
+end
+
+function pathListToString(list) -- for sprites
+    local str = ""
+    for _, path in pairs(list) do
+        str = str..folders[path[1]][path[2]][2].."-"
+    end
+    str = string.sub(str, 0, #str-1)
+    return str
 end
 
 function getPath()
@@ -661,24 +723,32 @@ function loadFile()
     local count = 0
     for y = 1,gH do
         for x = gW,1,-1 do
-            local layers = string.numsplit(lines[4+count], " ")
-            if #layers == 1 then
-                grid[2][x][y] = tonumber(layers[1])
-                count = count + 1
-            else
-                grid[1][x][y] = tonumber(layers[1])
-                grid[2][x][y] = tonumber(layers[2])
-                grid[3][x][y] = tonumber(layers[3])
-                count = count + 1
-            end
+            local layers = string.split(lines[4+count], " ")
+            local layers1 = string.split(layers[1], "/")
+            local layers2 = string.split(layers[2], "/")
+            local layers3 = string.split(layers[3], "/")
+
+            grid[1][x][y] = {"", {layers1[2] or "", layers1[3] or ""}}
+            grid[2][x][y] = {"", {layers2[2] or "", layers2[3] or ""}}
+            grid[3][x][y] = {"", {layers3[2] or "", layers3[3] or ""}}
+            count = count + 1
         end
     end
 
     sprites = {}
     for i = count+4, #lines do
-        nrsL = string.numsplit(lines[i], " ")
+        nrsL = string.split(lines[i], " ")
+        local nrsL2 = string.split(nrsL[3], "-")
+
+        local imgs = {}
+        for _, path in pairs(nrsL2) do
+            local nrsL3 = string.split(path, "/")
+            table.insert(imgs, {nrsL3[2], nrsL3[3]})
+        end
+        
+
         if #nrsL == 3 then
-            table.insert(sprites, {(math.abs(nrsL[1]-gW)-gW/2+1), (nrsL[2]-gH/2+1), findSpriteInIMG(nrsL[3]), ""})
+            table.insert(sprites, {(math.abs(nrsL[1]-gW)-gW/2+1), (nrsL[2]-gH/2+1), imgs, ""})
         else
             local str = ""
             for i2 = 4, #nrsL do
@@ -686,23 +756,7 @@ function loadFile()
             end
             str = string.sub(str, 0, math.max(0, #str-1))
             
-            table.insert(sprites, {(math.abs(nrsL[1]-gW)-gW/2+1), (nrsL[2]-gH/2+1), findSpriteInIMG(nrsL[3]), str})
-        end
-    end
-end
-
-function findWallInIMG(TEXID)
-    for i, data in pairs(image) do
-        if data[1] == tonumber(TEXID) and data[3] == true then
-            return i
-        end
-    end
-end
-
-function findSpriteInIMG(TEXID)
-    for i, data in pairs(image) do
-        if data[1] == tonumber(TEXID) and data[3] == false then
-            return i
+            table.insert(sprites, {(math.abs(nrsL[1]-gW)-gW/2+1), (nrsL[2]-gH/2+1), imgs, str})
         end
     end
 end

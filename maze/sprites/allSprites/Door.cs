@@ -5,9 +5,9 @@ namespace textured_raycast.maze.sprites.allSprites
     // IDForMapToGoTo IDForDoorOfMapToGoTo MyDoorID
     class Door : Sprite
     {
-        public Door(double posX, double posY, int spriteID, int effectID = 0, string whatsLeft = "") : base(posX, posY, spriteID, effectID, whatsLeft)
+        public Door(double posX, double posY, string[] texture, int effectID = 0, string whatsLeft = "") : base(posX, posY, texture, effectID, whatsLeft)
         {
-            define(posX, posY, spriteID, effectID, whatsLeft);
+            define(posX, posY, texture, effectID, whatsLeft);
         }
 
         public override void onLoad()

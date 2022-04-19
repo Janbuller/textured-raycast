@@ -614,8 +614,9 @@ namespace textured_raycast.maze
 
             if (InputManager.GetKey(Keys.K_LCTRL) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_RCTRL) == KeyState.KEY_DOWN)
             {
-                map.sprites.Add(new Fireball(World.plrPos.x, World.plrPos.y, 8, 6, $"100 {(int)(dir.x*1000)} {(int)(dir.y*1000)}"));
-                map.lightPoitions.Add(map.sprites.Count - 1);
+                // TODO: you may fix this as well, but again, i see no point...
+                //map.sprites.Add(new Fireball(World.plrPos.x, World.plrPos.y, 8, 6, $"100 {(int)(dir.x*1000)} {(int)(dir.y*1000)}"));
+                //map.lightPoitions.Add(map.sprites.Count - 1);
             }
         }
 

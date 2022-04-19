@@ -9,9 +9,9 @@ namespace textured_raycast.maze.sprites.allSprites
         float intesity;
         Vector2d vel;
 
-        public Fireball(double posX, double posY, int spriteID, int effectID = 0, string whatsLeft = "") : base(posX, posY, spriteID, effectID, whatsLeft)
+        public Fireball(double posX, double posY, string[] texture, int effectID = 0, string whatsLeft = "") : base(posX, posY, texture, effectID, whatsLeft)
         {
-            define(posX, posY, spriteID, effectID, whatsLeft);
+            define(posX, posY, texture, effectID, whatsLeft);
         }
 
         public override void onLoad()

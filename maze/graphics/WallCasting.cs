@@ -215,7 +215,7 @@ namespace textured_raycast.maze.graphics
             float darken = 0.9f;
             darken = (float)Math.Max(0, darken - perpWallDist * (visRange * 0.005));
 
-            Texture tex = ResourceManager.getTexture(World.textures[hitWall == null ? 1 : hitWall.thisTexID]);
+            Texture tex = ResourceManager.getTexture(hitWall == null ? "" : hitWall.textPath);
 
             double wallX;
             if (side == 0)
@@ -239,10 +239,11 @@ namespace textured_raycast.maze.graphics
             } else {
                 Vector2d realPosAbove = new Vector2d(hitPos.x + 0.1, hitPos.y);
                 Vector2i cellPosAbove = (Vector2i)realPosAbove;
-                if(map.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0 || map.IsWall(cellPosAbove.x, cellPosAbove.y))
+                if(map.GetRoof(cellPosAbove.x, cellPosAbove.y) != "" || map.IsWall(cellPosAbove.x, cellPosAbove.y))
                     darken *= 0.6f;
             }
 
+            /*
             if(hitWall.wallID == 5 && recurseCount < 5) {
                 Vector2d newDir;
                 if(side == 0)
@@ -251,6 +252,9 @@ namespace textured_raycast.maze.graphics
                     newDir = new Vector2d(dir.x, -dir.y);
                 return DoOneWallcast(x, width, height, lights, newDir, hitPos, visRange, perpWallDist + alreadyDist, recurseCount+1);
             }
+            */// removed beacuse it wont be used <3, and we dont use ids for walls no more...
+
+
             // Do Lighting
             // ===========
 

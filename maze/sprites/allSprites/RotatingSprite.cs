@@ -11,9 +11,9 @@ namespace textured_raycast.maze.sprites.allSprites
         Vector2d dir = new Vector2d(-1, 0);
         double rot = 0;
 
-        public RotatingSprite(double posX, double posY, int spriteID, int effectID = 0, string whatsLeft = "") : base(posX, posY, spriteID, effectID, whatsLeft)
+        public RotatingSprite(double posX, double posY, string[] texture, int effectID = 0, string whatsLeft = "") : base(posX, posY, texture, effectID, whatsLeft)
         {
-            define(posX, posY, spriteID, effectID, whatsLeft);
+            define(posX, posY, texture, effectID, whatsLeft);
         }
 
         public override void onLoad()
@@ -32,6 +32,8 @@ namespace textured_raycast.maze.sprites.allSprites
             dir.y = Math.Sin(rot+Math.PI);
         }
 
+        // TODO: fix if you care
+        /*
         public override void UpdateOnDraw(double distToPlayer)
         {
             List<string> texturePaths = Sprite.IDTextureCorrespondence[texID];
@@ -63,5 +65,6 @@ namespace textured_raycast.maze.sprites.allSprites
             }
             curTexture = (int)(rotDiff / radPrTex);
         }
+        */
     }
 }

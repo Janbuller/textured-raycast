@@ -16,9 +16,9 @@ namespace textured_raycast.maze.sprites.allSprites
             new shopItem[] { new shopItem(new Iron_Armor(), 0, 999) , new shopItem(new Iron_Broadsword(), 2, 1) }
         };
 
-        public Shop(double posX, double posY, int spriteID, int effectID = 0, string whatsLeft = "") : base(posX, posY, spriteID, effectID, whatsLeft)
+        public Shop(double posX, double posY, string[] texture, int effectID = 0, string whatsLeft = "") : base(posX, posY, texture, effectID, whatsLeft)
         {
-            define(posX, posY, spriteID, effectID, whatsLeft);
+            define(posX, posY, texture, effectID, whatsLeft);
         }
 
         public override void onLoad()

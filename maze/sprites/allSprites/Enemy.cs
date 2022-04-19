@@ -14,9 +14,9 @@ namespace textured_raycast.maze.sprites.allSprites
         public float moneyRecived;
         public float moneyVar;
 
-        public Enemy(double posX, double posY, int spriteID, int effectID = 0, string whatsLeft = "") : base(posX, posY, spriteID, effectID, whatsLeft)
+        public Enemy(double posX, double posY, string[] texture, int effectID = 0, string whatsLeft = "") : base(posX, posY, texture, effectID, whatsLeft)
         {
-            define(posX, posY, spriteID, effectID, whatsLeft);
+            define(posX, posY, texture, effectID, whatsLeft);
         }
 
         public override void onLoad()

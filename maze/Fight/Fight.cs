@@ -12,7 +12,7 @@ namespace textured_raycast.maze.Fight
 {
     internal class Fight
     {
-        int spriteID;
+        string[] textures;
         int mapID = -1;
 
         Enemy sTF;
@@ -32,11 +32,11 @@ namespace textured_raycast.maze.Fight
         {
             sTF = spriteToFight;
 
-            spriteID = sTF.spriteID;
+            textures = sTF.texture;
             maxHp = sTF.hp;
             hp = maxHp;
 
-            sprites.Add(new DefaultSprite(2.35, 2, spriteID));
+            sprites.Add(new DefaultSprite(2.35, 2, textures));
         }
 
         public void enemyDoAction()

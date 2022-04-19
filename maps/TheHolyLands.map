@@ -1,3223 +1,405 @@
-80 40
-78 17
+20 20
+16 15
 -1 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 -1 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 -1 0
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-6 0 0
-6 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-6 0 0
-6 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-6 0 0
-6 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-6 0 0
-6 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-6 0 0
-6 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-6 0 0
-6 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-6 0 0
-6 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-6 0 0
-6 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-6 0 0
-6 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-6 0 0
-6 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-6 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-6 0 0
-6 0 0
-6 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 2 2
-4 2 2
-4 2 2
-6 0 2
-4 2 2
-4 2 2
-4 2 2
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 2 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 0 1
-4 1 1
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 0 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 0 0
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-4 1 1
-57.5 37.5 1
-75.5 18.5 14 2 255 150 0 30 14 7
-64.5 15.5 14 2 255 150 0 30 14 7
-75.5 15.5 14 2 255 150 0 30 14 7
-64.5 18.5 14 2 255 150 0 30 14 7
-67.5 18.5 14 2 255 150 0 30 14 7
-67.5 15.5 14 2 255 150 0 30 14 7
-71.5 15.5 14 2 255 150 0 30 14 7
-71.5 18.5 14 2 255 150 0 30 14 7
-68.5 30.5 14 2 255 150 0 30 14 7
-72.5 30.5 14 2 255 150 0 30 14 7
-67.5 22.5 14 2 255 150 0 30 14 7
-64.5 22.5 14 2 255 150 0 30 14 7
-67.5 26.5 14 2 255 150 0 30 14 7
-64.5 26.5 14 2 255 150 0 30 14 7
-64.5 30.5 14 2 255 150 0 30 14 7
-69.5 30.5 10 4 2
-71.5 30.5 10 4 1
-70.5 31.5 1 8
-76 17 15 9 0
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/skills/tmp-slash-skill.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+15 13.5 img/enemy/bat1.ppm-img/enemy/bat2.ppm
+13.5 15.5 img/bs/bs1.ppm-img/bs/bs2.ppm-img/bs/bs3.ppm

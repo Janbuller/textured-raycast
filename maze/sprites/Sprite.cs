@@ -74,8 +74,7 @@ namespace textured_raycast.maze.sprites
 
         public Vector2d pos;
         public Vector2d orgPos;
-        public int spriteID;
-        public int texID;
+        public string[] texture;
         public int curTexture = 0;
         public int effectID;
         public bool effectedByLight = true;
@@ -87,10 +86,11 @@ namespace textured_raycast.maze.sprites
 
         private float time = 0;
 
-        public Sprite(double posX, double posY, int spriteID, int effectID = 0, string whatsLeft = "")
+        public Sprite(double posX, double posY, string[] texture, int effectID = 0, string whatsLeft = "")
         {
-            define(posX, posY, spriteID, effectID, whatsLeft);
+            define(posX, posY, texture, effectID, whatsLeft);
         }
+
         virtual public void updateAnimation()
         {
             time += World.dt;
@@ -98,17 +98,16 @@ namespace textured_raycast.maze.sprites
             {
                 time = 0;
                 curTexture++;
-                if (Sprite.IDTextureCorrespondence[texID].Count == curTexture)
+                if (texture.Length == curTexture)
                     curTexture = 0;
             }
         }
 
-        public void define(double posX, double posY, int spriteID, int effectID, string whatsLeft)
+        public void define(double posX, double posY, string[] texture, int effectID, string whatsLeft)
         {
             this.pos = new Vector2d(posX, posY);
             this.orgPos = new Vector2d(posX, posY);
-            this.spriteID = spriteID;
-            this.texID = spriteID;
+            this.texture = texture;
             this.effectID = effectID;
 
             if (whatsLeft.Length != 0)
@@ -125,7 +124,7 @@ namespace textured_raycast.maze.sprites
 
         virtual public Texture GetTexture()
         {
-            return ResourceManager.getTexture(IDTextureCorrespondence[texID][curTexture]);
+            return ResourceManager.getTexture(texture[curTexture]);
         }
 
         virtual public void Activate()

@@ -90,9 +90,11 @@ namespace textured_raycast.maze
 
             for (int i = 3; i < map.Count + 3; i++)
             {
-                floor[i - 3] = new Wall(int.Parse(imageData[i].Split(' ')[0]));
-                map[i - 3] = new Wall(int.Parse(imageData[i].Split(' ')[1]));
-                roof[i - 3] = new Wall(int.Parse(imageData[i].Split(' ')[2]));
+                string[] paths = imageData[i].Split(' ');
+
+                floor[i - 3] = new Wall(paths[0]);
+                map[i - 3] = new Wall(paths[1]);
+                roof[i - 3] = new Wall(paths[2]);
             }
 
             for (int i = map.Count + 3; i < imageData.Length; i++)
@@ -113,11 +115,11 @@ namespace textured_raycast.maze
 
                 if (thisInfo.Length == 3)
                 {
-                    sprites.Add(Activator.CreateInstance(spriteTypes[thisID], double.Parse(thisInfo[0], CultureInfo.InvariantCulture), double.Parse(thisInfo[1], CultureInfo.InvariantCulture), int.Parse(thisInfo[2]), 0, "") as Sprite);
+                    sprites.Add(Activator.CreateInstance(spriteTypes[thisID], double.Parse(thisInfo[0], CultureInfo.InvariantCulture), double.Parse(thisInfo[1], CultureInfo.InvariantCulture), thisInfo[2].Split('-'), 0, "") as Sprite);
                 }
                 else if (thisInfo.Length == 4)
                 {
-                    sprites.Add(Activator.CreateInstance(spriteTypes[thisID], double.Parse(thisInfo[0], CultureInfo.InvariantCulture), double.Parse(thisInfo[1], CultureInfo.InvariantCulture), int.Parse(thisInfo[2]), int.Parse(thisInfo[3]), "") as Sprite);
+                    sprites.Add(Activator.CreateInstance(spriteTypes[thisID], double.Parse(thisInfo[0], CultureInfo.InvariantCulture), double.Parse(thisInfo[1], CultureInfo.InvariantCulture), thisInfo[2].Split('-'), int.Parse(thisInfo[3]), "") as Sprite);
                 }
                 else if (thisInfo.Length != 1)
                 {
@@ -130,7 +132,7 @@ namespace textured_raycast.maze
                         thisString = thisString.Substring(0, thisString.Length - 1);
 
 
-                    sprites.Add(Activator.CreateInstance(spriteTypes[thisID], double.Parse(thisInfo[0], CultureInfo.InvariantCulture), double.Parse(thisInfo[1], CultureInfo.InvariantCulture), int.Parse(thisInfo[2]), int.Parse(thisInfo[3]), thisString) as Sprite);
+                    sprites.Add(Activator.CreateInstance(spriteTypes[thisID], double.Parse(thisInfo[0], CultureInfo.InvariantCulture), double.Parse(thisInfo[1], CultureInfo.InvariantCulture), thisInfo[2].Split('-'), int.Parse(thisInfo[3]), thisString) as Sprite);
 
                     if (sprites[sprites.Count - 1].effectID == 1)
                         doorPositions.Add(sprites[sprites.Count - 1].extraEffects[2], sprites[sprites.Count - 1].getPos());
@@ -167,19 +169,19 @@ namespace textured_raycast.maze
             }
         }
 
-        public int GetFloor(int x, int y)
+        public string GetFloor(int x, int y)
         {
             if (x > width - 1 || x < 0 || y > height - 1 || y < 0)
-                return 0;
+                return "";
             else
-                return floor[x + y * width].wallID;
+                return floor[x + y * width].textPath;
         }
-        public int GetRoof(int x, int y)
+        public string GetRoof(int x, int y)
         {
             if (x > width - 1 || x < 0 || y > height - 1 || y < 0)
-                return 0;
+                return "";
             else
-                return roof[x + y * width].wallID;
+                return roof[x + y * width].textPath;
         }
 
         public void openDoor(int myID, int doorID)
@@ -211,15 +213,15 @@ namespace textured_raycast.maze
 
         // Original SetCell function. Different X and Y from GetCell, since
         // GetCell was changed to flip horizontally.
-        public void SetCell(int x, int y, int wallIDIn)
+        public void SetCell(int x, int y, string texture)
         {
-            map[x + y * width] = new Wall(wallIDIn);
+            map[x + y * width] = new Wall(texture);
         }
 
         // SetCell relative to GetCell.
-        public void SetCellRel(int x, int y, int wallIDIn)
+        public void SetCellRel(int x, int y, string texture)
         {
-            map[width - x + y * width] = new Wall(wallIDIn);
+            map[width - x + y * width] = new Wall(texture);
         }
     }
 }

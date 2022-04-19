@@ -61,11 +61,11 @@ namespace textured_raycast.maze.graphics
                     }
 
                     Vector2i cellPos = (Vector2i)floor.Floor();
-                    int floorId = map.GetFloor(cellPos.x, cellPos.y);
-                    floorTex = floorId == 0 ? null : ResourceManager.getTexture(World.textures[floorId]);
+                    string floorId = map.GetFloor(cellPos.x, cellPos.y);
+                    floorTex = floorId == "" ? null : ResourceManager.getTexture(floorId);
 
-                    int ceilId = map.GetRoof(cellPos.x, cellPos.y);
-                    ceilingTex = ceilId == 0 ? null : ResourceManager.getTexture(World.textures[ceilId]);
+                    string ceilId = map.GetRoof(cellPos.x, cellPos.y);
+                    ceilingTex = ceilId == "" ? null : ResourceManager.getTexture(ceilId);
 
                     float darken = 0.9f;
                     if (!map.useSkybox)
@@ -94,7 +94,7 @@ namespace textured_raycast.maze.graphics
                         } else {
                             Vector2d realPosAbove = new Vector2d(floor.x + 0.1, floor.y);
                             Vector2i cellPosAbove = (Vector2i)realPosAbove;
-                            if(map.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0 || map.IsWall(cellPosAbove.x, cellPosAbove.y))
+                            if(map.GetRoof(cellPosAbove.x, cellPosAbove.y) != "" || map.IsWall(cellPosAbove.x, cellPosAbove.y))
                                 color *= 0.6f;
                         }
                         game.setPixel(x, y, color);
