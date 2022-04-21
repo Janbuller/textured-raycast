@@ -1,11 +1,6 @@
 20 20
 16 15
 -1 0
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
@@ -20,13 +15,18 @@ img/wolfenstein/end.ppm img/ownwalls/bricks.ppm
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
@@ -41,8 +41,8 @@ img/wolfenstein/end.ppm img/ownwalls/bricks.ppm
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
@@ -61,8 +61,8 @@ img/wolfenstein/end.ppm
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
@@ -81,7 +81,7 @@ img/wolfenstein/end.ppm
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
@@ -100,9 +100,9 @@ img/wolfenstein/end.ppm
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
@@ -121,23 +121,23 @@ img/wolfenstein/end.ppm
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
+img/items/food_kiwi.ppm img/ownwalls/bricks.ppm 
+img/items/food_kiwi.ppm img/ownwalls/bricks.ppm 
+img/items/food_kiwi.ppm img/ownwalls/bricks.ppm 
+img/items/food_kiwi.ppm  
+img/items/food_kiwi.ppm  
+img/items/food_kiwi.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
@@ -146,17 +146,17 @@ img/wolfenstein/end.ppm
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/items/food_kiwi.ppm img/ownwalls/bricks.ppm 
+img/items/food_kiwi.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
+img/items/food_kiwi.ppm  
+img/items/food_kiwi.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
@@ -166,81 +166,81 @@ img/wolfenstein/end.ppm
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/items/food_kiwi.ppm img/ownwalls/bricks.ppm 
+img/items/food_kiwi.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
+img/items/food_kiwi.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
+img/items/food_kiwi.ppm  
+img/items/food_kiwi.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
+img/items/food_kiwi.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
+img/items/food_kiwi.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
+img/items/food_kiwi.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
+img/items/food_kiwi.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
+img/items/food_kiwi.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
@@ -254,16 +254,16 @@ img/wolfenstein/end.ppm
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
+img/items/food_kiwi.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
@@ -274,11 +274,7 @@ img/wolfenstein/end.ppm
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm img/skills/tmp-slash-skill.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/items/food_kiwi.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
@@ -286,49 +282,6 @@ img/wolfenstein/end.ppm img/ownwalls/bricks.ppm
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
@@ -338,52 +291,17 @@ img/wolfenstein/end.ppm
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
+img/items/food_kiwi.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
-img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
@@ -397,9 +315,92 @@ img/wolfenstein/end.ppm
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
+img/items/food_kiwi.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
 img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm  
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
+img/wolfenstein/end.ppm img/ownwalls/bricks.ppm 
 15 13.5 img/enemy/bat1.ppm-img/enemy/bat2.ppm
 13.5 15.5 img/bs/bs1.ppm-img/bs/bs2.ppm-img/bs/bs3.ppm
+14.627659574468 14.351063829787 img/truck/truck2.ppm-img/truck/truck3.ppm-img/truck/truck4.ppm-img/truck/truck5.ppm-img/truck/truck6.ppm-img/truck/truck7.ppm-img/truck/truck8.ppm-img/truck/truck1.ppm

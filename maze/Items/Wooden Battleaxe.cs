@@ -1,13 +1,13 @@
 ﻿namespace textured_raycast.maze.Items
 {
-    class Iron_Broadsword : Item
+    class Wooden_Battleaxe : Item
     {
-        public Iron_Broadsword()
+        public Wooden_Battleaxe()
         {
-            name = "Iron Broadsword";
-            addDAM = 6;
+            name = "Wooden Battleaxe";
+            addDAM = 3;
 
-            imageID = 0;
+            imageID = 8;
 
             tags[EquipSlots.MainHand] = true;
             tags[EquipSlots.OffHand] = true;
