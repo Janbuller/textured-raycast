@@ -293,6 +293,7 @@ namespace textured_raycast.maze
                                     {
                                         if (World.player.inv[nowInv].consume())
                                             World.player.inv.Remove(nowInv);
+                                        World.player.invSelectedSpot = -1;
                                     }
                                     else
                                     {
