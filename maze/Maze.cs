@@ -325,7 +325,17 @@ namespace textured_raycast.maze
 
                         for (int i = 0; i < 5; i++)
                         {
-                            UIHolder.DrawPixel(new TexColor(loop * 50, 255, loop * 50), 17 + hp - loop * 36, 59 + i);
+                            if (i > 2)
+                            {
+                                if (World.player.actualHp > hp)
+                                {
+                                    UIHolder.DrawPixel(new TexColor(loop * 50, 155, loop * 50), 17 + hp - loop * 36, 59 + i);
+                                }
+                            }
+                            else
+                            {
+                                UIHolder.DrawPixel(new TexColor(loop * 50, 255, loop * 50), 17 + hp - loop * 36, 59 + i);
+                            }
                         }
                     }
 
