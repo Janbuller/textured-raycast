@@ -53,9 +53,9 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override Texture GetTexture()
         {
-            Texture baseTexture = base.GetTexture();
+            Texture baseTexture = ResourceManager.getTexture("a");
 
-            //TODO: Make animation n stuff...
+
 
             return baseTexture;
         }

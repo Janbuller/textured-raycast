@@ -31,6 +31,37 @@ namespace textured_raycast.maze.texture
             return pixels[x + y * width];
         }
 
+
+        /// <summary>
+        /// Draws a texture at a specific position.
+        /// </summary>
+        public void DrawTexture(Texture tex, int xP, int yP)
+        {
+            for (int y = 0; y < tex.height; y++)
+            {
+                for (int x = 0; x < tex.width; x++)
+                {
+                    setPixel(xP + x, yP + y, tex.getPixel(x, y));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Draws a texture at a specific position, ignoring any pixels of color <c>alpha</c>.
+        /// </summary>
+        public void DrawTexture(Texture tex, int xP, int yP, TexColor alpha)
+        {
+            for (int y = 0; y < tex.height; y++)
+            {
+                for (int x = 0; x < tex.width; x++)
+                {
+                    TexColor pixel = tex.getPixel(x, y);
+                    if (pixel != alpha)
+                        setPixel(xP + x, yP + y, pixel);
+                }
+            }
+        }
+
         public enum GetPixelMode
         {
 	    BLACK,

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using textured_raycast.maze.resources;
+using textured_raycast.maze.texture;
 
 namespace textured_raycast.maze
 {
@@ -70,7 +72,7 @@ namespace textured_raycast.maze
         public int addMAG = 0;
         public int giveHP = 0;
 
-        public bool consume()
+        public virtual bool consume()
         {
             if (giveHP > 0)
             {
@@ -80,18 +82,23 @@ namespace textured_raycast.maze
             return false;
         }
 
-        public void onEquip()
+        public virtual void onEquip()
         {
             World.player.hp += addHP;
             World.player.dam += addDAM;
             World.player.mag += addMAG;
         }
 
-        public void onUnEquip()
+        public virtual void onUnEquip()
         {
             World.player.hp -= addHP;
             World.player.dam -= addDAM;
             World.player.mag -= addMAG;
+        }
+
+        public virtual Texture getTexture()
+        {
+            return ResourceManager.getTexture(itemTextures[imageID]);
         }
     }
 }
