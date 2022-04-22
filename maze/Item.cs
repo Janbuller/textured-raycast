@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace textured_raycast.maze
 {
@@ -28,6 +29,17 @@ namespace textured_raycast.maze
         public int addHP = 0;
         public int addDAM = 0;
         public int addMAG = 0;
+        public int giveHP = 0;
+
+        public bool consume()
+        {
+            if (giveHP > 0)
+            {
+                World.player.actualHp = Math.Min(World.player.hp, World.player.actualHp + giveHP);
+                return true;
+            }
+            return false;
+        }
 
         public void onEquip()
         {

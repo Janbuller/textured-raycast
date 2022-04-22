@@ -254,10 +254,10 @@ namespace textured_raycast.maze
                                         {
                                             Item i = World.player.equipped[es];
                                             World.player.equipped[es] = World.player.inv[World.player.invSelectedSpot];
-                                            World.player.inv[nowInv] = i;
+                                            World.player.inv[World.player.invSelectedSpot] = i;
 
                                             World.player.equipped[es].onEquip();
-                                            World.player.inv[nowInv].onUnEquip();
+                                            World.player.inv[World.player.invSelectedSpot].onUnEquip();
                                             World.player.invSelectedSpot = -1;
                                         }
                                     }
@@ -289,10 +289,18 @@ namespace textured_raycast.maze
                                 }
                                 else
                                 {
-                                    Item i = World.player.inv[nowInv];
-                                    World.player.inv[nowInv] = World.player.inv[World.player.invSelectedSpot];
-                                    World.player.inv[World.player.invSelectedSpot] = i;
-                                    World.player.invSelectedSpot = -1;
+                                    if (nowInv == World.player.invSelectedSpot)
+                                    {
+                                        if (World.player.inv[nowInv].consume())
+                                            World.player.inv.Remove(nowInv);
+                                    }
+                                    else
+                                    {
+                                        Item i = World.player.inv[nowInv];
+                                        World.player.inv[nowInv] = World.player.inv[World.player.invSelectedSpot];
+                                        World.player.inv[World.player.invSelectedSpot] = i;
+                                        World.player.invSelectedSpot = -1;
+                                    }
                                 }
                             }
                         }
