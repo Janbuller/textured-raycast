@@ -66,9 +66,9 @@ namespace textured_raycast.maze.Fight
 
         public void renderFightToBuffer(ref ConsoleBuffer buffer)
         {
-	    startRot = World.plrRot;
-	    startPos = World.plrPos;
-	    startPlane = World.plrPlane;
+	        startRot = World.plrRot;
+	        startPos = World.plrPos;
+	        startPlane = World.plrPlane;
 
             World.plrRot = new Vector2d(-1, 0);
             World.plrPos = new Vector2d(3.65, 2);

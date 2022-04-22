@@ -254,10 +254,10 @@ namespace textured_raycast.maze
                                         {
                                             Item i = World.player.equipped[es];
                                             World.player.equipped[es] = World.player.inv[World.player.invSelectedSpot];
-                                            World.player.inv[nowInv] = i;
+                                            World.player.inv[World.player.invSelectedSpot] = i;
 
                                             World.player.equipped[es].onEquip();
-                                            World.player.inv[nowInv].onUnEquip();
+                                            World.player.inv[World.player.invSelectedSpot].onUnEquip();
                                             World.player.invSelectedSpot = -1;
                                         }
                                     }
@@ -289,10 +289,18 @@ namespace textured_raycast.maze
                                 }
                                 else
                                 {
-                                    Item i = World.player.inv[nowInv];
-                                    World.player.inv[nowInv] = World.player.inv[World.player.invSelectedSpot];
-                                    World.player.inv[World.player.invSelectedSpot] = i;
-                                    World.player.invSelectedSpot = -1;
+                                    if (nowInv == World.player.invSelectedSpot)
+                                    {
+                                        if (World.player.inv[nowInv].consume())
+                                            World.player.inv.Remove(nowInv);
+                                    }
+                                    else
+                                    {
+                                        Item i = World.player.inv[nowInv];
+                                        World.player.inv[nowInv] = World.player.inv[World.player.invSelectedSpot];
+                                        World.player.inv[World.player.invSelectedSpot] = i;
+                                        World.player.invSelectedSpot = -1;
+                                    }
                                 }
                             }
                         }
@@ -317,7 +325,17 @@ namespace textured_raycast.maze
 
                         for (int i = 0; i < 5; i++)
                         {
-                            UIHolder.DrawPixel(new TexColor(loop * 50, 255, loop * 50), 17 + hp - loop * 36, 59 + i);
+                            if (i > 2)
+                            {
+                                if (World.player.actualHp > hp)
+                                {
+                                    UIHolder.DrawPixel(new TexColor(loop * 50, 155, loop * 50), 17 + hp - loop * 36, 59 + i);
+                                }
+                            }
+                            else
+                            {
+                                UIHolder.DrawPixel(new TexColor(loop * 50, 255, loop * 50), 17 + hp - loop * 36, 59 + i);
+                            }
                         }
                     }
 
