@@ -114,7 +114,7 @@ namespace textured_raycast.maze.texture
             return new Texture(pixels.ToList(), width, height);
         }
         public void setPixel(int x, int y, TexColor pixel) {
-            if(x < 0 || x > width || y < 0 || y > height) {
+            if(x < 0 || x >= width || y < 0 || y >= height) {
                 return;
             }
             pixels[x + y * width] = pixel;
