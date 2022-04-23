@@ -13,11 +13,13 @@ namespace textured_raycast.maze.graphics
         public static void WallCast(ref ConsoleBuffer game, ref double[] ZBuffer, float visRange, Map map = null)
         {
 	    if(map is null)
-		map = World.getMapByID(World.currentMap);
+                map = World.curMap;
+            // map = World.getMapByID(World.currentMap);
 
             int width = game.Width;
             int height = game.Height;
             ILight[] lights = map.GetLights();
+
             // Loop through every x in the "window", casting a ray for each.
             // ---
             // Raycasting is done using the digital differential analyzer

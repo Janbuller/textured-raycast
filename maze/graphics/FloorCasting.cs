@@ -13,7 +13,8 @@ namespace textured_raycast.maze.graphics
         public static void FloorCast(ref Texture game, float visRange, Map map = null)
         {
 	    if(map is null)
-		map = World.getMapByID(World.currentMap);
+                map = World.curMap;
+            // map = World.getMapByID(World.currentMap);
 
             game.Clear();
 

@@ -133,6 +133,6 @@ img/ownwalls/stone.ppm img/ownwalls/stone.ppm img/ownwalls/stone.ppm
 3.5 7.5 img/mario/9.ppm 4 1 0 1
 4.5 9.5 img/LightOBJs/torch.ppm 2 200 80 20 80
 2.5 9.5 img/LightOBJs/torch.ppm 2 200 80 20 80
-3.5 8.5 img/items/trainingsword.ppm 7 0 0
-4.5 8 img/items/food_apple.ppm 7 1 0
-2.5 8 img/items/woodshield.ppm 7 0 0
+3.5 8.5 img/items/trainingsword.ppm 7 0 1
+4.5 8 img/items/food_apple.ppm 7 1 1
+2.5 8 img/items/woodshield.ppm 7 0 1
