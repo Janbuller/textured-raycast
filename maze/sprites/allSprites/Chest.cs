@@ -8,7 +8,7 @@ using textured_raycast.maze.Items;
 
 namespace textured_raycast.maze.sprites.allSprites
 {
-    // ID For item
+    // ID For item, the amount of that item
     class Chest : Sprite
     {
         private bool didGiveItem = false;
@@ -29,6 +29,11 @@ namespace textured_raycast.maze.sprites.allSprites
 
             if (extraEffects.Count == 2)
                 timesToOpenLeft = extraEffects[1];
+        }
+
+        public bool isEmpty()
+        {
+            return timesToOpenLeft == 0;
         }
 
         public override void Activate()
@@ -89,7 +94,9 @@ namespace textured_raycast.maze.sprites.allSprites
 
         Dictionary<int, Item> itemsForChest = new Dictionary<int, Item>()
         {
-            {0, new Iron_Broadsword()},
+            {0, new Training_Sword()},
+            {1, new Apple()},
+            // when made {2, new Wooden_Shield()},
         };
     }
 }

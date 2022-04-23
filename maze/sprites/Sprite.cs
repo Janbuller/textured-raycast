@@ -88,7 +88,8 @@ namespace textured_raycast.maze.sprites
 
         public Sprite(double posX, double posY, string[] texture, int effectID = 0, string whatsLeft = "")
         {
-            define(posX, posY, texture, effectID, whatsLeft);
+            // apparently this makes it double define, so commented out lol
+            // define(posX, posY, texture, effectID, whatsLeft);
         }
 
         virtual public void updateAnimation()

@@ -94,6 +94,7 @@ namespace textured_raycast.maze
         public virtual void onEquip()
         {
             World.player.hp += addHP;
+            World.player.actualHp = Math.Min(Math.Max(World.player.actualHp + addHP, 1), World.player.hp);
             World.player.dam += addDAM;
             World.player.mag += addMAG;
         }
@@ -101,6 +102,7 @@ namespace textured_raycast.maze
         public virtual void onUnEquip()
         {
             World.player.hp -= addHP;
+            World.player.actualHp = Math.Min(Math.Max(World.player.actualHp - addHP, 1), World.player.hp);
             World.player.dam -= addDAM;
             World.player.mag -= addMAG;
         }

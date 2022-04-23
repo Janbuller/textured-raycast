@@ -5,7 +5,7 @@
         public Banana()
         {
             name = "Banana";
-            giveHP = 6;
+            giveHP = 10;
 
             imageID = 44;
         }

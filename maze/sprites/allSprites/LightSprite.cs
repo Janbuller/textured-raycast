@@ -3,15 +3,16 @@ using textured_raycast.maze.math;
 
 namespace textured_raycast.maze.sprites.allSprites
 {
-    class RoofLight : Sprite, ILight
+    class LightSprite : Sprite, ILight
     {
+        // R(0-255), G(0-255), B(0-255), Intensity(0-100), Linear, Quadratic
         TexColor thisColor;
         float intesity;
 
         float linear;
         float quadratic;
 
-        public RoofLight(double posX, double posY, string[] texture, int effectID = 0, string whatsLeft = "") : base(posX, posY, texture, effectID, whatsLeft)
+        public LightSprite(double posX, double posY, string[] texture, int effectID = 0, string whatsLeft = "") : base(posX, posY, texture, effectID, whatsLeft)
         {
             define(posX, posY, texture, effectID, whatsLeft);
         }

@@ -8,10 +8,9 @@ namespace textured_raycast.maze.skills.Skills
         {
 	        name = "Slash";
 	        TexID = 1;
+            price = 1;
 
 	        requiredSkills = new int[0];
-
-	        ResourceManager.getTexture("slhfsld");
         }
 
         public void Activate()

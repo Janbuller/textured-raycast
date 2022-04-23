@@ -24,10 +24,7 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override string ActivateMessage()
         {
-            if (extraEffects.Count == 2)
-                return "Traverse the door";
-
-            return MessageTextHolder.Text[extraEffects[3]];
+            return "Traverse the door";
         }
     }
 }

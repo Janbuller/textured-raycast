@@ -6,6 +6,7 @@ using textured_raycast.maze.math;
 using textured_raycast.maze.sprites;
 using System.Globalization;
 using textured_raycast.maze.sprites.allSprites;
+using textured_raycast.maze.resources;
 
 namespace textured_raycast.maze
 {
@@ -34,20 +35,17 @@ namespace textured_raycast.maze
 
         public float lightMix = 0.7f;
 
-	public string Path;
+	    public string Path;
 
         private Dictionary<int, Type> spriteTypes = new Dictionary<int, Type>(){
             {0, typeof(DefaultSprite)},
             {1, typeof(Door)},
-            {2, typeof(RoofLight)},
+            {2, typeof(LightSprite)},
             {3, typeof(Enemy)},
-            {4, typeof(TalkingSprite)},
-            {5, typeof(Portal)},
-            {6, typeof(Fireball)},
-            {7, typeof(RotatingSprite)},
-            {8, typeof(ChoiceTP)},
-            {9, typeof(Shop)},
-            {10, typeof(Chest)},
+            {4, typeof(FunctionSprite)},
+            {5, typeof(ChoiceTP)},
+            {6, typeof(Shop)},
+            {7, typeof(Chest)},
         };
 
         public bool useSkybox = true;
@@ -188,7 +186,7 @@ namespace textured_raycast.maze
         public void openDoor(int myID, int doorID)
         {
             resetSprites();
-            World.currentMap = myID;
+            World.curMap = World.getMapByID(myID);
             World.plrPos = new Vector2d(doorPositions[doorID].x, doorPositions[doorID].y);
         }
 

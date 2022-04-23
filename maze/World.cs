@@ -81,8 +81,8 @@ namespace textured_raycast.maze
             maps = new Dictionary<int, string>()
             {
                 {-1, "maps/fightMap.map"},
-                {1, "maps/TheHolyLands.map"},
-                {2, "maps/Castle.map"},
+                {1, "maps/StartingCave.map"},
+                {2, "maps/TheHolyLands.map"},
             };
 
             resetPlrPos();
@@ -93,6 +93,11 @@ namespace textured_raycast.maze
             plrPos = new Vector2d(curMap.playerStartPos);
             plrRot = new Vector2d(curMap.playerStartRot);
             plrPlane = new Vector2d(plrRot.y, -plrRot.x) * 0.66;
+        }
+
+        public static void reloadCurMap()
+        {
+            curMap = new Map(curMap.Path);
         }
 
         public static Map getMapByID(int id)

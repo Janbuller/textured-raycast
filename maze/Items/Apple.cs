@@ -5,7 +5,7 @@
         public Apple()
         {
             name = "Apple";
-            giveHP = 4;
+            giveHP = 5;
 
             imageID = 43;
         }

@@ -5,7 +5,7 @@
         public Kiwi()
         {
             name = "Kiwi";
-            giveHP = 4;
+            giveHP = 20;
 
             imageID = 47;
         }

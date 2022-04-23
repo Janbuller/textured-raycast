@@ -1,5 +1,7 @@
 local love = love
 
+love.graphics.setDefaultFilter("nearest", "nearest")
+
 local socket = require("socket")
 local directory = {}
 
@@ -85,7 +87,7 @@ local cloneSave = {0, 0, ""}
 
 local guiTileSize = 40
 local guiTilediff = 6
-local guiMaxTiles = 30
+local guiMaxTiles = 17
 
 local gridActive = false;
 
@@ -193,7 +195,7 @@ function love.draw()
         local maxSprites = #sprite[3]
         local thisIndex = roundDown%maxSprites+1
         
-        thisImg = folders[sprite[3][thisIndex][1]][sprite[3][thisIndex][2]]
+        local thisImg = folders[sprite[3][thisIndex][1]][sprite[3][thisIndex][2]]
 
         love.graphics.draw(thisImg[1], sprite[1]-0.3, sprite[2]-0.3, 0, 0.6/thisImg[1]:getWidth(), 0.6/thisImg[1]:getHeight())
     end

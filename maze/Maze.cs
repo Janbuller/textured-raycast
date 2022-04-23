@@ -578,6 +578,9 @@ namespace textured_raycast.maze
             // forcing the player to stay slightly further away from
             // walls.
 
+            if (InputManager.GetKey(Keys.K_1) != KeyState.KEY_UP && InputManager.GetKey(Keys.K_3) != KeyState.KEY_UP && InputManager.GetKey(Keys.K_2) == KeyState.KEY_DOWN)
+                World.reloadCurMap();
+
             if (InputManager.GetKey(Keys.K_UP) != KeyState.KEY_UP || InputManager.GetKey(Keys.K_W) != KeyState.KEY_UP)
             {
                 moveInDir(ref map, ref pos, dir, true);

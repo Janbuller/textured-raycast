@@ -46,6 +46,7 @@ namespace textured_raycast.maze.skills
                 if (!allOwned)
                     return;
             }
+
             World.player.skillPoints -= price;
             World.player.UnlockedSkills.Add(this.id);
         }
@@ -104,7 +105,7 @@ namespace textured_raycast.maze.skills
             {9,  new Slash(9,  2, new int[]{10})},
             {10, new Slash(10, 2, new int[]{11})},
             {11, new Slash(11, 2, new int[]{12})},
-            {12, new Slash(12, 2, null)},
+            {12, new Slash(12, 1, null)},
             {13, new Slash(13, 2, new int[]{12})},
             {14, new Slash(14, 2, new int[]{13})},
             {15, new Slash(15, 2, new int[]{14})},
