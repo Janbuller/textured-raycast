@@ -18,8 +18,8 @@ namespace textured_raycast.maze
 
         static Button[] invButtons = new Button[]
         {
-            new Back(1, 1, 11, 11, new int[] {0, 1, 4, 0}), new Skills(13, 1, 23, 11, new int[] {0, 0, 1, -1}),
-            new PlaceHolder(13, 18, 11, 11, new int[] {-1, 1, 3, 0}), new PlaceHolder(44, 18, 11, 11, new int[] {0, 97, 4, -1}),
+            new Back(1, 1, 11, 11, new int[] {0, 1, 4, 0}), new Skills(13, 1, 23, 11, new int[] {0, 2, 1, -1}),
+            new PlaceHolder(13, 18, 11, 11, new int[] {-1, 1, 3, 0}), new PlaceHolder(44, 18, 11, 11, new int[] {-2, 97, 4, -1}),
             new PlaceHolder(1, 30, 11, 11, new int[] {-2, 1, 4, 0}), new PlaceHolder(13, 30, 11, 11, new int[] {-3, 1, 0, -1}), new PlaceHolder(25, 30, 11, 11, new int[] {-4, 1, 3, -1}), new PlaceHolder(44, 30, 11, 11, new int[] {-4, 98, 3, -1}),
             new PlaceHolder(1, 42, 11, 11, new int[] {-4, 1, 0, 0}), new PlaceHolder(25, 42, 11, 11, new int[] {-3, 1, 0, -1}), new PlaceHolder(44, 42, 11, 11, new int[] {-3, 100, 0, -1})
         };
@@ -217,6 +217,14 @@ namespace textured_raycast.maze
                     if (nowInv == -1)
                     {
                         UIHolder = invButtons[curInvButton].DrawOnBuffer(UIHolder);
+
+			if (World.player.guiToEquipped.ContainsKey(curInvButton)) {
+                            if (!(World.player.equipped[World.player.guiToEquipped[curInvButton]] is null))
+                            {
+                                GUI.GUI.text(ref UIHolder, World.player.equipped[World.player.guiToEquipped[curInvButton]].name, 58, 3, 59);
+                            }
+                        }
+
                         if (InputManager.GetKey(Keys.K_E) == KeyState.KEY_DOWN)
                         {
                             if (World.player.invSelectedSpot == -1)

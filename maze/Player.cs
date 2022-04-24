@@ -133,25 +133,12 @@ namespace textured_raycast.maze
 
             //{ 43, new Apple()},
             //{ 44, new Banana()},
-            //{ 45, new Buger()},
+            { 45, new Buger()},
             //{ 46, new Cherries()},
             //{ 47, new Kiwi()},
             //{ 48, new Orange()},
             //{ 49, new Pear()},
             //{ 50, new Strawberry()},
-            // { 4, new Iron_Broadsword()},
-            // { 7, new Iron_Helmet()},
-            // { 6, new Iron_Broadsword()},
-            // { 26, new Iron_Broadsword()},
-            // { 49, new Iron_Broadsword()},
-            // { 50, new Iron_Broadsword()},
-            // { 62, new Iron_Broadsword()},
-            // { 2, new Ruby_Ring()},
-            // { 3, new Ruby_Ring()},
-            // { 5, new Ruby_Ring()},
-            // { 10, new Iron_Armor()},
-            // { 11, new Iron_Armor()},
-            // { 12, new Iron_Armor()},
         };
 
         public int lvl = 1;
