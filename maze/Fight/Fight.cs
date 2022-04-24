@@ -49,7 +49,7 @@ namespace textured_raycast.maze.Fight
 
         public void enemyDead()
         {
-            World.state = states.Game;
+            World.state = States.Game;
 
             World.player.xp++;
 
@@ -59,7 +59,7 @@ namespace textured_raycast.maze.Fight
 
         public void plrDead()
         {
-            World.state = states.Game;
+            World.state = States.Game;
             World.player.reset();
             World.getCurMap().fullReset();
         }

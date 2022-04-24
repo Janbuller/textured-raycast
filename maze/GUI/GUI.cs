@@ -95,19 +95,19 @@ namespace textured_raycast.maze.GUI
                 switch (pauseUIIndex)
                 {
                     case 1:
-                        World.state = states.Inventory;
+                        World.state = States.Inventory;
                         break;
                     case 2:
-                        World.state = states.Settings;
+                        World.state = States.Settings;
                         break;
                     case 3:
-                        World.state = states.Stopping;
+                        World.state = States.Stopping;
                         break;
                 }
             }
             if (InputManager.GetKey(Keys.K_ESC) == KeyState.KEY_DOWN)
             {
-                World.state = states.Game;
+                World.state = States.Game;
             }
             if (InputManager.GetKey(Keys.K_UP) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W) == KeyState.KEY_DOWN)
             {

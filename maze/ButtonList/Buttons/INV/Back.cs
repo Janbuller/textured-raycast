@@ -6,7 +6,7 @@
 
         public override void onActivate()
         {
-            World.state = states.Paused;
+            World.state = States.Paused;
         }
     }
 }

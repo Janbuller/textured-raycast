@@ -6,7 +6,7 @@
 
         public override void onActivate()
         {
-            World.state = states.Skills;
+            World.state = States.Skills;
         }
     }
 }

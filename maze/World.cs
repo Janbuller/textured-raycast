@@ -7,7 +7,7 @@ using textured_raycast.maze.sprites.allSprites;
 
 namespace textured_raycast.maze
 {
-    public enum states
+    public enum States
     {
         Game,
         Inventory,
@@ -21,11 +21,12 @@ namespace textured_raycast.maze
     class World
     {
         public static ConsoleEngine ce;
+        public static Vector2i size = new Vector2i(120, 80);
 
         public static int currentMap = 1;
         private static Dictionary<int, string> maps;
 
-        public static states state = states.Game;
+        public static States state = States.Game;
 
         public static string currentMessage = ""; // this is to show messages to the player or something
         public static string interactMessage = ""; // This takes priority over current message
@@ -64,7 +65,7 @@ namespace textured_raycast.maze
 
         public static void startFight(Sprite sprite)
         {
-            state = states.Fighting;
+            state = States.Fighting;
             fight = new Fight.Fight(sprite as Enemy);
         }
 
