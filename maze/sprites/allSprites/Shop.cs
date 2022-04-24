@@ -58,26 +58,26 @@ namespace textured_raycast.maze.sprites.allSprites
 
                 Vector2i pos = new Vector2i(1, 1);
 
-                pos.y -= chosen * 16;
+                pos.Y -= chosen * 16;
                 
                 foreach (shopItem shopI in shopInvs[extraEffects[0]])
                 {
-                    buffer.DrawBox(pos.x + 6, pos.y, 11, 11, new TexColor(0, 0, 0));
-                    buffer.DrawBox(pos.x + 7, pos.y + 1, 9, 9, new TexColor(198, 132, 68));
-                    buffer.DrawBox(pos.x + 19, pos.y, 99, 15, new TexColor(0, 0, 0));
-                    buffer.DrawBox(pos.x + 20, pos.y + 1, 97, 13, new TexColor(198, 132, 68));
-                    buffer.DrawTexture(ResourceManager.getTexture(Item.itemTextures[shopI.item.imageID]), pos.x + 7, pos.y + 1, new TexColor(0, 0, 0));
+                    buffer.DrawBox(pos.X + 6, pos.Y, 11, 11, new TexColor(0, 0, 0));
+                    buffer.DrawBox(pos.X + 7, pos.Y + 1, 9, 9, new TexColor(198, 132, 68));
+                    buffer.DrawBox(pos.X + 19, pos.Y, 99, 15, new TexColor(0, 0, 0));
+                    buffer.DrawBox(pos.X + 20, pos.Y + 1, 97, 13, new TexColor(198, 132, 68));
+                    buffer.DrawTexture(ResourceManager.getTexture(Item.itemTextures[shopI.item.imageID]), pos.X + 7, pos.Y + 1, new TexColor(0, 0, 0));
 
-                    GUI.GUI.text(ref buffer, shopI.item.name, pos.x + 21, pos.y + 2, 100);
-                    GUI.GUI.text(ref buffer, "Price " + shopI.price + " | " + shopI.maxSell + " Left", pos.x + 21, pos.y + 8, 100);
+                    GUI.GUI.text(ref buffer, shopI.item.name, pos.X + 21, pos.Y + 2, 100);
+                    GUI.GUI.text(ref buffer, "Price " + shopI.price + " | " + shopI.maxSell + " Left", pos.X + 21, pos.Y + 8, 100);
 
                     buffer.DrawTexture(ResourceManager.getTexture("img/arrow.ppm"), 1, 3, new TexColor(0, 0, 0));
 
                     
-                    pos.y += 16;
+                    pos.Y += 16;
                 }
 
-                pos.y += chosen * 16;
+                pos.Y += chosen * 16;
 
                 GUI.GUI.text(ref buffer, "Money " + World.player.money, 1, 74, 100);
 

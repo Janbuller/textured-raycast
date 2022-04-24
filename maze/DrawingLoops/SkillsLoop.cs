@@ -80,14 +80,14 @@ namespace textured_raycast.maze.DrawingLoops
                 UIHolder.Height / 2 - skillButtons[curSkillButton].y - skillButtons[curSkillButton].w / 2
             );
 
-            UIHolder.DrawTexture(ResourceManager.getTexture(World.textures[104]), screenOffset.x, screenOffset.y);
+            UIHolder.DrawTexture(ResourceManager.getTexture(World.textures[104]), screenOffset.X, screenOffset.Y);
 
             foreach (SkillPlaceHolder skillButton in skillButtons)
             {
                 try
                 {
                     Skill curSkill = Skill.Skills[skillButton.id];
-                    UIHolder.DrawTexture(TextureHelper.TripleScale(curSkill.getTexture()), screenOffset.x + skillButton.x - 3, screenOffset.y + skillButton.y - 3, new TexColor(0, 0, 0));
+                    UIHolder.DrawTexture(TextureHelper.TripleScale(curSkill.getTexture()), screenOffset.X + skillButton.x - 3, screenOffset.Y + skillButton.y - 3, new TexColor(0, 0, 0));
                 }
                 catch (Exception)
                 {

@@ -101,8 +101,8 @@ namespace textured_raycast.maze.graphics
             // another. The y-value is the opposite.
             // The ternary operator is used to avoid division by zero,
             // setting it to a really high number in that case.
-            Vector2d diffDist = new Vector2d(rayDir.x == 0 ? 100000000 : Math.Abs(1 / rayDir.x),
-                                             rayDir.y == 0 ? 100000000 : Math.Abs(1 / rayDir.y));
+            Vector2d diffDist = new Vector2d(rayDir.X == 0 ? 100000000 : Math.Abs(1 / rayDir.X),
+                                             rayDir.Y == 0 ? 100000000 : Math.Abs(1 / rayDir.Y));
             // The distance to the intersected cell, perpendicular to
             // the camera plane.
             double perpWallDist;
@@ -113,26 +113,26 @@ namespace textured_raycast.maze.graphics
             Vector2i step = new Vector2i(0, 0);
 
             // Sets step variable and calculates sideDist for both x and y.
-            if (rayDir.x < 0)
+            if (rayDir.X < 0)
             {
-                step.x = -1;
-                sideDist.x = (pos.x - (double)mapPos.x) * diffDist.x;
+                step.X = -1;
+                sideDist.X = (pos.X - (double)mapPos.X) * diffDist.X;
             }
             else
             {
-                step.x = 1;
-                sideDist.x = ((double)mapPos.x + 1 - pos.x) * diffDist.x;
+                step.X = 1;
+                sideDist.X = ((double)mapPos.X + 1 - pos.X) * diffDist.X;
             }
 
-            if (rayDir.y < 0)
+            if (rayDir.Y < 0)
             {
-                step.y = -1;
-                sideDist.y = (pos.y - (double)mapPos.y) * diffDist.y;
+                step.Y = -1;
+                sideDist.Y = (pos.Y - (double)mapPos.Y) * diffDist.Y;
             }
             else
             {
-                step.y = 1;
-                sideDist.y = ((double)mapPos.y + 1 - pos.y) * diffDist.y;
+                step.Y = 1;
+                sideDist.Y = ((double)mapPos.Y + 1 - pos.Y) * diffDist.Y;
             }
 
             // Whether or not the ray hit a wall. Used to get out of a
@@ -152,14 +152,14 @@ namespace textured_raycast.maze.graphics
                 // on which is currently shorter, then keep casting
                 // that, until the other is shorter.
                 // SideDist is now holding the full ray distance.
-                if (sideDist.x < sideDist.y)
+                if (sideDist.X < sideDist.Y)
                 {
                     // Increment sideDist by the distance between
                     // intersections.
-                    sideDist.x += diffDist.x;
+                    sideDist.X += diffDist.X;
                     // mapPos now holds the position of the intersected
                     // cell.
-                    mapPos.x += step.x;
+                    mapPos.X += step.X;
                     // Set side, since we know, if this ray hit, the
                     // side was 0.
                     side = 0;
@@ -168,10 +168,10 @@ namespace textured_raycast.maze.graphics
                 {
                     // Increment sideDist by the distance between
                     // intersections.
-                    sideDist.y += diffDist.y;
+                    sideDist.Y += diffDist.Y;
                     // mapPos now holds the position of the intersected
                     // cell.
-                    mapPos.y += step.y;
+                    mapPos.Y += step.Y;
                     // Set side, since we know, if this ray hit, the
                     // side was 0.
                     side = 1;
@@ -179,10 +179,10 @@ namespace textured_raycast.maze.graphics
 
                 // Check if the currently intersected cell was not
                 // empty.
-                if (map.IsWall((int)mapPos.x, (int)mapPos.y))
+                if (map.IsWall((int)mapPos.X, (int)mapPos.Y))
                 {
                     hit = true;
-                    hitWall = map.GetWall((int)mapPos.x, (int)mapPos.y);
+                    hitWall = map.GetWall((int)mapPos.X, (int)mapPos.Y);
                 }
 
             }
@@ -194,9 +194,9 @@ namespace textured_raycast.maze.graphics
             // side variable to know which ray hit, calculating the
             // distance it traveled.
             if (side == 0)
-                perpWallDist = (sideDist.x - diffDist.x);
+                perpWallDist = (sideDist.X - diffDist.X);
             else
-                perpWallDist = (sideDist.y - diffDist.y);
+                perpWallDist = (sideDist.Y - diffDist.Y);
 
             // lineHeight stores the height needed to draw the ray in
             // screen coordinates.
@@ -221,9 +221,9 @@ namespace textured_raycast.maze.graphics
 
             double wallX;
             if (side == 0)
-                wallX = pos.y + perpWallDist * rayDir.y;
+                wallX = pos.Y + perpWallDist * rayDir.Y;
             else
-                wallX = pos.x + perpWallDist * rayDir.x;
+                wallX = pos.X + perpWallDist * rayDir.X;
             wallX -= (int)wallX;
 
             int texX = (int)(wallX * tex.width);
@@ -232,16 +232,16 @@ namespace textured_raycast.maze.graphics
 
             // Calculate the map position of the ray hit.
             Vector2d hitPos = new Vector2d(
-                pos.x + perpWallDist * rayDir.x,
-                pos.y + perpWallDist * rayDir.y
+                pos.X + perpWallDist * rayDir.X,
+                pos.Y + perpWallDist * rayDir.Y
             );
 
             if(World.dayTime > 0.5f) {
                 darken *= 0.6f;
             } else {
-                Vector2d realPosAbove = new Vector2d(hitPos.x + 0.1, hitPos.y);
+                Vector2d realPosAbove = new Vector2d(hitPos.X + 0.1, hitPos.Y);
                 Vector2i cellPosAbove = (Vector2i)realPosAbove;
-                if(map.GetRoof(cellPosAbove.x, cellPosAbove.y) != "" || map.IsWall(cellPosAbove.x, cellPosAbove.y))
+                if(map.GetRoof(cellPosAbove.X, cellPosAbove.Y) != "" || map.IsWall(cellPosAbove.X, cellPosAbove.Y))
                     darken *= 0.6f;
             }
 

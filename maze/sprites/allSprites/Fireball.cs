@@ -26,7 +26,7 @@ namespace textured_raycast.maze.sprites.allSprites
         {
             Map curMap = World.getCurMap();
             pos += vel * World.dt;
-            if(pos.x > curMap.Width || pos.x < 0 || pos.y > curMap.Height || pos.y < 0) {
+            if(pos.X > curMap.Width || pos.X < 0 || pos.Y > curMap.Height || pos.Y < 0) {
 
             }
         }

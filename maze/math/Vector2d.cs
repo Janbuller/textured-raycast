@@ -5,16 +5,21 @@ namespace textured_raycast.maze.math
     // Vector 2 double.
     class Vector2d {
         // Holds x and y of vector.
-        public double x, y;
+        private double x, y;
+
+        public double X { get { return x; } set {x = value; } }
+        public double Y { get { return y; } set {y = value; } }
+	public double Width { get {return X; } set { X = value; } }
+	public double Height{ get {return Y; } set { Y = value; } }
 
         public Vector2d(double x, double y) {
-            this.x = x;
-            this.y = y;
+            this.X = x;
+            this.Y = y;
         }
 
         public Vector2d(Vector2d vec) {
-            this.x = vec.x;
-            this.y = vec.y;
+            this.X = vec.X;
+            this.Y = vec.Y;
         }
         public static bool Equals(Vector2d vec1, Vector2d vec2)
         {
@@ -22,12 +27,12 @@ namespace textured_raycast.maze.math
             if (ReferenceEquals(vec1, null)) return false;
             if (ReferenceEquals(vec2, null)) return false;
             if (vec1.GetType() != vec2.GetType()) return false;
-            return vec1.x == vec2.x && vec1.y == vec2.y;
+            return vec1.X == vec2.X && vec1.Y == vec2.Y;
         }
 
         public static int GetHashCode(Vector2d obj)
         {
-            return HashCode.Combine(obj.x, obj.y);
+            return HashCode.Combine(obj.X, obj.Y);
         }
 
         public override bool Equals(object vec)
@@ -37,7 +42,7 @@ namespace textured_raycast.maze.math
         
         public override int GetHashCode()
         {
-            return HashCode.Combine(x, y);
+            return HashCode.Combine(X, Y);
         }
         
         // Bunch of operator overloading, making vector math easier.
@@ -54,46 +59,46 @@ namespace textured_raycast.maze.math
 
         // Addition operator: Adds X to X and Y to Y
         public static Vector2d operator +(Vector2d vec1, Vector2d vec2) {
-            return new Vector2d(vec1.x + vec2.x, vec1.y + vec2.y);
+            return new Vector2d(vec1.X + vec2.X, vec1.Y + vec2.Y);
         }
         // Subtraction operator: Subtracts X from X and Y from Y
         public static Vector2d operator -(Vector2d vec1, Vector2d vec2) {
-            return new Vector2d(vec1.x - vec2.x, vec1.y - vec2.y);
+            return new Vector2d(vec1.X - vec2.X, vec1.Y - vec2.Y);
         }
         // Multiplication operator: Multiplies vector by scalar.
         public static Vector2d operator *(Vector2d vec1, double scalar) {
-            return new Vector2d(vec1.x * scalar, vec1.y * scalar);
+            return new Vector2d(vec1.X * scalar, vec1.Y * scalar);
         }
         // Multiplication operator #2: Allows for scalar to be first.
         public static Vector2d operator *(double scalar, Vector2d vec1) {
-            return new Vector2d(vec1.x * scalar, vec1.y * scalar);
+            return new Vector2d(vec1.X * scalar, vec1.Y * scalar);
         }
         // Multiplication operator #3: Multiply the components of two vectors.
         public static Vector2d operator *(Vector2d vec1, Vector2d vec2) {
-            return new Vector2d(vec1.x * vec2.x, vec1.y * vec2.y);
+            return new Vector2d(vec1.X * vec2.X, vec1.Y * vec2.Y);
         }
         // Division operator: Divides vector by scalar.
         public static Vector2d operator /(Vector2d vec1, double scalar) {
-            return new Vector2d(vec1.x / scalar, vec1.y / scalar);
+            return new Vector2d(vec1.X / scalar, vec1.Y / scalar);
         }
 
         // allow casting v2i to v2d
         public static explicit operator Vector2d(Vector2i vec) {
-            return new Vector2d(vec.x, vec.y);
+            return new Vector2d(vec.X, vec.Y);
         }
 
         // Non-static function. Floors vector, basically turning it into an
         // integer vector.
         public Vector2d Floor()
         {
-            return new Vector2d(Math.Floor(x), Math.Floor(y));
+            return new Vector2d(Math.Floor(X), Math.Floor(Y));
         }
         public void Normalize()
         {
             double dist = DistTo(new Vector2d(0, 0));
 
-            x /= dist;
-            y /= dist;
+            X /= dist;
+            Y /= dist;
         }
 
         // Using multiplication instead of Math.Pow for this is /literally/ over
@@ -103,8 +108,8 @@ namespace textured_raycast.maze.math
         // Math.Pow():     ~50-60ms
         // Multiplication: ~0-5ms
         public double DistTo(Vector2d otherVec2d){
-            double x1 = otherVec2d.x - x;
-            double y1 = otherVec2d.y - y;
+            double x1 = otherVec2d.X - X;
+            double y1 = otherVec2d.Y - Y;
             return Math.Sqrt(x1*x1 + y1*y1);
         }
 

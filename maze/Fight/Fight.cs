@@ -72,7 +72,7 @@ namespace textured_raycast.maze.Fight
 
             World.plrRot = new Vector2d(-1, 0);
             World.plrPos = new Vector2d(3.65, 2);
-            World.plrPlane = new Vector2d(World.plrRot.y, -World.plrRot.x) * 0.66;
+            World.plrPlane = new Vector2d(World.plrRot.Y, -World.plrRot.X) * 0.66;
             Map map = World.getMapByID(mapID);
 
             Texture FloorAndRoof = new Texture(buffer.Width, buffer.Height);

@@ -35,7 +35,7 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void resetSprite()
         {
-            pos = new Vector2d(orgPos.x, orgPos.y);
+            pos = new Vector2d(orgPos.X, orgPos.Y);
 
             canInteract = true;
             doRender = true;

@@ -6,11 +6,16 @@ namespace textured_raycast.maze.math
     // Vector 2 double.
     class Vector2i {
         // Holds x and y of vector.
-        public int x, y;
+        private int x, y;
+
+        public int X { get { return x; } set {x = value; } }
+        public int Y { get { return y; } set {y = value; } }
+	public int Width { get {return X; } set { X = value; } }
+	public int Height{ get {return Y; } set { Y = value; } }
 
         public Vector2i(int x, int y) {
-            this.x = x;
-            this.y = y;
+            this.X = x;
+            this.Y = y;
         }
         public static bool Equals(Vector2i vec1, Vector2i vec2)
         {
@@ -18,12 +23,12 @@ namespace textured_raycast.maze.math
             if (ReferenceEquals(vec1, null)) return false;
             if (ReferenceEquals(vec2, null)) return false;
             if (vec1.GetType() != vec2.GetType()) return false;
-            return vec1.x == vec2.x && vec1.y == vec2.y;
+            return vec1.X == vec2.X && vec1.Y == vec2.Y;
         }
 
         public static int GetHashCode(Vector2i obj)
         {
-            return HashCode.Combine(obj.x, obj.y);
+            return HashCode.Combine(obj.X, obj.Y);
         }
 
         public override bool Equals(object vec)
@@ -33,7 +38,7 @@ namespace textured_raycast.maze.math
         
         public override int GetHashCode()
         {
-            return HashCode.Combine(x, y);
+            return HashCode.Combine(X, Y);
         }
         
         // Bunch of operator overloading, making vector math easier.
@@ -50,41 +55,41 @@ namespace textured_raycast.maze.math
 
         // Addition operator: Adds X to X and Y to Y
         public static Vector2i operator +(Vector2i vec1, Vector2i vec2) {
-            return new Vector2i(vec1.x + vec2.x, vec1.y + vec2.y);
+            return new Vector2i(vec1.X + vec2.X, vec1.Y + vec2.Y);
         }
         // Subtraction operator: Subtracts X from X and Y from Y
         public static Vector2i operator -(Vector2i vec1, Vector2i vec2) {
-            return new Vector2i(vec1.x - vec2.x, vec1.y - vec2.y);
+            return new Vector2i(vec1.X - vec2.X, vec1.Y - vec2.Y);
         }
         // Multiplication operator: Multiplies vector by scalar.
         public static Vector2i operator *(Vector2i vec1, double scalar) {
-            return new Vector2i(Convert.ToInt32(vec1.x * scalar), Convert.ToInt32(vec1.y * scalar));
+            return new Vector2i(Convert.ToInt32(vec1.X * scalar), Convert.ToInt32(vec1.Y * scalar));
         }
         public static Vector2i operator *(Vector2i vec1, int scalar) {
-            return new Vector2i(vec1.x * scalar, vec1.y * scalar);
+            return new Vector2i(vec1.X * scalar, vec1.Y * scalar);
         }
         // Multiplication operator #2: Allows for scalar to be first.
         public static Vector2i operator *(double scalar, Vector2i vec1) {
-            return new Vector2i(Convert.ToInt32(vec1.x * scalar), Convert.ToInt32(vec1.y * scalar));
+            return new Vector2i(Convert.ToInt32(vec1.X * scalar), Convert.ToInt32(vec1.Y * scalar));
         }
         public static Vector2i operator *(int scalar, Vector2i vec1) {
-            return new Vector2i(vec1.x * scalar, vec1.y * scalar);
+            return new Vector2i(vec1.X * scalar, vec1.Y * scalar);
         }
         // Multiplication operator #3: Multiply the components of two vectors.
         public static Vector2i operator *(Vector2i vec1, Vector2i vec2) {
-            return new Vector2i(vec1.x * vec2.x, vec1.y * vec2.y);
+            return new Vector2i(vec1.X * vec2.X, vec1.Y * vec2.Y);
         }
         // Division operator: Divides vector by scalar.
         public static Vector2i operator /(Vector2i vec1, double scalar) {
-            return new Vector2i(Convert.ToInt32(vec1.x / scalar), Convert.ToInt32(vec1.y / scalar));
+            return new Vector2i(Convert.ToInt32(vec1.X / scalar), Convert.ToInt32(vec1.Y / scalar));
         }
         public static Vector2i operator /(Vector2i vec1, int scalar) {
-            return new Vector2i(vec1.x / scalar, vec1.y / scalar);
+            return new Vector2i(vec1.X / scalar, vec1.Y / scalar);
         }
 
         // allow casting v2d to v2i
         public static explicit operator Vector2i(Vector2d vec) {
-            return new Vector2i(Convert.ToInt32(vec.x), Convert.ToInt32(vec.y));
+            return new Vector2i(Convert.ToInt32(vec.X), Convert.ToInt32(vec.Y));
         }
 
         // Following function tests )the functionality of the operator overloading.

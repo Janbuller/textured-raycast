@@ -32,22 +32,22 @@ namespace textured_raycast.maze.graphics
             Vector2i cal = new Vector2i((int)(x * heightDiff), (int)(y * heightDiff));
 
             // Get the players rotation in radians.
-            double dirRad = Math.Atan2(World.plrRot.x, World.plrRot.y);
+            double dirRad = Math.Atan2(World.plrRot.X, World.plrRot.Y);
             // The players rotation, mapped from the range [0, 2PI] to [0, 1].
             double dirMapped = dirRad / (Math.PI * 2);
             // The offset to the skybox texture, based of the mapped direction.
             int xOffset = (int)(dirMapped * skyboxTex.width);
 
             // Add the offset to the position.
-            cal.x += xOffset;
+            cal.X += xOffset;
 
             // While the position is outside the texture width, move back by the
             // amount over the bounds. This makes the texture repeating on the
             // x-axis.
-            while (cal.x > skyboxTex.width)
-                cal.x -= skyboxTex.width;
-            while (cal.x < 0)
-                cal.x += skyboxTex.width;
+            while (cal.X > skyboxTex.width)
+                cal.X -= skyboxTex.width;
+            while (cal.X < 0)
+                cal.X += skyboxTex.width;
 
             /* This no work :/, we try anohter try, no day-night for us *sadge*
             // getting the rotational position of the pixle
@@ -73,7 +73,7 @@ namespace textured_raycast.maze.graphics
             */
 
             // Return the pixel at the position.
-            return skyboxTex.getPixel(cal.x, cal.y);
+            return skyboxTex.getPixel(cal.X, cal.Y);
 
 
         }

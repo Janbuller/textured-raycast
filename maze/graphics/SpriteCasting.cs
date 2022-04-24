@@ -20,8 +20,8 @@ namespace textured_raycast.maze.graphics
             {
                 // Calculate sprite distance from player, using pythagoras.
                 // Since it's only used for comparing with itself, sqrt isn't required.
-                double xDist = World.plrPos.x - sprites[i].getX();
-                double yDist = World.plrPos.y - sprites[i].getY();
+                double xDist = World.plrPos.X - sprites[i].getX();
+                double yDist = World.plrPos.Y - sprites[i].getY();
 
                 spriteDist.Add(xDist * xDist + yDist * yDist);
             }
@@ -54,8 +54,8 @@ namespace textured_raycast.maze.graphics
 
                 // The imaginary camera matrix, which will be used for the
                 // transformations
-                Matrix2x2d camMat = new Matrix2x2d(new double[] {World.plrPlane.x, World.plrRot.x,
-                                                                 World.plrPlane.y, World.plrRot.y});
+                Matrix2x2d camMat = new Matrix2x2d(new double[] {World.plrPlane.X, World.plrRot.X,
+                                                                 World.plrPlane.Y, World.plrRot.Y});
 
                 // The position of the sprite, transformed by the inverse of the
                 // imaginary camera matrix. The camera matrix holds the position
@@ -70,11 +70,11 @@ namespace textured_raycast.maze.graphics
                 // Cull sprites, that are behind the camera. Since the
                 // distance variable isn't absolute, so a negative value,
                 // means that it is behind the camera.
-                if (transformed.y < 0)
+                if (transformed.Y < 0)
                     continue;
 
                 // The screen-space middle x-position of the sprite.
-                int spriteScreenX = (int)((game.Width / 2) * (1 + transformed.x / transformed.y));
+                int spriteScreenX = (int)((game.Width / 2) * (1 + transformed.X / transformed.Y));
 
                 // The screen-space height of the given sprite. This is
                 // calculated, by dividing the height of the screen, by the
@@ -96,7 +96,7 @@ namespace textured_raycast.maze.graphics
                 //
                 // This is called spriteScreenSize, as we assume the width to be
                 // the same as the height.
-                int spriteScreenSize = (int)((game.Height / transformed.y));
+                int spriteScreenSize = (int)((game.Height / transformed.Y));
 
                 // The screenspace x-positionm, at which to start drawing the
                 // sprite. This is calculated, by taking away half of the sprite
@@ -115,7 +115,7 @@ namespace textured_raycast.maze.graphics
                 // Calculates the darkening of the sprite, based of the distance
                 // to the camera.
                 float darken = 0.9f;
-                darken = (float)Math.Min(1, Math.Max(0, darken - transformed.y * (visRange * 0.005)));
+                darken = (float)Math.Min(1, Math.Max(0, darken - transformed.Y * (visRange * 0.005)));
 
                 // Goes through all columns, from statX to endX.
                 for (int x = startX; x < endX; x++)
@@ -130,9 +130,9 @@ namespace textured_raycast.maze.graphics
                     // and they were sorted earlier, thereby using the
                     // painters algorihm.
 
-                    if (transformed.y < ZBuffer[x])
+                    if (transformed.Y < ZBuffer[x])
                     {
-                        curSpr.UpdateOnDraw(transformed.y);
+                        curSpr.UpdateOnDraw(transformed.Y);
                         TexColor mixedLight = new TexColor(255, 255, 255);
                         Vector2d newPlane = ((World.plrPlane * -1) + ((World.plrPlane * 2)) / (endX - startX) * (x - startX));
 

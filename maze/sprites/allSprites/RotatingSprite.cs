@@ -28,8 +28,8 @@ namespace textured_raycast.maze.sprites.allSprites
                 rot -= Math.PI*2;
             while(rot < -Math.PI)
                 rot += Math.PI*2;
-            dir.x = Math.Cos(rot+Math.PI);
-            dir.y = Math.Sin(rot+Math.PI);
+            dir.X = Math.Cos(rot+Math.PI);
+            dir.Y = Math.Sin(rot+Math.PI);
         }
 
         // TODO: fix if you care

@@ -21,7 +21,7 @@ namespace textured_raycast.maze
     class World
     {
         public static ConsoleEngine ce;
-        public static Vector2i size = new Vector2i(120, 80);
+	public static Vector2i WindowSize = new Vector2i(120, 80);
 
         public static int currentMap = 1;
         private static Dictionary<int, string> maps;
@@ -74,7 +74,7 @@ namespace textured_raycast.maze
             curMap = ResourceManager.getMap(maps[currentMap]);
             plrPos = new Vector2d(curMap.playerStartPos);
             plrRot = new Vector2d(curMap.playerStartRot);
-            plrPlane = new Vector2d(plrRot.y, -plrRot.x) * 0.66;
+            plrPlane = new Vector2d(plrRot.Y, -plrRot.X) * 0.66;
         }
 
         public static void setupMapsInWorld()
@@ -93,7 +93,7 @@ namespace textured_raycast.maze
             curMap = map;
             plrPos = new Vector2d(curMap.playerStartPos);
             plrRot = new Vector2d(curMap.playerStartRot);
-            plrPlane = new Vector2d(plrRot.y, -plrRot.x) * 0.66;
+            plrPlane = new Vector2d(plrRot.Y, -plrRot.X) * 0.66;
         }
 
         public static void reloadCurMap()

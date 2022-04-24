@@ -17,24 +17,24 @@ namespace textured_raycast.maze
 {
     class Maze
     {
-        static ConsoleBuffer game;
-        static ConsoleBuffer fight;
-        static ConsoleBuffer UIHolder;
+        static ConsoleBuffer GameBuffer;
+        static ConsoleBuffer FightBuffer;
+        static ConsoleBuffer UIBuffer;
 
-        public static bool StartMaze()
+        public static bool StartGame()
         {
-            World.ce = new ConsoleEngine(World.size.x, World.size.y, "very dumb game");
-            game = new ConsoleBuffer(World.size.x, World.size.y);
-            fight = new ConsoleBuffer(World.size.x, World.size.y);
-            UIHolder = new ConsoleBuffer(World.size.x, World.size.y);
+            World.ce = new ConsoleEngine(World.WindowSize.Width, World.WindowSize.Height, "very dumb game");
+            GameBuffer = new ConsoleBuffer(World.WindowSize.Width, World.WindowSize.Height);
+            FightBuffer = new ConsoleBuffer(World.WindowSize.Width, World.WindowSize.Height);
+            UIBuffer = new ConsoleBuffer(World.WindowSize.Width, World.WindowSize.Height);
 
             Console.Clear();
             DrawScreen();
 
-            return Start();
+            return RunMainLoop();
         }
 
-        private static bool Start()
+        private static bool RunMainLoop()
         {
             // Main game loop
             while (World.state != States.Stopping)
@@ -45,19 +45,19 @@ namespace textured_raycast.maze
                 switch (World.state)
                 {
                     case States.Fighting:
-                        FightLoop.FightLoopIter(ref game, ref fight, ref UIHolder);
+                        FightLoop.FightLoopIter(ref GameBuffer, ref FightBuffer, ref UIBuffer);
                         break;
                     case States.Inventory:
-                        InventoryLoop.InventoryLoopIter(ref game, ref UIHolder);
+                        InventoryLoop.InventoryLoopIter(ref GameBuffer, ref UIBuffer);
                         break;
                     case States.Skills:
-                        SkillsLoop.SkillsLoopIter(ref game, ref UIHolder);
+                        SkillsLoop.SkillsLoopIter(ref GameBuffer, ref UIBuffer);
                         break;
                     case States.Paused:
-                        PauseLoop.PauseLoopIter(ref game, ref UIHolder);
+                        PauseLoop.PauseLoopIter(ref GameBuffer, ref UIBuffer);
                         break;
                     case States.Game:
-                        GameLoop.GameLoopIter(ref game, ref UIHolder);
+                        GameLoop.GameLoopIter(ref GameBuffer, ref UIBuffer);
                         break;
                 }
 
@@ -78,5 +78,6 @@ namespace textured_raycast.maze
                 }
             });
         }
+
     }
 }

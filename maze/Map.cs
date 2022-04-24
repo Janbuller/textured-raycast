@@ -187,7 +187,7 @@ namespace textured_raycast.maze
         {
             resetSprites();
             World.curMap = World.getMapByID(myID);
-            World.plrPos = new Vector2d(doorPositions[doorID].x, doorPositions[doorID].y);
+            World.plrPos = new Vector2d(doorPositions[doorID].X, doorPositions[doorID].Y);
         }
 
         public void fullReset()

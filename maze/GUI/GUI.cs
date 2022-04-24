@@ -36,13 +36,13 @@ namespace textured_raycast.maze.GUI
 
             while (toSend.Length > 0)
             {
-                addCharToBufferAt(ref guiBuffer, GUITextStrings.IndexOf(toSend.Substring(0, 1).ToUpper()), start.x, start.y);
+                addCharToBufferAt(ref guiBuffer, GUITextStrings.IndexOf(toSend.Substring(0, 1).ToUpper()), start.X, start.Y);
                 toSend = toSend.Remove(0, 1);
-                start.x += 4;
-                if (start.x > x+w)
+                start.X += 4;
+                if (start.X > x+w)
                 {
-                    start.x = x;
-                    start.y += 6;
+                    start.X = x;
+                    start.Y += 6;
                 }
             }
         }
@@ -71,13 +71,13 @@ namespace textured_raycast.maze.GUI
 
             while (toSend.Length > 0)
             {
-                addCharToBufferAt(ref guiBuffer, GUITextStrings.IndexOf(toSend.Substring(0, 1).ToUpper()), start.x, start.y);
+                addCharToBufferAt(ref guiBuffer, GUITextStrings.IndexOf(toSend.Substring(0, 1).ToUpper()), start.X, start.Y);
                 toSend = toSend.Remove(0, 1);
-                start.x += 4;
-                if (start.x > 98)
+                start.X += 4;
+                if (start.X > 98)
                 {
-                    start.x = 3;
-                    start.y += 6;
+                    start.X = 3;
+                    start.Y += 6;
                 }
             }
         }

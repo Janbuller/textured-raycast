@@ -23,7 +23,7 @@ namespace textured_raycast.maze.DrawingLoops
 
         static double[] ZBuffer = new double[World.ce.Width];
 
-        static Texture FloorAndRoof = new Texture(World.size.x, World.size.y);
+        static Texture FloorAndRoof = new Texture(World.WindowSize.X, World.WindowSize.Y);
 
         public static void GameLoopIter(ref ConsoleBuffer game, ref ConsoleBuffer UIHolder)
         {
@@ -127,33 +127,33 @@ namespace textured_raycast.maze.DrawingLoops
             }
             if (InputManager.GetKey(Keys.K_D) != KeyState.KEY_UP)
             {
-                moveInDir(ref map, ref pos, new Vector2d(-dir.y, dir.x) * -1);
+                moveInDir(ref map, ref pos, new Vector2d(-dir.Y, dir.X) * -1);
             }
             if (InputManager.GetKey(Keys.K_A) != KeyState.KEY_UP)
             {
-                moveInDir(ref map, ref pos, new Vector2d(-dir.y, dir.x));
+                moveInDir(ref map, ref pos, new Vector2d(-dir.Y, dir.X));
             }
             if (InputManager.GetKey(Keys.K_RIGHT) != KeyState.KEY_UP)
             {
                 // Use too much math, to calculate the direction unit vector.
-                double oldDirX = dir.x;
-                dir.x = dir.x * Math.Cos(-rotSpeed) - dir.y * Math.Sin(-rotSpeed);
-                dir.y = oldDirX * Math.Sin(-rotSpeed) + dir.y * Math.Cos(-rotSpeed);
+                double oldDirX = dir.X;
+                dir.X = dir.X * Math.Cos(-rotSpeed) - dir.Y * Math.Sin(-rotSpeed);
+                dir.Y = oldDirX * Math.Sin(-rotSpeed) + dir.Y * Math.Cos(-rotSpeed);
                 // Use too much math, to calculate the camera viewport plane.
-                double oldPlaneX = World.plrPlane.x;
-                World.plrPlane.x = World.plrPlane.x * Math.Cos(-rotSpeed) - World.plrPlane.y * Math.Sin(-rotSpeed);
-                World.plrPlane.y = oldPlaneX * Math.Sin(-rotSpeed) + World.plrPlane.y * Math.Cos(-rotSpeed);
+                double oldPlaneX = World.plrPlane.X;
+                World.plrPlane.X = World.plrPlane.X * Math.Cos(-rotSpeed) - World.plrPlane.Y * Math.Sin(-rotSpeed);
+                World.plrPlane.Y = oldPlaneX * Math.Sin(-rotSpeed) + World.plrPlane.Y * Math.Cos(-rotSpeed);
             }
             if (InputManager.GetKey(Keys.K_LEFT) != KeyState.KEY_UP)
             {
                 // Use too much math, to calculate the direction unit vector.
-                double oldDirX = dir.x;
-                dir.x = dir.x * Math.Cos(rotSpeed) - dir.y * Math.Sin(rotSpeed);
-                dir.y = oldDirX * Math.Sin(rotSpeed) + dir.y * Math.Cos(rotSpeed);
+                double oldDirX = dir.X;
+                dir.X = dir.X * Math.Cos(rotSpeed) - dir.Y * Math.Sin(rotSpeed);
+                dir.Y = oldDirX * Math.Sin(rotSpeed) + dir.Y * Math.Cos(rotSpeed);
                 // Use too much math, to calculate the camera viewport plane.
-                double oldPlaneX = World.plrPlane.x;
-                World.plrPlane.x = World.plrPlane.x * Math.Cos(rotSpeed) - World.plrPlane.y * Math.Sin(rotSpeed);
-                World.plrPlane.y = oldPlaneX * Math.Sin(rotSpeed) + World.plrPlane.y * Math.Cos(rotSpeed);
+                double oldPlaneX = World.plrPlane.X;
+                World.plrPlane.X = World.plrPlane.X * Math.Cos(rotSpeed) - World.plrPlane.Y * Math.Sin(rotSpeed);
+                World.plrPlane.Y = oldPlaneX * Math.Sin(rotSpeed) + World.plrPlane.Y * Math.Cos(rotSpeed);
             }
             if (InputManager.GetKey(Keys.K_E) == KeyState.KEY_DOWN)
             {
@@ -203,12 +203,12 @@ namespace textured_raycast.maze.DrawingLoops
             // make sense, since they could be different. They are
             // split up, to allow sliding on walls, when not walking
             // perpendicular into them.
-            Wall cellX = map.GetWall((int)(pos.x + dir.x * (curMovSpeed * extraColDistMult)), (int)(pos.y));
-            Wall cellY = map.GetWall((int)(pos.x), (int)(pos.y + dir.y * (curMovSpeed * extraColDistMult)));
+            Wall cellX = map.GetWall((int)(pos.X + dir.X * (curMovSpeed * extraColDistMult)), (int)(pos.Y));
+            Wall cellY = map.GetWall((int)(pos.X), (int)(pos.Y + dir.Y * (curMovSpeed * extraColDistMult)));
 
             // Check if cell is empty or a control cell, if so, move.
-            if (!cellX.isWall) pos.x += dir.x * curMovSpeed;
-            if (!cellY.isWall) pos.y += dir.y * curMovSpeed;
+            if (!cellX.isWall) pos.X += dir.X * curMovSpeed;
+            if (!cellY.isWall) pos.Y += dir.Y * curMovSpeed;
 
             cellX.Collide();
             cellY.Collide();

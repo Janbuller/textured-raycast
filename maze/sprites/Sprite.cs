@@ -162,10 +162,10 @@ namespace textured_raycast.maze.sprites
             return pos;
         }
         public double getX() {
-            return pos.x;
+            return pos.X;
         }
         public double getY() {
-            return pos.y;
+            return pos.Y;
         }
     }
 }

@@ -62,10 +62,10 @@ namespace textured_raycast.maze.graphics
                     }
 
                     Vector2i cellPos = (Vector2i)floor.Floor();
-                    string floorId = map.GetFloor(cellPos.x, cellPos.y);
+                    string floorId = map.GetFloor(cellPos.X, cellPos.Y);
                     floorTex = floorId == "" ? null : ResourceManager.getTexture(floorId);
 
-                    string ceilId = map.GetRoof(cellPos.x, cellPos.y);
+                    string ceilId = map.GetRoof(cellPos.X, cellPos.Y);
                     ceilingTex = ceilId == "" ? null : ResourceManager.getTexture(ceilId);
 
                     float darken = 0.9f;
@@ -83,19 +83,19 @@ namespace textured_raycast.maze.graphics
                     if(!(floorTex is null)) {
                         Vector2i texture = (Vector2i)(floorTex.width * (floor - (Vector2d)cellPos)).Floor();
                         texture = new Vector2i(
-                            Math.Abs(texture.x),
-                            Math.Abs(texture.y)
+                            Math.Abs(texture.X),
+                            Math.Abs(texture.Y)
                         );
 
-                        texColor = floorTex.getPixel(texture.x, texture.y);
+                        texColor = floorTex.getPixel(texture.X, texture.Y);
                         color  = texColor * darken * map.lightMix;
                         color += maze.texture.TexColor.unitMultReal(texColor, mixedLight) * (1 - map.lightMix);
                         if(World.dayTime > 0.5f) {
                             color *= 0.6f;
                         } else {
-                            Vector2d realPosAbove = new Vector2d(floor.x + 0.1, floor.y);
+                            Vector2d realPosAbove = new Vector2d(floor.X + 0.1, floor.Y);
                             Vector2i cellPosAbove = (Vector2i)realPosAbove;
-                            if(map.GetRoof(cellPosAbove.x, cellPosAbove.y) != "" || map.IsWall(cellPosAbove.x, cellPosAbove.y))
+                            if(map.GetRoof(cellPosAbove.X, cellPosAbove.Y) != "" || map.IsWall(cellPosAbove.X, cellPosAbove.Y))
                                 color *= 0.6f;
                         }
                         game.setPixel(x, y, color);
@@ -110,11 +110,11 @@ namespace textured_raycast.maze.graphics
                     } else {
                         Vector2i texture = (Vector2i)(ceilingTex.width * (floor - (Vector2d)cellPos)).Floor();
                         texture = new Vector2i(
-                            Math.Abs(texture.x),
-                            Math.Abs(texture.y)
+                            Math.Abs(texture.X),
+                            Math.Abs(texture.Y)
                         );
 
-                        texColor = ceilingTex.getPixel(texture.x, texture.y);
+                        texColor = ceilingTex.getPixel(texture.X, texture.Y);
                         color  = texColor * darken;
                         color *= map.lightMix * 0.6f;
                         color += maze.texture.TexColor.unitMultReal(texColor, mixedLight) * (1-map.lightMix);

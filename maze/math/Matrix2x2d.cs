@@ -19,8 +19,8 @@ namespace textured_raycast.maze.math
 
         private static Vector2d multByVec(Vector2d vec, Matrix2x2d mat) {
             return new Vector2d(
-                mat.getE(0, 0) * vec.x + mat.getE(1,0) * vec.y,
-                mat.getE(0, 1) * vec.x + mat.getE(1,1) * vec.y
+                mat.getE(0, 0) * vec.X + mat.getE(1,0) * vec.Y,
+                mat.getE(0, 1) * vec.X + mat.getE(1,1) * vec.Y
             );
         }
 

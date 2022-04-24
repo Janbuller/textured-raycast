@@ -7,7 +7,7 @@ namespace textured_raycast.maze.sprites.allSprites
     class Portal : Sprite
     {
 
-        Texture portalTex;
+        // Texture portalTex;
 
         public Portal(double posX, double posY, string[] texture, int effectID = 0, string whatsLeft = "") : base(posX, posY, texture, effectID, whatsLeft)
         {

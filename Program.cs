@@ -13,7 +13,7 @@ namespace textured_raycast
                 maze.input.InputManager.SetInputController(new maze.input.Windows.WindowsInputController());
 
             World.setupMapsInWorld();
-            Maze.StartMaze();
+            Maze.StartGame();
 
             // var watch = new System.Diagnostics.Stopwatch();
             // watch.Start();
