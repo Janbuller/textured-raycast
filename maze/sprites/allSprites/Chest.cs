@@ -52,7 +52,7 @@ namespace textured_raycast.maze.sprites.allSprites
         {
             if (!(animationTime == 3f || animationTime == 0f))
             {
-                animationTime = MathF.Min(animationTime + World.dt, 3);
+                animationTime = MathF.Min(animationTime + (float)World.dt, 3);
                 if (animationTime == 3f && didGiveItem == false)
                 {
                     didGiveItem = true;

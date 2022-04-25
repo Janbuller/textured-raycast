@@ -1,16 +1,5 @@
 using System;
-using textured_raycast.maze.math;
-using textured_raycast.maze.graphics;
-using textured_raycast.maze.texture;
-using textured_raycast.maze.skills;
-using textured_raycast.maze.sprites;
-using textured_raycast.maze.sprites.allSprites;
-using textured_raycast.maze.input;
-using textured_raycast.maze.resources;
 using System.Threading.Tasks;
-using textured_raycast.maze.ButtonList;
-using textured_raycast.maze.ButtonList.Buttons.INV;
-using textured_raycast.maze.ButtonList.Buttons.Skills;
 using textured_raycast.maze.DrawingLoops;
 
 namespace textured_raycast.maze
@@ -39,9 +28,8 @@ namespace textured_raycast.maze
             // Main game loop
             while (World.state != States.Stopping)
             {
-		// Calculate and set deltatime in world.
-                World.dt = (float)(DateTime.Now.Ticks - World.lastFrameTime) / TimeSpan.TicksPerSecond;
-                World.lastFrameTime = DateTime.Now.Ticks;
+                // Calculate and set deltatime in world.
+                World.UpdateDeltaTime();
 
                 switch (World.state)
                 {
@@ -53,6 +41,9 @@ namespace textured_raycast.maze
                         break;
                     case States.Skills:
                         SkillsLoop.SkillsLoopIter(ref GameBuffer, ref UIBuffer);
+                        break;
+		    case States.Settings:
+                        World.state = States.Paused;
                         break;
                     case States.Paused:
                         PauseLoop.PauseLoopIter(ref GameBuffer, ref UIBuffer);

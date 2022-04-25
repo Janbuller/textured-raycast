@@ -1,15 +1,9 @@
-using System;
 using textured_raycast.maze.math;
-using textured_raycast.maze.graphics;
 using textured_raycast.maze.texture;
 using textured_raycast.maze.skills;
-using textured_raycast.maze.sprites;
-using textured_raycast.maze.sprites.allSprites;
 using textured_raycast.maze.input;
 using textured_raycast.maze.resources;
-using System.Threading.Tasks;
 using textured_raycast.maze.ButtonList;
-using textured_raycast.maze.ButtonList.Buttons.INV;
 using textured_raycast.maze.ButtonList.Buttons.Skills;
 
 namespace textured_raycast.maze.DrawingLoops
@@ -37,12 +31,22 @@ namespace textured_raycast.maze.DrawingLoops
         public static void SkillsLoopIter(ref ConsoleBuffer game, ref ConsoleBuffer UIHolder)
         {
             UIHolder.Clear();
+	    UIHolder.Fill(new TexColor(198, 132, 68));
 
-            for (int x = 0; x < UIHolder.Width; x++)
-                for (int y = 0; y < UIHolder.Height; y++)
-                    UIHolder.DrawPixel(new TexColor(198, 132, 68), x, y);
+            HandleInput();
 
-	    if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_UP]) == KeyState.KEY_DOWN)
+            DrawSkillTree(ref UIHolder);
+
+            DrawSkillMinimap(ref UIHolder, new Vector2i(1, 62));
+
+            GUI.GUI.text(ref UIHolder, World.player.skillPoints.ToString(), 1, 1, 120);
+            World.ce.DrawConBuffer(UIHolder);
+            World.ce.SwapBuffers();
+        }
+
+
+	private static void HandleInput() {
+           if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_UP]) == KeyState.KEY_DOWN)
             {
                 curSkillButton += skillButtons[curSkillButton].listOfMovements[0];
             }
@@ -75,50 +79,46 @@ namespace textured_raycast.maze.DrawingLoops
             if (InputManager.GetKey(Keys.K_3) == KeyState.KEY_DOWN)
                 sph.assignSkill(2);
 
+	}
+
+	private static void DrawSkillTree(ref ConsoleBuffer buffer) {
             Vector2i screenOffset = new Vector2i(
-                UIHolder.Width / 2 - skillButtons[curSkillButton].x - skillButtons[curSkillButton].w / 2,
-                UIHolder.Height / 2 - skillButtons[curSkillButton].y - skillButtons[curSkillButton].w / 2
+                buffer.Width / 2 - skillButtons[curSkillButton].x - skillButtons[curSkillButton].w / 2,
+                buffer.Height / 2 - skillButtons[curSkillButton].y - skillButtons[curSkillButton].w / 2
             );
 
-            UIHolder.DrawTexture(ResourceManager.getTexture(World.textures[104]), screenOffset.X, screenOffset.Y);
+            buffer.DrawTexture(ResourceManager.getTexture(World.textures[104]), screenOffset.X, screenOffset.Y);
 
             foreach (SkillPlaceHolder skillButton in skillButtons)
             {
-                try
-                {
-                    Skill curSkill = Skill.Skills[skillButton.id];
-                    UIHolder.DrawTexture(TextureHelper.TripleScale(curSkill.getTexture()), screenOffset.X + skillButton.x - 3, screenOffset.Y + skillButton.y - 3, new TexColor(0, 0, 0));
-                }
-                catch (Exception)
-                {
-                }
+		Skill curSkill = Skill.Skills[skillButton.id];
+		buffer.DrawTexture(TextureHelper.TripleScale(curSkill.getTexture()), screenOffset.X + skillButton.x - 3, screenOffset.Y + skillButton.y - 3, new TexColor(0, 0, 0));
             }
+	}
 
-            for (int x = 1; x < 26; x++)
+	private static void DrawSkillMinimap(ref ConsoleBuffer buffer, Vector2i Pos)
+	{
+	    Vector2i Size = new Vector2i(25, 17);
+            buffer.DrawBoxOutlineFilled(Pos, Size, new TexColor(0, 0, 0), new TexColor(198, 132, 68));
+
+            // Draw the squared in the skill minimap
+            for (int i = 0; i < skillButtons.Length; i++)
             {
-                for (int y = 62; y < 79; y++)
-                {
-                    TexColor tc = new TexColor(198, 132, 68);
-                    if (x == 1 || x == 25 || y == 62 || y == 78)
-                        tc = new TexColor(0, 0, 0);
+                Button sb = skillButtons[i];
 
-                    UIHolder.DrawPixel(tc, x, y);
-                }
+		// Find the color for the currently drawn minimap
+		// pixel. If the currently drawn pixel is the selected
+		// one, the blue channel should be 255, otherwise it
+		// should be 0.
+                TexColor curCol = new TexColor(
+                    0,
+                    0,
+                    i == curSkillButton ? 255 : 0
+		);
+
+                Vector2i offset = Pos + new Vector2i(2, 2);
+                buffer.DrawPixel(curCol, (sb.x / 51) * 2 + offset.X, (sb.y / 51) * 2 + offset.Y);
             }
-
-            int i = 0;
-            foreach (Button sb in skillButtons)
-            {
-                if (i == curSkillButton)
-                    UIHolder.DrawPixel(new TexColor(0, 0, 255), (sb.x / 51) * 2 + 3, (sb.y / 51) * 2 + 64);
-                else
-                    UIHolder.DrawPixel(new TexColor(0, 0, 0), (sb.x / 51) * 2 + 3, (sb.y / 51) * 2 + 64);
-                i++;
-            }
-
-            GUI.GUI.text(ref UIHolder, World.player.skillPoints.ToString(), 1, 1, 120);
-            World.ce.DrawConBuffer(UIHolder);
-            World.ce.SwapBuffers();
-        }
+	}
     }
 }

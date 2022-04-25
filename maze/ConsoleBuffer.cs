@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using textured_raycast.maze.math;
 using textured_raycast.maze.texture;
 
 namespace textured_raycast.maze
@@ -224,12 +225,30 @@ namespace textured_raycast.maze
         }
 
         // Draws a box.
-        public void DrawBox(int xS, int yS, int w, int h, TexColor tc)
+        public void DrawBox(Vector2i Pos, Vector2i Size, TexColor Color) { DrawBox(Pos.X, Pos.Y, Size.Width, Size.Height, Color); }
+        public void DrawBox(int xP, int yP, int w, int h, TexColor Color)
         {
-            for (int x = xS; x < xS + w; x++)
-                for (int y = yS; y < yS + h; y++)
-                    DrawPixel(tc, x, y);
+            for (int x = xP; x < xP + w; x++)
+                for (int y = yP; y < yP + h; y++)
+                    DrawPixel(Color, x, y);
         }
+
+	// Draws a box outline:
+        public void DrawBoxOutline(Vector2i Pos, Vector2i Size, TexColor Color) { DrawBoxOutline(Pos.X, Pos.Y, Size.Width, Size.Height, Color); }
+        public void DrawBoxOutline(int xP, int yP, int w, int h, TexColor Color)
+        {
+            for (int x = xP; x < xP + w; x++)
+                for (int y = yP; y < yP + h; y++)
+                    if (x == xP || x == xP+w-1 || y == yP || y == yP+h-1)
+			DrawPixel(Color, x, y);
+        }
+
+        public void DrawBoxOutlineFilled(Vector2i Pos, Vector2i Size, TexColor OutlineColor, TexColor FillColor) { DrawBoxOutlineFilled(Pos.X, Pos.Y, Size.Width, Size.Height, OutlineColor, FillColor); }
+	public void DrawBoxOutlineFilled(int xP, int yP, int w, int h, TexColor OutlineColor, TexColor FillColor) {
+            DrawBoxOutline(xP, yP, w, h, OutlineColor);
+            DrawBox(xP+1, yP+1, w-2, h-2, FillColor);
+        }
+
 
         // Draws char to specific framebuffer. Used internally by DrawChar
         // functions.
