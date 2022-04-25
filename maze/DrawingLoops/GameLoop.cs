@@ -117,11 +117,11 @@ namespace textured_raycast.maze.DrawingLoops
             if (InputManager.GetKey(Keys.K_1) != KeyState.KEY_UP && InputManager.GetKey(Keys.K_3) != KeyState.KEY_UP && InputManager.GetKey(Keys.K_2) == KeyState.KEY_DOWN)
                 World.reloadCurMap();
 
-            if (InputManager.GetKey(Keys.K_UP) != KeyState.KEY_UP || InputManager.GetKey(Keys.K_W) != KeyState.KEY_UP)
+            if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_UP]) != KeyState.KEY_UP)
             {
                 moveInDir(ref map, ref pos, dir, true);
             }
-            if (InputManager.GetKey(Keys.K_DOWN) != KeyState.KEY_UP || InputManager.GetKey(Keys.K_S) != KeyState.KEY_UP)
+            if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_DOWN]) != KeyState.KEY_UP)
             {
                 moveInDir(ref map, ref pos, dir * -1, true);
             }

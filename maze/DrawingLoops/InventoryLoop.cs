@@ -42,19 +42,19 @@ namespace textured_raycast.maze.DrawingLoops
 
             if (nowInv == -1)
             {
-                if (InputManager.GetKey(Keys.K_UP) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W) == KeyState.KEY_DOWN)
+		if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_UP]) == KeyState.KEY_DOWN)
                 {
                     curInvButton += invButtons[curInvButton].listOfMovements[0];
                 }
-                if (InputManager.GetKey(Keys.K_DOWN) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_S) == KeyState.KEY_DOWN)
+		if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_DOWN]) == KeyState.KEY_DOWN)
                 {
                     curInvButton += invButtons[curInvButton].listOfMovements[2];
                 }
-                if (InputManager.GetKey(Keys.K_RIGHT) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_D) == KeyState.KEY_DOWN)
+		if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_RIGHT]) == KeyState.KEY_DOWN)
                 {
                     curInvButton += invButtons[curInvButton].listOfMovements[1];
                 }
-                if (InputManager.GetKey(Keys.K_LEFT) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_A) == KeyState.KEY_DOWN)
+		if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_LEFT]) == KeyState.KEY_DOWN)
                 {
                     curInvButton += invButtons[curInvButton].listOfMovements[3];
                 }
@@ -66,7 +66,7 @@ namespace textured_raycast.maze.DrawingLoops
                 pageOffset = (int)Math.Floor(y / 5f);
                 y = y - pageOffset * 5;
 
-                if (InputManager.GetKey(Keys.K_UP) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W) == KeyState.KEY_DOWN)
+		if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_UP]) == KeyState.KEY_DOWN)
                 {
                     if (InputManager.GetKey(Keys.K_SHIFT) != KeyState.KEY_UP)
                         pageOffset = Math.Max(pageOffset - 1, 0);
@@ -74,18 +74,18 @@ namespace textured_raycast.maze.DrawingLoops
                         y -= 1;
                     if (y == -1 && pageOffset == 0) y = 0;
                 }
-                if (InputManager.GetKey(Keys.K_DOWN) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_S) == KeyState.KEY_DOWN)
+		if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_DOWN]) == KeyState.KEY_DOWN)
                 {
                     if (InputManager.GetKey(Keys.K_SHIFT) != KeyState.KEY_UP)
                         pageOffset += 1;
                     else
                         y += 1;
                 }
-                if (InputManager.GetKey(Keys.K_RIGHT) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_D) == KeyState.KEY_DOWN)
+		if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_RIGHT]) == KeyState.KEY_DOWN)
                 {
                     x = Math.Min(x + 1, 4);
                 }
-                if (InputManager.GetKey(Keys.K_LEFT) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_A) == KeyState.KEY_DOWN)
+		if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_LEFT]) == KeyState.KEY_DOWN)
                 {
                     if (x == 0)
                     {
@@ -235,6 +235,7 @@ namespace textured_raycast.maze.DrawingLoops
                     }
                 }
             }
+
             if (InputManager.GetKey(Keys.K_ESC) == KeyState.KEY_DOWN)
             {
                 curInvButton = 0;
@@ -247,51 +248,16 @@ namespace textured_raycast.maze.DrawingLoops
                         UIHolder.DrawTexture(World.player.equipped[World.player.guiToEquipped[i]].getTexture(), invButtons[i].x + 1, invButtons[i].y + 1, new TexColor(0, 0, 0));
 
 
-            int loop = 0;
-            for (int hp = 0; hp < World.player.hp; hp++)
-            {
-                if (hp - loop * 36 == 36)
-                    loop++;
+	    // Max Health
+	    DrawBar(ref UIHolder, new Vector2i(17, 59), new Vector2i(36, 3), new TexColor(0, 255, 0), new TexColor(50, 0, 50), World.player.hp);
+	    // Actual Health
+            DrawBar(ref UIHolder, new Vector2i(17, 62), new Vector2i(36, 2), new TexColor(0, 155, 0), new TexColor(50, 0, 50), (int)World.player.actualHp);
 
-                for (int i = 0; i < 5; i++)
-                {
-                    if (i > 2)
-                    {
-                        if (World.player.actualHp > hp)
-                        {
-                            UIHolder.DrawPixel(new TexColor(loop * 50, 155, loop * 50), 17 + hp - loop * 36, 59 + i);
-                        }
-                    }
-                    else
-                    {
-                        UIHolder.DrawPixel(new TexColor(loop * 50, 255, loop * 50), 17 + hp - loop * 36, 59 + i);
-                    }
-                }
-            }
+	    // Damage
+            DrawBar(ref UIHolder, new Vector2i(17, 65), new Vector2i(36, 5), new TexColor(255, 0, 0), new TexColor(0, 50, 50), World.player.dam);
 
-            loop = 0;
-            for (int dam = 0; dam < World.player.dam; dam++)
-            {
-                if (dam - loop * 36 == 36)
-                    loop++;
-
-                for (int i = 0; i < 5; i++)
-                {
-                    UIHolder.DrawPixel(new TexColor(255, loop * 50, loop * 50), 17 + dam - loop * 36, 65 + i);
-                }
-            }
-
-            loop = 0;
-            for (int mag = 0; mag < World.player.mag; mag++)
-            {
-                if (mag - loop * 36 == 36)
-                    loop++;
-
-                for (int i = 0; i < 5; i++)
-                {
-                    UIHolder.DrawPixel(new TexColor(loop * 50, loop * 50, 255), 17 + mag - loop * 36, 72 + i);
-                }
-            }
+	    // Magic
+            DrawBar(ref UIHolder, new Vector2i(17, 72), new Vector2i(36, 5), new TexColor(0, 0, 255), new TexColor(50, 50, 0), World.player.mag);
 
             for (int i = 0; i < 3; i++)
                 if (World.player.equippedSkills[i] != -1)
@@ -301,5 +267,24 @@ namespace textured_raycast.maze.DrawingLoops
             World.ce.DrawConBuffer(UIHolder);
             World.ce.SwapBuffers();
         }
+
+	static void DrawBar(ref ConsoleBuffer Buffer, Vector2i Pos, Vector2i Size, TexColor StandardColor, TexColor ColorChangeMultiplier, int Length) {
+	    // Holds the amount of times, the bar has been filled up
+	    // and therefore needs to be recolored.
+            int Iterations = 0;
+
+	    // Loops through the entire length, to be filled, of the bar.
+            for (int len = 0; len < Length; len++)
+            {
+                if (len - Iterations * Size.Width == Size.Width)
+                    Iterations++;
+
+                for (int i = 0; i < Size.Height; i++)
+                {
+                    TexColor color = StandardColor + ColorChangeMultiplier * Iterations;
+                    Buffer.DrawPixel(color, Pos.X + len - Iterations * Length, Pos.Y + i);
+                }
+            }
+	}
     }
 }

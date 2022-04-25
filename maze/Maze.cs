@@ -21,12 +21,12 @@ namespace textured_raycast.maze
         static ConsoleBuffer FightBuffer;
         static ConsoleBuffer UIBuffer;
 
-        public static bool StartGame()
+	public static bool StartGame()
         {
-            World.ce = new ConsoleEngine(World.WindowSize.Width, World.WindowSize.Height, "very dumb game");
-            GameBuffer = new ConsoleBuffer(World.WindowSize.Width, World.WindowSize.Height);
+            World.ce =    new ConsoleEngine(World.WindowSize.Width, World.WindowSize.Height, "very dumb g̶a̶m̶e̶");
+            GameBuffer =  new ConsoleBuffer(World.WindowSize.Width, World.WindowSize.Height);
             FightBuffer = new ConsoleBuffer(World.WindowSize.Width, World.WindowSize.Height);
-            UIBuffer = new ConsoleBuffer(World.WindowSize.Width, World.WindowSize.Height);
+            UIBuffer =    new ConsoleBuffer(World.WindowSize.Width, World.WindowSize.Height);
 
             Console.Clear();
             DrawScreen();
@@ -39,6 +39,7 @@ namespace textured_raycast.maze
             // Main game loop
             while (World.state != States.Stopping)
             {
+		// Calculate and set deltatime in world.
                 World.dt = (float)(DateTime.Now.Ticks - World.lastFrameTime) / TimeSpan.TicksPerSecond;
                 World.lastFrameTime = DateTime.Now.Ticks;
 

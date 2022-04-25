@@ -20,9 +20,9 @@ namespace textured_raycast.maze.sprites.allText
                     (self) => { World.currentMessage = "Behind me are 3 chests"; return true; },
                     (self) => { World.currentMessage = "Please open them"; return true; },
                     (self) => {
-                        Chest c1 = World.curMap.sprites[4] as Chest;
-                        Chest c2 = World.curMap.sprites[5] as Chest;
-                        Chest c3 = World.curMap.sprites[6] as Chest;
+                        Chest c1 = World.curMap.sprites[3] as Chest;
+                        Chest c2 = World.curMap.sprites[4] as Chest;
+                        Chest c3 = World.curMap.sprites[5] as Chest;
 
                         if (c1.isEmpty() == true && c2.isEmpty() == true && c3.isEmpty() == true) {
                             World.currentMessage = "Ok lets continue";

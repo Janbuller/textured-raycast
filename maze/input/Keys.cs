@@ -1,6 +1,7 @@
 namespace textured_raycast.maze.input
 {
-    enum Keys {
+    enum Keys
+    {
         K_W,
         K_A,
         K_S,
@@ -23,5 +24,13 @@ namespace textured_raycast.maze.input
         K_ESC,
 
         UNKNOWN,
+    }
+
+    enum KeyGroups
+    {
+        KG_UP,
+        KG_DOWN,
+        KG_LEFT,
+        KG_RIGHT,
     }
 }

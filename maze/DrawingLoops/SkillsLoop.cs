@@ -42,19 +42,19 @@ namespace textured_raycast.maze.DrawingLoops
                 for (int y = 0; y < UIHolder.Height; y++)
                     UIHolder.DrawPixel(new TexColor(198, 132, 68), x, y);
 
-            if (InputManager.GetKey(Keys.K_UP) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_W) == KeyState.KEY_DOWN)
+	    if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_UP]) == KeyState.KEY_DOWN)
             {
                 curSkillButton += skillButtons[curSkillButton].listOfMovements[0];
             }
-            if (InputManager.GetKey(Keys.K_DOWN) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_S) == KeyState.KEY_DOWN)
+	    if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_DOWN]) == KeyState.KEY_DOWN)
             {
                 curSkillButton += skillButtons[curSkillButton].listOfMovements[2];
             }
-            if (InputManager.GetKey(Keys.K_RIGHT) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_D) == KeyState.KEY_DOWN)
+	    if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_RIGHT]) == KeyState.KEY_DOWN)
             {
                 curSkillButton += skillButtons[curSkillButton].listOfMovements[1];
             }
-            if (InputManager.GetKey(Keys.K_LEFT) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_A) == KeyState.KEY_DOWN)
+	    if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_LEFT]) == KeyState.KEY_DOWN)
             {
                 curSkillButton += skillButtons[curSkillButton].listOfMovements[3];
             }
