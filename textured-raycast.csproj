@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ENet-CSharp" Version="2.4.8" />
     <PackageReference Include="OpenTK" Version="4.7.1" />
     <PackageReference Include="Pastel" Version="3.0.0" />
   </ItemGroup>
