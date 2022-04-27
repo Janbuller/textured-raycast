@@ -41,9 +41,16 @@ namespace textured_raycast.maze.online
 
                 while (true)
                 {
+                    try
+                    {
+                        Console.WriteLine(players[1].x);
+                    }
+                    catch (Exception e)
+                    {
+                    }
                     Packet packet = default(Packet);
 
-                    string dataStr = $"{myId}|{World.plrPos.X}|{World.plrPos.Y}|{World.curMap.Path}";
+                    string dataStr = $"{World.plrPos.X}|{World.plrPos.Y}|{World.curMap.Path}";
                     byte[] data = Encoding.UTF8.GetBytes(dataStr);
 
                     packet.Create(data);
@@ -77,22 +84,26 @@ namespace textured_raycast.maze.online
                                 str = str.Remove(0, 1);
                                 string[] split = str.Split("|");
 
-				int id;
-				switch(type) {
-				    case 'C':
+                                int id;
+                                switch (type)
+                                {
+                                    case 'C':
                                         myId = Convert.ToInt32(split[0]);
                                         break;
-				    case 'U':
-					if (int.TryParse(split[0], out id))
-					{
-					    float x = float.Parse(split[1]);
-					    float y = float.Parse(split[2]);
-					    
-					    string map = split[3];
-					    players[id] = new Player(x, y, map);
-					}
+                                    case 'U':
+                                        if (id != myId)
+                                        {
+                                            if (int.TryParse(split[0], out id))
+                                            {
+                                                float x = float.Parse(split[1]);
+                                                float y = float.Parse(split[2]);
+
+                                                string map = split[3];
+                                                players[id] = new Player(x, y, map);
+                                            }
+                                        }
                                         break;
-				    case 'R':
+                                    case 'R':
                                         if (int.TryParse(split[0], out id))
                                         {
                                             players.Remove(id);

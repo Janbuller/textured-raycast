@@ -23,6 +23,7 @@ namespace textured_raycast.maze
 
             Console.Clear();
             DrawScreen();
+            StartClientPlayer();
 
             return RunMainLoop();
         }

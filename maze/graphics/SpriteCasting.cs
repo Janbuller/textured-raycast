@@ -13,10 +13,10 @@ namespace textured_raycast.maze.graphics
 {
     class SpriteCasting
     {
-        public static void SpriteCast(ref ConsoleBuffer game, List<Sprite> sprites, double[] ZBuffer, int visRange, Map map)
+        public static void SpriteCast(ref ConsoleBuffer game, List<Sprite> spritesIn, double[] ZBuffer, int visRange, Map map)
         {
-
-	    foreach(var player in Client.players) {
+            List<Sprite> sprites = new List<Sprite>(spritesIn);
+            foreach(var player in Client.players) {
                 var pV = player.Value;
                 if(pV.map == map.Path) {
                     sprites.Add(new DefaultSprite(pV.x, pV.y, new string[] {"img/mario/1.ppm"}));
