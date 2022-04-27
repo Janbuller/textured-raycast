@@ -7,6 +7,8 @@ namespace textured_raycast.maze
 {
     class Maze
     {
+        static bool usingGL = true;
+
         static ConsoleBuffer GameBuffer;
         static ConsoleBuffer FightBuffer;
         static ConsoleBuffer UIBuffer;
@@ -43,7 +45,11 @@ namespace textured_raycast.maze
                     case States.Skills:
                         SkillsLoop.SkillsLoopIter(ref GameBuffer, ref UIBuffer);
                         break;
-		    case States.Settings:
+		            case States.Settings:
+                        if (usingGL)
+                            MainGL.MainStop();
+
+                        usingGL = !usingGL;
                         World.state = States.Paused;
                         break;
                     case States.Paused:
@@ -65,12 +71,16 @@ namespace textured_raycast.maze
         {
             Task.Run(() =>
             {
-                // while (true)
-                // {
-                //     World.ce.DrawScreen();
-                // }
+                while (true)
+                {
+                    while (!usingGL)
+                    {
+                        Console.WriteLine("b");
+                        World.ce.DrawScreen();
+                    }
 
-		MainGL.MainRun();
+                    MainGL.MainRun();
+                }
             });
         }
 

@@ -5,6 +5,8 @@ namespace textured_raycast.maze.OpenGL
 {
     public static class MainGL
     {
+        static Window win;
+
         public static void MainRun()
         {
             var nativeWindowSettings = new NativeWindowSettings()
@@ -13,12 +15,18 @@ namespace textured_raycast.maze.OpenGL
                 Title = "LearnOpenTK - Creating a Window",
                 // This is needed to run on macos
                 Flags = ContextFlags.ForwardCompatible,
+                
             };
 
-	    using (var window = new Window(GameWindowSettings.Default, nativeWindowSettings))
+	    using (win = new Window(GameWindowSettings.Default, nativeWindowSettings))
             {
-                window.Run();
+                win.Run();
             }
+        }
+
+        public static void MainStop()
+        {
+            win.Close();
         }
     }
 }
