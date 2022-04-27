@@ -43,7 +43,7 @@ namespace textured_raycast.maze.OpenGL
         {
             base.OnLoad();
 
-            GL.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+            GL.ClearColor(0.776f, 0.518f, 0.267f, 1.0f);
 
             _vertexArrayObject = GL.GenVertexArray();
             GL.BindVertexArray(_vertexArrayObject);
@@ -56,7 +56,11 @@ namespace textured_raycast.maze.OpenGL
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, _elementBufferObject);
             GL.BufferData(BufferTarget.ElementArrayBuffer, _indices.Length * sizeof(uint), _indices, BufferUsageHint.StaticDraw);
 
-            _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
+	    try {
+		_shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
+	    } catch (Exception e) {
+		Console.WriteLine(e.Message);
+	    }
             _shader.Use();
 
             var vertexLocation = _shader.GetAttribLocation("aPosition");
@@ -88,7 +92,7 @@ namespace textured_raycast.maze.OpenGL
 		for (int x = 0; x < ConEn.Width; x++) {
                     var Pix = Buffer.GetPixel(x, y);
 		    if(Pix is null)
-			Pix = new TexColor(0, 0, 0);
+			Pix = new TexColor(255, 0, 255);
 
 		    pixels.Add((byte)Pix.R);
 		    pixels.Add((byte)Pix.G);
@@ -113,6 +117,11 @@ namespace textured_raycast.maze.OpenGL
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
 
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+
+            _shader.SetInt("WindowWidth",  base.Size.X);
+	    _shader.SetInt("WindowHeight", base.Size.Y);
+	    _shader.SetInt("EngineWidth",  ConEn.Width);
+	    _shader.SetInt("EngineHeight", ConEn.Height);
 
 	    _shader.Use();
 
