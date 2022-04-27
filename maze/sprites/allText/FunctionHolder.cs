@@ -18,6 +18,7 @@ namespace textured_raycast.maze.sprites.allText
                     (self) => { World.currentMessage = "To guide you thrugh youre journey"; return true; },
                     (self) => { World.currentMessage = "My role is a simple one to fill"; return true; },
                     (self) => { World.currentMessage = "Behind me are 3 chests"; return true; },
+                    (self) => { World.currentMessage = "There are multiple apples in one of the chests"; return true; },
                     (self) => { World.currentMessage = "Please open them"; return true; },
                     (self) => {
                         Chest c1 = World.curMap.sprites[3] as Chest;
