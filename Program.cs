@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using textured_raycast.maze;
+using textured_raycast.maze.OpenGL;
 
 namespace textured_raycast
 {
@@ -7,6 +8,7 @@ namespace textured_raycast
     {
         static void Main(string[] args)
         {
+            MainGL.MainRun();
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 maze.input.InputManager.SetInputController(new maze.input.linux.LinuxInputController());
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))

@@ -36,7 +36,11 @@ namespace textured_raycast.maze.DrawingLoops
 
             UIHolder.DrawTexture(ResourceManager.getTexture(World.textures[103]), 0, 0);
 
+	    // Holds the index of the cell in the inventory, over
+	    // which the cursor is. Set to -1, when the cursor is over
+	    // the non-inventory part of the inventory screen.
             int nowInv = -1;
+
             if (curInvButton > 99) nowInv = curInvButton - 100;
 
 
