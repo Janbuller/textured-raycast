@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Threading;
 using ENet;
@@ -91,13 +92,15 @@ namespace textured_raycast.maze.online
                                         myId = Convert.ToInt32(split[0]);
                                         break;
                                     case 'U':
-                                            if (int.TryParse(split[0], out id))
-                                            {
-                                        if (id != myId)
+                                        if (int.TryParse(split[0], out id))
                                         {
-                                                float x = float.Parse(split[1]);
-                                                float y = float.Parse(split[2]);
+                                            if (id != myId)
+                                            {
+                                                float x;
+                                                float y;
 
+                                                float.TryParse(split[1], NumberStyles.Any, CultureInfo.InvariantCulture, out x);
+                                                float.TryParse(split[2], NumberStyles.Any, CultureInfo.InvariantCulture, out y);
                                                 string map = split[3];
                                                 players[id] = new Player(x, y, map);
                                             }
