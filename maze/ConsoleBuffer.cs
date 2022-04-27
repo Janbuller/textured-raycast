@@ -26,7 +26,14 @@ namespace textured_raycast.maze
             Height = win_height;
         }
 
-        public List<TexColor> getBuffer()
+        public ConsoleBuffer(ConsoleBuffer buf){
+	    buffer = buf.buffer;
+	    Width = buf.Width;
+	    Height = buf.Height;
+
+	}
+
+    public List<TexColor> getBuffer()
         {
             return buffer;
         }

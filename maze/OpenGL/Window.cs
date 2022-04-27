@@ -3,6 +3,8 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using OpenTK.Windowing.Desktop;
 using System.Collections.Generic;
+using System;
+using textured_raycast.maze.texture;
 
 namespace textured_raycast.maze.OpenGL
 {
@@ -10,10 +12,10 @@ namespace textured_raycast.maze.OpenGL
     {
         private readonly float[] _vertices =
         {
-             0.5f,  0.5f, 0.0f, 1.0f, 1.0f, // top right
-             0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
-            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
-            -0.5f,  0.5f, 0.0f, 0.0f, 1.0f  // top left
+             1.0f,  1.0f, 0.0f, 1.0f, 1.0f, // top right
+             1.0f, -1.0f, 0.0f, 1.0f, 0.0f, // bottom right
+            -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, // bottom left
+            -1.0f,  1.0f, 0.0f, 0.0f, 1.0f  // top left
         };
 
         private readonly uint[] _indices =
@@ -65,25 +67,8 @@ namespace textured_raycast.maze.OpenGL
             GL.EnableVertexAttribArray(texCoordLocation);
             GL.VertexAttribPointer(texCoordLocation, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
 
-	    var ConEn = World.ce;
-            ConsoleBuffer Buffer = ConEn.GetCurrentBuffer();
-            var pixels = new List<byte>(4 * ConEn.Width * ConEn.Height);
-	    
-	    for (int y = 0; y < ConEn.Height; y++) {
-		for (int x = 0; x < ConEn.Width; x++) {
-                    var Pix = Buffer.GetPixel(x, y);
-
-                    pixels.Add((byte)Pix.R);
-                    pixels.Add((byte)Pix.G);
-                    pixels.Add((byte)Pix.B);
-                    pixels.Add(255);
-                }
-	    }
-
 	    texture = GL.GenTexture();
-	    GL.BindTexture(TextureTarget.Texture2D, texture);
-	    GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, ConEn.Width, ConEn.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, pixels.ToArray());
-	    GL.BindTexture(TextureTarget.Texture2D, 0);
+
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -94,11 +79,45 @@ namespace textured_raycast.maze.OpenGL
 
             GL.BindVertexArray(_vertexArrayObject);
 
+
+	    var ConEn = World.ce;
+            ConsoleBuffer Buffer = ConEn.GetCurrentBuffer();
+            var pixels = new List<byte>(4 * ConEn.Width * ConEn.Height);
+	    
+	    for (int y = ConEn.Height-1; y >= 0; y--) {
+		for (int x = 0; x < ConEn.Width; x++) {
+                    var Pix = Buffer.GetPixel(x, y);
+		    if(Pix is null)
+			Pix = new TexColor(0, 0, 0);
+
+		    pixels.Add((byte)Pix.R);
+		    pixels.Add((byte)Pix.G);
+		    pixels.Add((byte)Pix.B);
+		    pixels.Add(255);
+
+                    // pixels.Add(255);
+                    // pixels.Add(0);
+                    // pixels.Add(0);
+                    // pixels.Add(255);
+                }
+	    }
+
+            GL.ActiveTexture(TextureUnit.Texture0);
 	    GL.BindTexture(TextureTarget.Texture2D, texture);
+	    GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, ConEn.Width, ConEn.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, pixels.ToArray());
+
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
+
+            GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+
 	    _shader.Use();
-	    GL.BindTexture(TextureTarget.Texture2D, 0);
 
             GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
+	    GL.BindTexture(TextureTarget.Texture2D, 0);
 
             SwapBuffers();
         }
@@ -107,13 +126,7 @@ namespace textured_raycast.maze.OpenGL
         {
             base.OnUpdateFrame(e);
 
-            var input = KeyboardState;
-
-            if (input.IsKeyDown(Keys.Escape))
-            {
-                Close();
-            }
-        }
+            var input = KeyboardState;        }
 
         protected override void OnResize(ResizeEventArgs e)
         {

@@ -47,7 +47,7 @@ namespace textured_raycast.maze
 
         public void DrawConBuffer(ConsoleBuffer buf)
         {
-            curConBuf = buf;
+            curConBuf = new ConsoleBuffer(buf);
             if (firstBuffer)
             {
                 buffer2 = buf.getBuffer();
