@@ -6,6 +6,8 @@ using textured_raycast.maze.lights;
 using textured_raycast.maze.texture;
 using textured_raycast.maze.sprites;
 using textured_raycast.maze.sprites.allSprites;
+using textured_raycast.maze.online;
+using textured_raycast.maze.resources;
 
 namespace textured_raycast.maze.graphics
 {
@@ -13,6 +15,13 @@ namespace textured_raycast.maze.graphics
     {
         public static void SpriteCast(ref ConsoleBuffer game, List<Sprite> sprites, double[] ZBuffer, int visRange, Map map)
         {
+
+	    foreach(var player in Client.players) {
+                var pV = player.Value;
+                if(pV.map == map.Path) {
+                    sprites.Add(new DefaultSprite(pV.x, pV.y, new string[] {"img/mario/1.ppm"}));
+                }
+	    }
             ILight[] lights = map.GetLights();
 
             List<double> spriteDist = new List<double>();
