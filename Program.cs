@@ -8,7 +8,6 @@ namespace textured_raycast
     {
         static void Main(string[] args)
         {
-            MainGL.MainRun();
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 maze.input.InputManager.SetInputController(new maze.input.linux.LinuxInputController());
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))

@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using textured_raycast.maze.DrawingLoops;
+using textured_raycast.maze.OpenGL;
 
 namespace textured_raycast.maze
 {
@@ -64,10 +65,12 @@ namespace textured_raycast.maze
         {
             Task.Run(() =>
             {
-                while (true)
-                {
-                    World.ce.DrawScreen();
-                }
+                // while (true)
+                // {
+                //     World.ce.DrawScreen();
+                // }
+
+		MainGL.MainRun();
             });
         }
 

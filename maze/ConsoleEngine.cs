@@ -23,6 +23,8 @@ namespace textured_raycast.maze
         List<TexColor> buffer1;
         List<TexColor> buffer2;
 
+        ConsoleBuffer curConBuf;
+
         bool firstBuffer = true;
 
         public int Width { get => parameters.winWidth; set => parameters.winWidth = value; }
@@ -45,6 +47,7 @@ namespace textured_raycast.maze
 
         public void DrawConBuffer(ConsoleBuffer buf)
         {
+            curConBuf = buf;
             if (firstBuffer)
             {
                 buffer2 = buf.getBuffer();
@@ -53,6 +56,10 @@ namespace textured_raycast.maze
             {
                 buffer1 = buf.getBuffer();
             }
+        }
+
+	public ConsoleBuffer GetCurrentBuffer() {
+            return curConBuf;
         }
 
         // Swaps the buffers.
