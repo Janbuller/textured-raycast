@@ -92,7 +92,7 @@ namespace textured_raycast.maze.OpenGL
 		for (int x = 0; x < ConEn.Width; x++) {
                     var Pix = Buffer.GetPixel(x, y);
 		    if(Pix is null)
-			Pix = new TexColor(255, 0, 255);
+			Pix = new TexColor(0, 0, 0);
 
 		    pixels.Add((byte)Pix.R);
 		    pixels.Add((byte)Pix.G);

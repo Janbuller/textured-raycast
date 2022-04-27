@@ -108,7 +108,7 @@ namespace textured_raycast.maze.DrawingLoops
 
         public static void HandleInput(Map map, Vector2d pos, ref Vector2d dir, ref Sprite spriteToInteract)
         {
-            double rotSpeed = World.dt * 0.8;
+            double rotSpeed = World.dt * 1.5;
 
             // Multiplied with movement speed, during collision check,
             // forcing the player to stay slightly further away from
