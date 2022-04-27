@@ -28,12 +28,12 @@ namespace textured_raycast.maze.DrawingLoops
         public static void GameLoopIter(ref ConsoleBuffer game, ref ConsoleBuffer UIHolder)
         {
             // Make time pass
-            World.dayTime += World.dt / 60; // 60 = 1 whole day = 60 sec
+            World.dayTime += (float)World.dt / 60; // 60 = 1 whole day = 60 sec
             if (World.dayTime > 1) World.dayTime--;
 
             if (InputManager.GetKey(Keys.K_SHIFT) == KeyState.KEY_UP)
             {
-                World.staminaLVL = MathF.Min(World.staminaLVL + World.dt / 4, 1);
+                World.staminaLVL = MathF.Min(World.staminaLVL + (float)World.dt / 4, 1);
             }
 
             // make sure it knows what map its on
@@ -103,10 +103,10 @@ namespace textured_raycast.maze.DrawingLoops
 
             World.ce.DrawConBuffer(game.mixBuffer(UIHolder));
             World.ce.SwapBuffers();
-            HandleInputGame(map, World.plrPos, ref World.plrRot, ref spriteToInteract);
+            HandleInput(map, World.plrPos, ref World.plrRot, ref spriteToInteract);
         }
 
-        public static void HandleInputGame(Map map, Vector2d pos, ref Vector2d dir, ref Sprite spriteToInteract)
+        public static void HandleInput(Map map, Vector2d pos, ref Vector2d dir, ref Sprite spriteToInteract)
         {
             double rotSpeed = World.dt * 0.8;
 
@@ -185,13 +185,13 @@ namespace textured_raycast.maze.DrawingLoops
 
             if (doViewBob)
             {
-                World.plrBobTime += World.dt * 1000 * (float)movSpeed;
+                World.plrBobTime += (float)World.dt * 1000 * (float)movSpeed;
                 World.plrBob = (float)(Math.Sin(World.plrBobTime * 0.01) + 1);
             }
 
             if (InputManager.GetKey(Keys.K_SHIFT) != KeyState.KEY_UP && World.staminaLVL > 0)
             {
-                World.staminaLVL -= World.dt / 2;
+                World.staminaLVL -= (float)World.dt / 2;
                 if (World.staminaLVL < 0)
                     World.staminaLVL = -0.2f;
             }

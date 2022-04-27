@@ -84,7 +84,7 @@ namespace textured_raycast.maze.sprites
         public List<int> extraEffects = new List<int>();
         public float interactDistance = 0.4f;
 
-        private float time = 0;
+        private double time = 0;
 
         public Sprite(double posX, double posY, string[] texture, int effectID = 0, string whatsLeft = "")
         {

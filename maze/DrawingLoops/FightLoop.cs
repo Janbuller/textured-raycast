@@ -18,10 +18,7 @@ namespace textured_raycast.maze.DrawingLoops
     {
         public static void FightLoopIter(ref ConsoleBuffer game, ref ConsoleBuffer fight, ref ConsoleBuffer UIHolder)
         {
-            World.dt = (float)(DateTime.Now.Ticks - World.lastFrameTime) / TimeSpan.TicksPerSecond;
-            World.lastFrameTime = DateTime.Now.Ticks;
-
-            World.fight.tillFightBegins -= World.dt;
+            World.fight.tillFightBegins -= (float)World.dt;
 
             if (World.fight.tillFightBegins < 0)
             {

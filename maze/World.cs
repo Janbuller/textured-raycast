@@ -4,6 +4,7 @@ using System;
 using textured_raycast.maze.sprites;
 using textured_raycast.maze.resources;
 using textured_raycast.maze.sprites.allSprites;
+using textured_raycast.maze.Utils;
 
 namespace textured_raycast.maze
 {
@@ -46,8 +47,8 @@ namespace textured_raycast.maze
         public static float staminaLVL = 1;
         public static float dayTime = 0;
 
-        public static float dt;
-        public static long lastFrameTime = DateTime.Now.Ticks;
+        public static double dt;
+        private static DeltaVariable dtCalc = new DeltaVariable(new double[] {GetRealTime()});
 
         public static Dictionary<int, string> textures = new Dictionary<int, string>() {
             {1,   "img/ownwalls/bricks.ppm"},
@@ -109,6 +110,14 @@ namespace textured_raycast.maze
         public static Map getCurMap()
         {
             return curMap;
+        }
+
+	public static double GetRealTime() {
+            return (double)DateTime.Now.Ticks / TimeSpan.TicksPerSecond;
+        }
+
+	public static void UpdateDeltaTime() {
+            dt = dtCalc.GetDelta(new double[] { GetRealTime() })[0];
         }
     }
 }
