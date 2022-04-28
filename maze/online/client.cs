@@ -45,13 +45,6 @@ namespace textured_raycast.maze.online
 
                 while (true)
                 {
-                    try
-                    {
-                        Console.WriteLine(players[1].x);
-                    }
-                    catch (Exception e)
-                    {
-                    }
                     Packet packet = default(Packet);
 
                     string dataStr = $"{World.plrPos.X}|{World.plrPos.Y}|{World.plrRot.X}|{World.plrRot.Y}|{World.curMap.Path}";
@@ -109,9 +102,9 @@ namespace textured_raycast.maze.online
 
                                                 float.TryParse(split[1], NumberStyles.Any, CultureInfo.InvariantCulture, out x);
                                                 float.TryParse(split[2], NumberStyles.Any, CultureInfo.InvariantCulture, out y);
-                                                float.TryParse(split[1], NumberStyles.Any, CultureInfo.InvariantCulture, out xRot);
-                                                float.TryParse(split[2], NumberStyles.Any, CultureInfo.InvariantCulture, out yRot);
-                                                string map = split[3];
+                                                float.TryParse(split[3], NumberStyles.Any, CultureInfo.InvariantCulture, out xRot);
+                                                float.TryParse(split[4], NumberStyles.Any, CultureInfo.InvariantCulture, out yRot);
+                                                string map = split[5];
                                                 players[id] = new Player(x, y, xRot, yRot, map);
                                             }
                                         }
