@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using textured_raycast.maze.DrawingLoops;
+using textured_raycast.maze.online;
 using textured_raycast.maze.OpenGL;
 
 namespace textured_raycast.maze
@@ -22,6 +23,7 @@ namespace textured_raycast.maze
 
             Console.Clear();
             DrawScreen();
+            StartClientPlayer();
 
             return RunMainLoop();
         }
@@ -83,6 +85,17 @@ namespace textured_raycast.maze
                 }
             });
         }
+
+        // Multi-threaded multi-player
+        // =============================
+        public static void StartClientPlayer()
+        {
+           Task.Run(() =>
+            {
+                Client.Start("10.29.131.194", 4231);
+            });
+        }
+
 
     }
 }

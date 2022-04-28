@@ -5,6 +5,11 @@ namespace textured_raycast.maze.sprites.allSprites
 {
     class FunctionSprite : Sprite
     {
+        public Action update = () =>
+        {
+
+        };
+
         // first index of list(any nuber in the list)
         // second index of list(if its should start at some special place(any number like beffore)
         // 1, 2 or 3 : go thru 1 by 1 | be static at that 1 function | pick a random function from the list (ignores first second input)
@@ -17,6 +22,11 @@ namespace textured_raycast.maze.sprites.allSprites
         {
             if (extraEffects.Count == 1)
                 extraEffects.Add(0);
+        }
+
+        public override void Update()
+        {
+            update();
         }
 
         public override void Activate()

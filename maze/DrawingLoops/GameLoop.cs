@@ -29,6 +29,8 @@ namespace textured_raycast.maze.DrawingLoops
         {
             // Make time pass
             World.dayTime += (float)World.dt / 60; // 60 = 1 whole day = 60 sec
+            World.timePassed += World.dt;
+
             if (World.dayTime > 1) World.dayTime--;
 
             if (InputManager.GetKey(Keys.K_SHIFT) == KeyState.KEY_UP)

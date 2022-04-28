@@ -1,6 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 using textured_raycast.maze;
+using textured_raycast.maze.online;
 using textured_raycast.maze.OpenGL;
+using ENet;
 
 namespace textured_raycast
 {

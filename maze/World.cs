@@ -48,6 +48,7 @@ namespace textured_raycast.maze
         public static float dayTime = 0;
 
         public static double dt;
+        public static double timePassed;
         private static DeltaVariable dtCalc = new DeltaVariable(new double[] {GetRealTime()});
 
         public static Dictionary<int, string> textures = new Dictionary<int, string>() {

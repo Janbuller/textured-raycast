@@ -6,13 +6,31 @@ using textured_raycast.maze.lights;
 using textured_raycast.maze.texture;
 using textured_raycast.maze.sprites;
 using textured_raycast.maze.sprites.allSprites;
+using textured_raycast.maze.online;
+using textured_raycast.maze.resources;
 
 namespace textured_raycast.maze.graphics
 {
     class SpriteCasting
     {
-        public static void SpriteCast(ref ConsoleBuffer game, List<Sprite> sprites, double[] ZBuffer, int visRange, Map map)
+        public static void SpriteCast(ref ConsoleBuffer game, List<Sprite> spritesIn, double[] ZBuffer, int visRange, Map map)
         {
+            List<Sprite> sprites = new List<Sprite>(spritesIn);
+            foreach(var player in Client.players) {
+                var pV = player.Value;
+                if(pV.map == map.Path) {
+                    sprites.Add(new PlayerSprite(pV.x, pV.y, pV.xRot, pV.yRot, new string[] {
+                        "img/player/Player 1.ppm",
+                        "img/player/Player 8.ppm",
+                        "img/player/Player 7.ppm",
+                        "img/player/Player 6.ppm",
+                        "img/player/Player 5.ppm",
+                        "img/player/Player 4.ppm",
+                        "img/player/Player 3.ppm",
+                        "img/player/Player 2.ppm",
+                    }));
+                }
+	    }
             ILight[] lights = map.GetLights();
 
             List<double> spriteDist = new List<double>();
@@ -112,11 +130,6 @@ namespace textured_raycast.maze.graphics
                 int endX = spriteScreenSize / 2 + spriteScreenX;
                 endX = Math.Min(endX, game.Width);
 
-                // Calculates the darkening of the sprite, based of the distance
-                // to the camera.
-                float darken = 0.9f;
-                darken = (float)Math.Min(1, Math.Max(0, darken - transformed.Y * (visRange * 0.005)));
-
                 // Goes through all columns, from statX to endX.
                 for (int x = startX; x < endX; x++)
                 {
@@ -132,27 +145,21 @@ namespace textured_raycast.maze.graphics
 
                     if (transformed.Y < ZBuffer[x])
                     {
+                        float darken = 1;
+
                         curSpr.UpdateOnDraw(transformed.Y);
                         TexColor mixedLight = new TexColor(255, 255, 255);
                         Vector2d newPlane = ((World.plrPlane * -1) + ((World.plrPlane * 2)) / (endX - startX) * (x - startX));
 
-                        LightDist[] lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + newPlane);
-                        if (lights.Count() < 0)
-                            mixedLight = LightDistHelpers.MixLightDist(lightDists);
+                        if (curSpr.effectedByLight)
+                        {
+                            LightDist[] lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + newPlane);
+                            if (lights.Count() > 0)
+                                mixedLight = LightDistHelpers.MixLightDist(lightDists);
+                        }
 
-                        // if(World.dayTime > 0.5f) {
-                        //     darken *= 0.6f;
-                        // } else {
-                        //     Vector2d realPosAbove = new Vector2d(curSpr.pos.x, curSpr.pos.y);
-
-                        //     const float offset = 20;
-                        //     realPosAbove.x += 0.1;
-                        //     realPosAbove.y += World.dayTime * offset - offset/4;
-                        //     Vector2i cellPosAbove = (Vector2i)realPosAbove;
-                        //     if(map.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0 || map.IsWall(cellPosAbove.x, cellPosAbove.y))
-                        //         darken *= 0.6f;
-                        // }
-
+			if(curSpr.GetType() == typeof(PlayerSprite))
+                            Console.WriteLine($"{mixedLight.R}");
                         game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, mixedLight, map.lightMix, new TexColor(0, 0, 0));
                     }
                 }
