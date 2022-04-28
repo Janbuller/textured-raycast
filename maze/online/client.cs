@@ -57,7 +57,7 @@ namespace textured_raycast.maze.online
                     packet.Create(data);
                     peer.Send(0, ref packet);
 
-                    Thread.Sleep(250);
+                    Thread.Sleep(1);
                     bool polled = false;
 
                     while (!polled)
