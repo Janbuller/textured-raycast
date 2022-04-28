@@ -19,7 +19,7 @@ namespace textured_raycast.maze.graphics
             foreach(var player in Client.players) {
                 var pV = player.Value;
                 if(pV.map == map.Path) {
-                    sprites.Add(new DefaultSprite(pV.x, pV.y, new string[] {
+                    sprites.Add(new PlayerSprite(pV.x, pV.y, pV.xRot, pV.yRot, new string[] {
                         "img/player/Player 1.ppm",
                         "img/player/Player 2.ppm",
                         "img/player/Player 3.ppm",
@@ -28,7 +28,6 @@ namespace textured_raycast.maze.graphics
                         "img/player/Player 6.ppm",
                         "img/player/Player 7.ppm",
                         "img/player/Player 8.ppm",
-
                     }));
                 }
 	    }
