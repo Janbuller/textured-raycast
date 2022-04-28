@@ -27,6 +27,7 @@ namespace textured_raycast.maze.lights
 
         public static LightDist[] RoofLightArrayToDistArray(ILight[] lights, Vector2d toPos) {
             LightDist[] lightDists = new LightDist[lights.Count()];
+
             // I tried using a Parallel.For loop, but the overhead of starting
             // threads actually made it slower.
             for(int i = 0; i < lights.Count(); i++) {
