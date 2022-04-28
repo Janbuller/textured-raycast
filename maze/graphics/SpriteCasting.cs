@@ -154,22 +154,23 @@ namespace textured_raycast.maze.graphics
                         TexColor mixedLight = new TexColor(255, 255, 255);
                         Vector2d newPlane = ((World.plrPlane * -1) + ((World.plrPlane * 2)) / (endX - startX) * (x - startX));
 
-                        LightDist[] lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + newPlane);
-                        if (lights.Count() < 0)
-                            mixedLight = LightDistHelpers.MixLightDist(lightDists);
+                        if (curSpr.effectedByLight)
+                        {
+                            LightDist[] lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + newPlane);
+                            if (lights.Count() > 0)
+                                mixedLight = LightDistHelpers.MixLightDist(lightDists);
+                        }
 
-                        // if(World.dayTime > 0.5f) {
-                        //     darken *= 0.6f;
-                        // } else {
-                        //     Vector2d realPosAbove = new Vector2d(curSpr.pos.x, curSpr.pos.y);
+                        if (World.dayTime > 0.5f) {
+                            darken *= 0.6f;
+                        } else {
+                            Vector2d realPosAbove = new Vector2d(curSpr.pos.X, curSpr.pos.X);
+                            realPosAbove.X += 0.1;
 
-                        //     const float offset = 20;
-                        //     realPosAbove.x += 0.1;
-                        //     realPosAbove.y += World.dayTime * offset - offset/4;
-                        //     Vector2i cellPosAbove = (Vector2i)realPosAbove;
-                        //     if(map.GetRoof(cellPosAbove.x, cellPosAbove.y) != 0 || map.IsWall(cellPosAbove.x, cellPosAbove.y))
-                        //         darken *= 0.6f;
-                        // }
+                            Vector2i cellPosAbove = (Vector2i)realPosAbove;
+                            if(map.GetRoof(cellPosAbove.X, cellPosAbove.Y) != "" || map.IsWall(cellPosAbove.X, cellPosAbove.Y))
+                                darken *= 0.6f;
+                        }
 
                         game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, mixedLight, map.lightMix, new TexColor(0, 0, 0));
                     }

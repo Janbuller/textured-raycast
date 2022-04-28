@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using textured_raycast.maze.texture;
 using textured_raycast.maze.math;
@@ -12,6 +13,7 @@ namespace textured_raycast.maze.lights
             // I tried using a Parallel.For loop, but the overhead of starting
             // threads actually made it slower.
             for(int i = 0; i < lights.Count(); i++) {
+
                 LightDist light = lights[i];
                 TexColor curCol = light.col * (float)light.intensity;
 
@@ -19,6 +21,7 @@ namespace textured_raycast.maze.lights
 
                 mixedCol += curCol * distScalar;
             }
+
             return mixedCol;
         }
 
