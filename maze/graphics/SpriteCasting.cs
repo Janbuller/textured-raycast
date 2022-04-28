@@ -158,6 +158,8 @@ namespace textured_raycast.maze.graphics
                                 mixedLight = LightDistHelpers.MixLightDist(lightDists);
                         }
 
+			if(curSpr.GetType() == typeof(PlayerSprite))
+                            Console.WriteLine($"{mixedLight.R}");
                         game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, mixedLight, map.lightMix, new TexColor(0, 0, 0));
                     }
                 }
