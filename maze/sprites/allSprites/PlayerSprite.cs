@@ -37,7 +37,6 @@ namespace textured_raycast.maze.sprites.allSprites
             while (rotDiff > Math.PI * 2)
                 rotDiff -= Math.PI * 2;
 
-            Console.WriteLine((int)(rotDiff / radPrTex));
             return ResourceManager.getTexture(texture[(int)(rotDiff / radPrTex)]);
         }
     }

@@ -62,6 +62,26 @@ namespace textured_raycast.maze.sprites.allText
                     (self) => { World.openMapAtStartPos(World.getMapByID(2)); return false; },
                 }
             },
+            {3,
+                new List<Func<FunctionSprite, bool>> {
+                    (self) => {
+                        self.texture = new string[] {"img/mario/redeyes"};
+                        self.canInteract = false;
+                        float waitTill = (float)World.timePassed + 0.1f;
+                        self.update = () =>
+                        {
+                            if (World.timePassed > waitTill)
+                            {
+                                self.doRender = false;
+                                self.canInteract = false;
+
+                                self.update = () => {};
+                            }
+                        };
+                        return true; 
+                    },
+                }
+            },
         };
     }
 }
