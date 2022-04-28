@@ -27,6 +27,7 @@ namespace textured_raycast.maze.online
     {
         static int myId;
         static public Dictionary<int, Player> players = new Dictionary<int, Player>();
+        static public Dictionary<int, Player> actualPlayers = new Dictionary<int, Player>();
 
         static public void Start(string ip, ushort port)
         {
@@ -105,14 +106,14 @@ namespace textured_raycast.maze.online
                                                 float.TryParse(split[3], NumberStyles.Any, CultureInfo.InvariantCulture, out xRot);
                                                 float.TryParse(split[4], NumberStyles.Any, CultureInfo.InvariantCulture, out yRot);
                                                 string map = split[5];
-                                                players[id] = new Player(x, y, xRot, yRot, map);
+                                                actualPlayers[id] = new Player(x, y, xRot, yRot, map);
                                             }
                                         }
                                         break;
                                     case 'R':
                                         if (int.TryParse(split[0], out id))
                                         {
-                                            players.Remove(id);
+                                            actualPlayers.Remove(id);
                                         }
                                         break;
                                 }
@@ -121,6 +122,8 @@ namespace textured_raycast.maze.online
                                 break;
                         }
                     }
+
+                    players = new Dictionary<int, Player>(actualPlayers);
                 }
 
                 ENet.Library.Deinitialize();

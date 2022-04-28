@@ -130,11 +130,6 @@ namespace textured_raycast.maze.graphics
                 int endX = spriteScreenSize / 2 + spriteScreenX;
                 endX = Math.Min(endX, game.Width);
 
-                // Calculates the darkening of the sprite, based of the distance
-                // to the camera.
-                float darken = 0.9f;
-                darken = (float)Math.Min(1, Math.Max(0, darken - transformed.Y * (visRange * 0.005)));
-
                 // Goes through all columns, from statX to endX.
                 for (int x = startX; x < endX; x++)
                 {
@@ -150,6 +145,8 @@ namespace textured_raycast.maze.graphics
 
                     if (transformed.Y < ZBuffer[x])
                     {
+                        float darken = 1;
+
                         curSpr.UpdateOnDraw(transformed.Y);
                         TexColor mixedLight = new TexColor(255, 255, 255);
                         Vector2d newPlane = ((World.plrPlane * -1) + ((World.plrPlane * 2)) / (endX - startX) * (x - startX));
@@ -159,20 +156,6 @@ namespace textured_raycast.maze.graphics
                             LightDist[] lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + newPlane);
                             if (lights.Count() > 0)
                                 mixedLight = LightDistHelpers.MixLightDist(lightDists);
-
-                            if (World.dayTime > 0.5f)
-                            {
-                                darken *= 0.4f;
-                            }
-                            else
-                            {
-                                Vector2d realPosAbove = new Vector2d(curSpr.pos.X, curSpr.pos.X);
-                                realPosAbove.X += 0.1;
-
-                                Vector2i cellPosAbove = (Vector2i)realPosAbove;
-                                if (map.GetRoof(cellPosAbove.X, cellPosAbove.Y) != "" || map.IsWall(cellPosAbove.X, cellPosAbove.Y))
-                                    darken *= 0.4f;
-                            }
                         }
 
                         game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, mixedLight, map.lightMix, new TexColor(0, 0, 0));
