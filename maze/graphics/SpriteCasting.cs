@@ -159,17 +159,20 @@ namespace textured_raycast.maze.graphics
                             LightDist[] lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + newPlane);
                             if (lights.Count() > 0)
                                 mixedLight = LightDistHelpers.MixLightDist(lightDists);
-                        }
 
-                        if (World.dayTime > 0.5f) {
-                            darken *= 0.6f;
-                        } else {
-                            Vector2d realPosAbove = new Vector2d(curSpr.pos.X, curSpr.pos.X);
-                            realPosAbove.X += 0.1;
+                            if (World.dayTime > 0.5f)
+                            {
+                                darken *= 0.4f;
+                            }
+                            else
+                            {
+                                Vector2d realPosAbove = new Vector2d(curSpr.pos.X, curSpr.pos.X);
+                                realPosAbove.X += 0.1;
 
-                            Vector2i cellPosAbove = (Vector2i)realPosAbove;
-                            if(map.GetRoof(cellPosAbove.X, cellPosAbove.Y) != "" || map.IsWall(cellPosAbove.X, cellPosAbove.Y))
-                                darken *= 0.6f;
+                                Vector2i cellPosAbove = (Vector2i)realPosAbove;
+                                if (map.GetRoof(cellPosAbove.X, cellPosAbove.Y) != "" || map.IsWall(cellPosAbove.X, cellPosAbove.Y))
+                                    darken *= 0.4f;
+                            }
                         }
 
                         game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, mixedLight, map.lightMix, new TexColor(0, 0, 0));
