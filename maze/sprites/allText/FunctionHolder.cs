@@ -65,9 +65,9 @@ namespace textured_raycast.maze.sprites.allText
             {3,
                 new List<Func<FunctionSprite, bool>> {
                     (self) => {
-                        self.texture = new string[] {"img/mario/redeyes"};
+                        self.texture = new string[] {"img/mario/redeyes.ppm"};
                         self.canInteract = false;
-                        float waitTill = (float)World.timePassed + 0.1f;
+                        float waitTill = (float)World.timePassed + 0.25f;
                         self.update = () =>
                         {
                             if (World.timePassed > waitTill)
