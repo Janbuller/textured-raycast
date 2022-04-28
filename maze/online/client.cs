@@ -11,12 +11,15 @@ namespace textured_raycast.maze.online
     struct Player
     {
         public float x, y;
+        public float xRot, yRot;
         public string map;
 
-        public Player(float x, float y, string map)
+        public Player(float x, float y, float xRot, float yRot, string map)
         {
             this.x = x;
             this.y = y;
+            this.xRot = xRot;
+            this.yRot = yRot;
             this.map = map;
         }
     }
@@ -51,13 +54,13 @@ namespace textured_raycast.maze.online
                     }
                     Packet packet = default(Packet);
 
-                    string dataStr = $"{World.plrPos.X}|{World.plrPos.Y}|{World.curMap.Path}";
+                    string dataStr = $"{World.plrPos.X}|{World.plrPos.Y}|{World.plrRot.X}|{World.plrRot.Y}|{World.curMap.Path}";
                     byte[] data = Encoding.UTF8.GetBytes(dataStr);
 
                     packet.Create(data);
                     peer.Send(0, ref packet);
 
-                    Thread.Sleep(250);
+                    Thread.Sleep(1);
                     bool polled = false;
 
                     while (!polled)
@@ -98,11 +101,18 @@ namespace textured_raycast.maze.online
                                             {
                                                 float x;
                                                 float y;
+                                                float xRot;
+                                                float yRot;
+
+                                                for (int i = 1; i <= 4; i++)
+                                                    split[i] = split[i].Replace(",", ".");
 
                                                 float.TryParse(split[1], NumberStyles.Any, CultureInfo.InvariantCulture, out x);
                                                 float.TryParse(split[2], NumberStyles.Any, CultureInfo.InvariantCulture, out y);
+                                                float.TryParse(split[1], NumberStyles.Any, CultureInfo.InvariantCulture, out xRot);
+                                                float.TryParse(split[2], NumberStyles.Any, CultureInfo.InvariantCulture, out yRot);
                                                 string map = split[3];
-                                                players[id] = new Player(x, y, map);
+                                                players[id] = new Player(x, y, xRot, yRot, map);
                                             }
                                         }
                                         break;
