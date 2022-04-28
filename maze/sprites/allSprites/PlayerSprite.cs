@@ -22,7 +22,7 @@ namespace textured_raycast.maze.sprites.allSprites
             canInteract = false;
         }
 
-        virtual public Texture GetTexture()
+        public override Texture GetTexture()
         {
             int textureCount = texture.Length;
             double radPrTex = (Math.PI * 2) / textureCount;

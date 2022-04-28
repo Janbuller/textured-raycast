@@ -21,13 +21,13 @@ namespace textured_raycast.maze.graphics
                 if(pV.map == map.Path) {
                     sprites.Add(new PlayerSprite(pV.x, pV.y, pV.xRot, pV.yRot, new string[] {
                         "img/player/Player 1.ppm",
-                        "img/player/Player 2.ppm",
-                        "img/player/Player 3.ppm",
-                        "img/player/Player 4.ppm",
-                        "img/player/Player 5.ppm",
-                        "img/player/Player 6.ppm",
-                        "img/player/Player 7.ppm",
                         "img/player/Player 8.ppm",
+                        "img/player/Player 7.ppm",
+                        "img/player/Player 6.ppm",
+                        "img/player/Player 5.ppm",
+                        "img/player/Player 4.ppm",
+                        "img/player/Player 3.ppm",
+                        "img/player/Player 2.ppm",
                     }));
                 }
 	    }
