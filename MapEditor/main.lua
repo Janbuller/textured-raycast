@@ -1,4 +1,5 @@
 local love = love
+local SCMan = require("ShortcutHandler")
 
 love.graphics.setDefaultFilter("nearest", "nearest")
 
@@ -100,7 +101,7 @@ local directoryName = ""
 local editingSprite = 0
 local sprites = {}
 
-local sys = "Win"
+local sys = "Lin"
 local fileName = "newMap"
 local setSize = "20 20"
 
@@ -138,7 +139,12 @@ local multiSelect = {}
 grid = newGrid(20, 20)
 
 function love.load()
+   SCMan.loadKeybinds();
     grid = newGrid(gW, gH)
+end
+
+function love.textinput(t)
+   SCMan.txtIn(t);
 end
 
 function love.draw()
@@ -276,9 +282,16 @@ function love.draw()
     local pointX, pointY = math.floor(px), math.floor(py)
     love.graphics.print(px .. " | " .. py, 5, h-145)
     love.graphics.print(pointX .. " | " .. pointY, 5, h-165)
+
+    SCMan.draw();
 end
 
 function love.keypressed(key)
+   SCMan.keypressed(key);
+   if(SCMan.curKeybind ~= nil or SCMan.writingTo ~= nil) then
+      return;
+   end
+
     if definingSize == true then
         if key == "space" then key = " " end
         if key == "backspace" then
