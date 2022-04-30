@@ -34,12 +34,7 @@ function getCMD()
 end
 
 function getGmatch()
-    local sys = love.system.getOS()
-    if sys == "Windows" then
-        return "(.-).map"
-    elseif sys == "Linux" then
-        return "(%a+).map"
-    end
+   return "(.-).map"
 end
 
 function MyKey:findFiles()
