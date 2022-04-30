@@ -262,6 +262,7 @@ function love.keypressed(key)
         if key == "escape" then
             directoryName = ""
             selected = {"", ""}
+            multiSelect = {}
         elseif key == "up" then
             gridLayer = math.min(gridLayer+1, 3)
         elseif key == "down" then
