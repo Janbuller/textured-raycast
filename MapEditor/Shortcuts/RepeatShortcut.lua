@@ -6,11 +6,11 @@ MyKey.key = "a"
 
 local savedLast = nil
 
-function MyKey:onActivate(handler)
-    if handler.lastKeybind then
-        if MyKey ~= handler.lastKeybind then
-            savedLast = handler.lastKeybind
-            handler.lastKeybind:onActivate(handler)
+function MyKey:onActivate()
+    if self.handler.lastKeybind then
+        if MyKey ~= self.handler.lastKeybind then
+            savedLast = self.handler.lastKeybind
+            self.handler.lastKeybind:onActivate(self.handler)
         end
     end
 end

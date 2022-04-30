@@ -13,7 +13,7 @@ end
 
 function MyKey:onGetResult(obj)
     local macros = self.handler.keybindings["m"].keybindings["r"]:getRelevant()
-    macros[obj[3]] = nil
+    macros[obj[1]] = nil
 end
 
 function MyKey:genDic()
@@ -21,7 +21,7 @@ function MyKey:genDic()
     self.dicToPass = {}
     
     for _, macro in pairs(macros) do
-        table.insert(self.dicToPass, {macro.mKey, macro.nName, macro.command})
+        table.insert(self.dicToPass, {macro.mKey, macro.mName, macro.command})
     end
 end
 

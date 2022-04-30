@@ -20,8 +20,8 @@ function MyKey:onReciveText(text)
 end
 
 function MyKey:onGetResult(obj)
-    macroToChange = obj[3]
-    self.handler.startTxt(MyKey, obj[3], "What to change command to?")
+    macroToChange = obj[1]
+    self.handler.startTxt(MyKey, obj[3], "What to change command to?", true)
 end
 
 function MyKey:genDic()
@@ -29,7 +29,7 @@ function MyKey:genDic()
     self.dicToPass = {}
     
     for _, macro in pairs(macros) do
-        table.insert(self.dicToPass, {macro.mKey, macro.nName, macro.command})
+        table.insert(self.dicToPass, {macro.mKey, macro.mName, macro.command})
     end
 end
 

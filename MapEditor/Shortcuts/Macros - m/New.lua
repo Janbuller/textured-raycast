@@ -9,6 +9,9 @@ local key = ""
 local command = ""
 
 function MyKey:onActivate()
+    name = ""
+    key = ""
+    command = ""
     self.handler.startTxt(MyKey, "", "What to call the new macro?", true)
 end
 
