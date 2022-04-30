@@ -37,7 +37,7 @@ function MyKey:parseSize(text, handler)
         end
     end
 
-    handler.startTxt(MyKey, text, "Set size in format 'x y'")
+    handler.startTxt(MyKey, text, "Set name")
 end
 
 function MyKey:parseName(text, handler)
@@ -48,7 +48,7 @@ function MyKey:parseName(text, handler)
         return
     end
 
-    handler.startTxt(MyKey, text " -no spaces", "Set size in format 'x y'")
+    handler.startTxt(MyKey, text.." -no spaces", "Set name")
 end
 
 function MyKey:makeFile()
