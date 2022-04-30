@@ -8,8 +8,4 @@ function MyKey:onActivate(handler)
     handler.loadKeybinds()
 end
 
-function MyKey:onReciveText(text)
-    
-end
-
 return MyKey

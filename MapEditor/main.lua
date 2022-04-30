@@ -1,4 +1,3 @@
-local love = love
 local SCMan = require("ShortcutHandler")
 
 love.graphics.setDefaultFilter("nearest", "nearest")
@@ -56,7 +55,7 @@ end
 
 -- load all files in the img folder
 local namesOfFiles = love.filesystem.getDirectoryItems("img")
-local folders = {}
+folders = {}
 
 for _, fileName in pairs(namesOfFiles) do
     if love.filesystem.getInfo("img/"..fileName).type == "directory" then
@@ -71,52 +70,32 @@ for _, fileName in pairs(namesOfFiles) do
 end
 
 -- declare variables
-local w, h = love.graphics.getWidth(), love.graphics.getHeight()
-local grid = {}
-local gW, gH = 20, 20
-local gridLayer = 2
-local gridOffsetX, gridOffsetY = 0, 0
-local mx, my = -1, -1
-local scale = 10
-local px, py = 0, 0
-local selectedForMenuX, selectedForMenuY = 0, 0
-local openMen = false
+w, h = love.graphics.getWidth(), love.graphics.getHeight()
+grid = {}
+gW, gH = 20, 20
+gridLayer = 2
+gridOffsetX, gridOffsetY = 0, 0
+mx, my = -1, -1
+scale = 10
+px, py = 0, 0
 
-local selected = {"", ""}
+selected = {"", ""}
 
-local cloneSave = {0, 0, ""}
+guiTileSize = 40
+guiTilediff = 6
+guiMaxTiles = 17
 
-local guiTileSize = 40
-local guiTilediff = 6
-local guiMaxTiles = 17
+gridActive = false;
 
-local gridActive = false;
+spawn = {0, 0}
+spawnLook = {0, 0}
 
-local spawn = {0, 0}
-local spawnLook = {0, 0}
-local spawnPlacing = 1
+directoryName = ""
 
-local directoryName = ""
+editingSprite = 0
+sprites = {}
 
-local editingSprite = 0
-local sprites = {}
-
-local sys = "Lin"
-local fileName = "newMap"
-local setSize = "20 20"
-
-local definingSize = false
-
-local editingFName = false
-local ignoreNr = 0
-
-local keys = "1234567890-"
-local keysSize = "1234567890- "
-local txtKeys = "abcdefghijklmnopqrstuvwxyz"
-
-local animations = {
-
-}
+fileName = "newMap"
 
 function newGrid(gWin, gHin)
     local grid = {}
@@ -134,12 +113,12 @@ function newGrid(gWin, gHin)
     return grid
 end
 
-local multiSelect = {}
+multiSelect = {}
 
 grid = newGrid(20, 20)
 
 function love.load()
-   SCMan.loadKeybinds();
+    SCMan.loadKeybinds();
     grid = newGrid(gW, gH)
 end
 
@@ -192,10 +171,6 @@ function love.draw()
     love.graphics.line(spawn[1]+spawnLook[1]/3, spawn[2]+spawnLook[2]/3, spawn[1]+spawnLook[1]/3*2, spawn[2]+spawnLook[2]/3*2)
 
     love.graphics.setColor(1, 1, 1, 1)
-    if openMen then
-        love.graphics.rectangle("fill", px-gW/2+1, py-gH/2+1, 0.5, 0.8)
-    end
-
     for _, sprite in pairs(sprites) do
         local roundDown = math.floor(globalSpriteIndexHelper)
         local maxSprites = #sprite[3]
@@ -251,21 +226,12 @@ function love.draw()
     end
 
     love.graphics.setColor(1, 1, 1)
-    love.graphics.print("[n] Size: "..setSize, 5, h-125)
-    love.graphics.print("[z] Sys: "..sys, 5, h-105)
 
-    if editingFName then
-        love.graphics.setColor(0.6, 0.6, 0.6)
-        love.graphics.print("[x] File name: "..findMachFile(), 5, h-85)
-    end
-
-    love.graphics.setColor(1, 1, 1)
-
-    love.graphics.print("[x] File name: "..fileName, 5, h-85)
+    love.graphics.print("File name: "..fileName, 5, h-85)
     if gridActive then
-        love.graphics.print("[g] Grid: active", 5, h-65)
+        love.graphics.print("Grid: active", 5, h-65)
     else
-        love.graphics.print("[g] Grid: not active", 5, h-65)
+        love.graphics.print("Grid: not active", 5, h-65)
     end
     
     for i = 1,3 do
@@ -280,195 +246,26 @@ function love.draw()
     local Tmx, Tmy = love.mouse.getPosition()
     local px, py = math.abs((((Tmx-w/2-gridOffsetX)/scale)+gW/2-1)-gW), (((Tmy-h/2-gridOffsetY)/scale)+gH/2-1)
     local pointX, pointY = math.floor(px), math.floor(py)
-    love.graphics.print(px .. " | " .. py, 5, h-145)
-    love.graphics.print(pointX .. " | " .. pointY, 5, h-165)
+    love.graphics.print(px .. " | " .. py, 5, h-45)
+    love.graphics.print(pointX .. " | " .. pointY, 5, h-25)
 
     SCMan.draw();
+    SCMan.drawShortcutUI();
 end
 
 function love.keypressed(key)
-   SCMan.keypressed(key);
-   if(SCMan.curKeybind ~= nil or SCMan.writingTo ~= nil) then
-      return;
-   end
-
-    if definingSize == true then
-        if key == "space" then key = " " end
-        if key == "backspace" then
-            setSize = string.sub(setSize, 0, #setSize-1)
-        elseif key == "return" then
-            local wh = string.numsplit(setSize, " ")
-            if wh[1] and wh[2] then
-                grid = newGrid(wh[1], wh[2])
-                definingSize = false
-            end
-        end
-        for i = 1,#keysSize do
-            if key == string.sub(keysSize, i, i) then
-                setSize = setSize .. key
-            end
-        end
-        return
-    end
-    if editingFName == true then
-        if key == "backspace" then
-            fileName = string.sub(fileName, 0, #fileName-1)
-        elseif key == "return" then
-            editingFName = false
-            ignoreNr = 0
-        elseif key == "tab" then
-            fileName = findMachFile()
-        elseif key == "up" then
-            ignoreNr = math.max(ignoreNr - 1, 0)
-        elseif key == "down" then
-            ignoreNr = ignoreNr + 1
-        end
-        for i = 1,#txtKeys do
-            if key == string.sub(txtKeys, i, i) then
-                if love.keyboard.isDown("lshift") then
-                    fileName = fileName .. string.upper(key)
-                else
-                    fileName = fileName .. key
-                end
-            end
-        end
-        
-        while findMachFile() == "" and (ignoreNr ~= 0) do
-            ignoreNr = ignoreNr - 1
-        end
-        return
-    end
-    if key == "f" then
-        for x = 1,gW do
-            for y = 1,gH do
-                grid[gridLayer][x][y][2] = selected
-            end
-        end
-    elseif key == "z" then
-        if sys == "Win" then
-            sys = "Lin"
-        else
-            sys = "Win"
-        end
-    elseif key == "x" then
-        editingFName = true
-    elseif key == "escape" then
-        directoryName = ""
-        selected = {"", ""}
-    elseif key == "up" then
-        gridLayer = math.min(gridLayer+1, 3)
-    elseif key == "down" then
-        gridLayer = math.max(gridLayer-1, 1)
-    elseif key == "e" then
-        local mx, my = love.mouse.getPosition()
-        px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
-
-        local closest = 0
-        local distance = 0.5
-        for i,sprite in ipairs(sprites) do
-            local thisDist = math.dist(sprite[1], sprite[2], px, py)
-            if thisDist < distance then
-                distance = thisDist
-                closest = i
-            end
-        end
-
-        if closest ~= 0 then
-            editingSprite = closest
-        end
-    elseif key == "c" then
-        local mx, my = love.mouse.getPosition()
-        px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
-
-        local closest = 0
-        local distance = 0.5
-        for i,sprite in ipairs(sprites) do
-            local thisDist = math.dist(sprite[1], sprite[2], px, py)
-            if thisDist < distance then
-                distance = thisDist
-                closest = i
-            end
-        end
-
-        if closest ~= 0 then
-            if cloneSave[1] ~= closest then
-                cloneSave[1] = closest
-                cloneSave[2] = sprites[closest][3]
-                cloneSave[3] = sprites[closest][4]
-            else
-                cloneSave[1] = 0
-            end
-        end
-    elseif key == "b" then
-        local mx, my = love.mouse.getPosition()
-        px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
-
-        if cloneSave[1] ~= 0 then
-            if gridActive then
-                table.insert(sprites, {math.ceil((px-0.25)*2)/2, math.ceil((py-0.25)*2)/2, cloneSave[2], cloneSave[3]})
-            else
-                table.insert(sprites, {px, py, cloneSave[2], cloneSave[3]})
-            end
-        end
-    elseif key == "s" then
-        saveFile()
-    elseif key == "n" then
-        sprites = {}
-        setSize = ""
-        definingSize = true
-    elseif key == "g" then
-        gridActive = not gridActive;
-    elseif key == "l" then
-        loadFile()
-    elseif key == "p" then
-        local mx, my = love.mouse.getPosition()
-        px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
-        if spawnPlacing == 1 then
-            if gridActive then
-                spawn = {math.ceil((px-0.25)*2)/2, math.ceil((py-0.25)*2)/2}
-            else
-                spawn = {px, py}
-            end
-            spawnPlacing = 2
-        else
-            local v = math.floor(math.atan2(py-spawn[2], px-spawn[1])/(math.pi/2)+math.pi/8)*(math.pi/2)
-            spawnLook = {math.cos(v), math.sin(v)}
-            spawnPlacing = 1
-        end
+    if (SCMan.curKeybind ~= nil or SCMan.writingTo ~= nil) then
+        SCMan.keypressed(key);
     else
-        if key == "backspace" then
-            if editingSprite ~= 0 then
-                local newStrList = string.split(sprites[editingSprite][4], " ")
-                sprites[editingSprite][4] = ""
+        SCMan.keypressed(key);
 
-                for i = 1,#newStrList-1 do
-                    if i == 1 then
-                        sprites[editingSprite][4] = newStrList[i]
-                    else
-                        sprites[editingSprite][4] = sprites[editingSprite][4].." "..newStrList[i]
-                    end
-                end
-            end
-        elseif key == "return" then
-            editingSprite = 0
-        elseif key == "delete" then
-            table.remove(sprites, editingSprite)
-            editingSprite = 0
-        end
-        if editingSprite ~= 0 then
-            for i = 1,#keys do
-                if key == string.sub(keys, i, i) then
-                    if #sprites[editingSprite][4] == 0 then
-                        sprites[editingSprite][4] = sprites[editingSprite][4] .. key
-                    else
-                        if love.keyboard.isDown("lshift") then
-                            sprites[editingSprite][4] = sprites[editingSprite][4] .. key
-                        else
-                            sprites[editingSprite][4] = sprites[editingSprite][4] .. " " .. key
-                        end
-                    end
-                end
-            end
+        if key == "escape" then
+            directoryName = ""
+            selected = {"", ""}
+        elseif key == "up" then
+            gridLayer = math.min(gridLayer+1, 3)
+        elseif key == "down" then
+            gridLayer = math.max(gridLayer-1, 1)
         end
     end
 end
@@ -522,7 +319,6 @@ end
 
 function love.mousereleased(x, y, b)
     local grid = grid[gridLayer]
-    openMen = false
     if b == 1 then
         if my ~= -2 then
             gridOffsetX, gridOffsetY = gridOffsetX+(x-mx), gridOffsetY+(y-my)
@@ -574,19 +370,6 @@ function placeAt(x, y)
             grid[gridLayer][x][y][2] = {"", ""}
         else
             grid[gridLayer][x][y][2] = selected
-
-            --[[
-            if #multiSelect == 1 then
-                grid[gridLayer][x][y][2] = selected
-            else
-                grid[gridLayer][x][y][2] = {}
-                for i, selected in ipairs(multiSelect) do
-                    grid[gridLayer][x][y][2][i] = selected
-                end
-
-
-            end
-            ]]-- we dont have animated wall ground and roof textures, lol...
         end
     else
         grid[gridLayer][x][y][2] = {"", ""}
@@ -594,112 +377,6 @@ function placeAt(x, y)
 end
 
 function math.dist(x1,y1, x2,y2) return ((x2-x1)^2+(y2-y1)^2)^0.5 end
-
-function gridMakePath()
-    for y = 1,gH do
-        for x = gW,1,-1 do
-            for i = 1,3 do
-                if grid[i][x][y][2][1] ~= "" then
-                    grid[i][x][y][1] = folders[grid[i][x][y][2][1]][grid[i][x][y][2][2]][2]
-                else
-                    grid[i][x][y][1] = "";
-                end
-            end
-        end
-    end
-end
-
-function saveFile()
-    gridMakePath()
-
-    local str = ""
-    str = str..gW.." "..gH.."\n"
-
-    str = str..math.abs((spawn[1]+gW/2-1)-gW).." "..(spawn[2]+gH/2-1).."\n"
-    str = str..(-spawnLook[1]).." "..spawnLook[2].."\n"
-
-    for y = 1,gH do
-        for x = gW,1,-1 do
-            for i = 1,3 do
-                str = str..grid[i][x][y][1]
-                if i == 3 then
-                    str = str.."\n"
-                else
-                    str = str.." "
-                end
-            end
-        end
-    end
-
-    for _, sprite in pairs(sprites) do
-        if sprite[4] == "" then
-            str = str..math.abs((sprite[1]+gW/2-1)-gW).." "..(sprite[2]+gH/2-1).." "..pathListToString(sprite[3]).."\n"
-        else
-            str = str..math.abs((sprite[1]+gW/2-1)-gW).." "..(sprite[2]+gH/2-1).." "..pathListToString(sprite[3]).." "..sprite[4].."\n"
-        end
-    end
-
-    str = string.sub(str, 0, #str-1)
-
-    local f = io.open(getPath()..fileName..".map", "w")
-    f:write(str)
-    f:close()
-end
-
-function pathListToString(list) -- for sprites
-    local str = ""
-    for _, path in pairs(list) do
-        str = str..folders[path[1]][path[2]][2].."-"
-    end
-    str = string.sub(str, 0, #str-1)
-    return str
-end
-
-function getPath()
-    if sys == "Win" then
-        return "bin/Debug/netcoreapp3.1/maps/"
-    elseif sys == "Lin" then
-        return "../maps/"
-    end
-end
-
-function getCMD()
-    if sys == "Win" then
-        return 'dir "bin/Debug/netcoreapp3.1/maps/"'
-    elseif sys == "Lin" then
-        return 'ls "../maps/"'
-    end
-end
-
-function getGmatch()
-    if sys == "Win" then
-        return "%d ([^%d]*).map[^/.]"
-    elseif sys == "Lin" then
-        return "(%a+).map"
-    end
-end
-
-function findMachFile()
-    local i, t = 0, ""
-    local pfile = io.popen(getCMD())
-    for str in pfile:lines() do
-        i = i + 1
-        t = t .. str
-    end
-    pfile:close()
-    i = 0
-
-    for strPart in string.gmatch(t, getGmatch()) do
-        if string.sub(strPart, 0, #fileName) == fileName then
-            i = i + 1
-            if i > ignoreNr then
-                return strPart
-            end
-        end
-    end
-
-    return ""
-end
 
 function getLenOfCurImage()
     local len = 0
@@ -721,57 +398,6 @@ function lenOfPAIRSList(list)
     return len
 end
 
-function loadFile()
-    local f = io.open(getPath()..fileName..".map", "r")
-    local lines = {}
-    for line in f:lines() do
-        table.insert(lines, line)
-    end
-    local nrsL = string.numsplit(lines[1], " ")
-    grid = newGrid(nrsL[1], nrsL[2])
-    
-    nrsL = string.numsplit(lines[2], " ")
-    spawn = {(math.abs(nrsL[1]-gW)-gW/2+1), (nrsL[2]-gH/2+1)}
-    nrsL = string.numsplit(lines[3], " ")
-    spawnLook = {-nrsL[1], nrsL[2]}
-
-    local count = 0
-    for y = 1,gH do
-        for x = gW,1,-1 do
-            local layers = string.split(lines[4+count], " ")
-            local layers1 = string.split(layers[1], "/")
-            local layers2 = string.split(layers[2], "/")
-            local layers3 = string.split(layers[3], "/")
-
-            grid[1][x][y] = {"", {layers1[2] or "", layers1[3] or ""}}
-            grid[2][x][y] = {"", {layers2[2] or "", layers2[3] or ""}}
-            grid[3][x][y] = {"", {layers3[2] or "", layers3[3] or ""}}
-            count = count + 1
-        end
-    end
-
-    sprites = {}
-    for i = count+4, #lines do
-        nrsL = string.split(lines[i], " ")
-        local nrsL2 = string.split(nrsL[3], "-")
-
-        local imgs = {}
-        for _, path in pairs(nrsL2) do
-            local nrsL3 = string.split(path, "/")
-            table.insert(imgs, {nrsL3[2], nrsL3[3]})
-        end
-        
-
-        if #nrsL == 3 then
-            table.insert(sprites, {(math.abs(nrsL[1]-gW)-gW/2+1), (nrsL[2]-gH/2+1), imgs, ""})
-        else
-            local str = ""
-            for i2 = 4, #nrsL do
-                str = str..nrsL[i2].." "
-            end
-            str = string.sub(str, 0, math.max(0, #str-1))
-            
-            table.insert(sprites, {(math.abs(nrsL[1]-gW)-gW/2+1), (nrsL[2]-gH/2+1), imgs, str})
-        end
-    end
+function love.quit()
+    SCMan.savePref()
 end
