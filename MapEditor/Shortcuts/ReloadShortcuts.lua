@@ -4,9 +4,8 @@ local MyKey = s:new()
 
 MyKey.key = "r"
 
-function MyKey:onActivate(handler)
-    handler.savePref()
-    handler.loadKeybinds()
+function MyKey:onActivate()
+    self.handler.loadKeybinds()
 end
 
 return MyKey

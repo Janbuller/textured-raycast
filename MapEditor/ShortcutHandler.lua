@@ -1,7 +1,7 @@
 local json = require "dkjson"
 
 local module = {}
-local w, h = love.graphics.getWidth(), love.graphics.getHeight()
+module.w, module.h = love.graphics.getWidth(), love.graphics.getHeight()
 
 module.keybindings = {}
 module.curKeybind = nil
@@ -18,10 +18,11 @@ module.colors = {
     ["TextColor"] = {1, 1, 1},
     ["FolderColor"] = {0.6, 0.8, 0.9},
     ["KeybindColor"] = {0.7, 0.2, 0.7},
-    ["GhostTextColor"] = {0.6, 0.6, 0.6},
+    ["GhostTextColor1"] = {0.6, 0.6, 0.6},
+    ["GhostTextColor2"] = {0.6, 0.6, 0.6},
 }
 
-local keybindingWidth = math.floor(w/200)
+local keybindingWidth = math.floor(module.w/200)
 
 function module.keypressed(key)
     module.passKeyToWrite(key)
@@ -55,10 +56,10 @@ function module.passKeyToKeybinds(key)
             if module.curKeybind[key].key ~= nil then
                 local activeKeybind = module.curKeybind[key]
                 module.curKeybind = nil
-                activeKeybind:onActivate(module)
-                module.lastKeybind = activeKeybind
+                activeKeybind:onActivate()
+                module.lastKeybind = activeKeybind:onActivate()
                 if activeKeybind.postOnActivate ~= nil then
-                    activeKeybind:postOnActivate(module)
+                    activeKeybind:postOnActivate()
                 end
             else
                 module.curKeybind = module.curKeybind[key].keybindings
@@ -102,7 +103,6 @@ end
 
 function module.loadPref()
     local f = io.open("SC.conf", "r")
-    print(f)
     if f == nil then
         module.savePref()
     end
@@ -122,7 +122,7 @@ function sendStringsToKeybindings(list, keybindings)
     end
 end
 
-function module.txtIn(t)
+function module.textinput(t)
     if module.writingTo ~= nil then
         if module.ignore then
             module.ignore = false
@@ -133,6 +133,8 @@ function module.txtIn(t)
 end
 
 function module.draw()
+    module.drawShortcutUI();
+
     if module.writingTo ~= nil then
         module.txtDraw()
         return
@@ -151,7 +153,7 @@ function module.draw()
     local height = math.ceil(#curKeysToDraw/keybindingWidth)
 
     love.graphics.setColor(module.colors["BackgroundColor"])
-    love.graphics.rectangle("fill", 0, h- height*20, w, height*20)
+    love.graphics.rectangle("fill", 0, module.h- height*20, module.w, height*20)
 
     local endRes = {}
     local keys = {}
@@ -172,18 +174,18 @@ end
 function drawPairs(toUse, i, height)
     for _, key in pairsByKeys(toUse) do
         local xOffset = (math.ceil(i/height) - 1)
-        local yOffset = (h-height*20) + ((i-1)*20 - xOffset*(height*20))+4
-        xOffset = ((xOffset)*(w/keybindingWidth)+4)
+        local yOffset = (module.h-height*20) + ((i-1)*20 - xOffset*(height*20))+4
+        xOffset = ((xOffset)*(module.w/keybindingWidth)+4)
 
         love.graphics.setColor(module.colors["TextColor"])
-        love.graphics.printf(key[1], xOffset, yOffset, w, "left")
-        love.graphics.printf("-", xOffset+20, yOffset, w, "left")
+        love.graphics.printf(key[1], xOffset, yOffset, module.w, "left")
+        love.graphics.printf("-", xOffset+20, yOffset, module.w, "left")
         
         love.graphics.setColor(module.colors["FolderColor"])
         if key[3] == true then
             love.graphics.setColor(module.colors["KeybindColor"])
         end
-        love.graphics.printf(cutDown(key[2], 20), xOffset+40, yOffset, w, "left")
+        love.graphics.printf(cutDown(key[2], 20), xOffset+40, yOffset, module.w, "left")
 
         i = i + 1
     end
@@ -220,15 +222,15 @@ end
 
 function module.txtDraw()
     love.graphics.setColor(module.colors["BackgroundColor"])
-    love.graphics.rectangle("fill", 0, h- 20, w, 20)
+    love.graphics.rectangle("fill", 0, module.h- 20, module.w, 20)
 
     if module.keybindTxt == "" then
-        love.graphics.setColor(module.colors["GhostTextColor"])
-        love.graphics.printf(module.displayTxt, 2, h-18, w, "left")
+        love.graphics.setColor(module.colors["GhostTextColor1"])
+        love.graphics.printf(module.displayTxt, 2, module.h-18, module.w, "left")
     end
 
     love.graphics.setColor(module.colors["TextColor"])
-    love.graphics.printf(module.keybindTxt, 2, h-18, w, "left")
+    love.graphics.printf(module.keybindTxt, 2, module.h-18, module.w, "left")
 end
 
 function module.startTxt(keybind, preTxt, dispTxt, ignore)
@@ -244,6 +246,21 @@ function cutDown(string, len)
         return string.sub(string, 0, len-3).."..."
     else
         return string
+    end
+end
+
+function module.load()
+    module.loadKeybinds()
+    SetupKeys(module.keybindings)
+end
+
+function SetupKeys(keybindings)
+    for _, v in pairs(keybindings) do
+        if v.setup then
+            v:setup()
+        elseif v.keybindings then
+            SetupKeys(v.keybindings)
+        end
     end
 end
 

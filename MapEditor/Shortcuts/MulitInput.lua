@@ -7,7 +7,7 @@ MyKey.key = "o"
 local savedKeyInput = nil
 local input = ""
 
-function MyKey:onActivate(handler)
+function MyKey:onActivate()
     if savedKeyInput == nil then
         self.name = "Disable MultiInput"
         savedKeyInput = self.handler.passKeyToKeybinds

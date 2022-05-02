@@ -31,13 +31,13 @@ function MyKey:onGetResult(obj)
         local colors, selected = self.handler.keybindings["c"].keybindings["s"]:getRelevant()
         colorToModify = obj[2]
 
-        self.handler.startTxt(MyKey, self:toString(colors[palletToModify][colorToModify]), "What color should it be?", true)
+        self:startText(self:toString(colors[palletToModify][colorToModify]), "What color should it be?", true)
     end
 end
 
 function MyKey:onReciveText(text)
     local colorsToModify, selected = self.handler.keybindings["c"].keybindings["s"]:getRelevant()
-    local colors = string.numsplit(text, " ")
+    local colors = self:getColors(text)
 
     if #colors == 3 then
         if colors[1] and colors[2] and colors[3] then
@@ -46,7 +46,7 @@ function MyKey:onReciveText(text)
         end
     end
 
-    self.handler.startTxt(MyKey, text, "What color should it be?")
+    self:startText(text, "What color should it be?")
 end
 
 function MyKey:genDic1()
@@ -66,6 +66,23 @@ function MyKey:genDic2()
 
     for key, color in pairs(colors[palletToModify]) do
         table.insert(self.dicToPass, {string.lower(string.sub(key, 1, 1)), key})
+    end
+end
+
+function MyKey:getColors(text)
+    local color = {}
+    for res in string.gmatch(text.." ", "(.-) ") do
+        if tonumber(res) then
+            table.insert(color, tonumber(res))
+        else
+            return false
+        end
+    end
+
+    if #color == 3 then
+        return color
+    else
+        return false
     end
 end
 

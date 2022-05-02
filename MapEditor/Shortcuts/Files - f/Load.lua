@@ -1,18 +1,23 @@
-local s = require "ShortcutMultiChoice"
+local s = require "ShortcutDropdown"
 
 local MyKey = s:new()
 
 MyKey.key = "l"
 
-MyKey.dicToPass = {}
+MyKey.listToPass = {}
 
 function MyKey:onActivate()
     self:findFiles()
-    self:overrideDic(self.dicToPass, self.handler)
+    self:startText("", "What map to load?", true)
 end
 
-function MyKey:onGetResult(obj)
-    loadFile(obj[2])
+function MyKey:onReciveText(text)
+    if self:contains(text) then
+        loadFile(text)
+        print("a")
+        return
+    end
+    self:startText(text, "What map to load?", true)
 end
 
 function getPath()
@@ -38,27 +43,24 @@ function getGmatch()
 end
 
 function MyKey:findFiles()
-    self.dicToPass = {}
+    self.listToPass = {}
 
     local i, t = 0, ""
     local pfile = io.popen(getCMD())
     for str in pfile:lines() do
         i = i + 1
         t = t .. str
-        print(t)
     end
     pfile:close()
     i = 0
 
-    local i = 1
     for strPart in string.gmatch(t, getGmatch()) do
-        print(strPart)
-        table.insert(self.dicToPass, {tostring(i), strPart})
-        i = i + 1
+        table.insert(self.listToPass, strPart)
     end
 end
 
 function loadFile(loadFileName)
+    print(loadFileName)
     fileName = loadFileName
     local f = io.open(getPath()..fileName..".map", "r")
     local lines = {}
@@ -112,11 +114,6 @@ function loadFile(loadFileName)
             table.insert(sprites, {(math.abs(nrsL[1]-gW)-gW/2+1), (nrsL[2]-gH/2+1), imgs, str})
         end
     end
-
-
-end
-
-function MyKey:onReciveText(text)
 end
 
 return MyKey

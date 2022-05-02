@@ -4,7 +4,7 @@ local MyKey = s:new()
 
 MyKey.key = "g"
 
-function MyKey:onActivate(handler)
+function MyKey:onActivate()
     gridActive = not gridActive
 end
 

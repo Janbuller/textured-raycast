@@ -7,21 +7,21 @@ MyKey.key = "r"
 local name = ""
 
 function MyKey:onActivate()
-    self.handler.startTxt(MyKey, "", "Set new name", true)
+    self:startText("", "Set new name", true)
 end
 
 function MyKey:onReciveText(text)
    self:parseName(text, self.handler)
 end
 
-function MyKey:parseName(text, handler)
+function MyKey:parseName(text)
     if #string.split(text, " ") == 1 then
         name = text
-	fileName = name
+	    fileName = name
         return
     end
 
-    handler.startTxt(MyKey, text.." -no spaces", "Set new name")
+    self:startText(text.." -no spaces", "Set new name")
 end
 
 return MyKey

@@ -6,7 +6,7 @@ MyKey.key = "p"
 
 local spawnPlacing = 1
 
-function MyKey:onActivate(handler)
+function MyKey:onActivate()
     local mx, my = love.mouse.getPosition()
     local px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
     if spawnPlacing == 1 then

@@ -6,8 +6,8 @@ MyKey.key = "a"
 
 local savedFunc = {}
 
-function MyKey:onActivate(handler)
-    local closest, closestI = handler.keybindings["s"].keybindings["v"]:getRelevant()
+function MyKey:onActivate()
+    local closest, closestI = self.handler.keybindings["s"].keybindings["v"]:getRelevant()
 
     if closest then
         savedFunc = {love.keypressed}

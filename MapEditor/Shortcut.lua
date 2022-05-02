@@ -7,8 +7,16 @@ function Shortcut:new()
     return Shortcut
 end
 
+function Shortcut:setup()
+    
+end
+
 function Shortcut:onActivate()
     
+end
+
+function Shortcut:startText(StartText, Message, ignoreNextKey)
+    self.handler.startTxt(self, StartText, Message, ignoreNextKey)
 end
 
 function Shortcut:postOnActivate()

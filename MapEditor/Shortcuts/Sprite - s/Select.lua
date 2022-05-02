@@ -33,4 +33,30 @@ function MyKey:getRelevant()
     return selectedSprite, selectedSpriteIndex
 end
 
+function MyKey:drawAdditionalUI()
+    if selectedSprite then
+        local mX, mY = love.mouse.getPosition()
+        if mx == -1 then
+            mX, mY = mx, my
+        end
+
+        love.graphics.setLineWidth(0.02)
+        love.graphics.translate(w/2, h/2)
+        love.graphics.scale(scale, scale)
+        love.graphics.translate(gridOffsetX+(mX-mx)/scale, gridOffsetY+(mY-my)/scale)
+
+        local roundDown = math.floor(globalSpriteIndexHelper)
+        local maxSprites = #selectedSprite[3]
+        local thisIndex = roundDown%maxSprites+1
+        
+        local thisImg = folders[selectedSprite[3][thisIndex][1]][selectedSprite[3][thisIndex][2]]
+
+        love.graphics.setColor(1, 1, 0)
+        love.graphics.draw(thisImg[1], selectedSprite[1]-0.3, selectedSprite[2]-0.3, 0, (0.6/thisImg[1]:getWidth()), (0.6/thisImg[1]:getHeight()))
+        
+        love.graphics.origin()
+        love.graphics.setLineWidth(2)
+    end
+end
+
 return MyKey

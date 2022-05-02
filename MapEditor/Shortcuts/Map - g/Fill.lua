@@ -4,7 +4,7 @@ local MyKey = s:new()
 
 MyKey.key = "f"
 
-function MyKey:onActivate(handler)
+function MyKey:onActivate()
     local x, y = love.mouse.getPosition()
 
     local pointX, pointY = math.floor((x-w/2-gridOffsetX)/scale)+gW/2, math.floor((y-h/2-gridOffsetY)/scale)+gH/2

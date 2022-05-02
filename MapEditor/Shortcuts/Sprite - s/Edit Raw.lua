@@ -6,16 +6,16 @@ MyKey.key = "r"
 
 local selectedSprite = nil
 
-function MyKey:onActivate(handler)
-    local closest, closestI = handler.keybindings["s"].keybindings["v"]:getRelevant()
+function MyKey:onActivate()
+    local closest, closestI = self.handler.keybindings["s"].keybindings["v"]:getRelevant()
 
     if closest then
         selectedSprite = closest
-        handler.startTxt(MyKey, selectedSprite[4], "", true)
+        self:startText(selectedSprite[4], "", true)
     end
 end
 
-function MyKey:onReciveText(text, handler)
+function MyKey:onReciveText(text)
     selectedSprite[4] = text
 end
 

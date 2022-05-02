@@ -6,8 +6,8 @@ MyKey.key = "c"
 
 local cloneSave = nil
 
-function MyKey:onActivate(handler)
-    local closest, closestI = handler.keybindings["s"].keybindings["v"]:getRelevant()
+function MyKey:onActivate()
+    local closest, closestI = self.handler.keybindings["s"].keybindings["v"]:getRelevant()
 
     if closest then
         cloneSave = {}

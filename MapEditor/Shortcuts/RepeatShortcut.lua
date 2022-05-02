@@ -10,14 +10,14 @@ function MyKey:onActivate()
     if self.handler.lastKeybind then
         if MyKey ~= self.handler.lastKeybind then
             savedLast = self.handler.lastKeybind
-            self.handler.lastKeybind:onActivate(self.handler)
+            self.handler.lastKeybind:onActivate()
         end
     end
 end
 
-function MyKey:postOnActivate(handler)
+function MyKey:postOnActivate()
     if savedLast then
-        handler.lastKeybind = savedLast
+        self.handler.lastKeybind = savedLast
         savedLast = nil
     end
 end

@@ -4,8 +4,8 @@ local MyKey = s:new()
 
 MyKey.key = "o"
 
-function MyKey:onActivate(handler)
-    local closest, closestI = handler.keybindings["s"].keybindings["v"]:getRelevant()
+function MyKey:onActivate()
+    local closest, closestI = self.handler.keybindings["s"].keybindings["v"]:getRelevant()
 
     if closest then
         if selected[1] ~= "" then

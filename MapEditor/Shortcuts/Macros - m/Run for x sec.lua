@@ -1,4 +1,3 @@
-local json = require "dkjson"
 local s = require "ShortcutMultiChoice"
 
 local MyKey = s:new()
@@ -19,16 +18,14 @@ end
 
 function MyKey:onGetResult(obj)
     command = obj[3]
-    self.handler.startTxt(MyKey, "", "Run for how long?", true)
+    self:startText("", "Run for how long?", true)
 end
 
 function MyKey:onReciveText(text)
     if tonumber(text) then
         local time = tonumber(text)
         updateLoop = love.update
-        print("b")
         love.update = function(dt)
-            print(dt, "a")
             updateLoop(dt)
             self:runMacro(command)
             
@@ -40,7 +37,7 @@ function MyKey:onReciveText(text)
         end
         return
     end
-    self.handler.startTxt(MyKey, text .."-be a number", "How many times to run macro?")
+    self:startText(text .."-be a number", "How many times to run macro?")
 end
 
 function MyKey:runMacro(command)
@@ -56,13 +53,12 @@ function MyKey:tryRunKeybind(keyCombo)
             if kurKeybind[Key].keybindings then
                 kurKeybind = kurKeybind[Key].keybindings
             else
-                kurKeybind = kurKeybind[Key]
+                if kurKeybind.onActivate then
+                    kurKeybind:onActivate()
+                    kurKeybind = self.handler.keybindings
+                end
             end
         end
-    end
-    
-    if kurKeybind.onActivate then
-        kurKeybind:onActivate()
     end
 end
 

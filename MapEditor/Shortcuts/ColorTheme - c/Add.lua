@@ -7,14 +7,14 @@ MyKey.key = "a"
 local savedFunc = {}
 
 function MyKey:onActivate()
-    self.handler.startTxt(MyKey, "", "What to call the new pallet?", true)
+    self:startText("", "What to call the new theme?", true)
 end
 
 function MyKey:onReciveText(text)
     local colors, selected = self.handler.keybindings["c"].keybindings["s"]:getRelevant()
 
     if colors[text] then
-        self.handler.startTxt(MyKey, text .. " is already taken", "What to call the new pallet?")
+        self:startText(text .. " is already taken", "What to call the new theme?")
         return
     end
 
@@ -23,7 +23,8 @@ function MyKey:onReciveText(text)
         ["TextColor"] = {1, 1, 1},
         ["FolderColor"] = {0.6, 0.8, 0.9},
         ["KeybindColor"] = {0.7, 0.2, 0.7},
-        ["GhostTextColor"] = {0.6, 0.6, 0.6},
+        ["GhostTextColor1"] = {0.6, 0.6, 0.6},
+        ["GhostTextColor2"] = {0.6, 0.6, 0.6},
     }
 end
 

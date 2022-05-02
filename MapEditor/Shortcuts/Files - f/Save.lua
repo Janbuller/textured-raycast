@@ -4,7 +4,7 @@ local MyKey = s:new()
 
 MyKey.key = "s"
 
-function MyKey:onActivate(handler)
+function MyKey:onActivate()
    gridMakePath()
 
    local str = ""

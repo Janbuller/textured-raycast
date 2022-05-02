@@ -2,9 +2,6 @@ local SCMan = require("ShortcutHandler")
 
 love.graphics.setDefaultFilter("nearest", "nearest")
 
-local socket = require("socket")
-local directory = {}
-
 function loadImage(path)
     local str, len = love.filesystem.read(path)
 
@@ -35,7 +32,7 @@ function loadImage(path)
     return love.graphics.newImage(iData)
 end
 
-local globalSpriteIndexHelper = 1;
+globalSpriteIndexHelper = 1;
 
 function string.numsplit(s, delimiter)
     local result = {}
@@ -76,7 +73,7 @@ gW, gH = 20, 20
 gridLayer = 2
 gridOffsetX, gridOffsetY = 0, 0
 mx, my = -1, -1
-scale = 10
+scale = 20
 px, py = 0, 0
 
 selected = {"", ""}
@@ -118,12 +115,12 @@ multiSelect = {}
 grid = newGrid(20, 20)
 
 function love.load()
-    SCMan.loadKeybinds();
+    SCMan.load();
     grid = newGrid(gW, gH)
 end
 
 function love.textinput(t)
-   SCMan.txtIn(t);
+   SCMan.textinput(t);
 end
 
 function love.draw()
@@ -143,8 +140,9 @@ function love.draw()
 
     -- translate everything so when it gets drawn, it gets drawn in the right way
     -- also scale it...
-    love.graphics.translate(gridOffsetX+(mX-mx)+w/2, gridOffsetY+(mY-my)+h/2)
+    love.graphics.translate(w/2, h/2)
     love.graphics.scale(scale, scale)
+    love.graphics.translate(gridOffsetX+(mX-mx)/scale, gridOffsetY+(mY-my)/scale)
 
     -- draw the whole grid, and images in it if needed
     for x = -gW/2+1,gW/2 do
@@ -250,7 +248,6 @@ function love.draw()
     love.graphics.print(pointX .. " | " .. pointY, 5, h-25)
 
     SCMan.draw();
-    SCMan.drawShortcutUI();
 end
 
 function love.keypressed(key)
@@ -322,7 +319,7 @@ function love.mousereleased(x, y, b)
     local grid = grid[gridLayer]
     if b == 1 then
         if my ~= -2 then
-            gridOffsetX, gridOffsetY = gridOffsetX+(x-mx), gridOffsetY+(y-my)
+            gridOffsetX, gridOffsetY = gridOffsetX+(x-mx)/scale, gridOffsetY+(y-my)/scale
             if mx-x == 0 and my-y == 0 and selected[1] ~= "" then
                 local pointX, pointY = math.floor((x-w/2-gridOffsetX)/scale)+gW/2, math.floor((y-h/2-gridOffsetY)/scale)+gH/2
                 if pointX > 0 and pointX < gW+1 and pointY > 0 and pointY < gH+1 then
@@ -350,7 +347,8 @@ end
 
 function love.wheelmoved(x, y)
     local mx, my = love.mouse.getPosition()
-    scale = scale + y
+    scale = math.max(scale + (scale^0.5)*y, 1)
+    
 end
 
 function love.update(dt)

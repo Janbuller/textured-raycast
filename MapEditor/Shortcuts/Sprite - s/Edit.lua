@@ -12,27 +12,27 @@ local IDCorrespondence = {
     ["1"] = "IDForMapToGoTo IDForDoorOfMapToGoTo MyDoorID"
 }
 
-function MyKey:onActivate(handler)
-    local closest, closestI = handler.keybindings["s"].keybindings["v"]:getRelevant()
+function MyKey:onActivate()
+    local closest, closestI = self.handler.keybindings["s"].keybindings["v"]:getRelevant()
 
     if closest then
         selectedSprite = closest
-        handler.startTxt(MyKey, "", "Sprite Effect ID", true)
+        self:startText("", "Sprite Effect ID", true)
         ID = -1
         extra = ""
     end
 end
 
-function MyKey:onReciveText(text, handler)
+function MyKey:onReciveText(text)
     if ID == -1 then
         if text == "" then
             saveThis()
         else
             if tonumber(text) then
                 ID = tonumber(text)
-                handler.startTxt(MyKey, "", "ExtraEffects")
+                self:startText("", "ExtraEffects")
             else
-                handler.startTxt(MyKey, text.."-number", "Sprite Effect ID")
+                self:startText(text.."-number", "Sprite Effect ID")
             end
         end
     else
@@ -44,9 +44,9 @@ function MyKey:onReciveText(text, handler)
                 extra = text
                 saveThis()
             elseif l1 > l2 then
-                handler.startTxt(MyKey, text.."-missing "..l1-l2, "ExtraEffects")
+                self:startText(text.."-missing "..l1-l2, "ExtraEffects")
             elseif l2 > l1 then
-                handler.startTxt(MyKey, text.."-overload "..l2-l1, "ExtraEffects")
+                self:startText(text.."-overload "..l2-l1, "ExtraEffects")
             end
         else
             extra = text

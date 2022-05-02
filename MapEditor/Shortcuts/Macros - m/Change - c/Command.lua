@@ -21,7 +21,7 @@ end
 
 function MyKey:onGetResult(obj)
     macroToChange = obj[1]
-    self.handler.startTxt(MyKey, obj[3], "What to change command to?", true)
+    self:startText(obj[3], "What to change command to?", true)
 end
 
 function MyKey:genDic()

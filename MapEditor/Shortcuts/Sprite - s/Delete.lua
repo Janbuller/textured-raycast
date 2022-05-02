@@ -6,8 +6,8 @@ MyKey.key = "d"
 
 local selectedSprite = nil
 
-function MyKey:onActivate(handler)
-    local closest, closestI = handler.keybindings["s"].keybindings["v"]:getRelevant()
+function MyKey:onActivate()
+    local closest, closestI = self.handler.keybindings["s"].keybindings["v"]:getRelevant()
 
     if closestI ~= 0 then
         table.remove(sprites, closestI)

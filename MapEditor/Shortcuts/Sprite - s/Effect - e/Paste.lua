@@ -4,8 +4,8 @@ local MyKey = s:new()
 
 MyKey.key = "p"
 
-function MyKey:onActivate(handler)
-    local saveEffect = handler.keybindings["s"].keybindings["e"].keybindings["c"]:getRelevant()
+function MyKey:onActivate()
+    local saveEffect = self.handler.keybindings["s"].keybindings["e"].keybindings["c"]:getRelevant()
 
     local mx, my = love.mouse.getPosition()
     local px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
