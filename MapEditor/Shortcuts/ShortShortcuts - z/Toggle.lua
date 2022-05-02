@@ -10,6 +10,9 @@ local isToggled = true
 
 function MyKey:onActivate()
     isToggled = not isToggled
+    local name = "active"
+    if not isToggled then name = "dissabled" end
+    self.name = "Toggle - "..name
 end
 
 function MyKey:setup()
@@ -45,11 +48,15 @@ function MyKey:getRelevant()
 end
 
 function MyKey:loadString(v)
-    cuts = json.decode(v)
+    local toReturn = json.decode(v)
+    cuts, isToggled = toReturn[1], toReturn[2]
+    local name = "active"
+    if not isToggled then name = "dissabled" end
+    self.name = "Toggle - "..name
 end
 
 function MyKey:saveString()
-    return json.encode(cuts)
+    return json.encode({cuts, isToggled})
 end
 
 return MyKey

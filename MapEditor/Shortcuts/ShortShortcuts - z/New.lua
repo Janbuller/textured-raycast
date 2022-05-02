@@ -17,7 +17,7 @@ function MyKey:onReciveText(text)
         return
     else
         local short = self.handler.keybindings["z"].keybindings["t"]:getRelevant()
-        short[key] = {text}
+        short[key] = text
     end
 end
 

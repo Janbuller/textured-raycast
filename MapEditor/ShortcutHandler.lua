@@ -115,7 +115,11 @@ end
 function sendStringsToKeybindings(list, keybindings)
     for key, v in pairs(list) do
         if type(v) == "string" then
-            keybindings[key]:loadString(v)
+            local success, something = pcall(keybindings[key].loadString, keybindings[key], v)
+            if not success then
+                print("Reloading a file\n"..something)
+                keybindings[key]:loadString(keybindings[key]:saveString())
+            end
         else
             sendStringsToKeybindings(list[key], keybindings[key].keybindings)
         end
