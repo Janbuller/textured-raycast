@@ -20,7 +20,7 @@ function MyKey:onActivate()
         end
     
         function love.mousemoved(x, y, dx, dy)
-            local npx, npy = ((x-w/2-gridOffsetX)/scale), ((y-h/2-gridOffsetY)/scale)
+            local npx, npy = getMouseWorldPos()
             if gridActive then
                 closest[1], closest[2] = math.ceil((npx-0.25)*2)/2, math.ceil((npy-0.25)*2)/2
             else

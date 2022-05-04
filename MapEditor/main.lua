@@ -66,6 +66,8 @@ for _, fileName in pairs(namesOfFiles) do
     end
 end
 
+transform = love.math.newTransform()
+
 -- declare variables
 w, h = love.graphics.getWidth(), love.graphics.getHeight()
 grid = {}
@@ -74,7 +76,6 @@ gridLayer = 2
 gridOffsetX, gridOffsetY = 0, 0
 mx, my = -1, -1
 scale = 20
-px, py = 0, 0
 
 selected = {"", ""}
 
@@ -82,7 +83,7 @@ guiTileSize = 40
 guiTilediff = 6
 guiMaxTiles = 17
 
-gridActive = false;
+gridActive = false
 
 spawn = {0, 0}
 spawnLook = {0, 0}
@@ -140,9 +141,8 @@ function love.draw()
 
     -- translate everything so when it gets drawn, it gets drawn in the right way
     -- also scale it...
-    love.graphics.translate(w/2, h/2)
-    love.graphics.scale(scale, scale)
-    love.graphics.translate(gridOffsetX+(mX-mx)/scale, gridOffsetY+(mY-my)/scale)
+    transform = love.math.newTransform():translate(w/2, h/2):scale(scale, scale):translate(gridOffsetX+(mX-mx)/scale, gridOffsetY+(mY-my)/scale)
+    love.graphics.applyTransform(transform)
 
     -- draw the whole grid, and images in it if needed
     for x = -gW/2+1,gW/2 do
@@ -163,6 +163,7 @@ function love.draw()
     end
 
     love.graphics.circle("fill", spawn[1], spawn[2], 0.3)
+
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.line(spawn[1], spawn[2], spawn[1]+spawnLook[1], spawn[2]+spawnLook[2])
     love.graphics.setColor(0, 0, 0, 1)
@@ -241,13 +242,20 @@ function love.draw()
     end
 
     love.graphics.setColor(1, 1, 1, 1)
-    local Tmx, Tmy = love.mouse.getPosition()
-    local px, py = math.abs((((Tmx-w/2-gridOffsetX)/scale)+gW/2-1)-gW), (((Tmy-h/2-gridOffsetY)/scale)+gH/2-1)
-    local pointX, pointY = math.floor(px), math.floor(py)
+    local px, py = getMouseWorldPos()
+    local pointX, pointY = math.floor(px)+gW/2, math.floor(py)+gH/2
     love.graphics.print(px .. " | " .. py, 5, h-45)
     love.graphics.print(pointX .. " | " .. pointY, 5, h-25)
 
     SCMan.draw();
+end
+
+function getMouseWorldPos()
+    -- get mouse position
+    local mX, mY = love.mouse.getPosition()
+    -- do this for making screen drag work
+
+    return transform:inverseTransformPoint(mX, mY)
 end
 
 function love.keypressed(key)
@@ -321,7 +329,8 @@ function love.mousereleased(x, y, b)
         if my ~= -2 then
             gridOffsetX, gridOffsetY = gridOffsetX+(x-mx)/scale, gridOffsetY+(y-my)/scale
             if mx-x == 0 and my-y == 0 and selected[1] ~= "" then
-                local pointX, pointY = math.floor((x-w/2-gridOffsetX)/scale)+gW/2, math.floor((y-h/2-gridOffsetY)/scale)+gH/2
+                local px, py = getMouseWorldPos()
+                local pointX, pointY = math.floor(px)+gW/2, math.floor(py)+gH/2
                 if pointX > 0 and pointX < gW+1 and pointY > 0 and pointY < gH+1 then
                     placeAt(pointX, pointY)
                 end
@@ -329,7 +338,7 @@ function love.mousereleased(x, y, b)
         end
         mx, my = -1, -1
     elseif b == 2 then
-        px, py = ((x-w/2-gridOffsetX)/scale), ((y-h/2-gridOffsetY)/scale)
+        local px, py = getMouseWorldPos()
 
         if selected[1] ~= "" then
             if gridActive then
@@ -356,7 +365,8 @@ function love.update(dt)
     local grid = grid[gridLayer]
     local x, y = love.mouse.getPosition()
     if love.keyboard.isDown("space") and love.mouse.isDown(1) then
-        local pointX, pointY = math.floor((x-w/2-gridOffsetX)/scale)+gW/2, math.floor((y-h/2-gridOffsetY)/scale)+gH/2
+        local px, py = getMouseWorldPos()
+        local pointX, pointY = math.floor(px)+gW/2, math.floor(py)+gH/2
         if pointX > 0 and pointX < gW+1 and pointY > 0 and pointY < gH+1 then
             placeAt(pointX, pointY)
         end

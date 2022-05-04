@@ -7,9 +7,8 @@ MyKey.key = "v"
 local selectedSprite = nil
 local selectedSpriteIndex = 0
 
-function MyKey:onActivate(handeler)
-    local mx, my = love.mouse.getPosition()
-    local px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
+function MyKey:onActivate()
+    local px, py = getMouseWorldPos()
 
     local closest = nil
     local closestIndex = 0

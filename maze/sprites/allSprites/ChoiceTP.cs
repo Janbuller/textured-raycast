@@ -7,7 +7,6 @@ using textured_raycast.maze.texture;
 
 namespace textured_raycast.maze.sprites.allSprites
 {
-    // IDForMapToGoTo IDForDoorOfMapToGoTo MyDoorID
     class ChoiceTP : Sprite
     {
         private Dictionary<string, string> strings = new Dictionary<string, string>()

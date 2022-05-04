@@ -7,7 +7,8 @@ MyKey.key = "f"
 function MyKey:onActivate()
     local x, y = love.mouse.getPosition()
 
-    local pointX, pointY = math.floor((x-w/2-gridOffsetX)/scale)+gW/2, math.floor((y-h/2-gridOffsetY)/scale)+gH/2
+    local px, py = getMouseWorldPos()
+    local pointX, pointY = math.floor(px)+gW/2, math.floor(py)+gH/2
     if pointX > 0 and pointX < gW+1 and pointY > 0 and pointY < gH+1 then
         local selectedTile = grid[gridLayer][pointX][pointY][2]
         local toOverrideWith = selected
