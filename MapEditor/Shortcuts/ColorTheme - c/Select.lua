@@ -19,6 +19,7 @@ local colors = {
         ["GridBorder"] = {1, 1, 1},
         ["GridBackground"] = {0.6, 0.6, 0.6},
         ["AllBackground"] = {0, 0, 0},
+        ["ImageFolderColor"] = {0.6, 0.6, 0.6},
     }
 }
 
@@ -35,6 +36,7 @@ end
 
 function MyKey:genDic()
     self.dicToPass = {}
+
     
     local i = 1
     for key, color in pairs(colors) do

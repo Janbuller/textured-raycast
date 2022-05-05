@@ -198,7 +198,7 @@ function love.draw()
             for _, folderName in pairs(folders) do
                 i = i + 1
 
-                love.graphics.setColor(0.6, 0.6, 0.6)
+                love.graphics.setColor(SCMan.colors["ImageFolderColor"])
                 love.graphics.rectangle("fill", 2+(guiTileSize+guiTilediff)*(i-1)-((math.ceil(i/guiMaxTiles)-1)*(guiTileSize+guiTilediff)*guiMaxTiles)-1, 2+(guiTileSize+guiTilediff)*(math.ceil(i/guiMaxTiles)-1)-1, (guiTileSize+guiTilediff/2),  (guiTileSize+guiTilediff/2))
                 
                 love.graphics.setColor(0, 0, 0)

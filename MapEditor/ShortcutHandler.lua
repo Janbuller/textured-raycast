@@ -4,6 +4,7 @@ local module = {}
 module.w, module.h = love.graphics.getWidth(), love.graphics.getHeight()
 
 module.keybindings = {}
+module.lastKeybindings = {}
 module.curKeybind = nil
 
 module.lastKeybind = nil
@@ -13,14 +14,7 @@ module.writingTo = nil
 module.keybindTxt = ""
 module.displayTxt = ""
 
-module.colors = {
-    ["BackgroundColor"] = {0.2, 0.2, 0.2},
-    ["TextColor"] = {1, 1, 1},
-    ["FolderColor"] = {0.6, 0.8, 0.9},
-    ["KeybindColor"] = {0.7, 0.2, 0.7},
-    ["GhostTextColor1"] = {0.6, 0.6, 0.6},
-    ["GhostTextColor2"] = {0.6, 0.6, 0.6},
-}
+module.colors = {}
 
 local keybindingWidth = math.floor(module.w/200)
 
@@ -63,6 +57,7 @@ function module.passKeyToKeybinds(key)
                 end
             else
                 module.curKeybind = module.curKeybind[key].keybindings
+                module.lastKeybindings = module.curKeybind
             end
         end
     end
@@ -72,6 +67,13 @@ function module.passKeyToOpenKeybinds(key)
     if key == "space" and love.keyboard.isDown("lshift") or key == "lshift" and love.keyboard.isDown("space") then
         if module.curKeybind == nil then
             module.curKeybind = module.keybindings
+        else
+            module.curKeybind = nil
+        end
+    end
+    if key == "space" and love.keyboard.isDown("lctrl") or key == "lctrl" and love.keyboard.isDown("space") then
+        if module.curKeybind == nil then
+            module.curKeybind = module.lastKeybindings
         else
             module.curKeybind = nil
         end

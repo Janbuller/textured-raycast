@@ -28,6 +28,7 @@ function MyKey:onReciveText(text)
         ["GridBorder"] = {1, 1, 1},
         ["GridBackground"] = {0.6, 0.6, 0.6},
         ["AllBackground"] = {0, 0, 0},
+        ["ImageFolderColor"] = {0.6, 0.6, 0.6},
     }
 end
 

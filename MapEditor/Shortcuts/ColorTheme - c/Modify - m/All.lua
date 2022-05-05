@@ -53,6 +53,8 @@ function MyKey:genDic1()
     local colors, selected = self.handler.keybindings["c"].keybindings["s"]:getRelevant()
     self.dicToPass = {}
     
+    local keys = {}
+    
     local i = 1
     for key, color in pairs(colors) do
         table.insert(self.dicToPass, {tostring(i), key})
@@ -64,8 +66,17 @@ function MyKey:genDic2()
     local colors, selected = self.handler.keybindings["c"].keybindings["s"]:getRelevant()
     self.dicToPass = {}
 
+    local keys = {}
+
     for key, color in pairs(colors[palletToModify]) do
-        table.insert(self.dicToPass, {string.lower(string.sub(key, 1, 1)), key})
+        local actualKey = string.lower(string.sub(key, 1, 1))
+        if keys[actualKey] then
+            keys[actualKey] = keys[actualKey] + 1
+        else
+            keys[actualKey] = 1
+        end
+        actualKey = actualKey..keys[actualKey]
+        table.insert(self.dicToPass, {actualKey, key})
     end
 end
 
