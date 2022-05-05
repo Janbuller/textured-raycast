@@ -23,7 +23,5 @@ void main(void)
       aPosScale.y *= yRatio;
     }
 
-
-
     gl_Position = vec4(aPosScale, 1.0);
 }
