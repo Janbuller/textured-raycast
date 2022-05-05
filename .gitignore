@@ -627,3 +627,5 @@ flycheck_*.el
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/emacs,visualstudio,csharp,dotnetcore
+#
+*SC.conf
