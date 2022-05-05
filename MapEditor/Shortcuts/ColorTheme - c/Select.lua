@@ -16,6 +16,9 @@ local colors = {
         ["KeybindColor"] = {0.7, 0.2, 0.7},
         ["GhostTextColor1"] = {0.6, 0.6, 0.6},
         ["GhostTextColor2"] = {0.6, 0.6, 0.6},
+        ["GridBorder"] = {1, 1, 1},
+        ["GridBackground"] = {0.6, 0.6, 0.6},
+        ["AllBackground"] = {0, 0, 0},
     }
 }
 

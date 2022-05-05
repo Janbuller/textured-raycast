@@ -125,11 +125,12 @@ function love.textinput(t)
 end
 
 function love.draw()
+    love.graphics.setBackgroundColor(SCMan.colors["AllBackground"])
     -- layer of the grid
     local grid = grid[gridLayer]
 
     -- since we scale a lot, the lines will need to be reaaal small
-    love.graphics.setLineWidth(0.02)
+    love.graphics.setLineWidth(1/scale)
 
     -- get mouse position
     local mX, mY = love.mouse.getPosition()
@@ -149,15 +150,15 @@ function love.draw()
         for y = -gH/2+1,gH/2 do
             local thisFile = grid[x+gW/2][y+gH/2]
             if thisFile[2][1] == "" then
-                love.graphics.setColor(0.6, 0.6, 0.6)
+                love.graphics.setColor(SCMan.colors["GridBackground"])
                 love.graphics.rectangle("fill", x, y, 1, 1)
             elseif thisFile[2][1] ~= "" then
                 local thisImg = folders[thisFile[2][1]][thisFile[2][2]]
                 
-                love.graphics.setColor(1, 1, 1)
+                love.graphics.setColor(SCMan.colors["GridBorder"])
                 love.graphics.draw(thisImg[1], x, y, 0, 1/thisImg[1]:getWidth(), 1/thisImg[1]:getHeight())
             end
-            love.graphics.setColor(1, 1, 1)
+            love.graphics.setColor(SCMan.colors["GridBorder"])
             love.graphics.rectangle("line", x, y, 1, 1)
         end
     end
@@ -251,9 +252,7 @@ function love.draw()
 end
 
 function getMouseWorldPos()
-    -- get mouse position
     local mX, mY = love.mouse.getPosition()
-    -- do this for making screen drag work
 
     return transform:inverseTransformPoint(mX, mY)
 end
