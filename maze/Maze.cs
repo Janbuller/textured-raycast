@@ -16,10 +16,10 @@ namespace textured_raycast.maze
 
 	public static bool StartGame()
         {
-            World.ce =    new ConsoleEngine(World.WindowSize.Width, World.WindowSize.Height, "very dumb g̶a̶m̶e̶");
-            GameBuffer =  new ConsoleBuffer(World.WindowSize.Width, World.WindowSize.Height);
+            World.ce    = new ConsoleEngine(World.WindowSize.Width, World.WindowSize.Height, "very dumb g̶a̶m̶e̶");
+            GameBuffer  = new ConsoleBuffer(World.WindowSize.Width, World.WindowSize.Height);
             FightBuffer = new ConsoleBuffer(World.WindowSize.Width, World.WindowSize.Height);
-            UIBuffer =    new ConsoleBuffer(World.WindowSize.Width, World.WindowSize.Height);
+            UIBuffer    = new ConsoleBuffer(World.WindowSize.Width, World.WindowSize.Height);
 
             Console.Clear();
             DrawScreen();

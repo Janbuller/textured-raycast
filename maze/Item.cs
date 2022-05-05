@@ -53,13 +53,14 @@ namespace textured_raycast.maze
             {42,  "img/items/bismuthsword.ppm"},
             {43,  "img/items/food_apple.ppm"},
             {44,  "img/items/food_banana.ppm"},
-
             {45,  "img/items/food_burger.ppm"},
             {46,  "img/items/food_cherries.ppm"},
             {47,  "img/items/food_kiwi.ppm"},
             {48,  "img/items/food_orange.ppm"},
             {49,  "img/items/food_pear.ppm"},
             {50,  "img/items/food_strawberry.ppm"},
+
+            {51,  "img/items/woodshield.ppm"},
         };
 
 

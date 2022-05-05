@@ -84,8 +84,8 @@ namespace textured_raycast.maze
             maps = new Dictionary<int, string>()
             {
                 {-1, "maps/fightMap.map"},
-                {0, "maps/StartingCave.map"},
-                {1, "maps/TheHolyLands.map"},
+                {1, "maps/StartingCave.map"},
+                {0, "maps/TheHolyLands.map"},
             };
 
             resetPlrPos();
