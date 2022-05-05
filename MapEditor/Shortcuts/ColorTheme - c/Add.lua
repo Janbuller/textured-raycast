@@ -11,25 +11,14 @@ function MyKey:onActivate()
 end
 
 function MyKey:onReciveText(text)
-    local colors, selected = self.handler.keybindings["c"].keybindings["s"]:getRelevant()
+    local colors, selected, default = self.handler.keybindings["c"].keybindings["s"]:getRelevant()
 
     if colors[text] then
         self:startText(text .. " is already taken", "What to call the new theme?")
         return
     end
 
-    colors[text] = {
-        ["BackgroundColor"] = {0.2, 0.2, 0.2},
-        ["TextColor"] = {1, 1, 1},
-        ["FolderColor"] = {0.6, 0.8, 0.9},
-        ["KeybindColor"] = {0.7, 0.2, 0.7},
-        ["GhostTextColor1"] = {0.6, 0.6, 0.6},
-        ["GhostTextColor2"] = {0.6, 0.6, 0.6},
-        ["GridBorder"] = {1, 1, 1},
-        ["GridBackground"] = {0.6, 0.6, 0.6},
-        ["AllBackground"] = {0, 0, 0},
-        ["ImageFolderColor"] = {0.6, 0.6, 0.6},
-    }
+    colors[text] = default
 end
 
 return MyKey

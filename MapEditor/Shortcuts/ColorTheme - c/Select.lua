@@ -7,21 +7,22 @@ MyKey.key = "s"
 
 MyKey.dicToPass = {}
 
-local selected = "Default"
-local colors = {
-    ["Default"] = {
-        ["BackgroundColor"] = {0.2, 0.2, 0.2},
-        ["TextColor"] = {1, 1, 1},
-        ["FolderColor"] = {0.6, 0.8, 0.9},
-        ["KeybindColor"] = {0.7, 0.2, 0.7},
-        ["GhostTextColor1"] = {0.6, 0.6, 0.6},
-        ["GhostTextColor2"] = {0.6, 0.6, 0.6},
-        ["GridBorder"] = {1, 1, 1},
-        ["GridBackground"] = {0.6, 0.6, 0.6},
-        ["AllBackground"] = {0, 0, 0},
-        ["ImageFolderColor"] = {0.6, 0.6, 0.6},
-    }
+local defaultColors = {
+    ["BackgroundColor"] = {0.2, 0.2, 0.2},
+    ["TextColor"] = {1, 1, 1},
+    ["FolderColor"] = {0.6, 0.8, 0.9},
+    ["KeybindColor"] = {0.7, 0.2, 0.7},
+    ["GhostTextColor1"] = {0.6, 0.6, 0.6},
+    ["GhostTextColor2"] = {0.6, 0.6, 0.6},
+    ["GridBorder"] = {1, 1, 1},
+    ["GridBackground"] = {0.6, 0.6, 0.6},
+    ["AllBackground"] = {0, 0, 0},
+    ["ImageFolderColor"] = {0.6, 0.6, 0.6},
+    ["ImageFolderText"] = {0, 0, 0},
 }
+
+local selected = "Default"
+local colors = {}
 
 function MyKey:onActivate()
     self:genDic()
@@ -50,15 +51,28 @@ function MyKey:loadString(v)
     colors = decoded[1]
     selected = decoded[2]
 
+    for _, pallet in pairs(colors) do
+        for color, val in pairs(defaultColors) do
+            if not pallet[color] then
+                pallet[color] = val
+            end
+        end
+    end
+
     self.handler.colors = colors[selected]
 end
 
+
+
 function MyKey:saveString()
+    if #colors == 0 then
+        colors[selected] = defaultColors
+    end
     return json.encode({colors, selected})
 end
 
 function MyKey:getRelevant()
-    return colors, selected
+    return colors, selected, defaultColors
 end
 
 return MyKey
