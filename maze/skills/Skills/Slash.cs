@@ -7,6 +7,7 @@ namespace textured_raycast.maze.skills.Skills
         public Slash(int id, int price, int[] requiredSkills) : base(id, price, requiredSkills)
         {
 	        name = "Slash";
+            Desc = "Learn to slash bro";
 	        TexID = 1;
             price = 1;
 
@@ -15,7 +16,7 @@ namespace textured_raycast.maze.skills.Skills
 
         public void Activate()
         {
-            World.fight.hp -= World.player.dam;
+            World.fight.hp -= World.player.Dam;
         }
     }
 }

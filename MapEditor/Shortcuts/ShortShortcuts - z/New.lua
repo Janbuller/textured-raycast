@@ -7,6 +7,7 @@ MyKey.key = "n"
 local key = ""
 
 function MyKey:onActivate()
+    key = ""
     self:startText("", "What key to use?", true)
 end
 

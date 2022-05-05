@@ -85,7 +85,7 @@ namespace textured_raycast.maze
         {
             if (giveHP > 0)
             {
-                World.player.actualHp = Math.Min(World.player.hp, World.player.actualHp + giveHP);
+                World.player.actualHp = Math.Min(World.player.Hp, World.player.actualHp + giveHP);
                 return true;
             }
             return false;
@@ -94,7 +94,7 @@ namespace textured_raycast.maze
         public virtual void onEquip()
         {
             World.player.hp += addHP;
-            World.player.actualHp = Math.Min(Math.Max(World.player.actualHp + addHP, 1), World.player.hp);
+            World.player.actualHp = Math.Min(Math.Max(World.player.actualHp + addHP, 1), World.player.Hp);
             World.player.dam += addDAM;
             World.player.mag += addMAG;
         }
@@ -102,7 +102,7 @@ namespace textured_raycast.maze
         public virtual void onUnEquip()
         {
             World.player.hp -= addHP;
-            World.player.actualHp = Math.Min(Math.Max(World.player.actualHp - addHP, 1), World.player.hp);
+            World.player.actualHp = Math.Min(Math.Max(World.player.actualHp - addHP, 1), World.player.Hp);
             World.player.dam -= addDAM;
             World.player.mag -= addMAG;
         }

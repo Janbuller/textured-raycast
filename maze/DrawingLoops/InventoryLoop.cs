@@ -253,15 +253,15 @@ namespace textured_raycast.maze.DrawingLoops
 
 
 	    // Max Health
-	    DrawBar(ref UIHolder, new Vector2i(17, 59), new Vector2i(36, 3), new TexColor(0, 255, 0), new TexColor(50, 0, 50), World.player.hp);
+	    DrawBar(ref UIHolder, new Vector2i(17, 59), new Vector2i(36, 3), new TexColor(0, 255, 0), new TexColor(50, 0, 50), World.player.Hp);
 	    // Actual Health
             DrawBar(ref UIHolder, new Vector2i(17, 62), new Vector2i(36, 2), new TexColor(0, 155, 0), new TexColor(50, 0, 50), (int)World.player.actualHp);
 
 	    // Damage
-            DrawBar(ref UIHolder, new Vector2i(17, 65), new Vector2i(36, 5), new TexColor(255, 0, 0), new TexColor(0, 50, 50), World.player.dam);
+            DrawBar(ref UIHolder, new Vector2i(17, 65), new Vector2i(36, 5), new TexColor(255, 0, 0), new TexColor(0, 50, 50), World.player.Dam);
 
 	    // Magic
-            DrawBar(ref UIHolder, new Vector2i(17, 72), new Vector2i(36, 5), new TexColor(0, 0, 255), new TexColor(50, 50, 0), World.player.mag);
+            DrawBar(ref UIHolder, new Vector2i(17, 72), new Vector2i(36, 5), new TexColor(0, 0, 255), new TexColor(50, 50, 0), World.player.Mag);
 
             for (int i = 0; i < 3; i++)
                 if (World.player.equippedSkills[i] != -1)

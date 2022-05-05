@@ -94,7 +94,7 @@ namespace textured_raycast.maze.Fight
             buffer.DrawBox(59, 73, 60, 6, new TexColor(0, 0, 0));
 
             buffer.DrawBox(2, 2, (int)(58 * (hp / maxHp)), 4, new TexColor(0, 255, 0));
-            buffer.DrawBox(60, 74, (int)(58 * (World.player.actualHp / World.player.hp)), 4, new TexColor(0, 255, 0));
+            buffer.DrawBox(60, 74, (int)(58 * (World.player.actualHp / World.player.Hp)), 4, new TexColor(0, 255, 0));
 
             for (int i = 0; i < 3; i++)
             {

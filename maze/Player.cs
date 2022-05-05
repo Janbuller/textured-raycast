@@ -19,6 +19,26 @@ namespace textured_raycast.maze
         public int dam = 2;
         public int hp = 10;
         public int mag = 2;
+        public int Dam
+        {
+            get { return dam * (100 + addPPhys) / 100; } // apply dam %
+            set { dam = value; }
+        }
+        public int Hp
+        {
+            get { return hp; }
+            set { hp = value; }
+        }
+        public int Mag
+        {
+            get { return mag * (100 + addPMag) / 100; } // apply mag %
+            set { mag = value; }
+        }
+
+        public int addPLifeSteal = 0;
+        public int addPMag = 0;
+        public int addPPhys = 0;
+
 
         public float money = 0;
 
@@ -46,7 +66,7 @@ namespace textured_raycast.maze
 
         public void reset()
         {
-            actualHp = hp;
+            actualHp = Hp;
             xp = 0;
         }
 
@@ -143,7 +163,7 @@ namespace textured_raycast.maze
 
         public int lvl = 1;
         public float xp = 0;
-        public int skillPoints = 1;
+        public int skillPoints = 100;
         public List<int> UnlockedSkills = new List<int>() {};
 
         public int[] equippedSkills =

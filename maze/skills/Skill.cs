@@ -10,6 +10,8 @@ namespace textured_raycast.maze.skills
         public string name;
         public int TexID;
 
+        public string Desc;
+
         public int price;
         public int[] requiredSkills;
 
@@ -41,11 +43,19 @@ namespace textured_raycast.maze.skills
                     {
                         allOwned = false;
                     }
-                }
+                }   
 
                 if (!allOwned)
                     return;
             }
+
+            if (this is IPassiveSkill)
+            {
+                World.player.addPMag += (this as IPassiveSkill).getMagP();
+                World.player.addPPhys += (this as IPassiveSkill).getStrP();
+            }
+            if (this is IPassiveSkillLS)
+                World.player.addPLifeSteal += (this as IPassiveSkillLS).lifeSteal();
 
             World.player.skillPoints -= price;
             World.player.UnlockedSkills.Add(this.id);
@@ -97,22 +107,22 @@ namespace textured_raycast.maze.skills
             {1,  new Slash(1,  2, new int[]{2, 10})},
             {2,  new Slash(2,  2, new int[]{5})},
             {3,  new Slash(3,  2, new int[]{2, 14})},
-            {4,  new Slash(4,  2, new int[]{7})},
-            {5,  new Slash(5,  2, new int[]{12})},
-            {6,  new Slash(6,  2, new int[]{17})},
-            {7,  new Slash(7,  2, new int[]{8})},
+            {4,  new Phys50(4,  2, new int[]{7})},
+            {5,  new LS10(5,  2, new int[]{12})},
+            {6,  new Mag50(6,  2, new int[]{17})},
+            {7,  new Phys40(7,  2, new int[]{8})},
             {8,  new Slash(8,  2, new int[]{9})},
-            {9,  new Slash(9,  2, new int[]{10})},
-            {10, new Slash(10, 2, new int[]{11})},
-            {11, new Slash(11, 2, new int[]{12})},
+            {9,  new Phys30(9,  2, new int[]{10})},
+            {10, new Phys20(10, 2, new int[]{11})},
+            {11, new Phys10(11, 2, new int[]{12})},
             {12, new Slash(12, 1, null)},
-            {13, new Slash(13, 2, new int[]{12})},
-            {14, new Slash(14, 2, new int[]{13})},
-            {15, new Slash(15, 2, new int[]{14})},
-            {16, new Slash(16, 2, new int[]{15})},
-            {17, new Slash(17, 2, new int[]{16})},
-            {18, new Slash(18, 2, new int[]{7})},
-            {19, new Slash(19, 2, new int[]{12})},
+            {13, new Mag10(13, 2, new int[]{12})},
+            {14, new Mag20(14, 2, new int[]{13})},
+            {15, new Mag30(15, 2, new int[]{14})},
+            {16, new Mag40(16, 2, new int[]{15})},
+            {17, new Phys50(17, 2, new int[]{16})},
+            {18, new LS10(18, 2, new int[]{7})},
+            {19, new Mag50(19, 2, new int[]{12})},
             {20, new Slash(20, 2, new int[]{17})},
             {21, new Slash(21, 2, new int[]{22, 10})},
             {22, new Slash(22, 2, new int[]{19})},
