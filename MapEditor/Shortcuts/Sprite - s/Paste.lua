@@ -7,8 +7,7 @@ MyKey.key = "p"
 function MyKey:onActivate()
     local cloneSave = self.handler.keybindings["s"].keybindings["c"]:getRelevant()
 
-    local mx, my = love.mouse.getPosition()
-    local px, py = ((mx-w/2-gridOffsetX)/scale), ((my-h/2-gridOffsetY)/scale)
+    local px, py = getMouseWorldPos()
 
     if cloneSave[1] then
         if gridActive then

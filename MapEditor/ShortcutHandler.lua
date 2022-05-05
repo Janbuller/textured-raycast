@@ -57,7 +57,7 @@ function module.passKeyToKeybinds(key)
                 local activeKeybind = module.curKeybind[key]
                 module.curKeybind = nil
                 activeKeybind:onActivate()
-                module.lastKeybind = activeKeybind:onActivate()
+                module.lastKeybind = activeKeybind
                 if activeKeybind.postOnActivate ~= nil then
                     activeKeybind:postOnActivate()
                 end
@@ -292,8 +292,8 @@ function module.getKeysFromDir(path)
             keybind.handler = module
             keybindings[keybind.key] = keybind
         else
-            local key = string.sub(file, #file, #file)
-            local name = string.sub(file, 0, #file-4)
+            local key = string.match(file, " %- (.*)")
+            local name = string.match(file, "(.-) %- ")
             keybindings[key] = {name = name, keybindings = module.getKeysFromDir(path.."/"..file)}
         end
     end

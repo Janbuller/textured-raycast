@@ -43,8 +43,7 @@ function Dropdown:startText(StartText, Message, ignoreNextKey)
 
             textbox()
             
-            if self.handler.writingTo == nil then
-                print("a")
+            if self.handler.writingTo ~= self then
                 self.handler.txtDraw = textbox
                 textbox = nil
             end

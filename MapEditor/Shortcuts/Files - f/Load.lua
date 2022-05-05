@@ -14,7 +14,6 @@ end
 function MyKey:onReciveText(text)
     if self:contains(text) then
         loadFile(text)
-        print("a")
         return
     end
     self:startText(text, "What map to load?", true)
@@ -60,7 +59,6 @@ function MyKey:findFiles()
 end
 
 function loadFile(loadFileName)
-    print(loadFileName)
     fileName = loadFileName
     local f = io.open(getPath()..fileName..".map", "r")
     local lines = {}
