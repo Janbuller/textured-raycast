@@ -1,13 +1,13 @@
 ﻿namespace textured_raycast.maze.Items
 {
-    class Ruby_Ring : Item
+    class Iron_Ring : Item
     {
-        public Ruby_Ring()
+        public Iron_Ring()
         {
-            name = "Ruby Ring";
-            addMAG = 24;
+            name = "Iron Ring";
+            addMAG = 6;
 
-            imageID = 1;
+            imageID = 57;
 
             tags[EquipSlots.Accessory1] = true;
             tags[EquipSlots.Accessory2] = true;

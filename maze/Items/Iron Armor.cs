@@ -5,7 +5,7 @@
         public Iron_Armor()
         {
             name = "Iron Armor";
-            addHP = 5;
+            addHP = 30;
 
             imageID = 2;
 

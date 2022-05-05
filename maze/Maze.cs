@@ -47,7 +47,7 @@ namespace textured_raycast.maze
                     case States.Skills:
                         SkillsLoop.SkillsLoopIter(ref GameBuffer, ref UIBuffer);
                         break;
-		            case States.Settings:
+		    case States.Settings:
                         if (usingGL)
                             MainGL.MainStop();
 
