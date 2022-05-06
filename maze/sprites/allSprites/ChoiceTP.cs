@@ -76,6 +76,9 @@ namespace textured_raycast.maze.sprites.allSprites
 
                 World.ce.DrawConBuffer(buffer);
                 World.ce.SwapBuffers();
+
+		if(InputManager.GetKey(Keys.K_ESC) == KeyState.KEY_DOWN)
+                    selected = 0;
             }
         }
 
