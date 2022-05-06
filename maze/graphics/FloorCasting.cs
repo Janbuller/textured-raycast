@@ -56,7 +56,7 @@ namespace textured_raycast.maze.graphics
                 Vector2d floor = World.plrPos + (new Vector2d(lineDist, lineDist) * rayDirLeft);
 
                 for(int x = 0; x < winWidth; x++) {
-                    if(lights.Count() > 0) {
+                    if(lights.Count() > 0 || World.player.HoldsLight) {
                         lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, floor);
                         mixedLight = LightDistHelpers.MixLightDist(lightDists);
                     }
