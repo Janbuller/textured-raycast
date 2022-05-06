@@ -1,13 +1,13 @@
 ﻿namespace textured_raycast.maze.Items
 {
-    class Ruby_Ring : Item
+    class Holy_Cross : Item
     {
-        public Ruby_Ring()
+        public Holy_Cross()
         {
-            name = "Ruby Ring";
-            addMAG = 24;
+            name = "Holy Cross";
+            addMAG = 28;
 
-            imageID = 1;
+            imageID = 60;
 
             tags[EquipSlots.Accessory1] = true;
             tags[EquipSlots.Accessory2] = true;

@@ -26,7 +26,9 @@ namespace textured_raycast.maze.lights
         }
 
         public static LightDist[] RoofLightArrayToDistArray(ILight[] lights, Vector2d toPos) {
-            LightDist[] lightDists = new LightDist[lights.Count()];
+            bool PlayerLight = World.player.HoldsLight;
+
+            LightDist[] lightDists = new LightDist[lights.Count() + Convert.ToInt32(PlayerLight)];
 
             // I tried using a Parallel.For loop, but the overhead of starting
             // threads actually made it slower.
@@ -40,6 +42,16 @@ namespace textured_raycast.maze.lights
 		    lights[i].GetAttenuationLinear(),
 		    lights[i].GetAttenuationQuadratic()
                 );
+            }
+
+	    if(PlayerLight) {
+                lightDists[lights.Count()] = new LightDist(
+		    World.plrPos.DistTo(toPos),
+		    new TexColor(255, 120, 0),
+		    500,
+		    35,
+		    44
+		);
             }
 
             return lightDists;

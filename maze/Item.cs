@@ -53,13 +53,24 @@ namespace textured_raycast.maze
             {42,  "img/items/bismuthsword.ppm"},
             {43,  "img/items/food_apple.ppm"},
             {44,  "img/items/food_banana.ppm"},
-
             {45,  "img/items/food_burger.ppm"},
             {46,  "img/items/food_cherries.ppm"},
             {47,  "img/items/food_kiwi.ppm"},
             {48,  "img/items/food_orange.ppm"},
             {49,  "img/items/food_pear.ppm"},
             {50,  "img/items/food_strawberry.ppm"},
+
+            {51,  "img/items/woodshield.ppm"},
+            {52,  "img/items/woodshieldinset.ppm"},
+            {53,  "img/items/shield1.ppm"},
+            {54,  "img/items/shield2.ppm"},
+            {55,  "img/items/woodhelmet.ppm"},
+            {56,  "img/items/woodring.ppm"},
+            {57,  "img/items/metalring.ppm"},
+            {58,  "img/items/goldring.ppm"},
+            {59,  "img/items/crossnecklace.ppm"},
+            {60,  "img/items/cross.ppm"},
+            {61,  "img/items/torch.ppm"},
         };
 
 
@@ -80,6 +91,7 @@ namespace textured_raycast.maze
         public int addDAM = 0;
         public int addMAG = 0;
         public int giveHP = 0;
+	public bool light = false;
 
         public virtual bool consume()
         {

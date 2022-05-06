@@ -167,8 +167,8 @@ namespace textured_raycast.maze
             float sectionHeight = (float)tex.height / lineHeight;
             float texPos = (startY - Height / 2 + lineHeight / 2) * sectionHeight;
 
-            startY -= (int)World.plrBob;
-            endY   -= (int)World.plrBob;
+            startY -= (int)World.plrBob;// * (64.0f/lineHeight));
+	    endY   -= (int)World.plrBob;// * (64.0f/lineHeight));
 
             if (startY < 0)
             {

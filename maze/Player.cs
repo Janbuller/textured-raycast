@@ -46,12 +46,12 @@ namespace textured_raycast.maze
 
         public Dictionary<EquipSlots, Item> equipped = new Dictionary<EquipSlots, Item>()
         {
-            {EquipSlots.Head, null},
+            {EquipSlots.Head,       null},
             {EquipSlots.Accessory1, null},
             {EquipSlots.Accessory2, null},
-            {EquipSlots.MainHand, null},
-            {EquipSlots.OffHand, null},
-            {EquipSlots.Torso, null},
+            {EquipSlots.MainHand,   null},
+            {EquipSlots.OffHand,    new Torch()},
+            {EquipSlots.Torso,      null},
         };
 
         public Dictionary<int, EquipSlots> guiToEquipped = new Dictionary<int, EquipSlots>()
@@ -63,6 +63,18 @@ namespace textured_raycast.maze
             {6, EquipSlots.OffHand},
             {5, EquipSlots.Torso},
         };
+
+	public bool HoldsLight {
+	    get {
+		foreach(var item in equipped) {
+		    if(item.Value is null)
+                        continue;
+                    if(item.Value.light)
+                        return true;
+                }
+                return false;
+            }
+	}
 
         public void reset()
         {
@@ -153,7 +165,7 @@ namespace textured_raycast.maze
 
             //{ 43, new Apple()},
             //{ 44, new Banana()},
-            { 45, new Buger()},
+            //{ 45, new Buger()},
             //{ 46, new Cherries()},
             //{ 47, new Kiwi()},
             //{ 48, new Orange()},
