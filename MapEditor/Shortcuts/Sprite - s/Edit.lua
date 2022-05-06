@@ -13,8 +13,8 @@ local IDCorrespondence = {
     ["2"] = {"R(0-255), G(0-255), B(0-255), Intensity(0-100), Linear, Quadratic", "Light"},
     ["3"] = {"Hp AppxDmg VarInDam xpGiven MoneyRecived MoneyVar", "Enemy"},
     ["4"] = {"FirstIndexOfList SecondIndexOfList DialougeMode", "Function sprite, mostly talking"},
-    ["5"] = {"No arguments", "Choice tp"},
-    ["6"] = {"Shop index", "Shop"},
+    ["5"] = {"", "Choice tp"},
+    ["6"] = {"ShopIndex", "Shop"},
     ["7"] = {"IDForItem AmountOfThatItem", "Chest"},
 }
 
