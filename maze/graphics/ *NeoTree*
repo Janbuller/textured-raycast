@@ -1,0 +1,49 @@
+<ogrammeringC/eksamen/textured-raycast/
++ ..
++ MapEditor/
++ Shaders/
++ bin/
++ img/
++ maps/
+- maze/
+  + ButtonList/
+  + DrawingLoops/
+  + Fight/
+  + GUI/
+  + Items/
+  + OpenGL/
+  + Utils/
+  - graphics/
+    FloorCasting.cs
+    Skybox.cs
+    SpriteCasting.cs
+    WallCasting.cs
+  + input/
+  - lights/
+    LightDist.cs
+    RoofLightDistHelpers.cs
+  + math/
+  + online/
+  + resources/
+  + skills/
+  + sprites/
+  + texture/
+  ConsoleBuffer.cs
+  ConsoleEngine.cs
+  Item.cs
+  Map.cs
+  Maze.cs
+  Player.cs
+  Wall.cs
+  World.cs
+  logbog.org
++ obj/
++ problemformulering_programbeskrivelse/
+LICENSE
+Program.cs
+README.md
+logbog.txt
+lovec.exe.lnk
+textured-raycast.csproj
+textured-raycast.sln
+textured-raycast.sln.DotSettings.user
