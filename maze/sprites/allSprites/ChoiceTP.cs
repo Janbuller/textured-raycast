@@ -11,13 +11,11 @@ namespace textured_raycast.maze.sprites.allSprites
     {
         private Dictionary<string, string> strings = new Dictionary<string, string>()
         {
-            {"Castle", "maps/Castle.map"},
-            {"Church", "maps/Church.map"},
-            {"Blacksmith", "maps/Blacksmith.map"},
-            {"Library", "maps/Library.map"},
-            {"Arena", "maps/Arena.map"},
-            {"Market", "maps/Market.map"},
             {"Adventurers Guild", "maps/AG.map"},
+            {"House o the lord", "maps/Church.map"},
+            {"Town Store", "maps/TownStore.map"},
+            {"Blacksmith", "maps/Blacksmith.map"},
+            {"Arena", "maps/Arena.map"},
             {"Back", ""},
         };
 
@@ -69,8 +67,6 @@ namespace textured_raycast.maze.sprites.allSprites
                     else
                     {
                         World.openMapAtStartPos(ResourceManager.getMap("maps/TheHolyLands.map"));
-
-                        World.plrPos = new math.Vector2d(70.5, 31.5);
                     }
 
                     selected = 0;

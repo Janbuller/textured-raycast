@@ -308,7 +308,8 @@ function love.mousepressed(x, y, b)
         end
         my = -2
     elseif b == 3 then -- clone this tile to selected
-        local pointX, pointY = math.floor((x-w/2-gridOffsetX)/scale)+gW/2, math.floor((y-h/2-gridOffsetY)/scale)+gH/2
+        local px, py = getMouseWorldPos()
+        local pointX, pointY = math.floor(px)+gW/2, math.floor(py)+gH/2
         if pointX > 0 and pointX < gW+1 and pointY > 0 and pointY < gH+1 then
             directoryName = grid[gridLayer][pointX][pointY][2][1]
             selected = grid[gridLayer][pointX][pointY][2]

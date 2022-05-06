@@ -22,7 +22,7 @@ namespace textured_raycast.maze
     class World
     {
         public static ConsoleEngine ce;
-	public static Vector2i WindowSize = new Vector2i(120, 80);
+	    public static Vector2i WindowSize = new Vector2i(120, 80);
 
         public static int currentMap = 1;
         private static Dictionary<int, string> maps;
@@ -84,7 +84,8 @@ namespace textured_raycast.maze
             maps = new Dictionary<int, string>()
             {
                 {-1, "maps/fightMap.map"},
-                {0, "maps/StartingCave.map"},
+                {3, "maps/StartingCave.map"},
+                {2, "maps/FirstFight.map"},
                 {1, "maps/TheHolyLands.map"},
             };
 

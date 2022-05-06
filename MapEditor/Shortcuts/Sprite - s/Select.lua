@@ -50,8 +50,8 @@ function MyKey:drawAdditionalUI()
         
         local thisImg = folders[selectedSprite[3][thisIndex][1]][selectedSprite[3][thisIndex][2]]
 
-        love.graphics.setColor(1, 1, 0)
-        love.graphics.draw(thisImg[1], selectedSprite[1]-0.3, selectedSprite[2]-0.3, 0, (0.6/thisImg[1]:getWidth()), (0.6/thisImg[1]:getHeight()))
+        love.graphics.setColor(1, 1, 1, 0.5)
+        love.graphics.draw(thisImg[1], selectedSprite[1]-0.4, selectedSprite[2]-0.4, 0, (0.8/thisImg[1]:getWidth()), (0.8/thisImg[1]:getHeight()))
         
         love.graphics.origin()
         love.graphics.setLineWidth(2)

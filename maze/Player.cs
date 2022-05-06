@@ -67,7 +67,7 @@ namespace textured_raycast.maze
         public void reset()
         {
             actualHp = Hp;
-            xp = 0;
+            xp /= 2;
         }
 
         public void useSkill(int nr)

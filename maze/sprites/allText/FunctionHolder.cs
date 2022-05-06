@@ -62,6 +62,14 @@ namespace textured_raycast.maze.sprites.allText
                     (self) => { World.openMapAtStartPos(World.getMapByID(2)); return false; },
                 }
             },
+            {2,
+                new List<Func<FunctionSprite, bool>> {
+                    (self) => {World.currentMessage = "This is as far as we go"; return true;},
+                    (self) => {World.currentMessage = "Now"; return true;},
+                    (self) => {World.currentMessage = "Go out and prevail"; return true;},
+                    (self) => {World.currentMessage = "Go on"; return false;},
+                }
+            },
             {3,
                 new List<Func<FunctionSprite, bool>> {
                     (self) => {
@@ -78,7 +86,7 @@ namespace textured_raycast.maze.sprites.allText
                                 self.update = () => {};
                             }
                         };
-                        return true; 
+                        return true;
                     },
                 }
             },
