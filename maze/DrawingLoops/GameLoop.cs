@@ -35,7 +35,7 @@ namespace textured_raycast.maze.DrawingLoops
 
             if (InputManager.GetKey(Keys.K_SHIFT) == KeyState.KEY_UP)
             {
-                World.staminaLVL = MathF.Min(World.staminaLVL + (float)World.dt / 4, 1);
+                World.staminaLVL = MathF.Min(World.staminaLVL + (float)World.dt / 4, 1 + MathF.Log10(MathF.Pow(World.player.lvl, 2)));
             }
 
             // make sure it knows what map its on
@@ -86,7 +86,7 @@ namespace textured_raycast.maze.DrawingLoops
             // Draw the stamina bar in the UI Buffer
             for (int i = 0; i < 78; i++)
             {
-                if (World.staminaLVL > (float)i / 78)
+                if (World.staminaLVL > ((float)i / 78) * (1 + MathF.Log10(MathF.Pow(World.player.lvl, 2))))
                 {
                     UIHolder.DrawPixel(new TexColor(0, 155, 0), 117, 1 + i);
                     UIHolder.DrawPixel(new TexColor(0, 155, 0), 118, 1 + i);

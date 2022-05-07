@@ -68,12 +68,12 @@ namespace textured_raycast.maze
         public static void startFight(Sprite sprite)
         {
             state = States.Fighting;
-            fight = new Fight.Fight(sprite as Enemy);
+            fight.initiateNewFight(sprite as Enemy);
+            fight.doFight();
         }
 
         public static void resetPlrPos()
         {
-            curMap = ResourceManager.getMap(maps[currentMap]);
             plrPos = new Vector2d(curMap.playerStartPos);
             plrRot = new Vector2d(curMap.playerStartRot);
             plrPlane = new Vector2d(plrRot.Y, -plrRot.X) * 0.66;
@@ -84,10 +84,12 @@ namespace textured_raycast.maze
             maps = new Dictionary<int, string>()
             {
                 {-1, "maps/fightMap.map"},
-                {3, "maps/StartingCave.map"},
+                {1, "maps/StartingCave.map"},
                 {2, "maps/FirstFight.map"},
-                {1, "maps/TheHolyLands.map"},
+                {3, "maps/TheHolyLands.map"},
             };
+
+            curMap = ResourceManager.getMap(maps[1]);
 
             resetPlrPos();
         }

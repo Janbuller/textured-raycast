@@ -63,7 +63,14 @@ namespace textured_raycast.maze.sprites.allSprites
                 if (InputManager.GetKey(Keys.K_E) == KeyState.KEY_DOWN)
                 {
                     if (selectedVal != "")
+                    {
+                        if (selectedVal == "maps/Blacksmith.map")
+                            selectedVal = "maps/Blacksmith" + World.player.adventureLVL + ".map";
+                        else if (selectedVal == "maps/TownStore.map")
+                            selectedVal = "maps/TownStore" + World.player.adventureLVL + ".map";
+
                         World.openMapAtStartPos(ResourceManager.getMap(selectedVal));
+                    }
                     else
                     {
                         World.openMapAtStartPos(ResourceManager.getMap("maps/TheHolyLands.map"));

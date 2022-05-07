@@ -7,6 +7,7 @@ using textured_raycast.maze.sprites;
 using textured_raycast.maze.sprites.allSprites;
 using textured_raycast.maze.texture;
 using textured_raycast.maze.resources;
+using textured_raycast.maze.input;
 
 namespace textured_raycast.maze.Fight
 {
@@ -15,7 +16,18 @@ namespace textured_raycast.maze.Fight
         string[] textures;
         int mapID = -1;
 
+        public void link(ref ConsoleBuffer game, ref ConsoleBuffer fight, ref ConsoleBuffer UIHolder)
+        {
+            this.game = game;
+            this.fight = fight;
+            this.UIHolder = UIHolder;
+        }
+
+        Random r = new Random();
         Enemy sTF;
+        ConsoleBuffer game;
+        ConsoleBuffer fight;
+        ConsoleBuffer UIHolder;
 
         public float tillFightBegins = 2;
 
@@ -28,7 +40,7 @@ namespace textured_raycast.maze.Fight
         Vector2d startPos;
         Vector2d startPlane;
 
-        public Fight(Enemy spriteToFight)
+        public void initiateNewFight(Enemy spriteToFight)
         {
             sTF = spriteToFight;
 
@@ -36,12 +48,13 @@ namespace textured_raycast.maze.Fight
             maxHp = sTF.hp;
             hp = maxHp;
 
+            sprites = new List<Sprite>();
             sprites.Add(new DefaultSprite(2.35, 2, textures));
         }
 
         public void enemyDoAction()
         {
-            World.player.actualHp--;
+            World.player.actualHp -= (sTF.appDamage + (float)r.Next((int)sTF.damageVar*-1, (int)sTF.damageVar));
 
             if (World.player.actualHp <= 0)
                 plrDead();
@@ -52,6 +65,13 @@ namespace textured_raycast.maze.Fight
             World.state = States.Game;
 
             World.player.xp++;
+
+            if (World.player.xp > (MathF.Pow(1.1f, World.player.lvl) * 100 - 10))
+            {
+                World.player.xp -= (MathF.Pow(1.1f, World.player.lvl) * 100 - 10);
+                World.player.lvl++;
+                World.player.skillPoints++;
+            }
 
             sTF.canInteract = false;
             sTF.doRender = false;
@@ -108,6 +128,43 @@ namespace textured_raycast.maze.Fight
             World.plrRot = startRot;
             World.plrPos = startPos;
             World.plrPlane = startPlane;
+        }
+
+        public bool doFight()
+        {
+            while (World.state == States.Fighting)
+            {
+                World.fight.tillFightBegins -= (float)World.dt;
+
+                if (World.fight.tillFightBegins < 0)
+                {
+                    fight.Clear();
+
+                    if (InputManager.GetKey(Keys.K_1) == KeyState.KEY_DOWN)
+                        World.player.useSkill(0);
+                    if (InputManager.GetKey(Keys.K_2) == KeyState.KEY_DOWN)
+                        World.player.useSkill(1);
+                    if (InputManager.GetKey(Keys.K_3) == KeyState.KEY_DOWN)
+                        World.player.useSkill(2);
+
+                    World.fight.renderFightToBuffer(ref fight);
+
+                    World.ce.DrawConBuffer(fight);
+                    World.ce.SwapBuffers();
+                }
+                else
+                {
+                    UIHolder.Clear();
+                    World.fight.renderFightStartScreenToBuffer(ref UIHolder, World.fight.tillFightBegins / 2 - 0.1f);
+
+                    World.ce.DrawConBuffer(game.mixBuffer(UIHolder));
+                    World.ce.SwapBuffers();
+                }
+            }
+
+            if (World.fight.hp <= 0)
+                return true;
+            return false;
         }
 
         public void renderFightStartScreenToBuffer(ref ConsoleBuffer buffer, float progress)
