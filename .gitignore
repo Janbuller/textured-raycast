@@ -629,3 +629,5 @@ flycheck_*.el
 # End of https://www.toptal.com/developers/gitignore/api/emacs,visualstudio,csharp,dotnetcore
 #
 *SC.conf
+
+*\**

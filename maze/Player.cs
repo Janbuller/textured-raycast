@@ -39,6 +39,13 @@ namespace textured_raycast.maze
         public int addPMag = 0;
         public int addPPhys = 0;
 
+        public int adventureLVL = 0;
+        //1: Bronze
+        //2: Silver
+        //3: Gold
+        //4: Diamond
+        //5: Mythril
+
 
         public float money = 0;
 
@@ -50,7 +57,7 @@ namespace textured_raycast.maze
             {EquipSlots.Accessory1, null},
             {EquipSlots.Accessory2, null},
             {EquipSlots.MainHand,   null},
-            {EquipSlots.OffHand,    new Torch()},
+            {EquipSlots.OffHand,    null},
             {EquipSlots.Torso,      null},
         };
 

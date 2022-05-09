@@ -21,6 +21,9 @@ namespace textured_raycast.maze
             FightBuffer = new ConsoleBuffer(World.WindowSize.Width, World.WindowSize.Height);
             UIBuffer    = new ConsoleBuffer(World.WindowSize.Width, World.WindowSize.Height);
 
+            World.fight = new Fight.Fight();
+            World.fight.link(ref GameBuffer, ref FightBuffer, ref UIBuffer);
+
             Console.Clear();
             DrawScreen();
             StartClientPlayer();
@@ -39,7 +42,7 @@ namespace textured_raycast.maze
                 switch (World.state)
                 {
                     case States.Fighting:
-                        FightLoop.FightLoopIter(ref GameBuffer, ref FightBuffer, ref UIBuffer);
+                        World.state = States.Game; // it is no longer supposed to enter this state while in the main loop, so if it somehow dose, return it.
                         break;
                     case States.Inventory:
                         InventoryLoop.InventoryLoopIter(ref GameBuffer, ref UIBuffer);
@@ -47,7 +50,7 @@ namespace textured_raycast.maze
                     case States.Skills:
                         SkillsLoop.SkillsLoopIter(ref GameBuffer, ref UIBuffer);
                         break;
-		    case States.Settings:
+		            case States.Settings:
                         if (usingGL)
                             MainGL.MainStop();
 

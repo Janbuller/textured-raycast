@@ -97,6 +97,11 @@ namespace textured_raycast.maze.sprites.allSprites
             {0, new Training_Sword()},
             {1, new Apple()},
             {2, new Wooden_Shield()},
+            {3, new Buger()},
+            {4, new Wooden_Helmet()},
+            {5, new Wooden_Ring()},
+            {6, new Wooden_Axe()},
+            {7, new Small_Iron_Sword()},
         };
     }
 }
