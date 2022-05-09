@@ -7,6 +7,7 @@ using textured_raycast.maze.sprites;
 using System.Globalization;
 using textured_raycast.maze.sprites.allSprites;
 using textured_raycast.maze.resources;
+using System.Collections.Concurrent;
 
 namespace textured_raycast.maze
 {
@@ -25,7 +26,6 @@ namespace textured_raycast.maze
         public List<Sprite> sprites = new List<Sprite>();
 
         public Dictionary<int, Vector2d> doorPositions = new Dictionary<int, Vector2d>();
-        public List<int> lightPoitions = new List<int>();
 
         public int floorTexID = 1;
         public int ceilTexID = 1;
@@ -135,24 +135,22 @@ namespace textured_raycast.maze
 
                     if (sprites[sprites.Count - 1].effectID == 1)
                         doorPositions.Add(sprites[sprites.Count - 1].extraEffects[2], sprites[sprites.Count - 1].getPos());
-
-                    if (sprites[sprites.Count - 1].effectID == 2)
-                        lightPoitions.Add(sprites.Count - 1);
                 }
             }
         }
 
         public ILight[] GetLights()
         {
-            List<int> lightIdx = lightPoitions;
-            ILight[] lights = new ILight[lightIdx.Count];
+            List<ILight> lights = new List<ILight>();
 
-            for (int i = 0; i < lightIdx.Count; i++)
+            for (int i = 0; i < sprites.Count; i++)
             {
-                lights[i] = (ILight)sprites[lightIdx[i]];
-            }
+                if (typeof(ILight).IsAssignableFrom(sprites[i].GetType())) {
+		    lights.Add(sprites[i] as ILight);
+		}
+	    }
 
-            return lights;
+            return lights.ToArray();
         }
 
         // Return if specific cell is a wall / should be drawn.
