@@ -1,9 +1,0 @@
-/home/lasse/programming/cpp/emulators/chip-8/
-+ ..
-+ build/
-+ build-clang/
-+ res/
-+ src/
-Camera.cpp
-compile_commands.json
-launch.json
