@@ -27,11 +27,16 @@ namespace textured_raycast.maze.sprites.allSprites
         {
             Map curMap = World.getCurMap();
             pos += vel * World.dt;
-            if(pos.X > curMap.Width || pos.X < 0 || pos.Y > curMap.Height || pos.Y < 0) {
-		// var ListIdx = World.getCurMap().sprites.FindIndex(f => f == this);
-                // World.getCurMap().lightPoitions.Remove(ListIdx);
+
+            bool OutsideMap = pos.X > curMap.Width || pos.X < 0 || pos.Y > curMap.Height || pos.Y < 0;
+            bool IsInWall   = World.getCurMap().IsWall((int)pos.X, (int)pos.Y);
+
+	    bool ShouldBeDeleted = OutsideMap || IsInWall;
+
+            if(ShouldBeDeleted) {
                 World.getCurMap().sprites.Remove(this);
             }
+
         }
 
         public TexColor GetLightColor() {

@@ -21,7 +21,7 @@ namespace textured_raycast.maze.skills.Skills
                 mag *= 2;
             }
 
-            World.fight.poision = mag;
+            World.fight.poison = mag;
         }
     }
 }

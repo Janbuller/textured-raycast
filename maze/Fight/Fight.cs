@@ -37,7 +37,7 @@ namespace textured_raycast.maze.Fight
         public int dodgeStance = 0;
         public int bezerk = 0;
         public bool chargeSpell = false;
-        public int poision = 0;
+        public int poison = 0;
 
         List<Sprite> sprites = new List<Sprite>();
 
@@ -52,6 +52,11 @@ namespace textured_raycast.maze.Fight
             textures = sTF.texture;
             maxHp = sTF.hp;
             hp = maxHp;
+
+	    dodgeStance = 0;
+	    bezerk = 0;
+	    chargeSpell = false;
+            poison = 0;
 
             sprites = new List<Sprite>();
             sprites.Add(new DefaultSprite(2.35, 2, textures));
@@ -87,8 +92,8 @@ namespace textured_raycast.maze.Fight
             if (World.player.actualHp <= 0)
                 plrDead();
 
-            World.fight.hp -= poision;
-            poision = Math.Max(poision, 0);
+            World.fight.hp -= poison;
+            poison = Math.Max(poison, 0);
         }
 
         public void enemyDead()
