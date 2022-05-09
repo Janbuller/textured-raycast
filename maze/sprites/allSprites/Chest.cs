@@ -103,6 +103,8 @@ namespace textured_raycast.maze.sprites.allSprites
             {6, new Wooden_Axe()},
             {7, new Small_Iron_Sword()},
             {8, new Radium_Sword()},
+            {9, new Flint_Scythe()},
+            {10, new Flint_Spear()},
         };
     }
 }

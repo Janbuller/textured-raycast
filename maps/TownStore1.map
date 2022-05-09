@@ -54,4 +54,4 @@ img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 2.5 2.5 img/LightOBJs/HangingLight2.ppm-img/LightOBJs/HangingLight3.ppm-img/LightOBJs/HangingLight1.ppm 2 255 120 0 100 33 20
 5.5 3.5 img/LightOBJs/HangingLight2.ppm-img/LightOBJs/HangingLight3.ppm-img/LightOBJs/HangingLight1.ppm 2 255 120 0 100 33 20
 5.5 1.5 img/LightOBJs/HangingLight2.ppm-img/LightOBJs/HangingLight3.ppm-img/LightOBJs/HangingLight1.ppm 2 255 120 0 100 33 20
-5.5 2.5 img/Humanity/Human1.ppm
+5.5 2.5 img/Humanity/Human1.ppm 6 1

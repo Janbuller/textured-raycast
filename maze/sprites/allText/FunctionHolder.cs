@@ -132,6 +132,25 @@ namespace textured_raycast.maze.sprites.allText
                     (self) => {World.currentMessage = "they are already dead to me anyways"; return false;},
                 }
             },
+            {7, // Blocking iron cave
+                new List<Func<FunctionSprite, bool>> {
+                    (self) => {World.currentMessage = "You may only pass if you are an adventurere"; return true;},
+                    (self) => {
+                        if (World.player.adventureLVL != 0)
+                        {
+                            World.currentMessage = "Oh you are an adventurer my bad";
+                            World.curMap.SetCell(10, 19, "");
+                            return true;
+                        }
+                        else
+                        {
+                            World.currentMessage = "You may only pass if you are an adventurere";
+                            return false;
+                        }
+                    },
+                    (self) => {World.currentMessage = "have a nice day"; return false;},
+                }
+            },
         };
     }
 }
