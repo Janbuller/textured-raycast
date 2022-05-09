@@ -252,23 +252,23 @@ namespace textured_raycast.maze.DrawingLoops
                         UIHolder.DrawTexture(World.player.equipped[World.player.guiToEquipped[i]].getTexture(), invButtons[i].x + 1, invButtons[i].y + 1, new TexColor(0, 0, 0));
 
             // hp
-            GUI.GUI.text(ref UIHolder, World.player.Hp.ToString(), 17, 59, 120);
+            GUI.GUI.text(ref UIHolder, World.player.Hp.ToString(), 17, 60, 120);
 
             // dam
-            GUI.GUI.text(ref UIHolder, World.player.Dam.ToString(), 17, 65, 120);
-
-            // mag
-            GUI.GUI.text(ref UIHolder, World.player.Mag.ToString(), 17, 73, 120);
+            GUI.GUI.text(ref UIHolder, World.player.Dam.ToString(), 17, 66, 120);
 
             // exp
-            GUI.GUI.text(ref UIHolder, World.player.xp.ToString(), 29, 59, 120);
+            GUI.GUI.text(ref UIHolder, World.player.xp.ToString(), 17, 72, 120);
+
+            // mag
+            GUI.GUI.text(ref UIHolder, World.player.Mag.ToString(), 43, 60, 120);
 
             // lvl
-            GUI.GUI.text(ref UIHolder, World.player.lvl.ToString(), 29, 65, 120);
+            GUI.GUI.text(ref UIHolder, World.player.lvl.ToString(), 43, 66, 120);
 
             // xp 
-            UIHolder.DrawBox(new Vector2i(29, 72), new Vector2i(24, 4), new TexColor(120, 120, 120));
-            UIHolder.DrawBox(new Vector2i(29, 72), new Vector2i((int)MathF.Floor(24 * (World.player.xp / (MathF.Pow(1.1f, World.player.lvl) * 100 - 10))), 4), new TexColor(127, 255, 0));
+            UIHolder.DrawBox(new Vector2i(1, 54), new Vector2i(54, 3), new TexColor(120, 120, 120));
+            UIHolder.DrawBox(new Vector2i(1, 54), new Vector2i((int)MathF.Floor(54 * (World.player.xp / (MathF.Pow(1.1f, World.player.lvl) * 100 - 10))), 3), new TexColor(127, 255, 0));
 
             for (int i = 0; i < 3; i++)
                 if (World.player.equippedSkills[i] != -1)
