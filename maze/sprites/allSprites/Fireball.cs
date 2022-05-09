@@ -1,4 +1,5 @@
-﻿using textured_raycast.maze.texture;
+﻿using System;
+using textured_raycast.maze.texture;
 using textured_raycast.maze.math;
 
 namespace textured_raycast.maze.sprites.allSprites
@@ -27,7 +28,9 @@ namespace textured_raycast.maze.sprites.allSprites
             Map curMap = World.getCurMap();
             pos += vel * World.dt;
             if(pos.X > curMap.Width || pos.X < 0 || pos.Y > curMap.Height || pos.Y < 0) {
-
+		// var ListIdx = World.getCurMap().sprites.FindIndex(f => f == this);
+                // World.getCurMap().lightPoitions.Remove(ListIdx);
+                World.getCurMap().sprites.Remove(this);
             }
         }
 

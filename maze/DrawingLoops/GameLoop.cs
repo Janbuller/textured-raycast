@@ -46,26 +46,28 @@ namespace textured_raycast.maze.DrawingLoops
             Sprite spriteToInteract = null;
             double distanceToInteract = 9999;
 
-            foreach (Sprite sprite in map.sprites)
-            {
+            for (int i = 0; i < map.sprites.Count; i++)
+	    {
+                Sprite sprite = map.sprites[i];
                 sprite.Update();
-                sprite.updateAnimation();
 
-                double distance = World.plrPos.DistTo(sprite.getPos());
-                // Console.WriteLine(distance + " : " + sprite.canInteract);
-                if (distance < sprite.interactDistance && distance < distanceToInteract && sprite.canInteract)
-                {
-                    if (sprite.autoInteract)
-                    {
-                        sprite.Activate();
-                    }
-                    else
-                    {
-                        spriteToInteract = sprite;
-                        distanceToInteract = distance;
-                    }
-                }
-            }
+		sprite.updateAnimation();
+		
+		double distance = World.plrPos.DistTo(sprite.getPos());
+		// Console.WriteLine(distance + " : " + sprite.canInteract);
+		if (distance < sprite.interactDistance && distance < distanceToInteract && sprite.canInteract)
+		{
+		    if (sprite.autoInteract)
+		    {
+			sprite.Activate();
+		    }
+		    else
+		    {
+			spriteToInteract = sprite;
+			distanceToInteract = distance;
+		    }
+		}
+	    }
 
             if (spriteToInteract != null)
                 World.interactMessage = spriteToInteract.ActivateMessage();
@@ -175,8 +177,8 @@ namespace textured_raycast.maze.DrawingLoops
             if (InputManager.GetKey(Keys.K_LCTRL) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_RCTRL) == KeyState.KEY_DOWN)
             {
                 // TODO: you may fix this as well, but again, i see no point...
-                //map.sprites.Add(new Fireball(World.plrPos.x, World.plrPos.y, 8, 6, $"100 {(int)(dir.x*1000)} {(int)(dir.y*1000)}"));
-                //map.lightPoitions.Add(map.sprites.Count - 1);
+                map.sprites.Add(new Fireball(World.plrPos.X, World.plrPos.Y, new string[] {"img/skills/fireball.ppm"}, 6, $"100 {(int)(World.plrRot.X*1000)} {(int)(World.plrRot.Y*1000)}"));
+                // map.lightPoitions.Add(map.sprites.Count - 1);
             }
         }
 
