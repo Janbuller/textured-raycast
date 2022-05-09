@@ -31,11 +31,13 @@ namespace textured_raycast.maze.DrawingLoops
         public static void SkillsLoopIter(ref ConsoleBuffer game, ref ConsoleBuffer UIHolder)
         {
             UIHolder.Clear();
-	    UIHolder.Fill(new TexColor(198, 132, 68));
+	        UIHolder.Fill(new TexColor(198, 132, 68));
 
             HandleInput();
 
             DrawSkillTree(ref UIHolder);
+
+            DrawDescBox(ref UIHolder);
 
             DrawSkillMinimap(ref UIHolder, new Vector2i(1, 62));
 
@@ -44,8 +46,18 @@ namespace textured_raycast.maze.DrawingLoops
             World.ce.SwapBuffers();
         }
 
+        private static void DrawDescBox(ref ConsoleBuffer buffer)
+        {
+            int x = 120 - 40 - 2 - 1;
+            int y = 80 - 13 - 2 - 1;
+            buffer.DrawBoxOutlineFilled(new Vector2i(x, y), new Vector2i(42, 15), new TexColor(0, 0, 0), new TexColor(198, 132, 68));
 
-	private static void HandleInput() {
+            int id = (skillButtons[curSkillButton] as SkillPlaceHolder).id;
+            GUI.GUI.text(ref buffer, Skill.Skills[id].Desc, x+2, y+2, 35);
+        }
+
+
+    private static void HandleInput() {
            if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_UP]) == KeyState.KEY_DOWN)
             {
                 curSkillButton += skillButtons[curSkillButton].listOfMovements[0];
@@ -114,7 +126,7 @@ namespace textured_raycast.maze.DrawingLoops
                     0,
                     0,
                     i == curSkillButton ? 255 : 0
-		);
+		        );
 
                 Vector2i offset = Pos + new Vector2i(2, 2);
                 buffer.DrawPixel(curCol, (sb.x / 51) * 2 + offset.X, (sb.y / 51) * 2 + offset.Y);

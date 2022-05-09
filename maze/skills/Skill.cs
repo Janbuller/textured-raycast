@@ -57,6 +57,9 @@ namespace textured_raycast.maze.skills
             if (this is IPassiveSkillLS)
                 World.player.addPLifeSteal += (this as IPassiveSkillLS).lifeSteal();
 
+            if (this is IPassiveSkillDON)
+                World.player.don = true;
+
             World.player.skillPoints -= price;
             World.player.UnlockedSkills.Add(this.id);
         }
@@ -101,12 +104,13 @@ namespace textured_raycast.maze.skills
             {1, "img/skills/tmp-slash-skill.ppm"}
         };
 
+        // the dictionarry that represents all slots in the skill tree
         public static Dictionary<int, Skill> Skills = new Dictionary<int, Skill>()
         {
             {0,  new Slash(0,  2, new int[]{2})},
-            {1,  new Slash(1,  2, new int[]{2, 10})},
-            {2,  new Slash(2,  2, new int[]{5})},
-            {3,  new Slash(3,  2, new int[]{2, 14})},
+            {1,  new Bezerk(1,  2, new int[]{2, 10})},
+            {2,  new DoubleOrNothing(2,  2, new int[]{5})},
+            {3,  new Poison(3,  2, new int[]{2, 14})},
             {4,  new Phys50(4,  2, new int[]{7})},
             {5,  new LS10(5,  2, new int[]{12})},
             {6,  new Mag50(6,  2, new int[]{17})},
@@ -119,14 +123,14 @@ namespace textured_raycast.maze.skills
             {13, new Mag10(13, 2, new int[]{12})},
             {14, new Mag20(14, 2, new int[]{13})},
             {15, new Mag30(15, 2, new int[]{14})},
-            {16, new Mag40(16, 2, new int[]{15})},
-            {17, new Phys50(17, 2, new int[]{16})},
-            {18, new LS10(18, 2, new int[]{7})},
-            {19, new Mag50(19, 2, new int[]{12})},
-            {20, new Slash(20, 2, new int[]{17})},
-            {21, new Slash(21, 2, new int[]{22, 10})},
-            {22, new Slash(22, 2, new int[]{19})},
-            {23, new Slash(23, 2, new int[]{22, 14})},
+            {16, new Slash(16, 2, new int[]{15})},
+            {17, new Mag40(17, 2, new int[]{16})},
+            {18, new Phys50(18, 2, new int[]{7})},
+            {19, new LS10(19, 2, new int[]{12})},
+            {20, new Mag50(20, 2, new int[]{17})},
+            {21, new DodgeStance(21, 2, new int[]{22, 10})},
+            {22, new Both20(22, 2, new int[]{19})},
+            {23, new ChargeSpell(23, 2, new int[]{22, 14})},
             {24, new Slash(24, 2, new int[]{22})},
         };
     }

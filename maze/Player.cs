@@ -39,6 +39,8 @@ namespace textured_raycast.maze
         public int addPMag = 0;
         public int addPPhys = 0;
 
+        public bool don = false; // double or nothing
+
         public int adventureLVL = 0;
         //1: Bronze
         //2: Silver
@@ -49,7 +51,7 @@ namespace textured_raycast.maze
 
         public float money = 0;
 
-        public float actualHp = 2;
+        public float actualHp = 10;
 
         public Dictionary<EquipSlots, Item> equipped = new Dictionary<EquipSlots, Item>()
         {

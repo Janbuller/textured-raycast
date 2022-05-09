@@ -34,6 +34,11 @@ namespace textured_raycast.maze.Fight
         public float hp;
         public float maxHp;
 
+        public int dodgeStance = 0;
+        public int bezerk = 0;
+        public bool chargeSpell = false;
+        public int poision = 0;
+
         List<Sprite> sprites = new List<Sprite>();
 
         Vector2d startRot;
@@ -52,12 +57,38 @@ namespace textured_raycast.maze.Fight
             sprites.Add(new DefaultSprite(2.35, 2, textures));
         }
 
+        public void damMon(int dam)
+        {
+            hp -= dam;
+            World.player.hp += dam * World.player.addPLifeSteal;
+        }
+
         public void enemyDoAction()
         {
-            World.player.actualHp -= (sTF.appDamage + (float)r.Next((int)sTF.damageVar*-1, (int)sTF.damageVar));
+            float dam = (sTF.appDamage + (float)r.Next((int)sTF.damageVar * -1, (int)sTF.damageVar));
+
+            if (dodgeStance != 0)
+            {
+                dodgeStance -= 1;
+                if (r.Next(0, 1) == 1)
+                {
+                    if (World.player.don)
+                    {
+                        if (r.Next(0, 1) == 1)
+                            World.player.actualHp -= dam;
+                    }
+                    else
+                        World.player.actualHp -= dam;
+                }
+            }
+            else
+                World.player.actualHp -= dam;
 
             if (World.player.actualHp <= 0)
                 plrDead();
+
+            World.fight.hp -= poision;
+            poision = Math.Max(poision, 0);
         }
 
         public void enemyDead()
@@ -148,10 +179,15 @@ namespace textured_raycast.maze.Fight
                     if (InputManager.GetKey(Keys.K_3) == KeyState.KEY_DOWN)
                         World.player.useSkill(2);
 
-                    World.fight.renderFightToBuffer(ref fight);
+                    if (World.player.actualHp <= 0)
+                        plrDead(); // check for suicide
+                    else
+                    {
+                        World.fight.renderFightToBuffer(ref fight);
 
-                    World.ce.DrawConBuffer(fight);
-                    World.ce.SwapBuffers();
+                        World.ce.DrawConBuffer(fight);
+                        World.ce.SwapBuffers();
+                    }
                 }
                 else
                 {

@@ -2,14 +2,14 @@ using textured_raycast.maze.resources;
 
 namespace textured_raycast.maze.skills.Skills
 {
-    class Slash : Skill, IActiveSkill
+    class RecklessSlash : Skill, IActiveSkill
     {
-        public Slash(int id, int price, int[] requiredSkills) : base(id, price, requiredSkills)
+        public RecklessSlash(int id, int price, int[] requiredSkills) : base(id, price, requiredSkills)
         {
-            name = "Slash";
-            Desc = "Learn to slash";
+            name = "RecklessSlash";
+            Desc = "Reckless slash";
             TexID = 1;
-            price = 1;
+            price = 0;
         }
 
         public void Activate()
@@ -20,7 +20,9 @@ namespace textured_raycast.maze.skills.Skills
                 World.fight.bezerk -= 1;
                 dam *= 2;
             }
-            World.fight.damMon(dam);
+
+            World.fight.damMon(dam * 2);
+            World.player.hp -= (dam * 2) / 5;
         }
     }
 }
