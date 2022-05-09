@@ -60,7 +60,7 @@ namespace textured_raycast.maze.Fight
         public void damMon(int dam)
         {
             hp -= dam;
-            World.player.actualHp = MathF.Min(dam * (World.player.addPLifeSteal/100), World.player.Hp);
+            World.player.actualHp = MathF.Min(World.player.actualHp + MathF.Ceiling(dam * ((float)World.player.addPLifeSteal / 100f)), World.player.Hp);
         }
 
         public void enemyDoAction()
