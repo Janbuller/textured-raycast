@@ -27,6 +27,12 @@ namespace textured_raycast.maze.sprites.allSprites
                 new shopItem(new Iron_Shield(), 1, 40),
                 new shopItem(new Copper_Shield(), 1, 25),
             },
+            new shopItem[] { // town store 1
+                new shopItem(new Cherries(), 12, 8),
+                new shopItem(new Pear(), 10, 10),
+                new shopItem(new Apple(), 12, 20),
+                new shopItem(new Orange(), 8, 100),
+            },
         };
 
         public Shop(double posX, double posY, string[] texture, int effectID = 0, string whatsLeft = "") : base(posX, posY, texture, effectID, whatsLeft)
