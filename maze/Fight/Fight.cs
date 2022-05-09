@@ -60,7 +60,7 @@ namespace textured_raycast.maze.Fight
         public void damMon(int dam)
         {
             hp -= dam;
-            World.player.hp += dam * World.player.addPLifeSteal;
+            World.player.actualHp += dam * World.player.addPLifeSteal;
         }
 
         public void enemyDoAction()

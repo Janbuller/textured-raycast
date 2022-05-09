@@ -22,7 +22,7 @@ namespace textured_raycast.maze.skills.Skills
             }
 
             World.fight.damMon(dam * 2);
-            World.player.hp -= (dam * 2) / 5;
+            World.player.actualHp -= (dam * 2) / 5;
         }
     }
 }
