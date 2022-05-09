@@ -60,7 +60,7 @@ namespace textured_raycast.maze.Fight
         public void damMon(int dam)
         {
             hp -= dam;
-            World.player.actualHp += dam * World.player.addPLifeSteal;
+            World.player.actualHp = MathF.Min(dam * (World.player.addPLifeSteal/100), World.player.Hp);
         }
 
         public void enemyDoAction()
@@ -98,7 +98,7 @@ namespace textured_raycast.maze.Fight
             World.player.xp += sTF.xpGiven;
             World.player.money += sTF.moneyRecived + r.Next(-((int)sTF.moneyVar), (int)sTF.moneyVar);
 
-            if (World.player.xp > (MathF.Pow(1.1f, World.player.lvl) * 100 - 10))
+            while (World.player.xp > (MathF.Pow(1.1f, World.player.lvl) * 100 - 10))
             {
                 World.player.xp -= (MathF.Pow(1.1f, World.player.lvl) * 100 - 10);
                 World.player.lvl++;
