@@ -235,9 +235,17 @@ namespace textured_raycast.maze
         public void DrawBox(Vector2i Pos, Vector2i Size, TexColor Color) { DrawBox(Pos.X, Pos.Y, Size.Width, Size.Height, Color); }
         public void DrawBox(int xP, int yP, int w, int h, TexColor Color)
         {
-            for (int x = xP; x < xP + w; x++)
-                for (int y = yP; y < yP + h; y++)
-                    DrawPixel(Color, x, y);
+            int invX = 1;
+            int invY = 1;
+
+            if (h < 0)
+                invY = -1;
+            if (w < 0)
+                invX = -1;
+
+            for (int x = 0; x < w*invX; x++)
+                for (int y = 0; y < h*invY; y++)
+                    DrawPixel(Color, xP+x*invX, yP+y*invY);
         }
 	// Draws a box outline:
         public void DrawBoxOutline(Vector2i Pos, Vector2i Size, TexColor Color) { DrawBoxOutline(Pos.X, Pos.Y, Size.Width, Size.Height, Color); }

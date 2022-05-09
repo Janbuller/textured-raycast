@@ -269,6 +269,10 @@ namespace textured_raycast.maze.DrawingLoops
             // xp 
             UIHolder.DrawBox(new Vector2i(1, 54), new Vector2i(54, 3), new TexColor(120, 120, 120));
             UIHolder.DrawBox(new Vector2i(1, 54), new Vector2i((int)MathF.Floor(54 * (World.player.xp / (MathF.Pow(1.1f, World.player.lvl) * 100 - 10))), 3), new TexColor(127, 255, 0));
+            
+            // current hp
+            UIHolder.DrawBox(new Vector2i(38, 18), new Vector2i(4, 35), new TexColor(120, 120, 120));
+            UIHolder.DrawBox(new Vector2i(38, 52), new Vector2i(4, -(int)MathF.Floor(35 * (World.player.actualHp/World.player.Hp))), new TexColor(127, 255, 0));
 
             for (int i = 0; i < 3; i++)
                 if (World.player.equippedSkills[i] != -1)

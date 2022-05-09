@@ -49,7 +49,7 @@ namespace textured_raycast.maze
 
         public float money = 0;
 
-        public float actualHp = 10;
+        public float actualHp = 2;
 
         public Dictionary<EquipSlots, Item> equipped = new Dictionary<EquipSlots, Item>()
         {
