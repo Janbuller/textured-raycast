@@ -139,7 +139,7 @@ namespace textured_raycast.maze.sprites.allText
                         if (World.player.adventureLVL != 0)
                         {
                             World.currentMessage = "Oh you are an adventurer my bad";
-                            World.curMap.SetCell(10, 19, "");
+                            World.curMap.SetCell(40, 18, "");
                             return true;
                         }
                         else

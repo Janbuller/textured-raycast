@@ -28,6 +28,7 @@ namespace textured_raycast.maze
             DrawScreen();
             StartClientPlayer();
 
+
             return RunMainLoop();
         }
 
