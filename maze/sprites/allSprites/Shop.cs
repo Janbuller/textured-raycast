@@ -13,7 +13,20 @@ namespace textured_raycast.maze.sprites.allSprites
     {
         private shopItem[][] shopInvs = new shopItem[][]
         {
-            new shopItem[] { new shopItem(new Iron_Armor(), 0, 999) , new shopItem(new Iron_Broadsword(), 2, 1) }
+            new shopItem[] { // blacksmith 1
+                new shopItem(new Iron_Broadsword(), 1, 50),
+                new shopItem(new Iron_Armor(), 1, 40),
+                new shopItem(new Iron_Helmet(), 1, 30),
+                new shopItem(new Iron_Battleaxe(), 1, 50),
+                new shopItem(new Iron_Axe(), 1, 35),
+                new shopItem(new Iron_Dagger(), 1, 30),
+                new shopItem(new Iron_Knife(), 1, 30),
+                new shopItem(new Iron_Ring(), 1, 30),
+                new shopItem(new Iron_Scythe(), 1, 40),
+                new shopItem(new Iron_Spear(), 1, 35),
+                new shopItem(new Iron_Shield(), 1, 40),
+                new shopItem(new Copper_Shield(), 1, 25),
+            },
         };
 
         public Shop(double posX, double posY, string[] texture, int effectID = 0, string whatsLeft = "") : base(posX, posY, texture, effectID, whatsLeft)
