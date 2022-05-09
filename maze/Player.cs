@@ -99,8 +99,8 @@ namespace textured_raycast.maze
 
                     if (World.fight.hp <= 0)
                         World.fight.enemyDead();
-
-                    World.fight.enemyDoAction();
+                    else
+                        World.fight.enemyDoAction();
                 }
             }
         }

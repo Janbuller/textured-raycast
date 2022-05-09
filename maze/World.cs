@@ -105,7 +105,7 @@ namespace textured_raycast.maze
 
         public static void reloadCurMap()
         {
-            curMap = new Map(curMap.Path);
+            //curMap = new Map(curMap.Path);
         }
 
         public static Map getMapByID(int id)

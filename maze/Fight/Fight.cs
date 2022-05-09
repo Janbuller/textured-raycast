@@ -64,7 +64,8 @@ namespace textured_raycast.maze.Fight
         {
             World.state = States.Game;
 
-            World.player.xp++;
+            World.player.xp += sTF.xpGiven;
+            World.player.money += sTF.moneyRecived + r.Next(-((int)sTF.moneyVar), (int)sTF.moneyVar);
 
             if (World.player.xp > (MathF.Pow(1.1f, World.player.lvl) * 100 - 10))
             {
@@ -164,6 +165,7 @@ namespace textured_raycast.maze.Fight
 
             if (World.fight.hp <= 0)
                 return true;
+
             return false;
         }
 

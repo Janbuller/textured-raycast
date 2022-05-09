@@ -251,17 +251,24 @@ namespace textured_raycast.maze.DrawingLoops
                     if (!(World.player.equipped[World.player.guiToEquipped[i]] is null))
                         UIHolder.DrawTexture(World.player.equipped[World.player.guiToEquipped[i]].getTexture(), invButtons[i].x + 1, invButtons[i].y + 1, new TexColor(0, 0, 0));
 
+            // hp
+            GUI.GUI.text(ref UIHolder, World.player.Hp.ToString(), 17, 59, 120);
 
-	    // Max Health
-	    DrawBar(ref UIHolder, new Vector2i(17, 59), new Vector2i(36, 3), new TexColor(0, 255, 0), new TexColor(50, 0, 50), World.player.Hp);
-	    // Actual Health
-            DrawBar(ref UIHolder, new Vector2i(17, 62), new Vector2i(36, 2), new TexColor(0, 155, 0), new TexColor(50, 0, 50), (int)World.player.actualHp);
+            // dam
+            GUI.GUI.text(ref UIHolder, World.player.Dam.ToString(), 17, 65, 120);
 
-	    // Damage
-            DrawBar(ref UIHolder, new Vector2i(17, 65), new Vector2i(36, 5), new TexColor(255, 0, 0), new TexColor(0, 50, 50), World.player.Dam);
+            // mag
+            GUI.GUI.text(ref UIHolder, World.player.Mag.ToString(), 17, 73, 120);
 
-	    // Magic
-            DrawBar(ref UIHolder, new Vector2i(17, 72), new Vector2i(36, 5), new TexColor(0, 0, 255), new TexColor(50, 50, 0), World.player.Mag);
+            // exp
+            GUI.GUI.text(ref UIHolder, World.player.xp.ToString(), 29, 59, 120);
+
+            // lvl
+            GUI.GUI.text(ref UIHolder, World.player.lvl.ToString(), 29, 65, 120);
+
+            // xp 
+            UIHolder.DrawBox(new Vector2i(29, 72), new Vector2i(24, 4), new TexColor(120, 120, 120));
+            UIHolder.DrawBox(new Vector2i(29, 72), new Vector2i((int)MathF.Floor(24 * (World.player.xp / (MathF.Pow(1.1f, World.player.lvl) * 100 - 10))), 4), new TexColor(127, 255, 0));
 
             for (int i = 0; i < 3; i++)
                 if (World.player.equippedSkills[i] != -1)
