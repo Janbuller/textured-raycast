@@ -81,7 +81,7 @@ namespace textured_raycast.maze.sprites.allText
             },
             {4, // The main adventures branch talk dude (who dosent matter)
                 new List<Func<FunctionSprite, bool>> {
-                    (self) => { World.currentMessage = "Welcome to the adventures guild"; return true; },
+                    (self) => { World.currentMessage = "Welcome to the adventurers guild"; return true; },
                     (self) => {
                         if (World.player.adventureLVL == 0)
                         {
@@ -90,7 +90,7 @@ namespace textured_raycast.maze.sprites.allText
                         }
                         else
                         {
-                            World.currentMessage = "Congratulations on becomming an adventurer";
+                            World.currentMessage = "Congratulations on becoming an adventurer";
                             return true;
                         }
                     },
@@ -99,7 +99,7 @@ namespace textured_raycast.maze.sprites.allText
             },
             {5, // The fight dude (who actually means something)
                 new List<Func<FunctionSprite, bool>> {
-                    (self) => { World.currentMessage = "So you want to test you strength and see if you can become an adventurer"; return true; },
+                    (self) => { World.currentMessage = "So you want to test your strength and see if you can become an adventurer"; return true; },
                     (self) => { World.currentMessage = "Youve got guts well come talk to me when youre ready"; return true; },
                     (self) => {
                         World.state = States.Fighting;
@@ -113,7 +113,7 @@ namespace textured_raycast.maze.sprites.allText
                     },
                     (self) => { World.currentMessage = "Well done"; return true; },
                     (self) => { World.currentMessage = "Here you go you are now a bronze rank adventurer"; World.player.adventureLVL = 1; return true; },
-                    (self) => { World.currentMessage = "Come again when you want the status of a silver adventurere"; return true; },
+                    (self) => { World.currentMessage = "Come again when you want the status of a silver adventurer"; return true; },
                 }
             },
             {6, // Talking slime guide-like thingy
@@ -134,7 +134,7 @@ namespace textured_raycast.maze.sprites.allText
             },
             {7, // Blocking iron cave
                 new List<Func<FunctionSprite, bool>> {
-                    (self) => {World.currentMessage = "You may only pass if you are an adventurere"; return true;},
+                    (self) => {World.currentMessage = "You may only pass if you are an adventurer"; return true;},
                     (self) => {
                         if (World.player.adventureLVL != 0)
                         {
@@ -144,7 +144,7 @@ namespace textured_raycast.maze.sprites.allText
                         }
                         else
                         {
-                            World.currentMessage = "You may only pass if you are an adventurere";
+                            World.currentMessage = "You may only pass if you are an adventurer";
                             return false;
                         }
                     },
