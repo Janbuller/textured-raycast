@@ -81,16 +81,16 @@ namespace textured_raycast.maze.texture
 		    retPixel = new TexColor(0, 0, 0);
                 } else if(mode == GetPixelMode.REPEAT)
 		{
-                    int newX = 0, newY = 0;
+                    int newX = x, newY = y;
 		    while(x < 0)
 			newX += width;
-		    while(x > width)
+		    while(x >= width)
                         newX -= width;
 
 		    while(y < 0)
-			newY += width;
-		    while(y > width)
-                        newY -= width;
+			newY += height;
+		    while(y >= height)
+                        newY -= height;
 
                     retPixel = pixels[newX + newY * width];
                 }
