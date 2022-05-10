@@ -8,7 +8,7 @@ namespace textured_raycast.maze.skills.Skills
         {
             name = "Poison";
             Desc = "magical dot";
-            TexID = 1;
+            TexID = 4;
             price = 10;
         }
 

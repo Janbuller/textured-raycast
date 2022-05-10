@@ -104,7 +104,10 @@ namespace textured_raycast.maze.skills
 
         public static Dictionary<int, string> SkillTextures = new Dictionary<int, string>()
         {
-            {1, "img/skills/tmp-slash-skill.ppm"}
+            {1, "img/skills/tmp-slash-skill.ppm"},
+            {2, "img/skills/fireball.ppm"},
+            {3, "img/skills/lifesteal.ppm"},
+            {4, "img/skills/Poison.ppm"},
         };
 
         // the dictionarry that represents all slots in the skill tree

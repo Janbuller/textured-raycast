@@ -8,7 +8,7 @@ namespace textured_raycast.maze.skills.Skills
         {
             name = "Fireball";
             Desc = "Fireball";
-            TexID = 1;
+            TexID = 2;
             price = 0;
         }
 
