@@ -50,11 +50,14 @@ namespace textured_raycast.maze.sprites.allSprites
             {
                 if (typeof(Enemy) == HitSprite.GetType())
                 {
-                    HitEnemy = true;
-		    World.state = States.Fighting;
-                    World.fight.initiateNewFight(HitSprite as Enemy);
-		    World.fight.hp -= World.player.Mag * 2;
-                    World.fight.doFight();
+                    if (HitSprite.doRender)
+                    {
+                        HitEnemy = true;
+                        World.state = States.Fighting;
+                        World.fight.initiateNewFight(HitSprite as Enemy);
+                        World.fight.damMon(World.player.Mag * 2);
+                        World.fight.doFight();
+                    }
                 }
             }
 
