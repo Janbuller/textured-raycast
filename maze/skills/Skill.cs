@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using textured_raycast.maze.skills.Skills;
 using textured_raycast.maze.texture;
@@ -96,7 +97,9 @@ namespace textured_raycast.maze.skills
         public void assignTo(int assignToNr)
         {
             if (isBought())
+            {
                 World.player.equippedSkills[assignToNr] = id;
+            }
         }
 
         public static Dictionary<int, string> SkillTextures = new Dictionary<int, string>()

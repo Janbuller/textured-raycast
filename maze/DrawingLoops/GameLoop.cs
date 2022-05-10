@@ -1,4 +1,3 @@
-using System;
 using textured_raycast.maze.math;
 using textured_raycast.maze.graphics;
 using textured_raycast.maze.texture;
@@ -11,6 +10,7 @@ using System.Threading.Tasks;
 using textured_raycast.maze.ButtonList;
 using textured_raycast.maze.ButtonList.Buttons.INV;
 using textured_raycast.maze.ButtonList.Buttons.Skills;
+using System;
 
 namespace textured_raycast.maze.DrawingLoops
 {
@@ -174,11 +174,13 @@ namespace textured_raycast.maze.DrawingLoops
                 World.state = States.Paused;
             }
 
-            if (InputManager.GetKey(Keys.K_LCTRL) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_RCTRL) == KeyState.KEY_DOWN)
+            var FireballKey = World.player.FireballKey;
+            if (!(FireballKey is null))
             {
-                // TODO: you may fix this as well, but again, i see no point...
-                map.sprites.Add(new Fireball(World.plrPos.X, World.plrPos.Y, new string[] {"img/skills/fireball.ppm"}, 6, $"100 {(int)(World.plrRot.X*1000)} {(int)(World.plrRot.Y*1000)}"));
-                // map.lightPoitions.Add(map.sprites.Count - 1);
+                if (InputManager.GetKey(FireballKey.Value) == KeyState.KEY_DOWN)
+                {
+                    map.sprites.Add(new Fireball(World.plrPos.X, World.plrPos.Y, new string[] { "img/skills/fireball.ppm" }, 6, $"100 {(int)(World.plrRot.X * 1000)} {(int)(World.plrRot.Y * 1000)}"));
+                }
             }
         }
 

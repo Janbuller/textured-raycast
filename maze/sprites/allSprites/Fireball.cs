@@ -51,7 +51,10 @@ namespace textured_raycast.maze.sprites.allSprites
                 if (typeof(Enemy) == HitSprite.GetType())
                 {
                     HitEnemy = true;
-                    HitSprite.Activate();
+		    World.state = States.Fighting;
+                    World.fight.initiateNewFight(HitSprite as Enemy);
+		    World.fight.hp -= World.player.Mag * 2;
+                    World.fight.doFight();
                 }
             }
 

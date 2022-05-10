@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using textured_raycast.maze.Items;
 using textured_raycast.maze.skills;
+using textured_raycast.maze.input;
+using textured_raycast.maze.skills.Skills;
 
 namespace textured_raycast.maze
 {
@@ -73,17 +76,20 @@ namespace textured_raycast.maze
             {5, EquipSlots.Torso},
         };
 
-	public bool HoldsLight {
-	    get {
-		foreach(var item in equipped) {
-		    if(item.Value is null)
+        public bool HoldsLight
+        {
+            get
+            {
+                foreach (var item in equipped)
+                {
+                    if (item.Value is null)
                         continue;
-                    if(item.Value.light)
+                    if (item.Value.light)
                         return true;
                 }
                 return false;
             }
-	}
+        }
 
         public void reset()
         {
@@ -185,7 +191,7 @@ namespace textured_raycast.maze
         public int lvl = 1;
         public float xp = 0;
         public int skillPoints = 100;
-        public List<int> UnlockedSkills = new List<int>() {};
+        public List<int> UnlockedSkills = new List<int>() { };
 
         public int[] equippedSkills =
         {
@@ -193,5 +199,36 @@ namespace textured_raycast.maze
             -1,
             -1,
         };
+
+        public Keys? FireballKey
+        {
+            get
+            {
+                int? FireballIdx = null;
+                for (int i = 0; i < equippedSkills.Length; i++)
+                {
+                    var CurSkillIdx = equippedSkills[i];
+                    if(CurSkillIdx == -1)
+                        continue;
+                    if (Skill.Skills[CurSkillIdx] is Fireball)
+                    {
+			FireballIdx = i;
+                        break;
+                    }
+                }
+
+                switch(FireballIdx) {
+		    case 0:
+                        return Keys.K_1;
+		    case 1:
+                        return Keys.K_2;
+		    case 2:
+                        return Keys.K_3;
+                }
+
+
+		return null;
+            }
+        }
     }
 }
