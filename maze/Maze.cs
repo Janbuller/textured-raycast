@@ -45,7 +45,7 @@ namespace textured_raycast.maze
                     case States.Fighting:
 			// it is no longer supposed to enter this
 			// state while in the main loop, so if it
-			// somehow dose, return it.
+			// somehow does, return it.
                         World.state = States.Game; 
                         break;
                     case States.Inventory:

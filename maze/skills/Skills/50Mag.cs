@@ -8,7 +8,7 @@ namespace textured_raycast.maze.skills.Skills
         {
             name = "50p mag";
             Desc = "50p Mag";
-            TexID = 1;
+            TexID = 5;
         }
 
         public int getMagP()

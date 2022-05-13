@@ -8,7 +8,7 @@ namespace textured_raycast.maze.skills.Skills
         {
             name = "30p mag";
             Desc = "30p Mag";
-            TexID = 1;
+            TexID = 5;
             price = 8;
         }
 
