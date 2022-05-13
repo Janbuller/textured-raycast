@@ -3,7 +3,7 @@ using System;
 namespace textured_raycast.maze.math
 {
     // Vector 2 double.
-    class Vector2d {
+    public class Vector2d {
         // Holds x and y of vector.
         private double x, y;
 

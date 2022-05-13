@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "textured-raycast", "textured-raycast.csproj", "{6837D949-62DD-4B62-8030-9DF92A326FE3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "textured-raycast", "game\textured-raycast.csproj", "{4F78BC3C-5AC6-46E7-B5D2-16B2C0068D0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{222DB911-AD7C-4B41-B1B3-979963B4A496}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6837D949-62DD-4B62-8030-9DF92A326FE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6837D949-62DD-4B62-8030-9DF92A326FE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6837D949-62DD-4B62-8030-9DF92A326FE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6837D949-62DD-4B62-8030-9DF92A326FE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F78BC3C-5AC6-46E7-B5D2-16B2C0068D0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F78BC3C-5AC6-46E7-B5D2-16B2C0068D0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F78BC3C-5AC6-46E7-B5D2-16B2C0068D0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F78BC3C-5AC6-46E7-B5D2-16B2C0068D0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{222DB911-AD7C-4B41-B1B3-979963B4A496}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{222DB911-AD7C-4B41-B1B3-979963B4A496}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{222DB911-AD7C-4B41-B1B3-979963B4A496}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{222DB911-AD7C-4B41-B1B3-979963B4A496}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

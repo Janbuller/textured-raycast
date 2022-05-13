@@ -1,7 +1,9 @@
+using System;
+
 namespace textured_raycast.maze.math
 {
     // Vector 2 double.
-    class Matrix2x2d {
+    public class Matrix2x2d {
         // Holds x and y of vector.
         public double[] elements = new double[4];
 
@@ -30,6 +32,8 @@ namespace textured_raycast.maze.math
 
             Matrix2x2d invMat = new Matrix2x2d(new double[] { getE(1,1), -getE(1,0),
                                                              -getE(0, 1), getE(0,0)});
+            var res = invMat * determinant;
+
             return invMat * determinant;
         }
 
@@ -50,6 +54,7 @@ namespace textured_raycast.maze.math
         }
 
         public static Vector2d operator *(Vector2d vec, Matrix2x2d mat) {
+            var res = multByVec(vec, mat);
             return multByVec(vec, mat);
 
         }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace textured_raycast.maze.math
 {
     // Vector 2 double.
-    class Vector2i {
+    public class Vector2i {
         // Holds x and y of vector.
         private int x, y;
 
