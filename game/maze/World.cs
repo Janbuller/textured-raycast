@@ -88,7 +88,8 @@ namespace textured_raycast.maze
                 {2, "maps/FirstFight.map"},
                 {1, "maps/TheHolyLands.map"},
                 {4, "maps/IronCave.map"},
-                {5, "maps/IrontCaveSecondLayer.map"},   
+                {5, "maps/IronCaveSecondLayer.map"},
+                {6, "maps/IronCaveBoss.map"},
             };
 
             curMap = ResourceManager.getMap(maps[1]);

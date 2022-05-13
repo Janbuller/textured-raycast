@@ -22,9 +22,9 @@ end
 function getPath()
     local sys = love.system.getOS()
     if sys == "Windows" then
-        return "../bin/Debug/netcoreapp3.1/maps/"
+        return "../game/bin/Debug/netcoreapp3.1/maps/"
     elseif sys == "Linux" then
-        return "../maps/"
+        return "../game/maps/"
     end
 end
 

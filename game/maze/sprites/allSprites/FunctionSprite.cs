@@ -31,12 +31,16 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void Activate()
         {
+            // check if it is not random (1 normal, 2 stay at, 3 random)
             if (extraEffects[2] != 3)
             {
+                // run function
                 bool doChange = FunctionHolder.Functions[extraEffects[0]][extraEffects[1]](this);
 
                 if (extraEffects[2] == 1 && doChange)
                 {
+                    // add 1, and if that makes it hit count, loop
+                    // only if the function that got ran allowed it to
                     extraEffects[1] += 1;
                     if (extraEffects[1] == FunctionHolder.Functions[extraEffects[0]].Count)
                         extraEffects[1] = FunctionHolder.Functions[extraEffects[0]].Count-1;
@@ -44,6 +48,7 @@ namespace textured_raycast.maze.sprites.allSprites
             }
             else
             {
+                // run ranom function from functionholder, of that index
                 Random rnd = new Random();
                 FunctionHolder.Functions[extraEffects[0]][rnd.Next(FunctionHolder.Functions[extraEffects[0]].Count)](this);
             }

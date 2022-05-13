@@ -35,6 +35,7 @@ namespace textured_raycast.maze.sprites.allSprites
             },
         };
 
+        // define it
         public Shop(double posX, double posY, string[] texture, int effectID = 0, string whatsLeft = "") : base(posX, posY, texture, effectID, whatsLeft)
         {
             define(posX, posY, texture, effectID, whatsLeft);
@@ -53,14 +54,17 @@ namespace textured_raycast.maze.sprites.allSprites
             int selected = -1;
             int chosen = 0;
 
+            // start a while loop until you exit the shop
             while (selected == -1)
             {
+                // make up and down / w and s work
                 if (InputManager.GetKey(Keys.K_W) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_UP) == KeyState.KEY_DOWN)
                     chosen = Math.Max(chosen - 1, 0);
                 if (InputManager.GetKey(Keys.K_S) == KeyState.KEY_DOWN || InputManager.GetKey(Keys.K_DOWN) == KeyState.KEY_DOWN)
                     chosen = Math.Min(chosen + 1, shopInvs[extraEffects[0]].Length - 1);
                 if (InputManager.GetKey(Keys.K_E) == KeyState.KEY_DOWN)
                 {
+                    // if you press e, check if you can buy it, if you can, do it
                     if (World.player.money >= shopInvs[extraEffects[0]][chosen].price && shopInvs[extraEffects[0]][chosen].maxSell != 0)
                     {
                         World.player.money -= shopInvs[extraEffects[0]][chosen].price;
@@ -71,14 +75,16 @@ namespace textured_raycast.maze.sprites.allSprites
                     }
                 }
                 if (InputManager.GetKey(Keys.K_ESC) == KeyState.KEY_DOWN)
-                    selected = 0;
+                    selected = 0; // if escape, go out of the loop
 
+                // draw bacground color
                 buffer.Fill(new TexColor(198, 132, 68));
 
+                // set a start position for the shop
                 Vector2i pos = new Vector2i(1, 1);
-
                 pos.Y -= chosen * 16;
                 
+                // loop through all items in the shop, and draw them, then offset position and draw again, undtil no more items
                 foreach (shopItem shopI in shopInvs[extraEffects[0]])
                 {
                     buffer.DrawBox(pos.X + 6, pos.Y, 11, 11, new TexColor(0, 0, 0));
@@ -107,16 +113,16 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void Activate()
         {
-            beginRender();
+            beginRender(); // if you press e on it, go to while loop
         }
 
         public override string ActivateMessage()
         {
-            return "Talk to the... shop keeper?";
+            return "Open shop";
         }
     }
 
-    class shopItem
+    class shopItem // a class to hold all info of an shop item, for convenience
     {
         public Item item;
         public float price;

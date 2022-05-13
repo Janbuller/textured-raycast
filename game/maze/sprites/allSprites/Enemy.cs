@@ -21,6 +21,7 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void onLoad()
         {
+            // set all the variables of the sprite from map editor to something for this
             hp = extraEffects[0];
             appDamage = extraEffects[1];
             damageVar = extraEffects[2];
@@ -28,6 +29,7 @@ namespace textured_raycast.maze.sprites.allSprites
             moneyRecived = extraEffects[4];
             moneyVar = extraEffects[5];
 
+            // automatically interact, so that if it runs into you, you fight
             interactDistance = 0.2f;
             canInteract = true;
             autoInteract = true;
@@ -35,6 +37,7 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void resetSprite()
         {
+            // reset for when reloading a map
             pos = new Vector2d(orgPos.X, orgPos.Y);
 
             canInteract = true;
@@ -43,15 +46,18 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void Activate()
         {
+            // start a figth with this if it is activated
             World.startFight(this);
         }
 
         public override void Update()
         {
+            // check dist to player
             double dist = World.plrPos.DistTo(pos);
 
             if (dist < chaseDistance)
             {
+                // go towards the player, at the speed of the player *1.42
                 Vector2d vDist = World.plrPos - pos;
                 vDist.Normalize();
 

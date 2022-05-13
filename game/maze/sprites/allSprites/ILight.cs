@@ -3,6 +3,7 @@ using textured_raycast.maze.math;
 
 namespace textured_raycast.maze.sprites.allSprites
 {
+    // an interface for all sprites that need to make light
     interface ILight
     {
         public TexColor GetLightColor();

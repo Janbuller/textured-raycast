@@ -8,22 +8,27 @@ namespace textured_raycast.maze.sprites.allSprites
 {
     class PlayerSprite : Sprite
     {
-        Vector2d dir = new Vector2d(-1, 0);
+        // this is for online.
+        Vector2d dir = new Vector2d(-1, 0); 
 
         public PlayerSprite(double posX, double posY, double xRot, double yRot, string[] texture, int effectID = 0, string whatsLeft = "") : base(posX, posY, texture, effectID, whatsLeft)
         {
             define(posX, posY, texture, effectID, whatsLeft);
 
+            // set the rotation
             dir = new Vector2d(xRot, yRot);
         }
 
         public override void onLoad()
         {
-            canInteract = false;
+            canInteract = false; // you cant talk to other players
         }
 
         public override Texture GetTexture()
         {
+            // get the texture for the player based on rotation of the player, and rotation of yourself
+            // the player has 8 images for 8 different angles
+
             int textureCount = texture.Length;
             double radPrTex = (Math.PI * 2) / textureCount;
 

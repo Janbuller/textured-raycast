@@ -7,6 +7,7 @@ namespace textured_raycast.maze
 {
     abstract class Item
     {
+        // all items by id
         public static Dictionary<int, string> itemTextures = new Dictionary<int, string>() {
             {0,   "img/items/metalsword.ppm"},
             {1,   "img/items/rubyring.ppm"},
@@ -75,8 +76,9 @@ namespace textured_raycast.maze
 
 
         public string name = "";
-        public int imageID = 0;
+        public int imageID = 0; // the id of the image to use form above
 
+        // the places this item can be equipped
         public Dictionary<EquipSlots, bool> tags = new Dictionary<EquipSlots, bool>()
         {
             {EquipSlots.Head, false},
@@ -87,12 +89,16 @@ namespace textured_raycast.maze
             {EquipSlots.Torso, false},
         };
 
+        // the amount of hp, mg, dam and give-hp(for healing) to give the player on equip / consume
         public int addHP = 0;
         public int addDAM = 0;
         public int addMAG = 0;
         public int giveHP = 0;
-	public bool light = false;
 
+        // if the item emitting light
+	    public bool light = false;
+
+        // eat an item
         public virtual bool consume()
         {
             if (giveHP > 0)
@@ -103,6 +109,7 @@ namespace textured_raycast.maze
             return false;
         }
 
+        // give stats on equip
         public virtual void onEquip()
         {
             World.player.hp += addHP;
@@ -111,6 +118,7 @@ namespace textured_raycast.maze
             World.player.mag += addMAG;
         }
 
+        // take the away on unequip
         public virtual void onUnEquip()
         {
             World.player.hp -= addHP;
@@ -121,6 +129,7 @@ namespace textured_raycast.maze
 
         public virtual Texture getTexture()
         {
+            // return the texture of the item
             return ResourceManager.getTexture(itemTextures[imageID]);
         }
     }

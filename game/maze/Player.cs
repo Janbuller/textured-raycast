@@ -19,9 +19,12 @@ namespace textured_raycast.maze
 
     internal class Player
     {
+        // internal stats
         public int dam = 2;
         public int hp = 10;
         public int mag = 2;
+
+        // external stats, with potential buffs applied
         public int Dam
         {
             get { return dam * (100 + addPPhys) / 100; } // apply dam %
@@ -38,24 +41,28 @@ namespace textured_raycast.maze
             set { mag = value; }
         }
 
+        // buffs the player can get
         public int addPLifeSteal = 0;
         public int addPMag = 0;
         public int addPPhys = 0;
 
         public bool don = false; // double or nothing
 
-        public int adventureLVL = 0;
+        // the adventurere level of the player
+        public int adventureLVL = 1;
         //1: Bronze
         //2: Silver
         //3: Gold
         //4: Diamond
         //5: Mythril
 
-
+        // the players money
         public float money = 0;
 
+        // the active hp, Hp is just the max
         public float actualHp = 10;
 
+        // a dictionary of all slots to that can bear items
         public Dictionary<EquipSlots, Item> equipped = new Dictionary<EquipSlots, Item>()
         {
             {EquipSlots.Head,       null},
@@ -66,6 +73,7 @@ namespace textured_raycast.maze
             {EquipSlots.Torso,      null},
         };
 
+        // a list to convert from gui box to equipment slot
         public Dictionary<int, EquipSlots> guiToEquipped = new Dictionary<int, EquipSlots>()
         {
             {2, EquipSlots.Head},
@@ -76,6 +84,7 @@ namespace textured_raycast.maze
             {5, EquipSlots.Torso},
         };
 
+        // checks if player is holding an item that has light (like a torch, but we have a torch you just cant get it in the game...)
         public bool HoldsLight
         {
             get
@@ -91,12 +100,14 @@ namespace textured_raycast.maze
             }
         }
 
+        // hp = max hp, and half xp
         public void reset()
         {
             actualHp = Hp;
             xp /= 2;
         }
 
+        // check if the skill with the given index exists, then try to activate it.
         public void useSkill(int nr)
         {
             if (equippedSkills[nr] != -1)
@@ -113,6 +124,7 @@ namespace textured_raycast.maze
             }
         }
 
+        // add an item to the inventory
         public void addToInv(Item item)
         {
             bool placed = false;
@@ -129,8 +141,10 @@ namespace textured_raycast.maze
             }
         }
 
+        // for holding track of player 'cursor' in the inventory
         public int invSelectedSpot = -1;
 
+        // list of all items in the inventory, you could uncomment these to try being op... lol
         public Dictionary<int, Item> inv = new Dictionary<int, Item>()
         {
             //{ 0,  new Iron_Broadsword()},
@@ -188,11 +202,15 @@ namespace textured_raycast.maze
             //{ 50, new Strawberry()},
         };
 
+        // the level, xp and amount of skill points availible for the player
         public int lvl = 1;
         public float xp = 0;
-        public int skillPoints = 100;
+        public int skillPoints = 0;
+
+        // a lits of bought skills
         public List<int> UnlockedSkills = new List<int>() { };
 
+        // an array of equipped skills
         public int[] equippedSkills =
         {
             -1,
@@ -200,6 +218,9 @@ namespace textured_raycast.maze
             -1,
         };
 
+        // for checking if you use fireball in the overworld, so that lasse can get his fireball thing in
+        // honestly kinda pointless, but if you beat the game (to the point we go aka not so far) then you
+        // now know you can use fireball, in the overworld, its op
         public Keys? FireballKey
         {
             get

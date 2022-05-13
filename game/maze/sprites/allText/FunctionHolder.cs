@@ -9,6 +9,7 @@ namespace textured_raycast.maze.sprites.allText
 {
     internal class FunctionHolder
     {
+        // this is for all text in the game, and other weid functions that arent that commen and therefore dont need their own class
         public static Dictionary<int, List<Func<FunctionSprite, bool>>> Functions = new Dictionary<int, List<Func<FunctionSprite, bool>>>()
         {
             {1, // for ghost part 1
@@ -149,6 +150,13 @@ namespace textured_raycast.maze.sprites.allText
                         }
                     },
                     (self) => {World.currentMessage = "have a nice day"; return false;},
+                }
+            },
+            {6, // Talking slime guide-like thingy
+                new List<Func<FunctionSprite, bool>> {
+                    (self) => {World.currentMessage = "That was it, we got no further"; return true;},
+                    (self) => {World.currentMessage = "this is just a skillpoint giver"; return true;},
+                    (self) => {World.currentMessage = "plus 10 skill points"; World.player.skillPoints += 10; return false;},
                 }
             },
         };

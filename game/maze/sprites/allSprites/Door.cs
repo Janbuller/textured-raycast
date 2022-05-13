@@ -19,6 +19,7 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void Activate()
         {
+            // when activated load a map at a certain door.
             World.getMapByID(extraEffects[0]).openDoor(extraEffects[0], extraEffects[1]);
         }
 

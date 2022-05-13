@@ -19,8 +19,12 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public override void onLoad()
         {
+            // light cant be effected by light
+            // and you cant interact with it...
             effectedByLight = false;
             canInteract = false;
+            // set the color to what we gave in map editor, same with intensity, kubear and quadratics
+            // all stuff for calculating light strength based on distance
             thisColor = new TexColor(extraEffects[0], extraEffects[1], extraEffects[2]);
             intesity = (float)extraEffects[3]/100f;
 

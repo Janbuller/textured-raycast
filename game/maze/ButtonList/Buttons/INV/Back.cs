@@ -6,6 +6,7 @@
 
         public override void onActivate()
         {
+            // go back, away from inventory
             World.state = States.Paused;
         }
     }

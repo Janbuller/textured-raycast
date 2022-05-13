@@ -6,6 +6,7 @@
 
         public override void onActivate()
         {
+            // open skill loop
             World.state = States.Skills;
         }
     }

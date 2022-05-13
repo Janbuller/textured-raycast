@@ -6,6 +6,9 @@ namespace textured_raycast.maze.sprites.allSprites
 {
     class Fireball : Sprite, ILight
     {
+
+        // TODO: comment on your fireball lasseeeee
+
         TexColor thisColor = new TexColor(255, 100, 0);
         float intesity;
         Vector2d vel;
