@@ -7,7 +7,7 @@ namespace textured_raycast.maze.texture
     /// <summary>
     /// A simple, rgb (0-255) based color class, used for the textures.
     /// </summary>
-    class TexColor {
+    public class TexColor {
         private int r;
         private int g;
         private int b;
@@ -40,10 +40,10 @@ namespace textured_raycast.maze.texture
         /// Sets color, based on a clamping of (0-<c>max</c>).
         /// </summary>
         public void setColorWithMax(int r, int g, int b, int max) {
-            int rel = 255 / max;
-            this.R = r * rel;
-            this.G = g * rel;
-            this.B = b * rel;
+            double rel = 255.0 / max;
+            this.R = (int)(r * rel);
+            this.G = (int)(g * rel);
+            this.B = (int)(b * rel);
         }
 
         public void setColorHSV(int hue, float saturation, float value) {
@@ -80,6 +80,16 @@ namespace textured_raycast.maze.texture
                 this.G = 0;
                 this.B = Convert.ToInt32(X      * 255);
             }
+
+            double match = value - chroma;
+            this.R += Convert.ToInt32(match*255);
+            this.G += Convert.ToInt32(match*255);
+            this.B += Convert.ToInt32(match*255);
+
+	    // This clamps the value to 255
+            this.R = this.R;
+            this.G = this.G;
+            this.B = this.B;
         }
 
         /// <summary>
@@ -151,19 +161,6 @@ namespace textured_raycast.maze.texture
         }
 
         public static bool operator ==(TexColor col1, TexColor col2) {
-            // if (System.Object.ReferenceEquals(col1, null))
-            // {
-            //     if (System.Object.ReferenceEquals(col2, null))
-            //     {
-            //         return true;
-            //     }
-            //
-            //     return false;
-            // }
-            //
-            // return col1.R == col2.R &&
-            //        col1.G == col2.G &&
-            //        col1.B == col2.B;
             return TexColor.Equals(col1, col2);
         }
         public static bool operator !=(TexColor col1, TexColor col2) {
