@@ -226,8 +226,8 @@ img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/Door3/bricks-Door3.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/Door1/bricks-Door1.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
@@ -943,6 +943,7 @@ img/ownwalls/stone.ppm
 img/ownwalls/stone.ppm  img/ownwalls/bricks.ppm
 img/ownwalls/stone.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/stone.ppm  img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/Door2/bricks-Door2.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
@@ -953,58 +954,7 @@ img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/stone.ppm  
-img/ownwalls/stone.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/stone.ppm  
-img/ownwalls/stone.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm  
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm  
 img/ownwalls/grass.ppm  
 img/ownwalls/grass.ppm  
@@ -1055,6 +1005,56 @@ img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/stone.ppm  
+img/ownwalls/stone.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/stone.ppm  
+img/ownwalls/stone.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm  
+img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm  
@@ -1125,8 +1125,8 @@ img/ownwalls/grass.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/Door3/bricks-Door3.ppm img/ownwalls/bricks.ppm
+img/ownwalls/grass.ppm img/Door1/bricks-Door1.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/grass.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm

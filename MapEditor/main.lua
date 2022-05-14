@@ -4,7 +4,7 @@ local SCMan = require("ShortcutHandler")
 -- make pixle art not have blur between pixles
 love.graphics.setDefaultFilter("nearest", "nearest")
 
--- laod a ppm as an iamge
+-- load a ppm as an image
 function loadImage(path)
     -- load the path of the image
     local str, len = love.filesystem.read(path)

@@ -1,5 +1,5 @@
-8 6
-2 4.5
+8 4
+4 -1.5
 -6.1232339957368e-17 -1
 img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
@@ -9,49 +9,30 @@ img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/bricks.ppm img/Door1/bricks-Door1.ppm img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm img/Door3/bricks-Door3.ppm img/ownwalls/bricks.ppm
-img/ownwalls/bricks.ppm img/Door1/bricks-Door1.ppm img/ownwalls/bricks.ppm
+img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
+img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
+img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
+img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
+img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
+img/ownwalls/bricks.ppm  img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
-2 4.5 img/RandomOBJs/Sign.ppm 5
-2 4.5 img/RandomOBJs/Sign.ppm 5
-2.5 2.5 img/LightOBJs/HangingLight2.ppm-img/LightOBJs/HangingLight3.ppm-img/LightOBJs/HangingLight1.ppm 2 255 120 0 100 33 20
-5.5 3.5 img/LightOBJs/HangingLight2.ppm-img/LightOBJs/HangingLight3.ppm-img/LightOBJs/HangingLight1.ppm 2 255 120 0 100 33 20
-5.5 1.5 img/LightOBJs/HangingLight2.ppm-img/LightOBJs/HangingLight3.ppm-img/LightOBJs/HangingLight1.ppm 2 255 120 0 100 33 20
-5.5 2.5 img/Humanity/Human1.ppm 6 1
+img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
+2 2 img/RandomOBJs/Sign.ppm 1 5 2 1
+5.5 2 img/enemy/BossBat1.ppm-img/enemy/BossBat2.ppm 3 250 40 10 1000 500 250
+6.5 2 img/RandomOBJs/Sign.ppm 4 8 0 1
