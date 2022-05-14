@@ -7,11 +7,14 @@ using OpenTK.Mathematics;
 
 namespace textured_raycast.maze.OpenGL
 {
+    // This was taken from
+    // https://github.com/opentk/LearnOpenTK/blob/master/Common/Shader.cs
+    // and slightly modified to suit our needs
     public class Shader
     {
-        public readonly int Handle;
+        public readonly int ID;
 
-        private readonly Dictionary<string, int> _uniformLocations;
+        private readonly Dictionary<string, int> UniformLoc;
 
         public Shader(string vertPath, string fragPath)
         {
@@ -29,30 +32,30 @@ namespace textured_raycast.maze.OpenGL
             GL.ShaderSource(fragmentShader, shaderSource);
             CompileShader(fragmentShader);
 
-            Handle = GL.CreateProgram();
+            ID = GL.CreateProgram();
 
-            GL.AttachShader(Handle, vertexShader);
-            GL.AttachShader(Handle, fragmentShader);
+            GL.AttachShader(ID, vertexShader);
+            GL.AttachShader(ID, fragmentShader);
 
-            LinkProgram(Handle);
+            LinkProgram(ID);
 
-            GL.DetachShader(Handle, vertexShader);
-            GL.DetachShader(Handle, fragmentShader);
+            GL.DetachShader(ID, vertexShader);
+            GL.DetachShader(ID, fragmentShader);
             GL.DeleteShader(fragmentShader);
             GL.DeleteShader(vertexShader);
 
 
-            GL.GetProgram(Handle, GetProgramParameterName.ActiveUniforms, out var numberOfUniforms);
+            GL.GetProgram(ID, GetProgramParameterName.ActiveUniforms, out var numberOfUniforms);
 
-            _uniformLocations = new Dictionary<string, int>();
+            UniformLoc = new Dictionary<string, int>();
 
             for (var i = 0; i < numberOfUniforms; i++)
             {
-                var key = GL.GetActiveUniform(Handle, i, out _, out _);
+                var key = GL.GetActiveUniform(ID, i, out _, out _);
 
-                var location = GL.GetUniformLocation(Handle, key);
+                var location = GL.GetUniformLocation(ID, key);
 
-                _uniformLocations.Add(key, location);
+                UniformLoc.Add(key, location);
             }
         }
 
@@ -81,37 +84,37 @@ namespace textured_raycast.maze.OpenGL
 
         public void Use()
         {
-            GL.UseProgram(Handle);
+            GL.UseProgram(ID);
         }
 
         public int GetAttribLocation(string attribName)
         {
-            return GL.GetAttribLocation(Handle, attribName);
+            return GL.GetAttribLocation(ID, attribName);
         }
 
 
         public void SetInt(string name, int data)
         {
-            GL.UseProgram(Handle);
-            GL.Uniform1(_uniformLocations[name], data);
+            GL.UseProgram(ID);
+            GL.Uniform1(UniformLoc[name], data);
         }
 
         public void SetFloat(string name, float data)
         {
-            GL.UseProgram(Handle);
-            GL.Uniform1(_uniformLocations[name], data);
+            GL.UseProgram(ID);
+            GL.Uniform1(UniformLoc[name], data);
         }
 
         public void SetMatrix4(string name, Matrix4 data)
         {
-            GL.UseProgram(Handle);
-            GL.UniformMatrix4(_uniformLocations[name], true, ref data);
+            GL.UseProgram(ID);
+            GL.UniformMatrix4(UniformLoc[name], true, ref data);
         }
 
         public void SetVector3(string name, Vector3 data)
         {
-            GL.UseProgram(Handle);
-            GL.Uniform3(_uniformLocations[name], data);
+            GL.UseProgram(ID);
+            GL.Uniform3(UniformLoc[name], data);
         }
     }
 }

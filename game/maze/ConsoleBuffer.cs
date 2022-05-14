@@ -33,26 +33,28 @@ namespace textured_raycast.maze
 
 	}
 
-    public List<TexColor> getBuffer()
+	// Get the list of texcolors, represented by the buffer.
+	public List<TexColor> getBuffer()
         {
             return buffer;
         }
 
-        // Used to draw char to current buffer.
+        // Used to draw color to current buffer.
         public void DrawPixel(TexColor col, int x, int y)
         {
-            // Return exception, if char is out of game window.
+            // Return, if char is out of game window.
             if (x < 0 || x >= Width || y < 0 || y >= Height)
             {
                 return;
             }
 
-            DrawToFramebuffer(col, x, y, ref buffer);
+            buffer[x + y * Width] = col;
         }
 
+	// Gets the color of a pixel in the buffer.
         public TexColor GetPixel(int x, int y)
         {
-            // Return exception, if char is out of game window.
+            // Return black, if char is out of game window.
             if (x < 0 || x >= Width || y < 0 || y >= Height)
             {
                 return new TexColor(0, 0, 0);
@@ -69,7 +71,6 @@ namespace textured_raycast.maze
             List<TexColor> b1 = buffer;
             List<TexColor> b2 = overlay.getBuffer();
 
-
             for (int i = 0; i < buffer.Count; i++)
             {
                 if (b2[i] is null)
@@ -85,23 +86,26 @@ namespace textured_raycast.maze
             return consoleBuffer;
         }
 
+	// Completely clear the current buffer to the default
+	// TexColor.
         public void Clear()
         {
             TexColor[] tmp = new TexColor[Height * Width];
             buffer = tmp.ToList();
         }
 
-        public void Fill(TexColor fillColor)
+	// Fill the current buffer with a specified color.
+        public void Fill(TexColor FillColor)
         {
             TexColor[] tmp = new TexColor[Height * Width];
             for (int i = 0; i < tmp.Length; i++)
             {
-                tmp[i] = fillColor;
+                tmp[i] = FillColor;
             }
             buffer = tmp.ToList();
         }
 
-        // Draws a centered vertical line, width xPos, Height and Color.
+        // Draws a centered vertical line, with xPos, Height and Color.
         public void DrawVerLine(int x, int height, TexColor color)
         {
             // Return exception, if char is out of game window.
@@ -115,8 +119,7 @@ namespace textured_raycast.maze
             int startY = Height / 2 - height / 2;
             for (int i = 0; i < height; i++)
             {
-                // Draw the line, using NuGet package "Pastel" to color, using
-                // ansi escape sequences.
+                // Draw the line.
                 DrawPixel(color, x, startY + i);
             }
         }
@@ -145,10 +148,9 @@ namespace textured_raycast.maze
                 int texY = (int)texPos;
                 texPos += sectionHeight;
                 TexColor color = tex.getPixel(texX, texY);
-                // Draw the line, using NuGet package "Pastel" to color, using
-                // ansi escape sequences.
                 if (alphaCol == color)
                     continue;
+                // Draw the line.
                 DrawPixel((color * darken), x, i);
             }
         }
@@ -247,7 +249,8 @@ namespace textured_raycast.maze
                 for (int y = 0; y < h*invY; y++)
                     DrawPixel(Color, xP+x*invX, yP+y*invY);
         }
-	// Draws a box outline:
+
+	// Draws a box outline.
         public void DrawBoxOutline(Vector2i Pos, Vector2i Size, TexColor Color) { DrawBoxOutline(Pos.X, Pos.Y, Size.Width, Size.Height, Color); }
         public void DrawBoxOutline(int xP, int yP, int w, int h, TexColor Color)
         {
@@ -257,18 +260,11 @@ namespace textured_raycast.maze
 			DrawPixel(Color, x, y);
         }
 
+	// Draws a filled box with an outline.
         public void DrawBoxOutlineFilled(Vector2i Pos, Vector2i Size, TexColor OutlineColor, TexColor FillColor) { DrawBoxOutlineFilled(Pos.X, Pos.Y, Size.Width, Size.Height, OutlineColor, FillColor); }
 	public void DrawBoxOutlineFilled(int xP, int yP, int w, int h, TexColor OutlineColor, TexColor FillColor) {
             DrawBoxOutline(xP, yP, w, h, OutlineColor);
             DrawBox(xP+1, yP+1, w-2, h-2, FillColor);
-        }
-
-
-        // Draws char to specific framebuffer. Used internally by DrawChar
-        // functions.
-        private void DrawToFramebuffer(TexColor col, int x, int y, ref List<TexColor> buffer)
-        {
-            buffer[x + y * Width] = col;
         }
     }
 }

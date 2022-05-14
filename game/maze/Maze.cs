@@ -103,6 +103,5 @@ namespace textured_raycast.maze
             });
         }
 
-
     }
 }

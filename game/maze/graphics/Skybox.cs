@@ -21,6 +21,7 @@ namespace textured_raycast.maze.graphics
             }
         }
 
+	// Gets the color of a single screen-space pixel, to draw the skybox.
         public static TexColor GetSkyboxPixel(int winHeight, Texture skyboxTex, int x, int y, float dayTime)
         {
             // The difference between the height of on pixel on the screen and

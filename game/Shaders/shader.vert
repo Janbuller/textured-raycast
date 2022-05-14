@@ -1,7 +1,7 @@
 #version 330 core
 
-layout(location = 0) in vec3 aPosition;
-layout(location = 1) in vec2 aTexCoord;
+layout(location = 0) in vec3 aPos;
+layout(location = 1) in vec2 aTex;
 
 uniform int WindowWidth;
 uniform int WindowHeight;
@@ -10,11 +10,11 @@ uniform int EngineHeight;
 
 out vec2 texCoord;
 
-vec3 aPosScale = aPosition;
+vec3 aPosScale = aPos;
 
 void main(void)
 {
-    texCoord = aTexCoord;
+    texCoord = aTex;
 
     float yRatio = (float(EngineHeight) / float(EngineWidth)) * (float(WindowWidth) / float(WindowHeight));
     if(yRatio > 1) {

@@ -5,7 +5,7 @@ using Pastel;
 
 namespace textured_raycast.maze.texture
 {
-    class Texture {
+    public class Texture {
         public int width, height;
         List<TexColor> pixels;
 
