@@ -152,7 +152,7 @@ namespace textured_raycast.maze.sprites.allText
                     (self) => {World.currentMessage = "have a nice day"; return false;},
                 }
             },
-            {6, // Talking slime guide-like thingy
+            {8, // Talking slime guide-like thingy
                 new List<Func<FunctionSprite, bool>> {
                     (self) => {World.currentMessage = "That was it, we got no further"; return true;},
                     (self) => {World.currentMessage = "this is just a skillpoint giver"; return true;},

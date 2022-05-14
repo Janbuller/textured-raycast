@@ -84,9 +84,9 @@ namespace textured_raycast.maze
             maps = new Dictionary<int, string>()
             {
                 {-1, "maps/fightMap.map"},
-                {3, "maps/StartingCave.map"},
+                {1, "maps/StartingCave.map"},
                 {2, "maps/FirstFight.map"},
-                {1, "maps/TheHolyLands.map"},
+                {3, "maps/TheHolyLands.map"},
                 {4, "maps/IronCave.map"},
                 {5, "maps/IronCaveSecondLayer.map"},
                 {6, "maps/IronCaveBoss.map"},

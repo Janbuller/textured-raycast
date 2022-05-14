@@ -49,7 +49,7 @@ namespace textured_raycast.maze
         public bool don = false; // double or nothing
 
         // the adventurere level of the player
-        public int adventureLVL = 1;
+        public int adventureLVL = 0;
         //1: Bronze
         //2: Silver
         //3: Gold
