@@ -1,7 +1,0 @@
-#+TITLE: Logbog
-
-* Logbog
-| test          | test2      |
-|---------------+------------|
-| lkdhasfkhafds | aksdhfhdsa |
-|               |            |
