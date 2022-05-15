@@ -85,7 +85,7 @@ namespace textured_raycast.maze.input.Windows
         }
     }
 
-    public enum Keys : short
+    public enum Keys : short // this list we filled lol
     {
         K_W = 0x57,
         K_A = 0x41,

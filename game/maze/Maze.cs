@@ -43,9 +43,9 @@ namespace textured_raycast.maze
                 switch (World.state)
                 {
                     case States.Fighting:
-            // it is no longer supposed to enter this
-            // state while in the main loop, so if it
-            // somehow does, return it.
+                        // it is no longer supposed to enter this
+                        // state while in the main loop, so if it
+                        // somehow does, return it.
                         World.state = States.Game; 
                         break;
                     case States.Inventory:
