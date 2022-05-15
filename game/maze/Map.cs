@@ -39,7 +39,7 @@ namespace textured_raycast.maze
 
         public float lightMix = 0.7f;  // for colors
 
-	    public string Path; // the path gotten when defining
+        public string Path; // the path gotten when defining
 
         // the types of sprites that are used in the maps
         private Dictionary<int, Type> spriteTypes = new Dictionary<int, Type>(){
@@ -176,9 +176,9 @@ namespace textured_raycast.maze
             for (int i = 0; i < sprites.Count; i++)
             {
                 if (typeof(ILight).IsAssignableFrom(sprites[i].GetType())) {
-		    lights.Add(sprites[i] as ILight);
-		}
-	    }
+            lights.Add(sprites[i] as ILight);
+        }
+        }
 
             return lights.ToArray();
         }

@@ -6,9 +6,9 @@ namespace textured_raycast.maze.skills.Skills
     {
         public Phys10(int id, int price, int[] requiredSkills) : base(id, price, requiredSkills)
         {
-	        name = "10p phys";
+            name = "10p phys";
             Desc = "10p Dam";
-	        TexID = 1;
+            TexID = 1;
             price = 2;
         }
 

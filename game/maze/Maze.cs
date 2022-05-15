@@ -14,7 +14,7 @@ namespace textured_raycast.maze
         static ConsoleBuffer FightBuffer;
         static ConsoleBuffer UIBuffer;
 
-	public static bool StartGame()
+    public static bool StartGame()
         {
             World.ce    = new ConsoleEngine(World.WindowSize.Width, World.WindowSize.Height, "very dumb g̶a̶m̶e̶");
             GameBuffer  = new ConsoleBuffer(World.WindowSize.Width, World.WindowSize.Height);
@@ -43,9 +43,9 @@ namespace textured_raycast.maze
                 switch (World.state)
                 {
                     case States.Fighting:
-			// it is no longer supposed to enter this
-			// state while in the main loop, so if it
-			// somehow does, return it.
+                        // it is no longer supposed to enter this
+                        // state while in the main loop, so if it
+                        // somehow does, return it.
                         World.state = States.Game; 
                         break;
                     case States.Inventory:
@@ -54,7 +54,7 @@ namespace textured_raycast.maze
                     case States.Skills:
                         SkillsLoop.SkillsLoopIter(ref GameBuffer, ref UIBuffer);
                         break;
-		            case States.Settings:
+                    case States.Settings:
                         if (usingGL)
                             MainGL.MainStop();
 

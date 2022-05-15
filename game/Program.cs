@@ -14,7 +14,7 @@ namespace textured_raycast
                 maze.input.InputManager.SetInputController(new maze.input.linux.LinuxInputController());
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 maze.input.InputManager.SetInputController(new maze.input.Windows.WindowsInputController());
-	    else
+        else
                 maze.input.InputManager.SetInputController(new maze.input.console.ConsoleInputController());
 
             World.setupMapsInWorld();

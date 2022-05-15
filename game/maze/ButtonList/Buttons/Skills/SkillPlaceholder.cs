@@ -32,5 +32,11 @@ namespace textured_raycast.maze.ButtonList.Buttons.Skills
             // check if a skills is bought
             return Skill.Skills[id].isBought();
         }
+
+        public Skill getSkill()
+        {
+            // check if a skills is bought
+            return Skill.Skills[id];
+        }
     }
 }

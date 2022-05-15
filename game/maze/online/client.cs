@@ -7,6 +7,10 @@ using ENet;
 
 namespace textured_raycast.maze.online
 {
+    // this is a part of the game, but needs the server to run
+    // we therefore will not comment it, sicne we pretend its not a part of the program (cuz the server is not running)
+    // if the server were running it would work though <3
+    // and would be online
 
     struct Player
     {

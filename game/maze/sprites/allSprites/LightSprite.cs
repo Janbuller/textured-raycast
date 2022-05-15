@@ -35,7 +35,7 @@ namespace textured_raycast.maze.sprites.allSprites
             } else {
                 linear = 0.22f;
                 quadratic = 0.20f;
-	    }
+        }
         }
 
         public TexColor GetLightColor() {
@@ -52,7 +52,7 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public float GetAttenuationLinear()
         {
-	    return linear;
+        return linear;
         }
 
         public float GetAttenuationQuadratic()

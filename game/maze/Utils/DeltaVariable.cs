@@ -11,13 +11,13 @@ namespace textured_raycast.maze.Utils
             lastVars = start;
         }
 
-	public double[] GetDelta(double[] absolute) {
+    public double[] GetDelta(double[] absolute) {
             double[] delta = new double[lastVars.Length];
             for(int i = 0; i < lastVars.Length; i++) {
-		delta[i] = absolute[i] - lastVars[i];
-		lastVars[i] = absolute[i];
-	    }
-	    return delta;
-	}
+        delta[i] = absolute[i] - lastVars[i];
+        lastVars[i] = absolute[i];
+        }
+        return delta;
+    }
     }
 }

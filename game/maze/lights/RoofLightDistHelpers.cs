@@ -39,19 +39,19 @@ namespace textured_raycast.maze.lights
                     distTo,
                     lights[i].GetLightColor(),
                     lights[i].GetLightIntensity(),
-		    lights[i].GetAttenuationLinear(),
-		    lights[i].GetAttenuationQuadratic()
+            lights[i].GetAttenuationLinear(),
+            lights[i].GetAttenuationQuadratic()
                 );
             }
 
-	    if(PlayerLight) {
+        if(PlayerLight) {
                 lightDists[lights.Count()] = new LightDist(
-		    World.plrPos.DistTo(toPos),
-		    new TexColor(255, 120, 0),
-		    500,
-		    35,
-		    44
-		);
+            World.plrPos.DistTo(toPos),
+            new TexColor(255, 120, 0),
+            500,
+            35,
+            44
+        );
             }
 
             return lightDists;

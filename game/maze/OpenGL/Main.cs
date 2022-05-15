@@ -14,10 +14,10 @@ namespace textured_raycast.maze.OpenGL
                 Size = new Vector2i(480, 320),
                 Title = World.ce.Title,
                 Flags = ContextFlags.ForwardCompatible,
-		// WindowBorder = WindowBorder.Fixed
+        // WindowBorder = WindowBorder.Fixed
             };
 
-	    using (win = new Window(GameWindowSettings.Default, nativeWindowSettings))
+        using (win = new Window(GameWindowSettings.Default, nativeWindowSettings))
             {
                 win.Run();
             }

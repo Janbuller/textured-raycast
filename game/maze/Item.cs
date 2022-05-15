@@ -96,7 +96,7 @@ namespace textured_raycast.maze
         public int giveHP = 0;
 
         // if the item emitting light
-	    public bool light = false;
+        public bool light = false;
 
         // eat an item
         public virtual bool consume()

@@ -86,7 +86,7 @@ namespace textured_raycast.maze.texture
             this.G += Convert.ToInt32(match*255);
             this.B += Convert.ToInt32(match*255);
 
-	    // This clamps the value to 255
+        // This clamps the value to 255
             this.R = this.R;
             this.G = this.G;
             this.B = this.B;

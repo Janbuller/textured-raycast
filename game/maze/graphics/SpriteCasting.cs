@@ -16,7 +16,7 @@ namespace textured_raycast.maze.graphics
         public static void SpriteCast(ref ConsoleBuffer game, List<Sprite> spritesIn, double[] ZBuffer, int visRange, Map map)
         {
 
-	    // Generate a list of all player sprites, when playing online.
+        // Generate a list of all player sprites, when playing online.
             List<Sprite> sprites = new List<Sprite>(spritesIn);
             foreach(var player in Client.players) {
                 var pV = player.Value;
@@ -32,9 +32,9 @@ namespace textured_raycast.maze.graphics
                         "img/player/Player 2.ppm",
                     }));
                 }
-	    }
+        }
 
-	    // Get all the lights.
+        // Get all the lights.
             ILight[] lights = map.GetLights();
 
             List<double> spriteDist = new List<double>();
@@ -149,20 +149,20 @@ namespace textured_raycast.maze.graphics
 
                     if (transformed.Y < ZBuffer[x])
                     {
-			// Run the updateondraw function in the
-			// currently drawn sprite.
+            // Run the updateondraw function in the
+            // currently drawn sprite.
                         curSpr.UpdateOnDraw(transformed.Y);
 
                         TexColor mixedLight = new TexColor();
 
-			// Calculate the offset of the sprites center,
-			// to the currently drawn column, using the
-			// players plane variable.
+            // Calculate the offset of the sprites center,
+            // to the currently drawn column, using the
+            // players plane variable.
                         Vector2d SpriteColumnOffset = ((World.plrPlane * -1) + ((World.plrPlane * 2)) / (endX - startX) * (x - startX));
 
-			// If the sprite isn't affected by light
-			// (example lights), don't do light
-			// calculations.
+            // If the sprite isn't affected by light
+            // (example lights), don't do light
+            // calculations.
                         if (curSpr.effectedByLight)
                         {
                             LightDist[] lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + SpriteColumnOffset);
@@ -170,8 +170,8 @@ namespace textured_raycast.maze.graphics
                                 mixedLight = LightDistHelpers.MixLightDist(lightDists);
                         }
 
-			// Draw the current column of the sprite on
-			// the screen.
+            // Draw the current column of the sprite on
+            // the screen.
                         game.DrawVerLine(x, spriteScreenSize, sprTex, texX, 1, mixedLight, map.lightMix, new TexColor(0, 0, 0));
                     }
                 }

@@ -15,8 +15,8 @@ namespace textured_raycast.maze.lights
             this.col = col;
             this.intensity = intensity;
 
-	    this.linear = linear;
-	    this.quadratic = quadratic;
+        this.linear = linear;
+        this.quadratic = quadratic;
         }
     }
 }

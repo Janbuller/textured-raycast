@@ -29,10 +29,10 @@ namespace textured_raycast.maze.input
 	// All the different keygroups.
         public static Dictionary<KeyGroups, Keys[]> KeyGroup = new Dictionary<KeyGroups, Keys[]>()
         {
-	    {KeyGroups.KG_UP,    new Keys[] {Keys.K_W, Keys.K_UP}},
-	    {KeyGroups.KG_DOWN,  new Keys[] {Keys.K_S, Keys.K_DOWN}},
-	    {KeyGroups.KG_LEFT,  new Keys[] {Keys.K_A, Keys.K_LEFT}},
-	    {KeyGroups.KG_RIGHT, new Keys[] {Keys.K_D, Keys.K_RIGHT}},
+        {KeyGroups.KG_UP,    new Keys[] {Keys.K_W, Keys.K_UP}},
+        {KeyGroups.KG_DOWN,  new Keys[] {Keys.K_S, Keys.K_DOWN}},
+        {KeyGroups.KG_LEFT,  new Keys[] {Keys.K_A, Keys.K_LEFT}},
+        {KeyGroups.KG_RIGHT, new Keys[] {Keys.K_D, Keys.K_RIGHT}},
         };
 
 	// Polls the inputcontroller for all keys in a keygroup. The

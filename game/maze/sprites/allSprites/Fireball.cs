@@ -28,15 +28,15 @@ namespace textured_raycast.maze.sprites.allSprites
             vel = new Vector2d(extraEffects[1]/100.0, extraEffects[2]/100.0);
         }
 
-	private Sprite CheckForCollision() {
-	    foreach(Sprite CheckSpr in World.getCurMap().sprites) {
-		if(CheckSpr == this)
-		    continue;
+    private Sprite CheckForCollision() {
+        foreach(Sprite CheckSpr in World.getCurMap().sprites) {
+        if(CheckSpr == this)
+            continue;
 
-		if(Math.Abs(CheckSpr.pos.DistTo(this.pos)) < size) {
+        if(Math.Abs(CheckSpr.pos.DistTo(this.pos)) < size) {
                     return CheckSpr;
                 }
-	    }
+        }
 
             return null;
         }
@@ -46,7 +46,7 @@ namespace textured_raycast.maze.sprites.allSprites
             Map curMap = World.getCurMap();
             pos += vel * World.dt;
 
-	    bool HitEnemy = false;
+        bool HitEnemy = false;
 
             Sprite HitSprite = CheckForCollision();
             if (!(HitSprite is null))
@@ -89,7 +89,7 @@ namespace textured_raycast.maze.sprites.allSprites
 
         public float GetAttenuationLinear()
         {
-	    return 0.22f;
+        return 0.22f;
         }
 
         public float GetAttenuationQuadratic()
