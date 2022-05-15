@@ -27,14 +27,14 @@ namespace textured_raycast.maze
         }
 
         public ConsoleBuffer(ConsoleBuffer buf){
-	    buffer = buf.buffer;
-	    Width = buf.Width;
-	    Height = buf.Height;
+        buffer = buf.buffer;
+        Width = buf.Width;
+        Height = buf.Height;
 
-	}
+    }
 
-	// Get the list of texcolors, represented by the buffer.
-	public List<TexColor> getBuffer()
+    // Get the list of texcolors, represented by the buffer.
+    public List<TexColor> getBuffer()
         {
             return buffer;
         }
@@ -51,7 +51,7 @@ namespace textured_raycast.maze
             buffer[x + y * Width] = col;
         }
 
-	// Gets the color of a pixel in the buffer.
+    // Gets the color of a pixel in the buffer.
         public TexColor GetPixel(int x, int y)
         {
             // Return black, if char is out of game window.
@@ -86,15 +86,15 @@ namespace textured_raycast.maze
             return consoleBuffer;
         }
 
-	// Completely clear the current buffer to the default
-	// TexColor.
+    // Completely clear the current buffer to the default
+    // TexColor.
         public void Clear()
         {
             TexColor[] tmp = new TexColor[Height * Width];
             buffer = tmp.ToList();
         }
 
-	// Fill the current buffer with a specified color.
+    // Fill the current buffer with a specified color.
         public void Fill(TexColor FillColor)
         {
             TexColor[] tmp = new TexColor[Height * Width];
@@ -170,7 +170,7 @@ namespace textured_raycast.maze
             float texPos = (startY - Height / 2 + lineHeight / 2) * sectionHeight;
 
             startY -= (int)World.plrBob;// * (64.0f/lineHeight));
-	    endY   -= (int)World.plrBob;// * (64.0f/lineHeight));
+        endY   -= (int)World.plrBob;// * (64.0f/lineHeight));
 
             if (startY < 0)
             {
@@ -250,19 +250,19 @@ namespace textured_raycast.maze
                     DrawPixel(Color, xP+x*invX, yP+y*invY);
         }
 
-	// Draws a box outline.
+    // Draws a box outline.
         public void DrawBoxOutline(Vector2i Pos, Vector2i Size, TexColor Color) { DrawBoxOutline(Pos.X, Pos.Y, Size.Width, Size.Height, Color); }
         public void DrawBoxOutline(int xP, int yP, int w, int h, TexColor Color)
         {
             for (int x = xP; x < xP + w; x++)
                 for (int y = yP; y < yP + h; y++)
                     if (x == xP || x == xP+w-1 || y == yP || y == yP+h-1)
-			DrawPixel(Color, x, y);
+            DrawPixel(Color, x, y);
         }
 
-	// Draws a filled box with an outline.
+    // Draws a filled box with an outline.
         public void DrawBoxOutlineFilled(Vector2i Pos, Vector2i Size, TexColor OutlineColor, TexColor FillColor) { DrawBoxOutlineFilled(Pos.X, Pos.Y, Size.Width, Size.Height, OutlineColor, FillColor); }
-	public void DrawBoxOutlineFilled(int xP, int yP, int w, int h, TexColor OutlineColor, TexColor FillColor) {
+    public void DrawBoxOutlineFilled(int xP, int yP, int w, int h, TexColor OutlineColor, TexColor FillColor) {
             DrawBoxOutline(xP, yP, w, h, OutlineColor);
             DrawBox(xP+1, yP+1, w-2, h-2, FillColor);
         }

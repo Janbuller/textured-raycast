@@ -9,8 +9,8 @@ namespace textured_raycast.maze.math
 
         public double X { get { return x; } set {x = value; } }
         public double Y { get { return y; } set {y = value; } }
-	public double Width { get {return X; } set { X = value; } }
-	public double Height{ get {return Y; } set { Y = value; } }
+    public double Width { get {return X; } set { X = value; } }
+    public double Height{ get {return Y; } set { Y = value; } }
 
         public Vector2d(double x, double y) {
             this.X = x;

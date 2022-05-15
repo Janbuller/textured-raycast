@@ -46,8 +46,8 @@ namespace textured_raycast.maze
             Console.Title = game_name;
         }
 
-	// Gets the list of TexColor from a ConsoleBuffer object and
-	// draws it to the back-buffer.
+    // Gets the list of TexColor from a ConsoleBuffer object and
+    // draws it to the back-buffer.
         public void DrawConBuffer(ConsoleBuffer buf)
         {
             curConBuf = new ConsoleBuffer(buf);
@@ -61,7 +61,7 @@ namespace textured_raycast.maze
             }
         }
 
-	public ConsoleBuffer GetCurrentBuffer() {
+    public ConsoleBuffer GetCurrentBuffer() {
             return curConBuf;
         }
 

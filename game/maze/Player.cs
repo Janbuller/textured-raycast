@@ -233,22 +233,22 @@ namespace textured_raycast.maze
                         continue;
                     if (Skill.Skills[CurSkillIdx] is Fireball)
                     {
-			FireballIdx = i;
+            FireballIdx = i;
                         break;
                     }
                 }
 
                 switch(FireballIdx) {
-		    case 0:
+            case 0:
                         return Keys.K_1;
-		    case 1:
+            case 1:
                         return Keys.K_2;
-		    case 2:
+            case 2:
                         return Keys.K_3;
                 }
 
 
-		return null;
+        return null;
             }
         }
     }

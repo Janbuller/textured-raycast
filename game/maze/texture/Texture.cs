@@ -64,8 +64,8 @@ namespace textured_raycast.maze.texture
 
         public enum GetPixelMode
         {
-	    BLACK,
-	    REPEAT,
+        BLACK,
+        REPEAT,
         }
         public TexColor getPixel(int x, int y, GetPixelMode mode) {
             TexColor retPixel = null;
@@ -78,18 +78,18 @@ namespace textured_raycast.maze.texture
             {
                 if (mode == GetPixelMode.BLACK)
                 {
-		    retPixel = new TexColor(0, 0, 0);
+            retPixel = new TexColor(0, 0, 0);
                 } else if(mode == GetPixelMode.REPEAT)
-		{
+        {
                     int newX = x, newY = y;
-		    while(x < 0)
-			newX += width;
-		    while(x >= width)
+            while(x < 0)
+            newX += width;
+            while(x >= width)
                         newX -= width;
 
-		    while(y < 0)
-			newY += height;
-		    while(y >= height)
+            while(y < 0)
+            newY += height;
+            while(y >= height)
                         newY -= height;
 
                     retPixel = pixels[newX + newY * width];
@@ -108,7 +108,7 @@ namespace textured_raycast.maze.texture
             TexColor[] pixels = new TexColor[this.pixels.Count];
             for (int i = 0; i < this.pixels.Count; i++)
             {
-		int value = TexColor.getBrightness(this.pixels[i]);
+        int value = TexColor.getBrightness(this.pixels[i]);
                 pixels[i] = new TexColor(value, value, value);
             }
             return new Texture(pixels.ToList(), width, height);

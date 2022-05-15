@@ -99,7 +99,7 @@ namespace textured_raycast.maze.sprites.allSprites
                 World.ce.SwapBuffers();
 
                 // escape to stop loop / undo
-		        if(InputManager.GetKey(Keys.K_ESC) == KeyState.KEY_DOWN)
+                if(InputManager.GetKey(Keys.K_ESC) == KeyState.KEY_DOWN)
                     selected = 0;
             }
         }

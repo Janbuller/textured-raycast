@@ -12,7 +12,7 @@ namespace textured_raycast.maze.graphics
     {
         public static void WallCast(ref ConsoleBuffer game, ref double[] ZBuffer, float visRange, Map map = null)
         {
-	    if(map is null)
+        if(map is null)
                 map = World.curMap;
             // map = World.getMapByID(World.currentMap);
 
@@ -71,8 +71,8 @@ namespace textured_raycast.maze.graphics
 
         public static WallcastReturn DoOneWallcast(int x, int width, int height, ILight[] lights, Vector2d dir, Vector2d pos, float visRange, double alreadyDist = 0, int recurseCount = 0, Map map = null) {
 
-	    if(map is null)
-		map = World.getMapByID(World.currentMap);
+        if(map is null)
+        map = World.getMapByID(World.currentMap);
 
             // The current x-coordinate on the camera viewport "plane"
             // (line), corresponding to the current viewspace
@@ -236,31 +236,31 @@ namespace textured_raycast.maze.graphics
                 pos.Y + perpWallDist * rayDir.Y
             );
 
-	    // If it's night, darken the color by
-	    // multiplying with 0.6. Else, darken if in
-	    // shadow.
+        // If it's night, darken the color by
+        // multiplying with 0.6. Else, darken if in
+        // shadow.
             if(World.dayTime > 0.5f) {
                 darken *= 0.6f;
             } else {
-		// Take the current position and move its
-		// x-coordinate by a slight amount, to
-		// simulate the sun coming from a
-		// direction. The get the position of the
-		// in the grid, by converting it to a
-		// Vector2i.
+        // Take the current position and move its
+        // x-coordinate by a slight amount, to
+        // simulate the sun coming from a
+        // direction. The get the position of the
+        // in the grid, by converting it to a
+        // Vector2i.
                 Vector2d realPosAbove = new Vector2d(hitPos.X + 0.1, hitPos.Y);
                 Vector2i cellPosAbove = (Vector2i)realPosAbove;
 
-		// Check, whether or not there is a roof
-		// or a wall at the moved position. If
-		// there is, darken the floor.
+        // Check, whether or not there is a roof
+        // or a wall at the moved position. If
+        // there is, darken the floor.
                 if(map.GetRoof(cellPosAbove.X, cellPosAbove.Y) != "" || map.IsWall(cellPosAbove.X, cellPosAbove.Y))
                     darken *= 0.6f;
             }
 
             // removed beacuse it wont be used <3, and we dont use ids
             // for walls no more...
-	    //
+        //
             // if(hitWall.wallID == 5 && recurseCount < 5) {
             //     Vector2d newDir;
             //     if(side == 0)

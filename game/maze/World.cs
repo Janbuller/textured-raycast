@@ -22,7 +22,7 @@ namespace textured_raycast.maze
     class World
     {
         public static ConsoleEngine ce;
-	    public static Vector2i WindowSize = new Vector2i(120, 80);
+        public static Vector2i WindowSize = new Vector2i(120, 80);
 
         public static int currentMap = 1;
         private static Dictionary<int, string> maps;
@@ -119,11 +119,11 @@ namespace textured_raycast.maze
             return curMap;
         }
 
-	public static double GetRealTime() {
+    public static double GetRealTime() {
             return (double)DateTime.Now.Ticks / TimeSpan.TicksPerSecond;
         }
 
-	public static void UpdateDeltaTime() {
+    public static void UpdateDeltaTime() {
             dt = dtCalc.GetDelta(new double[] { GetRealTime() })[0];
         }
     }

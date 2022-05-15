@@ -14,11 +14,11 @@ namespace textured_raycast.maze.resources
         {
             Texture tex;
             bool exists = cachedTextures.TryGetValue(path, out tex);
-	    if (!exists)
+        if (!exists)
             {
                 try
                 {
-		    tex = TextureLoaders.loadFromPlainPPM(path);
+            tex = TextureLoaders.loadFromPlainPPM(path);
                 } catch (FileNotFoundException)
                 {
                     return null;
@@ -29,9 +29,9 @@ namespace textured_raycast.maze.resources
             return tex;
         }
 
-	/// Adds a texture to the texture cache. Make sure, /NOT/ to
-	/// add multiple textures to the same path or to the path of
-	/// and existing or futurely loaded texture.
+    /// Adds a texture to the texture cache. Make sure, /NOT/ to
+    /// add multiple textures to the same path or to the path of
+    /// and existing or futurely loaded texture.
         public static void cacheTexture(string path, Texture tex)
         {
             try

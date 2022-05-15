@@ -10,8 +10,8 @@ namespace textured_raycast.maze.math
 
         public int X { get { return x; } set {x = value; } }
         public int Y { get { return y; } set {y = value; } }
-	public int Width { get {return X; } set { X = value; } }
-	public int Height{ get {return Y; } set { Y = value; } }
+    public int Width { get {return X; } set { X = value; } }
+    public int Height{ get {return Y; } set { Y = value; } }
 
         public Vector2i(int x, int y) {
             this.X = x;

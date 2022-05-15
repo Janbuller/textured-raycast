@@ -47,33 +47,35 @@ namespace textured_raycast.maze.DrawingLoops
             double distanceToInteract = 9999;
 
             for (int i = 0; i < map.sprites.Count; i++)
-	    {
+            {
                 Sprite sprite = map.sprites[i];
                 sprite.Update();
 
-		sprite.updateAnimation();
-		
-		double distance = World.plrPos.DistTo(sprite.getPos());
-		// Console.WriteLine(distance + " : " + sprite.canInteract);
-		if (distance < sprite.interactDistance && distance < distanceToInteract && sprite.canInteract)
-		{
-		    if (sprite.autoInteract)
-		    {
-			sprite.Activate();
-		    }
-		    else
-		    {
-			spriteToInteract = sprite;
-			distanceToInteract = distance;
-		    }
-		}
-	    }
+                sprite.updateAnimation();
+        
+                double distance = World.plrPos.DistTo(sprite.getPos());
+                // Console.WriteLine(distance + " : " + sprite.canInteract);
+                if (distance < sprite.interactDistance && distance < distanceToInteract && sprite.canInteract)
+                {
+                    if (sprite.autoInteract)
+                    {
+                        sprite.Activate();
+                    }
+                    else
+                    {
+                        spriteToInteract = sprite;
+                        distanceToInteract = distance;
+                    }
+            }
+            }
 
+            // if it found one, display interact message, otherwise dont...
             if (spriteToInteract != null)
                 World.interactMessage = spriteToInteract.ActivateMessage();
             else
                 World.interactMessage = "";
 
+            // if there is no current message, show interaction message, otherwise show current message
             string toSend = World.currentMessage == "" ? World.interactMessage : World.currentMessage;
 
             //Clear the UI buffer
@@ -118,9 +120,7 @@ namespace textured_raycast.maze.DrawingLoops
             // forcing the player to stay slightly further away from
             // walls.
 
-            if (InputManager.GetKey(Keys.K_1) != KeyState.KEY_UP && InputManager.GetKey(Keys.K_3) != KeyState.KEY_UP && InputManager.GetKey(Keys.K_2) == KeyState.KEY_DOWN)
-                World.reloadCurMap();
-
+            // keypresses, for moving
             if (InputManager.GetKeyGroup(InputManager.KeyGroup[KeyGroups.KG_UP]) != KeyState.KEY_UP)
             {
                 moveInDir(ref map, ref pos, dir, true);
@@ -161,19 +161,18 @@ namespace textured_raycast.maze.DrawingLoops
             }
             if (InputManager.GetKey(Keys.K_E) == KeyState.KEY_DOWN)
             {
-                World.dayTime += 0.05f;
-                if (World.dayTime > 1)
-                    World.dayTime -= 1;
-
+                // if you press e, and there is a sprite that you can interact with, interact with it
                 if (spriteToInteract != null)
                     spriteToInteract.Activate();
             }
             if (InputManager.GetKey(Keys.K_ESC) == KeyState.KEY_DOWN)
             {
+                // open pause state if you press esc
                 GUI.GUI.pauseUIIndex = 1;
                 World.state = States.Paused;
             }
 
+            // check if the player has fireball, and if he dose, check if he is pressing the fireball key
             var FireballKey = World.player.FireballKey;
             if (!(FireballKey is null))
             {
@@ -186,15 +185,18 @@ namespace textured_raycast.maze.DrawingLoops
 
         public static void moveInDir(ref Map map, ref Vector2d pos, Vector2d dir, bool doViewBob = false)
         {
+            // get movement speed, double if you press shift and have stamina, multiply movementspeed by delta time, to make you run same speed no matter the fps
             double movSpeed = ((InputManager.GetKey(Keys.K_SHIFT) != KeyState.KEY_UP && World.staminaLVL > 0) ? 2 : 1);
             double curMovSpeed = World.dt * movSpeed;
 
+            // do view bob, variable says it all
             if (doViewBob)
             {
                 World.plrBobTime += (float)World.dt * 1000 * (float)movSpeed;
                 World.plrBob = (float)(Math.Sin(World.plrBobTime * 0.01) + 1);
             }
 
+            // if you dont press shift and have stamina, remove stamina
             if (InputManager.GetKey(Keys.K_SHIFT) != KeyState.KEY_UP && World.staminaLVL > 0)
             {
                 World.staminaLVL -= (float)World.dt / 2;

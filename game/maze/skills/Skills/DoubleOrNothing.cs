@@ -6,9 +6,9 @@ namespace textured_raycast.maze.skills.Skills
     {
         public DoubleOrNothing(int id, int price, int[] requiredSkills) : base(id, price, requiredSkills)
         {
-	        name = "DoubleOrNothing";
+            name = "DoubleOrNothing";
             Desc = "0 or 2x damage";
-	        TexID = 1;
+            TexID = 1;
             price = 10;
         }
     }

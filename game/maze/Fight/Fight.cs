@@ -67,9 +67,9 @@ namespace textured_raycast.maze.Fight
             hp = maxHp;
 
             // reset combat/fight variables
-	        dodgeStance = 0;
-	        bezerk = 0;
-	        chargeSpell = false;
+            dodgeStance = 0;
+            bezerk = 0;
+            chargeSpell = false;
             poison = 0;
 
             // make the list only contain the enemy
@@ -159,9 +159,9 @@ namespace textured_raycast.maze.Fight
         public void renderFightToBuffer(ref ConsoleBuffer buffer)
         {
             // save world player transform
-	        startRot = World.plrRot;
-	        startPos = World.plrPos;
-	        startPlane = World.plrPlane;
+            startRot = World.plrRot;
+            startPos = World.plrPos;
+            startPlane = World.plrPlane;
 
             // set it to a new fixed position
             World.plrRot = new Vector2d(-1, 0);

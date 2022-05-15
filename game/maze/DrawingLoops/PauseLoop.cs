@@ -18,12 +18,14 @@ namespace textured_raycast.maze.DrawingLoops
     {
         public static void PauseLoopIter(ref ConsoleBuffer game, ref ConsoleBuffer UIHolder)
         {
-	    UIHolder.Clear();
-	    
-	    GUI.GUI.pauseGUI(ref UIHolder);
-	    
-	    World.ce.DrawConBuffer(game.mixBuffer(UIHolder));
-	    World.ce.SwapBuffers();
+            UIHolder.Clear(); // clear ui screen
+        
+            // draw pause gui
+            GUI.GUI.pauseGUI(ref UIHolder);
+        
+            // draw ui screen over game screen, and draw it to the main screen...
+            World.ce.DrawConBuffer(game.mixBuffer(UIHolder));
+            World.ce.SwapBuffers();
         }
     }
 }
