@@ -7,6 +7,8 @@ namespace textured_raycast.maze.math
         // Holds x and y of vector.
         private double x, y;
 
+	// Uses parameters, to allow for different names for the same
+	// variables.
         public double X { get { return x; } set {x = value; } }
         public double Y { get { return y; } set {y = value; } }
 	public double Width { get {return X; } set { X = value; } }
@@ -21,6 +23,8 @@ namespace textured_raycast.maze.math
             this.X = vec.X;
             this.Y = vec.Y;
         }
+
+	// Checks for equality, returning false if either is null.
         public static bool Equals(Vector2d vec1, Vector2d vec2)
         {
             if (ReferenceEquals(vec1, vec2)) return true;
@@ -32,9 +36,11 @@ namespace textured_raycast.maze.math
 
         public static int GetHashCode(Vector2d obj)
         {
-            return HashCode.Combine(obj.X, obj.Y);
+            return obj.GetHashCode();
         }
 
+	// Dotnet /really/ wants this Equals function, for some
+	// reason.
         public override bool Equals(object vec)
         {
             return Vector2d.Equals(this, vec);
@@ -42,7 +48,7 @@ namespace textured_raycast.maze.math
         
         public override int GetHashCode()
         {
-            return HashCode.Combine(X, Y);
+            return HashCode.Combine(x, y);
         }
         
         // Bunch of operator overloading, making vector math easier.
@@ -93,8 +99,12 @@ namespace textured_raycast.maze.math
         {
             return new Vector2d(Math.Floor(X), Math.Floor(Y));
         }
+
+	// Normalizes the vector in-place
         public void Normalize()
         {
+	    // Getting the distance to (0; 0) gets the length of the
+	    // vector.
             double dist = DistTo(new Vector2d(0, 0));
 
             X /= dist;
@@ -111,24 +121,6 @@ namespace textured_raycast.maze.math
             double x1 = otherVec2d.X - X;
             double y1 = otherVec2d.Y - Y;
             return Math.Sqrt(x1*x1 + y1*y1);
-        }
-
-        // Following function tests the functionality of the operator overloading.
-        // Should say true at the end of all the lines.
-        public static void test() {
-            Console.WriteLine($"Equals: {new Vector2d(5, 7) == new Vector2d(5, 7)}");
-            Console.WriteLine($"EqualsInv: {!(new Vector2d(2, 7) == new Vector2d(5, 7))}");
-            Console.WriteLine($"NotEquals: {new Vector2d(2, 7) != new Vector2d(5, 7)}");
-            Console.WriteLine($"NotEqualsInv: {!(new Vector2d(5, 7) != new Vector2d(5, 7))}");
-            Console.WriteLine("");
-
-            Console.WriteLine($"Add: {(new Vector2d(9, 2) + new Vector2d(-3, 7)) == new Vector2d(6, 9)}");
-            Console.WriteLine($"Sub: {(new Vector2d(9, 2) - new Vector2d(-3, 7)) == new Vector2d(12, -5)}");
-            Console.WriteLine($"Mult: {(new Vector2d(9, 2) * 2.2) == new Vector2d(19.8, 4.4)}");
-            Console.WriteLine($"Mult2: {(2.2 * new Vector2d(9, 2)) == new Vector2d(19.8, 4.4)}");
-            Console.WriteLine($"Div: {(new Vector2d(9, 2) / 20) == new Vector2d(0.45, 0.1)}");
-
-            Console.Read();
         }
     }
 }
