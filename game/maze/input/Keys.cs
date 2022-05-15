@@ -1,5 +1,6 @@
 namespace textured_raycast.maze.input
 {
+    // An enum of all the supported keys.
     enum Keys
     {
         K_W,
@@ -26,11 +27,20 @@ namespace textured_raycast.maze.input
         UNKNOWN,
     }
 
+    // An enum of supported keygroups
     enum KeyGroups
     {
         KG_UP,
         KG_DOWN,
         KG_LEFT,
         KG_RIGHT,
+    }
+
+    // An enum of all the supported keystates
+    enum KeyState
+    {
+        KEY_UP,
+        KEY_DOWN,
+        KEY_HELD,
     }
 }

@@ -11,8 +11,11 @@ namespace textured_raycast.maze.input.linux
         private const int bufLen = 24;
         private byte[] evBuf = new byte[bufLen];
 
+	// Holds a filestream to read from the linux event file.
         private FileStream evStream;
 
+	// Checks for the kyestate in the pressedkeys dictionary, if
+	// the key doesn't exist, returns up.
         public KeyState GetKey(Keys key) {
             try {
                 if(pressedKeys[key]== KeyState.KEY_DOWN) {
@@ -26,18 +29,31 @@ namespace textured_raycast.maze.input.linux
         }
 
         public void Init() {
+	    // Create the event filestream
             evStream = new FileStream("/dev/input/event3", FileMode.Open, FileAccess.Read);
+	    // Run the loop in another thread.
             Task.Run(() => { InputLoop(); });
         }
 
         private void InputLoop() {
             while(true) {
+		// Read from the filestream, into the evBuf buffer
                 evStream.Read(evBuf, 0, bufLen);
+		// Convert some bytes to a short, representing the
+		// type of the inputevent, then convert to the types enum.
                 types  type  = (types)BitConverter.ToInt16(evBuf, 16);
+		// Convert some bytes to a short, representing the
+		// code of the inputevent, then convert to the code enum.
                 codes  code  = (codes)BitConverter.ToInt16(evBuf, 18);
+		// Convert some bytes to a int32_t, representing the
+		// value of the inputevent, then convert to the values enum
                 values value = (values)BitConverter.ToInt32(evBuf, 20);
+
+		// Generate a key enum from the code enum.
                 Keys convCode = (Keys)Enum.Parse(typeof(Keys), code.ToString());
 
+		// If the type is key, check the value and use that as
+		// the keystate.
                 switch(type) {
                     case types.EV_KEY:
                         switch(value) {
@@ -54,6 +70,7 @@ namespace textured_raycast.maze.input.linux
         }
     }
 
+    // The supported keycodes and their corresponding linux value.
     public enum codes : short {
         K_W = 17,
         K_A = 30,
@@ -76,10 +93,12 @@ namespace textured_raycast.maze.input.linux
         K_3 = 4,
     }
 
+    // Supported event types with their linux values.
     public enum types : short {
         EV_KEY = 1,
     }
 
+    // Supported event-value types with their linux values.
     public enum values : int {
         KEY_UP = 0,
         KEY_DOWN = 1,
