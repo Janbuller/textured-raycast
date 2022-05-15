@@ -29,6 +29,7 @@ namespace textured_raycast.maze
 
         public int Width { get => parameters.winWidth; set => parameters.winWidth = value; }
         public int Height { get => parameters.winHeight; set => parameters.winHeight = value; }
+        public string Title { get => parameters.name; set { parameters.name = value; Console.Title = value; } }
 
         public ConsoleEngine(int win_width, int win_height, string game_name)
         {
@@ -45,6 +46,8 @@ namespace textured_raycast.maze
             Console.Title = game_name;
         }
 
+	// Gets the list of TexColor from a ConsoleBuffer object and
+	// draws it to the back-buffer.
         public void DrawConBuffer(ConsoleBuffer buf)
         {
             curConBuf = new ConsoleBuffer(buf);

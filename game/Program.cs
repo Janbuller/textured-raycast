@@ -14,17 +14,11 @@ namespace textured_raycast
                 maze.input.InputManager.SetInputController(new maze.input.linux.LinuxInputController());
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 maze.input.InputManager.SetInputController(new maze.input.Windows.WindowsInputController());
+	    else
+                maze.input.InputManager.SetInputController(new maze.input.console.ConsoleInputController());
 
             World.setupMapsInWorld();
             Maze.StartGame();
-
-            // var watch = new System.Diagnostics.Stopwatch();
-            // watch.Start();
-            // Texture test = TextureLoaders.loadFromPlainPPM("img/test4.ppm");
-            // watch.Stop();
-            // Console.Out.WriteLine($"Time: {watch.ElapsedMilliseconds} ms");
-            // test.draw();
-
         }
     }
 }

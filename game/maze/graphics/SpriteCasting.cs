@@ -15,6 +15,8 @@ namespace textured_raycast.maze.graphics
     {
         public static void SpriteCast(ref ConsoleBuffer game, List<Sprite> spritesIn, double[] ZBuffer, int visRange, Map map)
         {
+
+	    // Generate a list of all player sprites, when playing online.
             List<Sprite> sprites = new List<Sprite>(spritesIn);
             foreach(var player in Client.players) {
                 var pV = player.Value;
@@ -31,6 +33,8 @@ namespace textured_raycast.maze.graphics
                     }));
                 }
 	    }
+
+	    // Get all the lights.
             ILight[] lights = map.GetLights();
 
             List<double> spriteDist = new List<double>();
@@ -145,22 +149,30 @@ namespace textured_raycast.maze.graphics
 
                     if (transformed.Y < ZBuffer[x])
                     {
-                        float darken = 1;
-
+			// Run the updateondraw function in the
+			// currently drawn sprite.
                         curSpr.UpdateOnDraw(transformed.Y);
-                        TexColor mixedLight = new TexColor(255, 255, 255);
-                        Vector2d newPlane = ((World.plrPlane * -1) + ((World.plrPlane * 2)) / (endX - startX) * (x - startX));
 
+                        TexColor mixedLight = new TexColor();
+
+			// Calculate the offset of the sprites center,
+			// to the currently drawn column, using the
+			// players plane variable.
+                        Vector2d SpriteColumnOffset = ((World.plrPlane * -1) + ((World.plrPlane * 2)) / (endX - startX) * (x - startX));
+
+			// If the sprite isn't affected by light
+			// (example lights), don't do light
+			// calculations.
                         if (curSpr.effectedByLight)
                         {
-                            LightDist[] lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + newPlane);
+                            LightDist[] lightDists = LightDistHelpers.RoofLightArrayToDistArray(lights, curSpr.pos + SpriteColumnOffset);
                             if (lights.Count() > 0)
                                 mixedLight = LightDistHelpers.MixLightDist(lightDists);
                         }
 
-			if(curSpr.GetType() == typeof(PlayerSprite))
-                            Console.WriteLine($"{mixedLight.R}");
-                        game.DrawVerLine(x, spriteScreenSize, sprTex, texX, darken, mixedLight, map.lightMix, new TexColor(0, 0, 0));
+			// Draw the current column of the sprite on
+			// the screen.
+                        game.DrawVerLine(x, spriteScreenSize, sprTex, texX, 1, mixedLight, map.lightMix, new TexColor(0, 0, 0));
                     }
                 }
             }

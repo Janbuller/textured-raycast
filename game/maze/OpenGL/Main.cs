@@ -12,8 +12,7 @@ namespace textured_raycast.maze.OpenGL
             var nativeWindowSettings = new NativeWindowSettings()
             {
                 Size = new Vector2i(480, 320),
-                Title = "LearnOpenTK - Creating a Window",
-                // This is needed to run on macos
+                Title = World.ce.Title,
                 Flags = ContextFlags.ForwardCompatible,
 		// WindowBorder = WindowBorder.Fixed
             };

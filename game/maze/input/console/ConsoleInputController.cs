@@ -14,7 +14,7 @@ namespace textured_raycast.maze.input.console
         }
     }
 
-    class WindowsInputController : ILowLevelInput {
+    class ConsoleInputController : ILowLevelInput {
         private Dictionary<Keys, Press> pressedKeys = new Dictionary<Keys, Press>() {};
 
         public KeyState GetKey(Keys key) {
