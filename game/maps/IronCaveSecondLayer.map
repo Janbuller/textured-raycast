@@ -1,6 +1,6 @@
 14 14
-7 3.5
--6.1232339957368e-17 -1
+2.5 8.5
+1 1.2246467991474e-16
 img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
@@ -198,8 +198,7 @@ img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm img/ownwalls/bricks.ppm
 2.5 8.5 img/RandomOBJs/Sign.ppm 1 4 2 1
-12.496650695801 2.0490283966064 img/RandomOBJs/Sign.ppm 1 6 1 2
-12.496650695801 2.0490283966064 img/RandomOBJs/Sign.ppm 1 4 2 1
+12.5 2 img/RandomOBJs/Sign.ppm 1 6 1 2
 4.5 8.5 img/enemy/ScarryBat2.ppm-img/enemy/ScarryBat1.ppm 3 70 16 9 200 50 25
 11 11.5 img/enemy/ScarryBat2.ppm-img/enemy/ScarryBat1.ppm 3 70 16 9 200 50 25
 5 12 img/enemy/ScarryBat2.ppm-img/enemy/ScarryBat1.ppm 3 70 16 9 200 50 25
